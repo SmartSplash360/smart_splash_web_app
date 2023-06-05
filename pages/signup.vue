@@ -1,9 +1,11 @@
 <template>
   <div></div>
-  <ul></ul>
-  <div></div>
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({
+  layout: "signup",
+});
+</script>
 
 <style lang="scss" scoped></style>

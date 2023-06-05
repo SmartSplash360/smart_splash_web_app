@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+@layer components {
+  .heading-h1 {
+  }
+  .heading-h2 {
+    @apply;
+  }
+  .heading-h3 {
+    @apply text-[20px] font-[500] leading-[30px] text-black;
+  }
+  .custom-paragraph {
+    @apply text-[15px] font-[400] leading-[22px];
+  }
+  .custom-paragraph--small {
+    @apply;
+  }
+  .custom-paragraph--big {
+    @apply;
+  }
+  .custom-logger-btn {
+    @apply flex w-full items-center justify-center rounded-md bg-[#0291BF] py-3 text-[15px] text-white;
+  }
+  .custom-btn--small {
+    @apply;
+  }
+  .custom-btn--md {
+    @apply;
+  }
+  .custom-btn--lg {
+    @apply;
+  }
+  .input-group {
+    @apply flex w-full flex-col gap-4;
+  }
+  .custom-label {
+    @apply text-[15px] font-[400] leading-[22px];
+  }
+  .custom-input {
+    @apply h-[40px] w-full rounded-md border border-gray-200 p-5 text-xs font-[400] leading-[18px];
+  }
+  .card {
+    @apply;
+  }
+  .form-container {
+    @apply flex flex-col items-center gap-4 px-20 py-5;
+  }
+}
