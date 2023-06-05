@@ -1,7 +1,6 @@
 <template>
-  <div></div>
+  <UiTheHeader></UiTheHeader>
+  <UiTheHeroSection></UiTheHeroSection>
+  <main></main>
+  <UiTheFooter></UiTheFooter>
 </template>
-
-<script setup></script>
-
-<style lang="scss" scoped></style>

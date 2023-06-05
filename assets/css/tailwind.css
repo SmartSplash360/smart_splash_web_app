@@ -7,13 +7,20 @@ body {
 }
 
 @layer components {
+  .nav-link {
+    @apply text-[16px] font-[400] leading-7;
+  }
   .heading-h1 {
+    @apply text-[50px] font-[600] leading-[75px] text-white;
   }
   .heading-h2 {
     @apply;
   }
   .heading-h3 {
     @apply text-[20px] font-[500] leading-[30px] text-black;
+  }
+  .heading-h4 {
+    @apply text-[20px] font-[400] leading-[30px] tracking-wider text-white;
   }
   .custom-paragraph {
     @apply text-[15px] font-[400] leading-[22px];

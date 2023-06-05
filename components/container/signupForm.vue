@@ -31,11 +31,11 @@
       :name="'confirm_password'"
       :id="'confirm_password_id'"
     ></base-input>
-    <base-button :btnText="'Create Acccount'"></base-button>
+    <base-button :btnText="'Create Acccount'" :link="''"></base-button>
     <div class="py-3">
       <p>
         Already have an account ?
-        <nuxt-link to="/signin" class="text-[#4D6977]">Login</nuxt-link>
+        <nuxt-link to="/signin" class="text-[#4D6977]">Sign In</nuxt-link>
       </p>
     </div>
     <div class="flex flex-col gap-3">
