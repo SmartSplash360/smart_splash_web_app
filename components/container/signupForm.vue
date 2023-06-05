@@ -1,6 +1,6 @@
 <template>
   <form class="form-container">
-    <div class="h-[125px] w-[300px] bg-red-400">
+    <div class="h-[125px] w-[300px]">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"

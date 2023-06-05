@@ -1,13 +1,13 @@
 <template>
   <form class="form-container">
-    <div class="h-[125px] w-[300px]">
+    <div class="mb-10 h-[125px] w-[300px] sm:mb-0">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
         class="h-full w-full"
       />
     </div>
-    <div class="flex w-full flex-col gap-3 text-start">
+    <div class="hidden w-full flex-col gap-3 text-start sm:flex">
       <h2 class="text-[30px] font-[400] leading-[45px]">Login</h2>
       <p>Please enter your details</p>
     </div>

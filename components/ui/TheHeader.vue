@@ -1,9 +1,9 @@
 <template>
   <header
-    class="flex h-[100px] items-center justify-between gap-12 px-20 shadow-md"
+    class="hidden h-[100px] items-center justify-between gap-12 px-20 shadow-md sm:flex"
   >
     <div class="w-1/5">
-      <div class="h-[100px] max-h-[100px] w-[298px] bg-red-400">
+      <div class="h-[100px] max-h-[100px] bg-red-400 lg:w-[298px]">
         <img
           :src="SmartPlashLogo"
           alt="Smart-Splash-Logo"
@@ -11,7 +11,7 @@
         />
       </div>
     </div>
-    <ul class="flex w-2/5 items-center justify-between">
+    <ul class="hidden items-center justify-between lg:flex lg:w-2/5">
       <li class="nav-link">
         <nuxt-link to="/pricing">Pricing</nuxt-link>
       </li>
@@ -28,7 +28,7 @@
         <nuxt-link to="/contact">Contact</nuxt-link>
       </li>
     </ul>
-    <div class="flex w-1/5 items-center justify-between gap-5">
+    <div class="flex w-full items-center justify-between gap-5 lg:w-1/5">
       <BaseButton
         :bg="'#0291BF'"
         :btn-text="'Sign up'"

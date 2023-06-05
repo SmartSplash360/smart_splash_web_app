@@ -1,6 +1,7 @@
 <template>
   <UiTheHeader></UiTheHeader>
-  <UiTheHeroSection></UiTheHeroSection>
-  <main></main>
+  <main>
+    <slot></slot>
+  </main>
   <UiTheFooter></UiTheFooter>
 </template>
