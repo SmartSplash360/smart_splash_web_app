@@ -17,17 +17,13 @@
         <span class="text-[16px] leading-6">Josh Greg</span>
         <div class="flex items-center gap-2">
           <div class="h-[50px] w-[50px] rounded-full">
-            <img
-              :src="userProfile"
-              alt="user-profile"
-              class="h-full w-full rounded-full"
+            <Avatar
+              :image="userProfile"
+              class="mr-2"
+              size="xlarge"
+              shape="circle"
             />
           </div>
-          <span
-            class="inline-flex h-[16px] w-[16px] items-center justify-center"
-          >
-            <font-awesome-icon :icon="['fas', 'chevron-down']" />
-          </span>
         </div>
       </div>
     </div>
