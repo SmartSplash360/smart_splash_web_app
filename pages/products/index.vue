@@ -1,4 +1,6 @@
-<template>PRODUCTS</template>
+<template>
+  <ContainerProductsList></ContainerProductsList>
+</template>
 
 <script setup>
 definePageMeta({

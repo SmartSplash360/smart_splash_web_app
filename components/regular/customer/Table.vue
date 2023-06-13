@@ -129,8 +129,6 @@ const addCustomerModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
 
-console.log(selectedProduct.value);
-
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 
 const closeModal = () => (addCustomerModal.value = false);

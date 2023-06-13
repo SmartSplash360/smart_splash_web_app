@@ -1,4 +1,6 @@
-<template>ALERT</template>
+<template>
+  <ContainerAlertsList></ContainerAlertsList>
+</template>
 
 <script setup>
 definePageMeta({

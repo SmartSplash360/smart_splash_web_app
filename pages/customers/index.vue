@@ -1,6 +1,6 @@
 <template>
-  <ContainerCustomerList></ContainerCustomerList>
-  <!-- <ContainerCustomerLeads></ContainerCustomerLeads> -->
+  <!-- <ContainerCustomerList></ContainerCustomerList> -->
+  <ContainerCustomerLeads></ContainerCustomerLeads>
 </template>
 
 <script setup>
