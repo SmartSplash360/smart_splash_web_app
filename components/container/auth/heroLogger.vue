@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-import img_pool from "../../assets/undraw_svg/undraw_pool_bk6q.svg";
-import img_browser_stat from "../../assets/undraw_svg/undraw_browser_stats_re_j7wy.svg";
+import img_pool from "@/assets/undraw_svg/undraw_pool_bk6q.svg";
+import img_browser_stat from "@/assets/undraw_svg/undraw_browser_stats_re_j7wy.svg";
 
 const props = defineProps({
   login: Boolean,

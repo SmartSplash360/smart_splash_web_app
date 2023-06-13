@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import SmartPlashLogo from "../../assets/images/SmartSplash.png";
+import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 </script>
 
 <style lang="scss" scoped></style>
