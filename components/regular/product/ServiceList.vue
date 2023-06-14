@@ -5,10 +5,10 @@
         :btnText="' Service'"
         @click="toggleAddServiceModal"
       ></BaseAddButton>
-      <NewServiceModal
+      <ModalsProductCreateServiceModal
         v-if="addServiceModal"
         :toggleAddServiceModal="closeModal"
-      ></NewServiceModal>
+      ></ModalsProductCreateServiceModal>
     </div>
     <div class="card">
       <DataTable
@@ -70,7 +70,6 @@
 import { onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { ProductService } from "@/services/ProductService";
-import NewServiceModal from "~/components/modals/product/NewServiceModal.vue";
 
 onMounted(() => {
   ProductService.getProductsMini().then((data) => (services.value = data));

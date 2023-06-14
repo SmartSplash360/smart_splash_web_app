@@ -44,7 +44,7 @@
             outlined
             @click="toggleAddAlertModal"
           />
-          <Button label="Submit" icon="pi pi-check" />
+          <Button label="Submit" icon="pi pi-check" class="!bg-[#0291BF]" />
         </div>
       </form>
       <div

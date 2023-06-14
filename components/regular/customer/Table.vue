@@ -5,10 +5,10 @@
         :btnText="' Customer'"
         @click="toggleAddCustomerModal"
       ></BaseAddButton>
-      <NewCustomerModal
+      <ModalsCustomerCreateCustomerModal
         v-if="addCustomerModal"
         :toggleAddCustomerModal="closeModal"
-      ></NewCustomerModal>
+      ></ModalsCustomerCreateCustomerModal>
     </div>
     <div class="card">
       <DataTable
@@ -114,7 +114,6 @@
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { CustomerService } from "@/services/CustomerServices";
-import NewCustomerModal from "~/components/modals/customer/NewCustomerModal.vue";
 
 onMounted(() => {
   CustomerService.getCustomersMedium().then((data) => (customers.value = data));

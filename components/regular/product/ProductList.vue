@@ -5,10 +5,10 @@
         :btnText="' Product'"
         @click="toggleAddProductModal"
       ></BaseAddButton>
-      <ModalsProductNewProductModal
+      <ModalsProductCreateProductModal
         v-if="addProductModal"
         :toggleAddProductModal="closeModal"
-      ></ModalsProductNewProductModal>
+      ></ModalsProductCreateProductModal>
     </div>
     <div class="card">
       <DataTable

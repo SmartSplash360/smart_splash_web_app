@@ -7,18 +7,45 @@
           @click="toggleAddAlertModal"
         ></BaseAddButton>
       </div>
-      <ModalsAlertNewAlertModal
+      <CreateAlertModal
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
-      ></ModalsAlertNewAlertModal>
+      ></CreateAlertModal>
       <TabView v-model:activeIndex="active">
-        <TabPanel header="High">
+        <TabPanel>
+          <template #header>
+            <div class="flex items-center justify-center gap-3">
+              <span class="text-[18px] font-[500]">High</span>
+              <span
+                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
+                >5</span
+              >
+            </div>
+          </template>
           <RegularAlertHighAlert></RegularAlertHighAlert>
         </TabPanel>
-        <TabPanel header="Medium">
+        <TabPanel>
+          <template #header>
+            <div class="flex items-center justify-center gap-3">
+              <span class="text-[18px] font-[500]">Medium</span>
+              <span
+                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#FFA500] shadow-md"
+                >3</span
+              >
+            </div>
+          </template>
           <RegularAlertMediumAlert></RegularAlertMediumAlert>
         </TabPanel>
-        <TabPanel header="Low">
+        <TabPanel>
+          <template #header>
+            <div class="flex items-center justify-center gap-3">
+              <span class="text-[18px] font-[500]">Low</span>
+              <span
+                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#02BF70] shadow-md"
+                >3</span
+              >
+            </div>
+          </template>
           <RegularAlertLowAlert></RegularAlertLowAlert>
         </TabPanel>
       </TabView>
@@ -27,6 +54,8 @@
 </template>
 
 <script setup>
+import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
+
 const addAlertModal = ref(false);
 
 const toggleAddAlertModal = () => (addAlertModal.value = true);
