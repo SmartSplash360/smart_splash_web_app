@@ -21,7 +21,7 @@
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label for="name"> Price* </label>
+            <label for="name"> Status* </label>
             <div class="card justify-content-center flex">
               <Dropdown
                 v-model="selectedCity"

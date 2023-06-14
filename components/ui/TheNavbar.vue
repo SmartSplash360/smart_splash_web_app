@@ -12,7 +12,7 @@
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
       <div class="flex items-center justify-between gap-4">
         <span class="inline-flex h-[60px] w-[60px] items-center justify-center"
-          ><font-awesome-icon :icon="['far', 'bell']" class="text-2xl"
+          ><img :src="BellIcon" alt="bell-icons"
         /></span>
         <span class="text-[16px] leading-6">Josh Greg</span>
         <div class="flex items-center gap-2">
@@ -81,6 +81,7 @@
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
+import BellIcon from "@/assets/icons/bell-notification-outline.svg";
 import { sideBarLinks } from "@/utils/sidebarLinks";
 
 const sideBarVisible = ref(false);

@@ -10,7 +10,7 @@
       <div class="lg:hidden">
         <UiTheSidebar></UiTheSidebar>
       </div>
-      <div class="px-5 py-6 sm:px-10 sm:py-12">
+      <div class="px-5 py-6 lg:px-10 lg:py-12">
         <slot></slot>
       </div>
     </div>

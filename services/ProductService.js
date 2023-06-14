@@ -13,7 +13,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1001",
@@ -27,7 +28,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
       },
       {
         id: "1002",
@@ -41,7 +43,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1003",
@@ -55,7 +58,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
       },
       {
         id: "1004",
@@ -69,7 +73,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1005",
@@ -83,7 +88,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1006",
@@ -97,7 +103,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1007",
@@ -111,7 +118,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
       },
       {
         id: "1008",
@@ -125,7 +133,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1009",
@@ -139,7 +148,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1010",
@@ -153,7 +163,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1011",
@@ -167,7 +178,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1012",
@@ -181,7 +193,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1013",
@@ -195,7 +208,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1014",
@@ -209,7 +223,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1015",
@@ -223,7 +238,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1016",
@@ -237,7 +253,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1017",
@@ -251,7 +268,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1018",
@@ -265,7 +283,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1019",
@@ -279,7 +298,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1020",
@@ -293,7 +313,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1021",
@@ -307,7 +328,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1022",
@@ -321,7 +343,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1023",
@@ -335,7 +358,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1024",
@@ -349,7 +373,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1025",
@@ -363,7 +388,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1026",
@@ -377,7 +403,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1027",
@@ -391,7 +418,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1028",
@@ -405,7 +433,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
       {
         id: "1029",
@@ -419,7 +448,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 8,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
       },
     ];
   },
@@ -438,7 +468,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1000-0",
@@ -490,7 +521,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1001-0",
@@ -524,7 +556,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1002-0",
@@ -558,7 +591,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [],
       },
       {
@@ -573,7 +607,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1004-0",
@@ -607,7 +642,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1005-0",
@@ -650,7 +686,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1006-0",
@@ -684,7 +721,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1007-0",
@@ -709,7 +747,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1008-0",
@@ -743,7 +782,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1009-0",
@@ -795,7 +835,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1010-0",
@@ -829,7 +870,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1011-0",
@@ -854,7 +896,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1012-0",
@@ -888,7 +931,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1013-0",
@@ -913,7 +957,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1014-0",
@@ -947,7 +992,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1015-0",
@@ -972,7 +1018,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [],
       },
       {
@@ -987,7 +1034,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1017-0",
@@ -1012,7 +1060,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1018-0",
@@ -1046,7 +1095,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [],
       },
       {
@@ -1061,7 +1111,8 @@ export const ProductService = {
         inventoryStatus: "OUTOFSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1020-0",
@@ -1095,7 +1146,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1021-0",
@@ -1120,7 +1172,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1022-0",
@@ -1154,7 +1207,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1023-0",
@@ -1179,7 +1233,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [],
       },
       {
@@ -1194,7 +1249,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 4,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1025-0",
@@ -1228,7 +1284,8 @@ export const ProductService = {
         inventoryStatus: "LOWSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1026-0",
@@ -1253,7 +1310,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 3,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "unavailable",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Unavailable",
         orders: [
           {
             id: "1027-0",
@@ -1287,7 +1345,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 5,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [],
       },
       {
@@ -1302,7 +1361,8 @@ export const ProductService = {
         inventoryStatus: "INSTOCK",
         rating: 8,
         modified_at: new Date().toUTCString().slice(5, 16),
-        status: "available",
+        created_at: new Date().toUTCString().slice(5, 16),
+        status: "Available",
         orders: [
           {
             id: "1029-0",

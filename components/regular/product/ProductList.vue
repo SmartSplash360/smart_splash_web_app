@@ -33,8 +33,8 @@
           </div>
         </template>
         <Column
-          field="id"
-          header="Created at"
+          field="created_at"
+          header="Created Date"
           sortable
           class="w-[1%] lg:w-[20%]"
         ></Column>
@@ -52,12 +52,12 @@
         <Column
           field="status"
           header="Status"
-          class="w-[5%] lg:w-[15%]"
+          class="w-[5%] lg:w-[12.5%]"
         ></Column>
-        <Column field="price" header="Price" class="w-[5%] lg:w-[15%]"></Column>
+        <Column field="price" header="Price" class="w-[5%] lg:w-[10%]"></Column>
         <Column
           field="modified_at"
-          header="Modified at"
+          header="Modified Date"
           sortable
           class="w-[5%] lg:w-[25%]"
         ></Column>

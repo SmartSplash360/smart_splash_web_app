@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-20">
+  <div class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo></RegularCustomerInfo>
     <div
-      class="flex w-[30rem] items-center justify-center gap-20 self-center border-b-2 border-black text-[#025E7C]"
+      class="flex items-center justify-center self-center border-b-2 border-black text-[#025E7C] sm:w-[30rem] sm:gap-20"
     >
       <div class="card justify-content-center flex">
         <Dropdown
@@ -10,7 +10,7 @@
           :options="reports"
           optionLabel="name"
           placeholder="View Reports"
-          class="md:w-14rem w-full !border-0 !text-[#025E7C] !outline-none"
+          class="md:w-14rem w-full !border-0 !text-[#025E7C]"
         />
       </div>
       <div class="card justify-content-center flex">
@@ -19,7 +19,7 @@
           :options="jobsInprogress"
           optionLabel="name"
           placeholder="Jobs in Progress"
-          class="md:w-14rem w-full !border-0 !outline-none"
+          class="md:w-14rem w-full !border-0"
         />
       </div>
     </div>

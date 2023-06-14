@@ -1,6 +1,6 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col bg-[#015d7b] px-6 pb-20 lg:flex"
+    class="side-bar-container hidden h-full flex-col gap-64 bg-[#015d7b] px-6 pb-20 lg:flex"
   >
     <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
       <img
@@ -9,17 +9,17 @@
         class="h-full w-full"
       />
     </div>
-    <div class="mt-auto">
+    <div class="">
       <ul class="flex flex-col gap-10 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link
             :to="link.to"
             class="flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2 hover:bg-white hover:text-black"
-            :class="[link.name ? 'bg-white text-black' : '']"
           >
             <span
               class="inline-flex h-[16px] w-[16px] items-center justify-center text-xl"
-              ><font-awesome-icon :icon="link.icon"
+            >
+              <font-awesome-icon :icon="link.icon"
             /></span>
             <span class="text-sm font-bold leading-7">{{ link.name }}</span>
           </nuxt-link>
@@ -59,3 +59,5 @@ const showActiveRoute = () => {
 </script>
 
 <style scoped></style>
+
+<!-- :class="[link.name ? 'bg-white text-black' : '']" -->
