@@ -1,0 +1,36 @@
+<template>
+  <div class="flex w-full items-center justify-between">
+    <div
+      class="flex flex-col items-end gap-3 sm:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
+    >
+      <h3 class="min-w-max text-[22px] font-[600] leading-7">3 Technicians</h3>
+      <div class="card justify-content-center flex w-full sm:w-fit">
+        <Dropdown
+          v-model="status"
+          :options="statuses"
+          optionLabel="state"
+          placeholder="Status"
+          class="md:w-20rem w-full !text-white !outline-none"
+        />
+      </div>
+    </div>
+    <BaseAddButton
+      :btnText="'Technician'"
+      @click="$emit('open-modal')"
+    ></BaseAddButton>
+  </div>
+</template>
+
+<script setup>
+const status = ref();
+const statuses = ref([
+  {
+    state: "Active",
+    code: "A",
+  },
+  {
+    state: "Inactive",
+    code: "A",
+  },
+]);
+</script>

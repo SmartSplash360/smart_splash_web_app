@@ -1,4 +1,6 @@
-<template>TECHNICIANS</template>
+<template>
+  <ContainerTechnicianList></ContainerTechnicianList>
+</template>
 
 <script setup>
 definePageMeta({

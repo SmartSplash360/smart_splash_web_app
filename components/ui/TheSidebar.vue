@@ -58,6 +58,16 @@ const showActiveRoute = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.side-bar-container {
+  background: rgb(108, 106, 153);
+  background: linear-gradient(
+    180deg,
+    rgba(108, 106, 153, 1) 0%,
+    rgba(245, 235, 235, 1) 0%,
+    rgba(4, 132, 173, 1) 33%
+  );
+}
+</style>
 
 <!-- :class="[link.name ? 'bg-white text-black' : '']" -->

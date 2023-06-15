@@ -11,6 +11,9 @@ import FileUpload from "primevue/fileupload";
 import Textarea from "primevue/textarea";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
+import Card from "primevue/card";
+import ProgressBar from "primevue/progressbar";
+import TieredMenu from "primevue/tieredmenu";
 
 import ToastService from "primevue/toastservice";
 
@@ -29,6 +32,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Textarea", Textarea);
   nuxtApp.vueApp.component("TabView", TabView);
   nuxtApp.vueApp.component("TabPanel", TabPanel);
+  nuxtApp.vueApp.component("Card", Card);
+  nuxtApp.vueApp.component("ProgressBar", ProgressBar);
+  nuxtApp.vueApp.component("TieredMenu", TieredMenu);
 
   //other components that you need
 });
