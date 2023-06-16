@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex max-h-[88vh] flex-col gap-3 overflow-y-auto sm:flex-row lg:-mt-10"
+    class="flex max-h-[88vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
   >
     <RegularCustomerChatPreview :chats="chats"></RegularCustomerChatPreview>
     <RegularCustomerChat></RegularCustomerChat>

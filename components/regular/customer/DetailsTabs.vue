@@ -33,7 +33,6 @@
 
 <script setup>
 const props = defineProps({
-  switchTabs: Function,
   currentTab: String,
 });
 </script>

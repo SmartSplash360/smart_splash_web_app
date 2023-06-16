@@ -2,7 +2,7 @@
   <div class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo></RegularCustomerInfo>
     <div
-      class="flex items-center justify-center self-center border-b-2 border-black text-[#025E7C] sm:w-[30rem] sm:gap-20"
+      class="flex items-center justify-center self-center text-[#025E7C] sm:w-[30rem] sm:gap-20"
     >
       <div class="card justify-content-center flex">
         <Dropdown
@@ -23,7 +23,7 @@
         />
       </div>
     </div>
-    <div class="flex flex-col gap-10">
+    <div class="flex flex-col gap-10 border-t pt-12">
       <RegularCustomerDetailsTabs
         @select-tab="switchTabs"
         :currentTab="currentTab"

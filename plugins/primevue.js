@@ -14,6 +14,7 @@ import TabPanel from "primevue/tabpanel";
 import Card from "primevue/card";
 import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
+import BadgeDirective from "primevue/badgedirective";
 
 import ToastService from "primevue/toastservice";
 
@@ -35,6 +36,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Card", Card);
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
+
+  nuxtApp.vueApp.directive("badge", BadgeDirective);
 
   //other components that you need
 });

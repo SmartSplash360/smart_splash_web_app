@@ -44,7 +44,7 @@
     </div>
     <div class="hidden flex-col sm:flex sm:w-1/6">
       <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
-        <span class="flex h-[20px] w-[20px] place-items-center"
+        <span class="flex h-[25px] w-[25px] place-items-center"
           ><Avatar
             v-badge.danger="4"
             class="p-overlay-badge"

@@ -1,5 +1,5 @@
 <template>
-  <ContainerCustomerOverview></ContainerCustomerOverview>
+  <ContainerTechnicianOverview></ContainerTechnicianOverview>
 </template>
 
 <script setup>

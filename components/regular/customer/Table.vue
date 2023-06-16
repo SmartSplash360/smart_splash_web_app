@@ -10,7 +10,7 @@
         :toggleAddCustomerModal="closeModal"
       ></ModalsCustomerCreateCustomerModal>
     </div>
-    <div class="card">
+    <div class="card border">
       <DataTable
         v-model:selection="selectedProduct"
         v-model:filters="filters"
@@ -19,7 +19,7 @@
         dataKey="id"
         paginator
         :rows="8"
-        tableStyle="min-width: 50rem; min-height : 25rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
+        tableStyle="min-width: 50rem; min-height : 25rem; margin-top : 2.5rem"
         :loading="loading"
         :globalFilterFields="['customer', 'representative.name']"
       >
@@ -72,10 +72,10 @@
         :btnText="' Customer'"
         @click="toggleAddCustomerModal"
       ></BaseAddButton>
-      <NewCustomerModal
+      <ModalsCustomerCreateCustomerModal
         v-if="addCustomerModal"
         :toggleAddCustomerModal="closeModal"
-      ></NewCustomerModal>
+      ></ModalsCustomerCreateCustomerModal>
     </div>
     <div class="card">
       <DataTable

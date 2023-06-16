@@ -1,6 +1,6 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col gap-64 bg-[#015d7b] px-6 pb-20 lg:flex"
+    class="side-bar-container hidden h-full flex-col gap-64 px-6 pb-20 lg:flex"
   >
     <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
       <img

@@ -14,14 +14,15 @@
               v-if="showMenu"
               class="absolute -right-16 top-8 z-10 flex min-h-[81px] min-w-[171px] flex-col items-center justify-center rounded-md bg-white shadow-md"
             >
-              <div
+              <nuxt-link
+                :to="`technicians/${34}`"
                 class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-b-none px-3 py-2 hover:bg-gray-200"
               >
                 <img :src="BarsIcon" alt="bars-icon" />
                 <span class="min-w-max text-sm font-medium">
                   View Technician</span
                 >
-              </div>
+              </nuxt-link>
               <div
                 class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
               >
@@ -75,11 +76,7 @@
         <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
           <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
-              ><Avatar
-                v-badge.danger="4"
-                class="p-overlay-badge"
-                :image="EmailIcon"
-                size="xlarge"
+              ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
             /></span>
             <span class="text-xs xl:text-[16px]">evan@tmail.com</span>
           </div>

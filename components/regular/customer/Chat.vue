@@ -1,6 +1,6 @@
 <template>
-  <div class="hidden min-h-full w-full flex-col px-3 sm:flex sm:w-1/2">
-    <div class="flex items-center justify-between gap-2 px-5 py-3">
+  <div class="hidden w-full flex-col pb-5 sm:flex sm:flex-1">
+    <div class="flex items-center justify-between gap-2 border-b px-5 py-3">
       <div>
         <Avatar
           :image="userProfile"
@@ -19,29 +19,29 @@
         >...</span
       >
     </div>
-    <div class="flex flex-1 flex-col">
+    <div class="flex flex-1 flex-col py-10">
       <span class="text-center">Today, 12:33 AM</span>
     </div>
     <div class="relative flex justify-center">
       <div class="card justify-content-center flex px-5">
-        <Textarea v-model="value" autoResize rows="5" cols="70" />
+        <Textarea v-model="value" autoResize rows="10" cols="90" />
       </div>
-      <div class="absolute bottom-4 flex w-3/4 items-center gap-5">
+      <div class="absolute bottom-6 flex w-4/5 items-center gap-5">
         <span
-          class="inline-flex h-[20px] w-[20px] items-center justify-center rounded-md text-xl text-[#9C9C9C]"
+          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
         >
           <font-awesome-icon icon=" fa-paperclip"
         /></span>
         <span
-          class="inline-flex h-[20px] w-[20px] items-center justify-center rounded-md text-xl text-[#9C9C9C]"
+          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
           ><font-awesome-icon icon="image"
         /></span>
         <span
-          class="inline-flex h-[20px] w-[20px] items-center justify-center rounded-md text-xl text-[#9C9C9C]"
+          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
           ><font-awesome-icon icon="face-smile"
         /></span>
         <span
-          class="ml-auto inline-flex h-[20px] w-[20px] flex-1 items-center justify-end rounded-md text-xl text-[#9C9C9C]"
+          class="ml-auto inline-flex h-[20px] w-[20px] flex-1 cursor-pointer items-center justify-end rounded-md text-xl text-[#9C9C9C]"
           ><font-awesome-icon icon="paper-plane"
         /></span>
       </div>

@@ -8,7 +8,7 @@
       v-if="poolInfoModal"
       :togglePoolInfoModal="closeModal"
     ></ModalsCustomerPoolInfo>
-    <div class="card">
+    <div class="card border">
       <DataTable
         :value="customers"
         v-model:selection="selectedProduct"
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { CustomerJobs } from "@/services/CustomerJobs";
 
 onMounted(() => {

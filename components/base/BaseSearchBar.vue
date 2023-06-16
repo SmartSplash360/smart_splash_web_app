@@ -4,7 +4,9 @@
     <InputText
       v-model="value"
       placeholder="Search"
-      :class="[size === 'lg' ? 'min-w-[300px] xl:min-w-[400px]' : 'min-w-full']"
+      :class="[
+        size === 'lg' ? 'min-w-[300px] xl:min-w-[400px]' : ' w-full min-w-full',
+      ]"
     />
   </span>
 </template>
