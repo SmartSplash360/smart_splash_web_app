@@ -53,18 +53,9 @@
 import userProfile from "@/assets/images/profile_user.jpg";
 import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
 
-// import { Essentials } from "@ckeditor/ckeditor5-essentials";
-// import { Link } from "@ckeditor/ckeditor5-link";
-// import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
-
 const editor = ClassicEditor;
-const editorData = ref();
-const editorConfig = reactive({
-  // plugins: [Essentials, Bold, Italic, Link, Paragraph],
-  // toolbar: {
-  //   items: ["bold", "italic", "link", "undo", "redo"],
-  // },
-});
+const editorData = ref("<p>Content of the editor.</p>");
+const editorConfig = reactive({});
 
 const value = ref("");
 </script>
