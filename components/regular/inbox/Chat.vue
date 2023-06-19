@@ -39,18 +39,32 @@
         >
       </p>
     </div>
-    <div class="flex w-full flex-col justify-center">
-      <div class="card justify-content-center flex">
-        <div class="card">
-          <Editor v-model="value" class="min-h-[345px] w-full" />
-        </div>
-      </div>
+    <div>
+      <ckeditor
+        :editor="editor"
+        v-model="editorData"
+        :config="editorConfig"
+      ></ckeditor>
     </div>
   </div>
 </template>
 
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
+import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
+
+// import { Essentials } from "@ckeditor/ckeditor5-essentials";
+// import { Link } from "@ckeditor/ckeditor5-link";
+// import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
+
+const editor = ClassicEditor;
+const editorData = ref();
+const editorConfig = reactive({
+  // plugins: [Essentials, Bold, Italic, Link, Paragraph],
+  // toolbar: {
+  //   items: ["bold", "italic", "link", "undo", "redo"],
+  // },
+});
 
 const value = ref("");
 </script>

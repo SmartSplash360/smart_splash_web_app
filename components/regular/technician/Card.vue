@@ -1,5 +1,7 @@
 <template>
-  <div class="card align-items-center justify-content-center flex">
+  <div
+    class="card align-items-center justify-content-center flex justify-center"
+  >
     <Card class="max-w-full">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2">
