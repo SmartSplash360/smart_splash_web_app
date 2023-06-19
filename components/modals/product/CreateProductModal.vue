@@ -24,9 +24,9 @@
             <label for="name"> Status* </label>
             <div class="card justify-content-center flex">
               <Dropdown
-                v-model="selectedCity"
+                v-model="selectedStatus"
                 :options="status"
-                optionLabel="name"
+                optionLabel="state"
                 placeholder="Select status"
                 class="md:w-14rem w-full"
               />
@@ -67,10 +67,10 @@ const props = defineProps({
   toggleAddProductModal: Function,
 });
 
-const selectedCity = ref();
+const selectedStatus = ref();
 const status = ref([
-  { name: "Available", code: "NY" },
-  { name: "Unavailable", code: "RM" },
+  { state: "available", code: "A" },
+  { state: "unavailable", code: "U" },
 ]);
 
 const description = ref("");

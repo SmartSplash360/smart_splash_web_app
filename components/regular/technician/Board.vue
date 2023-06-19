@@ -30,7 +30,7 @@ const statuses = ref([
   },
   {
     state: "Inactive",
-    code: "A",
+    code: "I",
   },
 ]);
 </script>

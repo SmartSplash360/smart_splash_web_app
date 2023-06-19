@@ -1,4 +1,6 @@
-<template>INBOX PAGE</template>
+<template>
+  <ContainerInboxList></ContainerInboxList>
+</template>
 
 <script setup>
 definePageMeta({
