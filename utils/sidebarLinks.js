@@ -26,8 +26,13 @@ export const sideBarLinks = [
     to: "/inbox",
   },
   {
-    icon: "inbox",
+    icon: "file-lines",
     name: "Reports",
     to: "/reports",
+  },
+  {
+    icon: "gear",
+    name: "Settings",
+    to: "/settings",
   },
 ];

@@ -16,6 +16,10 @@ import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Editor from "primevue/editor";
+import RadioButton from "primevue/radiobutton";
+import SelectButton from "primevue/selectbutton";
+import InputSwitch from "primevue/inputswitch";
+import Checkbox from "primevue/checkbox";
 
 import ToastService from "primevue/toastservice";
 
@@ -38,6 +42,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
   nuxtApp.vueApp.component("Editor", Editor);
+  nuxtApp.vueApp.component("RadioButton", RadioButton);
+  nuxtApp.vueApp.component("SelectButton", SelectButton);
+  nuxtApp.vueApp.component("InputSwitch", InputSwitch);
+  nuxtApp.vueApp.component("Checkbox", Checkbox);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
 });
