@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-col gap-10">
     <div class="card">
-      <div class="hidden w-full justify-end gap-5 sm:flex">
+      <div class="flex w-full justify-end gap-5">
         <BaseAddButton
           :btnText="' Alert'"
           @click="toggleAddAlertModal"
