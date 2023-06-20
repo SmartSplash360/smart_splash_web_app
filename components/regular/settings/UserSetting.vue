@@ -24,7 +24,7 @@
               <InputText
                 v-model="filters['global'].value"
                 placeholder="Search user"
-                class="w-[25rem]"
+                class="w-full sm:w-[25rem]"
               />
             </span>
           </div>

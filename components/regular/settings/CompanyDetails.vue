@@ -1,13 +1,17 @@
 <template>
-  <form class="flex flex-col gap-3">
-    <div class="flex items-center justify-between border-b py-5">
-      <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Company Profile</h2>
+  <form class="flex flex-col sm:gap-3">
+    <div
+      class="flex flex-col justify-between gap-8 border-b py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4">
+        <h2 class="min-w-max text-[22px] font-[500]">Company Profile</h2>
         <span class="text-sm font-[400] leading-normal"
           >Update your company logo and details here</span
         >
       </div>
-      <div class="flex flex-col justify-end gap-5 sm:flex-row">
+      <div
+        class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
+      >
         <Button
           label="Cancel"
           severity="secondary"
@@ -17,22 +21,26 @@
         <Button label="Save changes" class="!bg-[#0291BF]" />
       </div>
     </div>
-    <div class="flex items-center gap-20 border-b py-10">
-      <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Company Logo</h2>
+    <div
+      class="flex flex-col gap-10 border-b py-5 sm:flex-row sm:items-center sm:gap-20 sm:py-10"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4">
+        <h2 class="min-w-max text-[22px] font-[500]">Company Logo</h2>
         <span class="text-sm font-[400] leading-normal"
           >Update company logo
         </span>
       </div>
-      <div class="flex flex-1 items-center gap-14 px-64">
-        <div class="max-h-[120px] lg:max-w-[225px]">
+      <div
+        class="flex flex-col gap-5 sm:flex-1 sm:flex-row sm:items-center lg:gap-14"
+      >
+        <div class="max-h-[120px] max-w-[225px]">
           <img
             :src="SmartPlashLogo"
             alt="Smart-Splash-Logo"
             class="h-full w-full"
           />
         </div>
-        <div class="card">
+        <div class="card min-w-[330px]">
           <Toast />
           <FileUpload
             name="demo[]"
@@ -151,7 +159,7 @@
               </div>
             </template>
             <template #empty>
-              <div class="flex items-center gap-2">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <span class="underline">Click to upload </span>
                 <p>or drag and drop SVG, PNG or JPG</p>
               </div>
@@ -160,14 +168,16 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-64 border-b py-10">
-      <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Company Name</h2>
+    <div
+      class="flex flex-col gap-10 border-b py-10 sm:flex-row sm:items-center sm:gap-64"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4">
+        <h2 class="min-w-max text-[22px] font-[500]">Company Name</h2>
         <span class="text-sm font-[400] leading-normal"
           >Update company name
         </span>
       </div>
-      <div class="card justify-content-center flex w-[40rem]">
+      <div class="card justify-content-center flex sm:w-[40rem]">
         <InputText
           type="text"
           class="w-full"
@@ -175,15 +185,19 @@
         ></InputText>
       </div>
     </div>
-    <div class="flex items-center gap-64 border-b py-14">
+    <div
+      class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
+    >
       <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Company Address</h2>
+        <h2 class="min-w-max text-[22px] font-[500]">Company Address</h2>
         <span class="text-sm font-[400] leading-normal"
           >Update company address
         </span>
       </div>
-      <div class="flex w-1/2 items-center justify-between gap-5">
-        <div class="card justify-content-center">
+      <div
+        class="flex w-full flex-col items-center justify-between gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
+      >
+        <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
             <Dropdown
               v-model="selectedCity"
@@ -223,7 +237,7 @@
             <label for="dd-city" class="text-md">Select City</label>
           </div>
         </div>
-        <div class="card justify-content-center">
+        <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
             <Dropdown
               v-model="selectedState"
@@ -264,7 +278,7 @@
             <label for="dd-city" class="text-md">Select State</label>
           </div>
         </div>
-        <div class="card justify-content-center">
+        <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
