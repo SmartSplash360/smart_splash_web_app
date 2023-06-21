@@ -31,6 +31,11 @@ export const sideBarLinks = [
     to: "/reports",
   },
   {
+    icon: "calendar-days",
+    name: "Calendar",
+    to: "/calendar",
+  },
+  {
     icon: "gear",
     name: "Settings",
     to: "/settings",
