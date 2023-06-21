@@ -12,26 +12,44 @@
         />
       </div>
     </div>
-    <div class="grid grid-cols-4 items-center justify-between">
-      <div class="flex flex-col justify-center gap-3 border-r p-5">
-        <h4 class="text-md font-medium leading-7">Average Start time</h4>
-        <h2 class="text-[20px] font-[600] leading-9 text-[#015D7B]">
+    <div
+      class="grid grid-cols-2 justify-between sm:grid-cols-4 sm:items-center"
+    >
+      <div
+        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5"
+      >
+        <h4 class="sm:text-md text-[16px] font-medium leading-7">
+          Average Start time
+        </h4>
+        <h2 class="text-md font-[600] leading-9 text-[#015D7B] sm:text-[20px]">
           12:50 pm
         </h2>
       </div>
-      <div class="flex flex-col justify-center gap-3 border-r p-5">
-        <h4 class="text-md font-medium leading-7">Average Finish time</h4>
-        <h2 class="text-[20px] font-[600] leading-9 text-[#015D7B]">6:01 pm</h2>
+      <div
+        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5"
+      >
+        <h4 class="sm:text-md text-[16px] font-medium leading-7">
+          Average Finish time
+        </h4>
+        <h2 class="text-md font-[600] leading-9 text-[#015D7B] sm:text-[20px]">
+          6:01 pm
+        </h2>
       </div>
-      <div class="flex flex-col justify-center gap-3 border-r p-5">
-        <h4 class="text-md font-medium leading-7">Average time on site</h4>
-        <h2 class="text-[20px] font-[600] leading-9 text-[#015D7B]">40m 8s</h2>
+      <div class="flex flex-col justify-center gap-3 border-r px-3 sm:p-5">
+        <h4 class="sm:text-md text-[16px] font-medium leading-7">
+          Average time on site
+        </h4>
+        <h2 class="text-md font-[600] leading-9 text-[#015D7B] sm:text-[20px]">
+          40m 8s
+        </h2>
       </div>
-      <div class="flex flex-col justify-center gap-3 p-5">
-        <h4 class="text-md font-medium leading-7">
+      <div class="flex flex-col justify-center gap-3 px-3 sm:p-5">
+        <h4 class="sm:text-md text-[16px] font-medium leading-7">
           Average chem cost per pool
         </h4>
-        <h2 class="text-[20px] font-[600] leading-9 text-[#015D7B]">$2.96</h2>
+        <h2 class="text-md font-[600] leading-9 text-[#015D7B] sm:text-[20px]">
+          $2.96
+        </h2>
       </div>
     </div>
   </div>

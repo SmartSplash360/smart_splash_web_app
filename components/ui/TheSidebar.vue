@@ -1,6 +1,6 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col gap-64 px-6 pb-20 lg:flex"
+    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20"
   >
     <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
       <img
@@ -9,7 +9,7 @@
         class="h-full w-full"
       />
     </div>
-    <div class="">
+    <div class="flex-1">
       <ul class="flex flex-col gap-10 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link
