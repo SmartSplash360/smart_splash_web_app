@@ -17,6 +17,8 @@ import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Editor from "primevue/editor";
 import Chart from "primevue/chart";
+import Accordion from "primevue/accordion";
+import AccordionTab from "primevue/accordiontab";
 
 import ToastService from "primevue/toastservice";
 
@@ -40,6 +42,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
   nuxtApp.vueApp.component("Editor", Editor);
   nuxtApp.vueApp.component("Chart", Chart);
+  nuxtApp.vueApp.component("Accordion", Accordion);
+  nuxtApp.vueApp.component("AccordionTab", AccordionTab);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
 });

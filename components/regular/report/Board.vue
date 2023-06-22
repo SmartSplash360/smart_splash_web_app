@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <div class="flex gap-5 rounded-xl">
+    <div class="hidden gap-5 rounded-xl lg:flex">
       <div
         class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
       >
@@ -41,26 +41,42 @@
         >
       </div>
     </div>
-    <div class="flex rounded-lg border">
-      <div class="flex-1 border-r">
-        <div class="flex flex-col items-start gap-4 p-5">
-          <p class="text-md font-[500] leading-7">Active Customer</p>
-          <span class="text-[20px] font-[600] text-[#015D7B]">156</span>
+    <div
+      class="flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border"
+    >
+      <div class="lg:flex-1 lg:border-r">
+        <div
+          class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
+        >
+          <p class="sm:text-md text-sm font-[500] leading-7">Active Customer</p>
+          <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
+            >156</span
+          >
         </div>
       </div>
-      <div class="flex-1 border-r">
-        <div class="flex flex-col items-start gap-4 p-5">
-          <p class="text-md font-[500] leading-7">Prpoerties Serviced</p>
-          <span class="text-[20px] font-[600] text-[#015D7B]">178</span>
+      <div class="lg:flex-1 lg:border-r">
+        <div
+          class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
+        >
+          <p class="sm:text-md text-sm font-[500] leading-7">
+            Prpoerties Serviced
+          </p>
+          <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
+            >178</span
+          >
         </div>
       </div>
-      <div class="flex-1 border-r">
-        <div class="flex flex-col items-start gap-4 p-5">
-          <p class="text-md font-[500] leading-7">Jobs Completed</p>
-          <span class="text-[20px] font-[600] text-[#015D7B]">754</span>
+      <div class="lg:flex-1 lg:border-r">
+        <div
+          class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
+        >
+          <p class="sm:text-md text-sm font-[500] leading-7">Jobs Completed</p>
+          <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
+            >754</span
+          >
         </div>
       </div>
-      <div class="flex flex-1 items-center justify-center">
+      <div class="hidden items-center justify-center lg:flex lg:flex-1">
         <Dropdown
           v-model="days"
           :options="numberOfDays"

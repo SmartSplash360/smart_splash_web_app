@@ -69,7 +69,6 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const reports = ref();
-const addCustomerModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
 </script>
