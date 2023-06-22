@@ -16,6 +16,7 @@ import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Editor from "primevue/editor";
+import Chart from "primevue/chart";
 
 import ToastService from "primevue/toastservice";
 
@@ -38,6 +39,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
   nuxtApp.vueApp.component("Editor", Editor);
+  nuxtApp.vueApp.component("Chart", Chart);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
 });

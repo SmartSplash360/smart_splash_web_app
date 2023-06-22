@@ -19,7 +19,7 @@
         dataKey="id"
         paginator
         :rows="8"
-        tableStyle="min-width: 50rem; min-height : 25rem; margin-top : 2.5rem"
+        tableStyle="min-width: 50rem; min-height : 25rem;"
         :loading="loading"
         :globalFilterFields="['customer', 'representative.name']"
       >
