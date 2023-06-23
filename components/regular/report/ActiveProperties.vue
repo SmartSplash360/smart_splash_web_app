@@ -51,17 +51,17 @@ const setChartData = () => {
   const documentStyle = getComputedStyle(document.body);
 
   return {
-    labels: ["A", "B", "C"],
+    labels: ["Profitable 6", "Low profit 4", "Losing Money 2"],
     datasets: [
       {
-        data: [540, 325, 702],
+        data: [140, 325, 702],
         backgroundColor: [
-          documentStyle.getPropertyValue("--blue-500"),
+          documentStyle.getPropertyValue("--red-500"),
           documentStyle.getPropertyValue("--yellow-500"),
           documentStyle.getPropertyValue("--green-500"),
         ],
         hoverBackgroundColor: [
-          documentStyle.getPropertyValue("--blue-400"),
+          documentStyle.getPropertyValue("--red-400"),
           documentStyle.getPropertyValue("--yellow-400"),
           documentStyle.getPropertyValue("--green-400"),
         ],

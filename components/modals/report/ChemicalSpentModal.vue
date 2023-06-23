@@ -1,47 +1,44 @@
 <template>
   <div
-    class="flex justify-center lg:fixed lg:bottom-0 lg:left-0 lg:right-0 lg:top-0 lg:z-[1200] lg:bg-[#000000da] lg:py-20"
+    @click="toggleChemCostModal"
+    class="flex justify-center lg:fixed lg:bottom-0 lg:left-0 lg:right-0 lg:top-0 lg:z-[1200] lg:justify-normal lg:bg-[#000000aa] lg:py-20"
   >
-    <div class="flex w-full gap-2 sm:gap-5 lg:min-h-[500px] lg:rounded-md">
-      <form
-        class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:h-[268px] lg:min-w-[437px] lg:gap-8"
-      >
-        <div class="flex items-center justify-between">
-          <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
-            Invoices
-          </h3>
-          <div class="card justify-content-center flex">
-            <Dropdown
-              v-model="days"
-              :options="numberOfDays"
-              optionLabel="name"
-              placeholder="90 days"
-              class="min-w-42"
-            />
-          </div>
-        </div>
+    <form
+      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[51rem] lg:mt-28 lg:max-h-[570px] lg:min-w-[487px] lg:gap-5"
+    >
+      <div class="flex items-center justify-between">
+        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+          Chemical Spent
+        </h3>
         <div class="card justify-content-center flex">
-          <Chart
-            type="pie"
-            :data="chartData"
-            :options="chartOptions"
-            class="md:w-30rem w-full"
+          <Dropdown
+            v-model="days"
+            :options="numberOfDays"
+            optionLabel="name"
+            placeholder="90 days"
+            class="min-w-4"
           />
         </div>
-      </form>
-      <div
-        @click="toggleAddAlertModal"
-        class="hidden h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8 lg:flex"
-      >
-        x
       </div>
-    </div>
+      <div class="card justify-content-center flex">
+        <Chart
+          type="pie"
+          :data="chartData"
+          :options="chartOptions"
+          class="md:w-30rem w-full"
+        />
+      </div>
+      <h3>
+        <span>Total = </span>
+        <span class="ml-2 font-[700] text-[#015D7B]">$4,669.85</span>
+      </h3>
+    </form>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
-  toggleAddAlertModal: Function,
+  toggleChemCostModal: Function,
 });
 
 const days = ref();
@@ -81,14 +78,14 @@ const setChartData = () => {
           documentStyle.getPropertyValue("--yellow-500"),
           documentStyle.getPropertyValue("--green-500"),
           documentStyle.getPropertyValue("--red-500"),
-          documentStyle.getPropertyValue("--grey-500"),
+          documentStyle.getPropertyValue("--purple-500"),
         ],
         hoverBackgroundColor: [
           documentStyle.getPropertyValue("--blue-400"),
           documentStyle.getPropertyValue("--yellow-400"),
           documentStyle.getPropertyValue("--green-400"),
           documentStyle.getPropertyValue("--red-400"),
-          documentStyle.getPropertyValue("--grey-400"),
+          documentStyle.getPropertyValue("--purple-400"),
         ],
       },
     ],

@@ -1,77 +1,70 @@
 <template>
   <div
-    class="flex justify-center lg:fixed lg:bottom-0 lg:left-0 lg:right-0 lg:top-0 lg:z-[1200] lg:bg-[#000000da] lg:py-20"
+    @click="toggleJobModal"
+    class="flex justify-center lg:fixed lg:bottom-0 lg:left-0 lg:right-0 lg:top-0 lg:z-[1200] lg:justify-normal lg:bg-[#000000aa] lg:py-20"
   >
-    <div class="flex w-full gap-2 sm:gap-5 lg:min-h-[500px] lg:rounded-md">
-      <form
-        class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:h-[268px] lg:min-w-[437px] lg:gap-8"
-      >
-        <div class="flex items-center justify-between">
-          <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
-            Job
-          </h3>
-          <div class="card justify-content-center flex">
-            <Dropdown
-              v-model="days"
-              :options="numberOfDays"
-              optionLabel="name"
-              placeholder="90 days"
-              class="min-w-42"
-            />
-          </div>
+    <form
+      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-80 lg:mt-28 lg:h-[268px] lg:min-w-[437px] lg:gap-5"
+    >
+      <div class="flex items-center justify-between">
+        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+          Jobs
+        </h3>
+        <div class="card justify-content-center flex">
+          <Dropdown
+            v-model="days"
+            :options="numberOfDays"
+            optionLabel="name"
+            placeholder="90 days"
+            class="min-w-42"
+          />
         </div>
-        <div class="card">
-          <Chart type="bar" :data="chartData" :options="chartOptions" />
-        </div>
-      </form>
-      <div
-        @click="toggleAddAlertModal"
-        class="hidden h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8 lg:flex"
-      >
-        x
       </div>
-    </div>
+      <div class="card hidden lg:block">
+        <Chart
+          type="bar"
+          :data="chartData"
+          :options="chartOptions"
+          class="h-30rem"
+        />
+      </div>
+      <div class="card lg:hidden">
+        <Chart
+          type="bar"
+          :data="chartDataMobile"
+          :options="chartOptionsMobile"
+        />
+      </div>
+    </form>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
-  toggleAddAlertModal: Function,
+  toggleJobModal: Function,
 });
 
 const days = ref();
-import { ref } from "vue";
 
-const chartData = ref({
+const chartDataMobile = ref({
   labels: ["Not started 10", "Progress 0", "Completed 78"],
   datasets: [
     {
-      label: "Sales",
-      data: [540, 325, 702, 620],
-      backgroundColor: [
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-      ],
-      borderColor: [
-        "rgb(255, 159, 64)",
-        "rgb(75, 192, 192)",
-        "rgb(54, 162, 235)",
-        "rgb(153, 102, 255)",
-      ],
+      label: "",
+      data: [325, 702, 620],
+      backgroundColor: ["#eba29d", "#e4cd7c", "#60c36a"],
+      borderColor: ["#D4382E", "#D4AF2E", "#009F10"],
       borderWidth: 1,
     },
   ],
 });
-const chartOptions = ref({
+const chartOptionsMobile = ref({
   scales: {
     y: {
       beginAtZero: true,
     },
   },
 });
-
 const numberOfDays = ref([
   {
     name: "90 days",
@@ -86,4 +79,73 @@ const numberOfDays = ref([
     option: 30,
   },
 ]);
+
+onMounted(() => {
+  chartData.value = setChartData();
+  chartOptions.value = setChartOptions();
+});
+
+const chartData = ref();
+const chartOptions = ref();
+
+const setChartData = () => {
+  const documentStyle = getComputedStyle(document.documentElement);
+
+  return {
+    labels: ["Not started", "Progress", "Completed"],
+    datasets: [
+      {
+        label: "",
+        backgroundColor: documentStyle.getPropertyValue("--green-500"),
+        backgroundColor: documentStyle.getPropertyValue("--green-500"),
+        backgroundColor: documentStyle.getPropertyValue("--green-500"),
+        data: [35, 20, 50],
+      },
+    ],
+  };
+};
+const setChartOptions = () => {
+  const documentStyle = getComputedStyle(document.documentElement);
+  const textColor = documentStyle.getPropertyValue("--text-color");
+  const textColorSecondary = documentStyle.getPropertyValue(
+    "--text-color-secondary"
+  );
+  const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
+
+  return {
+    indexAxis: "y",
+    maintainAspectRatio: false,
+    aspectRatio: 0.8,
+    plugins: {
+      legend: {
+        labels: {
+          fontColor: textColor,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: textColorSecondary,
+          font: {
+            weight: 500,
+          },
+        },
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+      },
+      y: {
+        ticks: {
+          color: textColorSecondary,
+        },
+        grid: {
+          color: surfaceBorder,
+          drawBorder: false,
+        },
+      },
+    },
+  };
+};
 </script>

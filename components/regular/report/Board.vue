@@ -1,22 +1,32 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="relative flex flex-col gap-8">
     <div class="hidden gap-5 rounded-xl lg:flex">
       <div
+        @click="toggleJobModal"
         class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
       >
         <img :src="WorkCaseIcon" alt="work-case-icon" />
 
         <span class="text-center text-[18px] font-light leading-8">Jobs</span>
       </div>
-      <ModalsReportJobModal v-if="toggleJobModal"></ModalsReportJobModal>
+      <ModalsReportJobModal
+        v-if="jobModal"
+        :toggleJobModal="toggleJobModal"
+      ></ModalsReportJobModal>
 
       <div
+        @click="toggleQuoteModal"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="text-center text-[18px] font-light leading-8">Quotes</span>
       </div>
+      <ModalsReportQuotesModal
+        v-if="quoteModal"
+        :toggleQuoteModal="toggleQuoteModal"
+      ></ModalsReportQuotesModal>
       <div
+        @click="toggleInvoiceModal"
         class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
       >
         <img :src="InvoiceIcon" alt="invoice-icon" />
@@ -24,7 +34,12 @@
           >Invoices</span
         >
       </div>
+      <ModalsReportInvoicesModal
+        v-if="invoiceModal"
+        :toggleInvoiceModal="toggleInvoiceModal"
+      ></ModalsReportInvoicesModal>
       <div
+        @click="toggleChemCostModal"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] sm:px-6"
       >
         <img :src="ChemicalIcon" alt="chemical-tank-icon" />
@@ -32,6 +47,10 @@
           >Chemical Cost</span
         >
       </div>
+      <ModalsReportChemicalSpentModal
+        v-if="chemCostModal"
+        :toggleChemCostModal="toggleChemCostModal"
+      ></ModalsReportChemicalSpentModal>
       <div
         class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
       >
@@ -113,7 +132,17 @@ const numberOfDays = ref([
   },
 ]);
 
-const toggleJobModal = ref(false);
+const jobModal = ref(false);
+const toggleJobModal = () => (jobModal.value = !jobModal.value);
+
+const quoteModal = ref();
+const toggleQuoteModal = () => (quoteModal.value = !quoteModal.value);
+
+const invoiceModal = ref();
+const toggleInvoiceModal = () => (invoiceModal.value = !invoiceModal.value);
+
+const chemCostModal = ref();
+const toggleChemCostModal = () => (chemCostModal.value = !chemCostModal.value);
 </script>
 
 <style lang="scss" scoped></style>

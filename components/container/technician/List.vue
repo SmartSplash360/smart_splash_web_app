@@ -7,7 +7,9 @@
       v-if="addTechnicianModal"
       :toggleAddTechnicianModal="closeModal"
     ></ModalsTechnicianCreateTechnician>
-    <div class="card-container grid items-center justify-between gap-10">
+    <div
+      class="card-container grid items-center justify-between gap-x-5 gap-y-10"
+    >
       <RegularTechnicianCard></RegularTechnicianCard>
       <RegularTechnicianCard></RegularTechnicianCard>
       <RegularTechnicianCard></RegularTechnicianCard>

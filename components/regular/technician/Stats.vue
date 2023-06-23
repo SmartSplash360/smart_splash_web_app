@@ -8,7 +8,7 @@
           :options="numberOfDays"
           optionLabel="name"
           placeholder="Days"
-          class="md:w-14rem !bg-[#0291C2] !text-white"
+          class="w-40"
         />
       </div>
     </div>
