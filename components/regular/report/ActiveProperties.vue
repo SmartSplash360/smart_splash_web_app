@@ -8,7 +8,7 @@
         type="pie"
         :data="chartData"
         :options="chartOptions"
-        class="md:w-30rem w-full"
+        class="min-w-24"
       />
     </div>
     <div class="flex w-full flex-col items-center gap-5 sm:my-10 sm:w-4/5">

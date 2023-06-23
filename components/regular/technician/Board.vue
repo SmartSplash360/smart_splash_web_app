@@ -17,6 +17,7 @@
     <BaseAddButton
       :btnText="'Technician'"
       @click="$emit('open-modal')"
+      class="hover:shadow-xl"
     ></BaseAddButton>
   </div>
 </template>

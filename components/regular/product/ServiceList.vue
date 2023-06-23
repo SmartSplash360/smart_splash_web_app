@@ -4,6 +4,7 @@
       <BaseAddButton
         :btnText="' Service'"
         @click="toggleAddServiceModal"
+        class="hover:shadow-xl"
       ></BaseAddButton>
       <ModalsProductCreateServiceModal
         v-if="addServiceModal"

@@ -4,6 +4,7 @@
       <BaseAddButton
         :btnText="' Product'"
         @click="toggleAddProductModal"
+        class="hover:shadow-xl"
       ></BaseAddButton>
       <ModalsProductCreateProductModal
         v-if="addProductModal"

@@ -43,7 +43,7 @@
             label="+"
             severity="secondary"
             outlined
-            class="!bg-[#0291BF] !text-white"
+            class="!bg-[#0291BF] !text-white hover:shadow-xl"
           />
         </div>
         <div class="flex items-center justify-between gap-5">

@@ -35,8 +35,13 @@
             severity="secondary"
             outlined
             @click="toggleAddTechnicianModal"
+            class="hover:shadow-xl"
           />
-          <Button label="Submit" icon="pi pi-check" class="!bg-[#0291BF]" />
+          <Button
+            label="Submit"
+            icon="pi pi-check"
+            class="!bg-[#0291BF] hover:shadow-xl"
+          />
         </div>
       </form>
       <div

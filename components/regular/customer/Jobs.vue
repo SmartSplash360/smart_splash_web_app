@@ -3,6 +3,7 @@
     <BaseAddButton
       :btnText="' View Pool'"
       @click="togglePoolInfoModal"
+      class="hover:shadow-xl"
     ></BaseAddButton>
     <ModalsCustomerPoolInfo
       v-if="poolInfoModal"

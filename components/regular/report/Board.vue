@@ -3,11 +3,14 @@
     <div class="hidden gap-5 rounded-xl lg:flex">
       <div
         @click="toggleJobModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
+        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
       >
         <img :src="WorkCaseIcon" alt="work-case-icon" />
 
-        <span class="text-center text-[18px] font-light leading-8">Jobs</span>
+        <span
+          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
+          >Jobs</span
+        >
       </div>
       <ModalsReportJobModal
         v-if="jobModal"
@@ -16,10 +19,13 @@
 
       <div
         @click="toggleQuoteModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] sm:px-6"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="text-center text-[18px] font-light leading-8">Quotes</span>
+        <span
+          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
+          >Quotes</span
+        >
       </div>
       <ModalsReportQuotesModal
         v-if="quoteModal"
@@ -27,10 +33,11 @@
       ></ModalsReportQuotesModal>
       <div
         @click="toggleInvoiceModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
+        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
       >
         <img :src="InvoiceIcon" alt="invoice-icon" />
-        <span class="text-center text-[18px] font-light leading-8"
+        <span
+          class="lg:text-md min-w-max text-center font-light leading-8 sm:text-sm xl:text-[18px]"
           >Invoices</span
         >
       </div>
@@ -40,10 +47,11 @@
       ></ModalsReportInvoicesModal>
       <div
         @click="toggleChemCostModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] sm:px-6"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6"
       >
         <img :src="ChemicalIcon" alt="chemical-tank-icon" />
-        <span class="text-center text-[18px] font-light leading-8"
+        <span
+          class="lg:text-md min-w-max text-center font-light leading-8 sm:text-sm xl:text-[18px]"
           >Chemical Cost</span
         >
       </div>
@@ -52,10 +60,11 @@
         :toggleChemCostModal="toggleChemCostModal"
       ></ModalsReportChemicalSpentModal>
       <div
-        class="flex cursor-pointer items-center gap-3 rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-6"
+        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
       >
         <img :src="CardIcon" alt="card-icon" />
-        <span class="text-center text-[18px] font-light leading-8"
+        <span
+          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
           >Payments</span
         >
       </div>
@@ -101,7 +110,7 @@
           :options="numberOfDays"
           optionLabel="name"
           placeholder="90 days"
-          class="w-[12rem]"
+          class="xl:w-[12rem]"
         />
       </div>
     </div>

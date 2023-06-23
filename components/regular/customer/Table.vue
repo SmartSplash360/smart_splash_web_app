@@ -4,6 +4,7 @@
       <BaseAddButton
         :btnText="' Customer'"
         @click="toggleAddCustomerModal"
+        class="hover:shadow-xl"
       ></BaseAddButton>
       <ModalsCustomerCreateCustomerModal
         v-if="addCustomerModal"
@@ -71,6 +72,7 @@
       <BaseAddButton
         :btnText="' Customer'"
         @click="toggleAddCustomerModal"
+        class="hover:shadow-xl"
       ></BaseAddButton>
       <ModalsCustomerCreateCustomerModal
         v-if="addCustomerModal"
