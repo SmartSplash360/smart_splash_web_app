@@ -4,6 +4,7 @@
       <BaseAddButton
         :btnText="' Product'"
         @click="toggleAddProductModal"
+        class="hover:shadow-xl"
       ></BaseAddButton>
       <ModalsProductCreateProductModal
         v-if="addProductModal"
@@ -37,7 +38,14 @@
           header="Created Date"
           sortable
           class="w-[1%] lg:w-[20%]"
-        ></Column>
+        >
+          <template #body="slotProps">
+            <div class="flex items-center gap-5">
+              <img :src="BoxIcon" alt="box-icon" />
+              <span>{{ slotProps.data.created_at }}</span>
+            </div>
+          </template></Column
+        >
         <Column
           field="name"
           header="Name"
@@ -70,6 +78,8 @@
 import { onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { ProductService } from "@/services/ProductService";
+
+import BoxIcon from "@/assets/icons/box-icon.svg";
 
 onMounted(() => {
   ProductService.getProductsMini().then((data) => (products.value = data));

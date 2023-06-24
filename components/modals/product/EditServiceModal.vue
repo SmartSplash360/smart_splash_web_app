@@ -48,6 +48,7 @@
             severity="secondary"
             outlined
             @click="toggleAddServiceModal"
+            class="hover:shadow-xl"
           />
           <Button label="Edit" icon="pi pi-check" />
         </div>

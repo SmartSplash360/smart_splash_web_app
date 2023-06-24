@@ -1,8 +1,9 @@
 <template>
   <div
-    class="card align-items-center justify-content-center flex justify-center"
+    @click="viewTechnician"
+    class="card align-items-center justify-content-center flex cursor-pointer justify-center"
   >
-    <Card class="max-w-full">
+    <Card class="max-w-full hover:shadow-md">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2">
           <div class="relative flex items-center justify-between">
@@ -109,18 +110,9 @@ const showMenu = ref(false);
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;
 };
+
+const router = useRouter();
+const viewTechnician = () => {
+  router.push("/technicians/34");
+};
 </script>
-
-<style scoped>
-.p-tieredmenu .p-menuitem-active > .p-submenu-list {
-  background: red !important;
-}
-
-.p-tieredmenu
-  .p-menuitem
-  > .p-menuitem-content
-  .p-menuitem-link
-  .p-submenu-icon {
-  color: #fff !important;
-}
-</style>

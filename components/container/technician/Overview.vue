@@ -13,7 +13,7 @@
         <p class="sm:text-md text-sm leading-4">Cleaning Tech</p>
       </div>
       <div class="ml-auto flex flex-1 justify-end">
-        <Button label="View Reports" class="!bg-[#0291BF]" />
+        <Button label="View Reports" class="!bg-[#0291BF] hover:shadow-xl" />
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>

@@ -1,4 +1,6 @@
-<template>REPORTS</template>
+<template>
+  <ContainerReportList></ContainerReportList>
+</template>
 
 <script setup>
 definePageMeta({
