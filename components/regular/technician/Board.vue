@@ -3,18 +3,16 @@
     <div
       class="flex flex-col items-end gap-3 sm:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
     >
-      <h3
-        class="order-1 min-w-max text-[22px] font-[600] leading-7 sm:-order-1"
-      >
-        3 Technicians
+      <h3 class="order-1 min-w-max text-2xl font-[500] leading-7 sm:-order-1">
+        {{ technicianCount }} Technicians
       </h3>
-      <div class="card justify-content-center flex w-full sm:w-fit">
+      <div class="card flex w-full justify-center sm:w-fit">
         <Dropdown
           v-model="status"
           :options="statuses"
           optionLabel="state"
           placeholder="Status"
-          class="md:w-20rem w-full !text-white !outline-none"
+          class="w-full md:w-48"
         />
       </div>
     </div>
@@ -27,6 +25,9 @@
 </template>
 
 <script setup>
+defineProps({
+  technicianCount: Number,
+});
 const status = ref();
 const statuses = ref([
   {

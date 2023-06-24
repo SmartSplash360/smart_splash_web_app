@@ -1,14 +1,20 @@
 <template>
   <div
     @click="viewTechnician"
-    class="card align-items-center justify-content-center flex cursor-pointer justify-center"
+    class="card align-items-center justify-content-center flex w-full cursor-pointer justify-center"
   >
     <Card class="max-w-full hover:shadow-md">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2">
           <div class="relative flex items-center justify-between">
-            <span class="rounded-md px-5 py-2 text-xs text-[#02BF70] shadow-md"
-              >Active</span
+            <span
+              class="rounded-md px-5 py-2 text-xs shadow-md"
+              :class="[
+                status
+                  ? 'text-[#02BF70] shadow-md'
+                  : 'text-[#D4382E] shadow-md',
+              ]"
+              >{{ status ? "Active" : "Inactive" }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
               <img :src="AlignDotIcons" alt="align-dot-icon" />
@@ -46,8 +52,8 @@
               />
             </div>
             <div class="flex flex-col gap-2">
-              <h2 class="text-3xl font-[500] leading-9">Evan Kings</h2>
-              <p class="text-md leading-4">Cleaning Tech</p>
+              <h2 class="text-xl font-[500] leading-9">{{ name }}</h2>
+              <p class="text-md leading-4">{{ position }}</p>
               <div class="mt-4 flex justify-between">
                 <div class="flex items-center gap-3">
                   <img
@@ -55,7 +61,9 @@
                     alt="like-icon"
                     class="h-[24px] w-[24px]"
                   />
-                  <span class="text-sm font-semibold">64</span>
+                  <span class="text-sm font-semibold">{{
+                    appreciation.like
+                  }}</span>
                 </div>
                 <div class="flex items-center gap-3">
                   <img
@@ -63,7 +71,9 @@
                     alt="dislike-icon"
                     class="h-[24px] w-[24px]"
                   />
-                  <span class="text-sm font-semibold">10</span>
+                  <span class="text-sm font-semibold">{{
+                    appreciation.dislike
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -81,13 +91,13 @@
             <span class="flex h-[20px] w-[20px] place-items-center"
               ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
             /></span>
-            <span class="text-xs xl:text-[16px]">evan@tmail.com</span>
+            <span class="text-xs xl:text-[16px]">{{ email }}</span>
           </div>
           <div class="flex items-center gap-3 pt-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
               ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
             /></span>
-            <span class="text-xs xl:text-[16px]">407-717-1755</span>
+            <span class="text-xs xl:text-[16px]">{{ phone_number }}</span>
           </div>
         </div></template
       >
@@ -104,6 +114,13 @@ import PhoneIcon from "@/assets/icons/phone-icon.svg";
 import BarsIcon from "@/assets/icons/bars-icon.svg";
 import TrashIcon from "@/assets/icons/trash-icon.svg";
 import AlignDotIcons from "@/assets/icons/align-dot-icon.svg";
+
+const props = defineProps({
+  technician: Object,
+});
+
+const { id, name, status, appreciation, email, phone_number, position } =
+  props.technician;
 
 const showMenu = ref(false);
 
