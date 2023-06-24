@@ -1,8 +1,11 @@
 <template>
   <div
-    v-on="isLead && { click: toggleCustomerView }"
-    class="flex w-full cursor-pointer items-center rounded-xl p-2 sm:justify-between"
-    :class="[bg === 'primary' ? 'bg-[#0291BF]' : 'bg-[#E9E9E9]']"
+    v-on="isLead ? { click: toggleCustomerView } : {}"
+    class="flex w-full cursor-pointer items-center rounded-xl p-2 sm:justify-between xl:p-4"
+    :class="[
+      bg === 'primary' ? 'bg-[#0291BF]' : 'bg-[#E9E9E9]',
+      isLead && 'hover:shadow-lg',
+    ]"
   >
     <span class="h-[35px] w-[35px]">
       <img :src="icon" :alt="alt" class="h-full w-full" />

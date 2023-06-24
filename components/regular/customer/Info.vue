@@ -1,87 +1,95 @@
 <template>
   <div
-    class="flex flex-col justify-between gap-10 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:max-h-[110px] sm:flex-row sm:items-center"
+    class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-nowrap lg:gap-5"
   >
-    <div class="flex gap-5 sm:w-1/4">
-      <div class="flex items-center justify-between gap-3">
-        <div class="h-[50px] w-[50px] rounded-full">
-          <img
-            :src="userProfile"
-            alt="user-profile"
-            class="h-full w-full rounded-full"
-          />
-        </div>
-        <div class="flex flex-col gap-2">
-          <h3 class="min-w-max text-xs font-[400] leading-6 xl:text-sm">
+    <div class="flex gap-5 lg:w-1/5">
+      <div
+        class="flex w-full flex-col items-center justify-between gap-5 lg:justify-start xl:flex-row"
+      >
+        <img
+          :src="userProfile"
+          alt="user-profile"
+          class="h-48 w-48 items-center rounded-full lg:h-[60px] lg:w-[60px] xl:h-28 xl:w-28"
+        />
+        <div class="flex flex-col gap-1">
+          <h3 class="hidden text-sm font-[400] leading-6 xl:flex">
             CUSTOMER INFO:
           </h3>
-          <h4 class="flex items-center gap-3">
-            <span class="text-sm font-[400] leading-8 xl:text-[18px]"
-              >A.J Beson</span
-            >
-            <img :src="ChatIcon" alt="chat-icon" class="h-[25px] w-[25px]" />
-          </h4>
-        </div>
-      </div>
-      <div class="flex flex-col sm:hidden">
-        <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
-          <span class="flex h-[20px] w-[20px] place-items-center"
-            ><Avatar
-              v-badge.danger="4"
-              class="p-overlay-badge"
-              :image="EmailIcon"
-              size="medium"
-          /></span>
-          <span class="text-xs xl:text-[16px]">aj@beson4.com</span>
-        </div>
-        <div class="flex items-center gap-3 pt-2 xl:gap-5">
-          <span class="flex h-[20px] w-[20px] place-items-center"
-            ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
-          /></span>
-          <span class="text-xs xl:text-[16px]">9042349945</span>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-[400] leading-7">{{
+              customerInfo.name
+            }}</span>
+            <img
+              :src="ChatIcon"
+              alt="chat-icon"
+              class="h-4 w-4 cursor-pointer lg:h-[25px] lg:w-[25px]"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div class="hidden flex-col sm:flex sm:w-1/6">
-      <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
+    <div class="flex flex-col gap-5 md:gap-3 lg:w-1/5">
+      <div class="flex items-center gap-3">
         <span class="flex h-[25px] w-[25px] place-items-center"
           ><Avatar
-            v-badge.danger="4"
-            class="p-overlay-badge"
+            v-badge.danger="3"
+            class="p-overlay-badge h-4 w-4 lg:h-[25px] lg:w-[25px]"
             :image="EmailIcon"
             size="medium"
         /></span>
-        <span class="text-xs xl:text-[16px]">aj@beson4.com</span>
+        <span class="text-sm font-[400] leading-7">{{
+          customerInfo.email
+        }}</span>
       </div>
-      <div class="flex items-center gap-3 pt-2 xl:gap-5">
-        <span class="flex h-[20px] w-[20px] place-items-center"
-          ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
-        /></span>
-        <span class="text-xs xl:text-[16px]">9042349945</span>
+      <div class="flex items-center gap-3">
+        <img
+          :src="PhoneIcon"
+          alt="phone-icon"
+          class="h-5 w-5 lg:h-[20px] lg:w-[20px]"
+        />
+        <span class="min-w-max text-sm font-[400] leading-7">{{
+          customerInfo.phone_number
+        }}</span>
       </div>
     </div>
     <div
-      class="sm:min-w-1/5 flex max-h-[75px] min-h-[75px] items-start gap-2 overflow-hidden text-ellipsis sm:p-2 xl:gap-3"
+      class="flex items-start gap-1 overflow-hidden text-ellipsis md:hidden lg:w-1/5 xl:flex xl:h-[75px] xl:gap-3"
     >
-      <span class="inline-flex h-[25px] w-[25px] items-center"
-        ><img :src="LocationIcon" alt="location-icon" class="h-full w-full"
-      /></span>
-      <span class="text-xs font-[400] leading-4 xl:text-[16px] xl:leading-7">
-        24436 Harbour View Driver Pante Vedra Beach Florida 32082</span
+      <img
+        :src="LocationIcon"
+        alt="location-icon"
+        class="h-5 w-5 lg:h-[25px] lg:w-[25px]"
+      />
+      <span class="text-sm font-[400] leading-7">
+        {{ customerInfo.address }}</span
       >
     </div>
-    <div class="flex justify-between sm:w-1/5">
-      <span class="flex h-[45px] w-[45px] items-center justify-center">
-        <img :src="BuildingIcon" alt="building-icon" class="h-full w-full" />
-      </span>
-      <div class="flex w-1/2 items-center justify-between gap-10">
-        <span class="flex h-[35px] w-[35px] items-center justify-center">
-          <img :src="LockIcon" alt="locker-icon" class="h-full w-full"
-        /></span>
-        <span class="flex h-[35px] w-[35px] items-center justify-center">
-          <img :src="DogIcon" alt="dog-icon" class="h-full w-full"
-        /></span>
+    <div
+      class="lg:1/5 ml-auto flex w-full flex-row items-center justify-between md:flex-col md:justify-end md:gap-6 lg:flex-row xl:flex-1 xl:justify-between 2xl:pl-48"
+    >
+      <div class="relative flex flex-col items-center justify-center">
+        <img
+          :src="BuildingIcon"
+          alt="building-icon"
+          class="flex h-[45px] w-[45px] items-center justify-center"
+        />
+        <div
+          class="-mt-2 flex flex-col items-center justify-center gap-1 rounded-xl bg-white px-4 py-2"
+        >
+          <span class="min-w-max text-sm text-[#025E7C]">Gate code</span>
+          <span class="text-[8px]">F5JKJGF</span>
+        </div>
       </div>
+      <img
+        :src="LockIcon"
+        alt="locker-icon"
+        class="flex h-[35px] w-[35px] items-center justify-center"
+      />
+      <img
+        :src="DogIcon"
+        alt="dog-icon"
+        class="flex h-[35px] w-[35px] items-center justify-center"
+      />
     </div>
   </div>
 </template>
@@ -95,6 +103,10 @@ import LocationIcon from "@/assets/icons/location-icon.svg";
 import BuildingIcon from "@/assets/icons/building-icon.svg";
 import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
+
+defineProps({
+  customerInfo: Object,
+});
 </script>
 
 <style lang="scss" scoped></style>

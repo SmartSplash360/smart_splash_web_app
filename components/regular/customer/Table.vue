@@ -1,85 +1,76 @@
 <template>
-  <div class="hidden flex-col gap-10 sm:flex">
-    <div class="hidden w-full justify-end gap-5 sm:flex">
-      <BaseAddButton
-        :btnText="' Customer'"
-        @click="toggleAddCustomerModal"
-        class="hover:shadow-xl"
-      ></BaseAddButton>
-      <ModalsCustomerCreateCustomerModal
-        v-if="addCustomerModal"
-        :toggleAddCustomerModal="closeModal"
-      ></ModalsCustomerCreateCustomerModal>
-    </div>
-    <div class="card border">
-      <DataTable
-        v-model:selection="selectedProduct"
-        v-model:filters="filters"
-        :value="customers"
-        selectionMode="single"
-        dataKey="id"
-        paginator
-        :rows="8"
-        tableStyle="min-width: 50rem; min-height : 25rem;"
-        :loading="loading"
-        :globalFilterFields="['customer', 'representative.name']"
-      >
-        <template #header>
-          <div class="flex gap-5">
-            <div class="justify-content-end flex">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText placeholder="Keyword Search" />
-              </span>
-            </div>
-          </div>
-        </template>
-        <Column
-          field="id"
-          header="No"
-          sortable
-          class="w-[1%] lg:w-[20%]"
-        ></Column>
-        <Column
-          field="name"
-          header="Customer"
-          class="w-[5%] lg:w-[20%]"
-          sortable
-        ></Column>
-        <Column
-          field="address"
-          header="Address"
-          class="w-[5%] lg:w-[20%]"
-        ></Column>
-        <Column
-          field="phone_number"
-          header="Cell number"
-          class="w-[5%] lg:w-[20%]"
-        ></Column>
-        <Column
-          field="email"
-          header="Email address"
-          class="w-[5%] lg:w-[20%]"
-        ></Column>
-      </DataTable>
-    </div>
-  </div>
-  <div class="mobile flex flex-col gap-2 sm:hidden">
-    <div
-      class="-mt-12 flex w-full justify-between gap-5 rounded-xl bg-white px-3 pb-5 pt-10"
+  <div class="laptop+ card hidden border border-b-0 border-t-0 sm:block">
+    <DataTable
+      v-model:filters="filters"
+      :value="customers"
+      paginator
+      ref="dt"
+      v-model:selection="selectedProduct"
+      dataKey="id"
+      filterDisplay="row"
+      :loading="loading"
+      selectionMode="single"
+      sortMode="multiple"
+      :rows="8"
+      tableStyle="min-width: 50rem; min-height : 25rem;"
+      :globalFilterFields="['name', 'id']"
     >
-      <BaseSearchBar class="flex-1"></BaseSearchBar>
-      <BaseAddButton
-        :btnText="' Customer'"
-        @click="toggleAddCustomerModal"
-        class="hover:shadow-xl"
-      ></BaseAddButton>
-      <ModalsCustomerCreateCustomerModal
-        v-if="addCustomerModal"
-        :toggleAddCustomerModal="closeModal"
-      ></ModalsCustomerCreateCustomerModal>
-    </div>
-    <div class="card">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <div class="flex w-80 justify-start">
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-search" />
+              <InputText
+                v-model="filters['global'].value"
+                placeholder="Keyword Search"
+                class="w-full"
+              />
+            </span>
+          </div>
+          <div>
+            <Button
+              icon="pi pi-external-link"
+              label="Export"
+              @click="exportCSV($event)"
+              severity="success"
+            />
+          </div>
+        </div>
+      </template>
+      <template #empty> No customers found. </template>
+      <template #loading> Loading customers data. Please wait. </template>
+      <Column
+        field="id"
+        header="No"
+        exportHeader="Customer ID"
+        sortable
+        class="w-[1%] lg:w-[20%]"
+      ></Column>
+      <Column
+        field="name"
+        header="Customer"
+        class="w-[5%] lg:w-[20%]"
+        sortable
+      ></Column>
+      <Column
+        field="address"
+        header="Address"
+        class="w-[5%] lg:w-[20%]"
+      ></Column>
+      <Column
+        field="phone_number"
+        header="Cell number"
+        class="w-[5%] lg:w-[20%]"
+      ></Column>
+      <Column
+        field="email"
+        header="Email address"
+        class="w-[5%] lg:w-[20%]"
+      ></Column>
+    </DataTable>
+  </div>
+  <div class="mobile- flex flex-col gap-2 sm:hidden">
+    <div class="card border border-b-0 border-t-0">
       <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -89,48 +80,46 @@
         :loading="loading"
         :globalFilterFields="['customer', 'representative.name']"
       >
-        <Column
-          field="id"
-          header="No"
-          sortable
-          class="w-1/3 !p-1 text-xs"
-        ></Column>
-        <Column
-          field="name"
-          header="Customer"
-          class="w-1/3 text-xs"
-          sortable
-        ></Column>
-
-        <Column
-          field="representative.name"
-          header="Email"
-          class="w-1/3 text-xs"
-        ></Column>
+        <Column field="id" header="No" sortable></Column>
+        <Column field="name" header="Customer" sortable></Column>
+        <Column field="representative.name" header="Email"></Column>
       </DataTable>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { CustomerService } from "@/services/CustomerServices";
 
-onMounted(() => {
-  CustomerService.getCustomersMedium().then((data) => (customers.value = data));
-  loading.value = false;
-});
-
+const customers = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  representative: { value: null, matchMode: FilterMatchMode.IN },
 });
-const customers = ref();
-const addCustomerModal = ref(false);
+
 const loading = ref(true);
+
+onMounted(() => {
+  CustomerService.getCustomersMedium().then((data) => {
+    customers.value = getCustomers(data);
+    loading.value = false;
+  });
+});
+
+const getCustomers = (data) => {
+  return [...(data || [])].map((d) => {
+    d.date = new Date(d.date);
+
+    return d;
+  });
+};
+
 const selectedProduct = ref();
 
-const toggleAddCustomerModal = () => (addCustomerModal.value = true);
-
-const closeModal = () => (addCustomerModal.value = false);
+const dt = ref();
+const exportCSV = () => {
+  dt.value.exportCSV();
+};
 </script>
