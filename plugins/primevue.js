@@ -19,6 +19,11 @@ import Editor from "primevue/editor";
 import Chart from "primevue/chart";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
+import RadioButton from "primevue/radiobutton";
+import SelectButton from "primevue/selectbutton";
+import InputSwitch from "primevue/inputswitch";
+import Checkbox from "primevue/checkbox";
+
 
 import ToastService from "primevue/toastservice";
 
@@ -44,6 +49,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Chart", Chart);
   nuxtApp.vueApp.component("Accordion", Accordion);
   nuxtApp.vueApp.component("AccordionTab", AccordionTab);
+  nuxtApp.vueApp.component("RadioButton", RadioButton);
+  nuxtApp.vueApp.component("SelectButton", SelectButton);
+  nuxtApp.vueApp.component("InputSwitch", InputSwitch);
+  nuxtApp.vueApp.component("Checkbox", Checkbox);
+
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
 });

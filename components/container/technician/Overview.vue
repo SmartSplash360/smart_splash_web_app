@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-col gap-12">
-    <div class="flex items-center gap-5">
-      <div class="h-[120px] w-[120px] rounded-full">
+    <div class="flex items-center gap-2 sm:gap-5">
+      <div class="h-[60px] w-[60px] rounded-full sm:h-[120px] sm:w-[120px]">
         <Avatar
           :image="userProfile"
           class="mr-2 !h-full !w-full"
           shape="circle"
         />
       </div>
-      <div class="flex flex-col gap-2">
-        <h2 class="text-3xl font-[500] leading-9">Evan Kings</h2>
-        <p class="text-md leading-4">Cleaning Tech</p>
+      <div class="flex flex-col gap-1 sm:gap-2">
+        <h2 class="text-lg font-[500] sm:text-3xl">Evan Kings</h2>
+        <p class="sm:text-md text-sm leading-4">Cleaning Tech</p>
       </div>
       <div class="ml-auto flex flex-1 justify-end">
         <Button label="View Reports" class="!bg-[#0291BF] hover:shadow-xl" />
