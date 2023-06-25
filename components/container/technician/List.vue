@@ -8,9 +8,7 @@
       v-if="addTechnicianModal"
       :toggleAddTechnicianModal="closeModal"
     ></ModalsTechnicianCreateTechnician>
-    <div
-      class="card-container grid items-center justify-between gap-x-5 gap-y-10"
-    >
+    <div class="card-container grid items-center justify-between">
       <RegularTechnicianCard
         v-for="(technician, index) in technicians"
         :key="index"
@@ -50,5 +48,7 @@ const getTechnicians = (data) => {
 <style scoped>
 .card-container {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  row-gap: 50px;
+  column-gap: 50px;
 }
 </style>

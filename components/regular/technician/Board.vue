@@ -8,6 +8,7 @@
       </h3>
       <div class="card flex w-full justify-center sm:w-fit">
         <Dropdown
+          :change="selectStatus()"
           v-model="status"
           :options="statuses"
           optionLabel="state"
@@ -39,4 +40,8 @@ const statuses = ref([
     code: "I",
   },
 ]);
+
+const selectStatus = (event) => {
+  // console.log(event);
+};
 </script>

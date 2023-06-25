@@ -12,12 +12,23 @@
         :loading="loading"
         :globalFilterFields="['product', 'name']"
       >
-        <Column
-          field="id"
-          header="Alert"
-          sortable
-          class="w-[1%] lg:w-[20%]"
-        ></Column>
+        <Column field="alert" header="Alert" sortable class="w-[1%] lg:w-[20%]">
+          <template #body="slotProps">
+            <div class="flex items-center gap-5">
+              <img
+                :src="[
+                  slotProps.data.alert === 'PSI trending down'
+                    ? WaterMachineIcon
+                    : slotProps.data.alert === 'Chem cost high'
+                    ? ChemCostIcon
+                    : ClockIcon,
+                ]"
+                alt="alert-icon"
+              />
+              <span>{{ slotProps.data.alert }}</span>
+            </div>
+          </template></Column
+        >
         <Column
           field="name"
           header="Customer name"
@@ -25,17 +36,17 @@
           sortable
         ></Column>
         <Column
-          field="description"
+          field="address"
           header="Address"
           class="w-[5%] lg:w-[20%]"
         ></Column>
         <Column
-          field="status"
+          field="pool"
           header="Pool name"
           class="w-[5%] lg:w-[15%]"
         ></Column>
         <Column
-          field="price"
+          field="technician"
           header="Technician responsible"
           class="w-[5%] lg:w-[15%]"
         ></Column>
@@ -45,12 +56,14 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
-import { ProductService } from "@/services/ProductService";
+import { AlertServices } from "@/services/AlertServices";
+import WaterMachineIcon from "@/assets/icons/water-machine-icon.svg";
+import ChemCostIcon from "@/assets/icons/chem-cost-icon.svg";
+import ClockIcon from "@/assets/icons/clock-icon.svg";
 
 onMounted(() => {
-  ProductService.getProductsMini().then((data) => (services.value = data));
+  AlertServices.getAlertServicesSmall().then((data) => (services.value = data));
   loading.value = false;
 });
 

@@ -296,8 +296,8 @@
 
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-
 import { useToast } from "primevue/usetoast";
+
 const toast = useToast();
 
 const totalSize = ref(0);
@@ -305,6 +305,7 @@ const totalSizePercent = ref(0);
 const files = ref([]);
 
 const selectedCity = ref();
+const selectedState = ref();
 const cities = ref([
   { name: "Australia", code: "AU" },
   { name: "Brazil", code: "BR" },

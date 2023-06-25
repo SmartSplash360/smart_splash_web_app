@@ -13,6 +13,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://pbs.twimg.com/profile_images/1485050791488483328/UNJ05AV8_400x400.jpg",
         email: "lenajustice@austech.com",
         balance: 70663,
         position: "Cleaning Tech",
@@ -29,6 +31,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?s=612x612&w=0&k=20&c=QjebAlXBgee05B3rcLDAtOaMtmdLjtZ5Yg9IJoiy-VY=",
         email: "raemonroe@austech.com",
         balance: 82429,
         position: "Cleaning Tech",
@@ -45,6 +49,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://st4.depositphotos.com/3438085/28961/i/600/depositphotos_289618484-stock-photo-black-african-american-businesswoman-office.jpg",
         email: "valeriakoch@austech.com",
         balance: 28334,
         position: "Cleaning Tech",
@@ -61,6 +67,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.490.medium.jpg/1594668408164.jpg",
         email: "wellsherrera@austech.com",
         balance: 88521,
         position: "Cleaning Tech",
@@ -77,6 +85,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://www.vera.org/images/headshots/_800x800_crop_center-center_82_none/Melvin-Washington-V2_200309_203156.jpg?mtime=1646883304",
         email: "salazarsavage@austech.com",
         balance: 93905,
         position: "Cleaning Tech",
@@ -93,6 +103,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://cdn2.atlantamagazine.com/wp-content/uploads/sites/4/2020/06/m-washington-dentist-2020.jpg",
         email: "ivymercer@austech.com",
         balance: 50041,
         position: "Cleaning Tech",
@@ -109,6 +121,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://hips.hearstapps.com/hmg-prod/images/street-portrait-of-a-young-man-using-mobile-phone-royalty-free-image-1018047498-1564431457.jpg?crop=0.668xw:1.00xh;0.226xw,0&resize=1200:*",
         email: "clarewagner@austech.com",
         balance: 58706,
         position: "Cleaning Tech",
@@ -125,6 +139,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://imgv3.fotor.com/images/gallery/AI-3D-Female-Profile-Picture.jpg",
         email: "kaylafaulkner@austech.com",
         balance: 26640,
         position: "Cleaning Tech",
@@ -141,7 +157,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
-        email: "meyerpierce@austech.com",
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI_fS70krutwN7fPAAfk5KEJywcD_cvxM_w9F_5K6V0lvAf4zhRW5Xs22x038xPPA5wMc&usqp=CAU",
         balance: 65369,
         position: "Cleaning Tech",
       },
@@ -157,6 +174,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://thenation.co.za/wp-content/uploads/2020/11/makhadzisa_20201128_085237_0-820x1024.jpg",
         email: "jessiestein@austech.com",
         balance: 63451,
         position: "Cleaning Tech",
@@ -173,6 +192,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://nadiazheng.com/wp-content/uploads/2021/02/Montreal-linkedin-profile-professional-headshot-personal-branding-800x1000.jpg",
         email: "esteskemp@austech.com",
         balance: 71169,
         position: "Cleaning Tech",
@@ -189,6 +210,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://kylebondeson.com/wp-content/uploads/2023/06/Chicago-Headshots-4233.jpg",
         email: "tamikaholloway@austech.com",
         balance: 96842,
         position: "Cleaning Tech",
@@ -205,6 +228,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
         email: "lenoreglover@austech.com",
         balance: 92734,
         position: "Cleaning Tech",
@@ -221,6 +246,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://images.unsplash.com/photo-1573496358961-3c82861ab8f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
         email: "velasquezhatfield@austech.com",
         balance: 45250,
         position: "Cleaning Tech",
@@ -237,6 +264,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://images.squarespace-cdn.com/content/v1/51ef4493e4b0561c90fa76d6/1667315305235-RCUO3EX7WIENHM8CG9U1/20210601_SLP2805-edit.jpg",
         email: "farmergilmore@austech.com",
         balance: 30236,
         position: "Cleaning Tech",
@@ -253,6 +282,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://cdn.shopify.com/s/files/1/0155/8570/6084/products/20200907_3827_Walker_Headshot_2036.jpg?v=1681405175",
         email: "alishaowens@austech.com",
         balance: 64533,
         position: "Cleaning Tech",
@@ -269,6 +300,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://cdn.shopify.com/s/files/1/0155/8570/6084/products/20200907_3827_Walker_Headshot_2036.jpg?v=1681405175",
         email: "valentinedonaldson@austech.com",
         balance: 37279,
         position: "Cleaning Tech",
@@ -285,6 +318,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://jlondonimages.com/wp-content/uploads/sites/12421/2020/07/002_Charaun-Headshots-JLondon-Images_2020-scaled.jpg",
         email: "martineztorres@austech.com",
         balance: 27381,
         position: "Cleaning Tech",
@@ -301,6 +336,7 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image: "https://www.terrificshot.com/img/s/v-10/p3106848461-4.jpg",
         email: "wilmabentley@austech.com",
         balance: 9257,
         position: "Cleaning Tech",
@@ -317,6 +353,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://lh3.googleusercontent.com/HcUYQb4gfGdlRV8DoiXjupVQSx-IcQZJ5hBraDoLbnKqYqcms-kBEazEyVoxZwuBvwbgcwvrPbVthHqJTiCwssYsEFn0dHGUy0_Iw9a6RJByEA",
         email: "mcleankeller@austech.com",
         balance: 67783,
         position: "Cleaning Tech",
@@ -333,6 +371,8 @@ export const TechniciansList = {
           like: 45,
           dislike: 3,
         },
+        image:
+          "https://i.pinimg.com/236x/4c/5b/07/4c5b074331656f48e703ce5ad425546e.jpg",
         email: "lynnemcneil@austech.com",
         balance: 4609,
         position: "Cleaning Tech",

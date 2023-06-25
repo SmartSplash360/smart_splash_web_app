@@ -4,6 +4,7 @@
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]"
   >
     <form
+      @click.stop=""
       class="flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
     >
       <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
