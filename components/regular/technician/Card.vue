@@ -126,6 +126,6 @@ const toggleMenu = () => {
 
 const router = useRouter();
 const viewTechnician = () => {
-  router.push(`/technicians/${id}`);
+  // router.push(`/technicians/${id}`);
 };
 </script>

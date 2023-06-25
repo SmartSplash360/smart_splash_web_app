@@ -11,7 +11,7 @@
         :toggleAddProductModal="closeModal"
       ></ModalsProductCreateProductModal>
     </div>
-    <div class="card">
+    <div class="card border border-t-0">
       <DataTable
         v-model:selection="selectedProduct"
         v-model:filters="filters"
@@ -19,16 +19,20 @@
         selectionMode="single"
         dataKey="id"
         :rows="10"
-        tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
+        tableStyle="min-width: 50rem; min-height : 35rem;"
         :loading="loading"
-        :globalFilterFields="['product', 'name']"
+        :globalFilterFields="['name']"
       >
         <template #header>
-          <div class="flex gap-5">
-            <div class="justify-content-end flex">
-              <span class="p-input-icon-left">
+          <div class="flex items-center justify-between">
+            <div class="flex w-80 justify-start">
+              <span class="p-input-icon-left w-full">
                 <i class="pi pi-search" />
-                <InputText placeholder="Keyword Search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Keyword Search"
+                  class="w-full"
+                />
               </span>
             </div>
           </div>
@@ -40,35 +44,63 @@
           class="w-[1%] lg:w-[20%]"
         >
           <template #body="slotProps">
-            <div class="flex items-center gap-5">
+            <div class="flex items-center gap-5 text-sm">
               <img :src="BoxIcon" alt="box-icon" />
               <span>{{ slotProps.data.created_at }}</span>
             </div>
           </template></Column
         >
-        <Column
-          field="name"
-          header="Name"
-          class="w-[5%] lg:w-[20%]"
-          sortable
-        ></Column>
+        <Column field="name" header="Name" class="w-[5%] lg:w-[20%]" sortable>
+          <template #body="slotProps">
+            <div class="flex items-center rounded-lg p-2 text-sm">
+              <span>{{ slotProps.data.name }}</span>
+            </div>
+          </template></Column
+        >
         <Column
           field="description"
           header="Description"
           class="w-[5%] lg:w-[20%]"
-        ></Column>
-        <Column
-          field="status"
-          header="Status"
-          class="w-[5%] lg:w-[12.5%]"
-        ></Column>
-        <Column field="price" header="Price" class="w-[5%] lg:w-[10%]"></Column>
+        >
+          <template #body="slotProps">
+            <div class="flex items-center rounded-lg p-2 text-sm">
+              <span>{{ slotProps.data.description }}</span>
+            </div>
+          </template></Column
+        >
+        <Column field="status" header="Status" class="w-[5%] lg:w-[12.5%]">
+          <template #body="slotProps">
+            <div
+              class="flex items-center justify-center rounded-lg p-2 text-sm"
+              :class="[
+                slotProps.data.status === 'Available'
+                  ? 'bg-[#ccf4e4]'
+                  : 'bg-[#f8cccc]',
+              ]"
+            >
+              <span>{{ slotProps.data.status }}</span>
+            </div>
+          </template></Column
+        >
+        <Column field="price" header="Price" class="w-[5%] lg:w-[10%]">
+          <template #body="slotProps">
+            <div class="flex items-center rounded-lg p-2 text-sm">
+              <span>${{ slotProps.data.price }}</span>
+            </div>
+          </template>
+        </Column>
         <Column
           field="modified_at"
           header="Modified Date"
           sortable
           class="w-[5%] lg:w-[25%]"
-        ></Column>
+        >
+          <template #body="slotProps">
+            <div class="flex items-center rounded-lg p-2 text-sm">
+              <span>{{ slotProps.data.modified_at }}</span>
+            </div>
+          </template></Column
+        >
       </DataTable>
     </div>
   </div>
@@ -88,6 +120,7 @@ onMounted(() => {
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 const products = ref();
 const addProductModal = ref(false);
