@@ -10,7 +10,7 @@
       </h3>
       <div class="card flex w-full justify-center sm:w-fit">
         <Dropdown
-          :change="selectStatus()"
+          @change="$emit('selectStatus', status)"
           v-model="status"
           :options="statuses"
           optionLabel="state"
@@ -30,20 +30,7 @@
 <script setup>
 defineProps({
   technicianCount: Number,
+  statuses: Array,
 });
 const status = ref();
-const statuses = ref([
-  {
-    state: "Active",
-    code: "A",
-  },
-  {
-    state: "Inactive",
-    code: "I",
-  },
-]);
-
-const selectStatus = (event) => {
-  // console.log(event);
-};
 </script>

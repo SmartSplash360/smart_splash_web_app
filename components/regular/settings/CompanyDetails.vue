@@ -12,12 +12,7 @@
       <div
         class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
       >
-        <Button
-          label="Cancel"
-          severity="secondary"
-          outlined
-          @click="toggleAddAlertModal"
-        />
+        <Button label="Cancel" severity="secondary" outlined />
         <Button label="Save changes" class="!bg-[#0291BF]" />
       </div>
     </div>

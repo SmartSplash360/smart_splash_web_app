@@ -5,7 +5,7 @@
   >
     <form
       @click.stop=""
-      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[51rem] lg:mt-28 lg:max-h-[570px] lg:min-w-[487px] lg:gap-5"
+      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[30rem] lg:mt-28 lg:max-h-[570px] lg:min-w-[487px] lg:gap-5 xl:ml-[51rem]"
     >
       <div class="flex items-center justify-between">
         <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">

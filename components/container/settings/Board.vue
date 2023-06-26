@@ -27,4 +27,6 @@
   </TabView>
 </template>
 
-<script setup></script>
+<script setup>
+const active = ref(0);
+</script>

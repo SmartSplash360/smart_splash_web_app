@@ -84,7 +84,7 @@
     </template>
     <template #content>
       <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
-        <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
+        <div class="flex items-center gap-3 pb-2 xl:gap-5">
           <span class="flex h-[20px] w-[20px] place-items-center"
             ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
           /></span>
