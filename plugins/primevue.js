@@ -24,7 +24,6 @@ import SelectButton from "primevue/selectbutton";
 import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
 
-
 import ToastService from "primevue/toastservice";
 
 export default defineNuxtPlugin((nuxtApp) => {

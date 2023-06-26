@@ -2,9 +2,9 @@
   <form class="form-container">
     <div class="mb-10 h-[125px] w-[300px] sm:mb-0">
       <img
-        :src="SmartPlashLogo"
-        alt="Smart-Splash-Logo"
-        class="h-full w-full"
+          :src="SmartPlashLogo"
+          alt="Smart-Splash-Logo"
+          class="h-full w-full"
       />
     </div>
     <div class="hidden w-full flex-col gap-3 text-start sm:flex">
@@ -12,17 +12,17 @@
       <p>Please enter your details</p>
     </div>
     <base-input
-      :placeHolder="'Email Address'"
-      :type="'email'"
-      :name="'email'"
-      :id="'email'"
+        :placeHolder="'Email Address'"
+        :type="'email'"
+        :name="'email'"
+        :id="'email'"
     ></base-input>
 
     <InputText type="text" placeholder="Email" v-model="email" name="email" class="w-full"/>
     <InputText type="password" placeholder="Password" v-model="password" name="password" class="w-full"/>
 
     <p class="w-full text-end text-[#4D6977]">Forgot password?</p>
-    <Button  @click="login()" label="Login" class="w-full"/>
+    <Button @click="login()" label="Login" class="w-full"/>
     <div class="py-3">
       <p>
         Don't have an account ?
@@ -42,13 +42,19 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 
 import {useUserStore} from "~/stores/users";
+import {useCustomerStore} from "~/stores/customer";
+
 const store = useUserStore();
+const customerStore = useCustomerStore();
+const router = useRouter();
 
 const email = ref('test@user.com');
 const password = ref('password');
 
-async function login(){
+async function login() {
   await store.login(email.value, password.value);
+  await customerStore.fetchCustomers();
+  await router.push('/customers');
 }
 
 </script>

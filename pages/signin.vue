@@ -14,7 +14,7 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SigninForm from "~/components/container/auth/signinForm.vue";
 import HeroLogger from "~/components/container/auth/heroLogger.vue";
 

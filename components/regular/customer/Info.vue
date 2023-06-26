@@ -7,7 +7,7 @@
         class="flex w-full flex-col items-center justify-between gap-5 lg:justify-start xl:flex-row"
       >
         <img
-          :src="userProfile"
+          :src="customerInfo.photo ?? ''"
           alt="user-profile"
           class="h-48 w-48 items-center rounded-full lg:h-[60px] lg:w-[60px] xl:h-28 xl:w-28"
         />
@@ -18,7 +18,7 @@
           <div class="flex items-center gap-2">
             <span class="text-sm font-[400] leading-7">{{
               customerInfo.name
-            }}</span>
+            }} {{ customerInfo.surname ?? '' }}</span>
             <img
               :src="ChatIcon"
               alt="chat-icon"
@@ -105,7 +105,10 @@ import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
 
 defineProps({
-  customerInfo: Object,
+  customerInfo: {
+    type: Object,
+    required: true,
+  },
 });
 </script>
 

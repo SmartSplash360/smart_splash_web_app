@@ -1,6 +1,6 @@
 <template>
   <div class="sn:gap-20 flex flex-col gap-10">
-    <RegularCustomerInfo :customerInfo="customerInfo"></RegularCustomerInfo>
+    <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
     <div
       class="sm:min-:w-[30rem] flex items-center justify-center self-center text-[#025E7C] sm:gap-20"
     >
@@ -77,8 +77,14 @@
 </template>
 
 <script setup>
+import { useCustomerStore} from "~/stores/customer";
+const store = useCustomerStore();
+
 const props = defineProps({
-  customerId: String,
+  customerId: {
+    type: String,
+    required: true,
+  },
 });
 const currentTab = ref("JOBS");
 
@@ -97,17 +103,12 @@ const jobsInprogress = ref([
   { name: "Jobs in progress October", code: "r2" },
 ]);
 
-const customerInfo = {
-  id: props.customerId,
-  name: "Lena Justice",
-  email: "lenajustice@austech.com",
-  created_at: "2022-01-04T10:19:00 -02:00",
-  updated_at: "2019-04-11T03:53:14 -02:00",
-  phone_number: "+1 (866) 430-2829",
-  status: false,
-  address: "293 Jodie Court, Makena, Nebraska, 3145",
-  role: "",
-};
+const customer = ref({});
+
+onMounted(async () => {
+  customer.value = await store.fetchCustomer(props.customerId)
+})
+
 
 const switchTabs = (tab) => {
   currentTab.value = tab;

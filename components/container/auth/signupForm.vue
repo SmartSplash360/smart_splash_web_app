@@ -36,6 +36,7 @@ import Button from 'primevue/button';
 
 import {useUserStore} from "~/stores/users";
 const store = useUserStore();
+const router = useRouter();
 
 const firstName = ref('');
 const lastName = ref('');
@@ -49,6 +50,7 @@ async function registerUser() {
     alert('Passwords do not match')
     return;
   }
+  // TODO: add validation
 
   const userPayload = {
     name: firstName.value,
@@ -60,6 +62,7 @@ async function registerUser() {
     role: 'Admin'
   }
   await store.register(userPayload);
+  await router.push('/customers');
 }
 </script>
 
