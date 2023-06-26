@@ -66,10 +66,8 @@ const filterTechnicians = (status) => {
 
 const getTechniciansList = computed(() => {
   if (filter.state === "Active") {
-    console.log("first");
     return technicians.value.filter((tech) => tech.status === true);
   } else if (filter.state === "Inactive") {
-    console.log("second");
     return technicians.value.filter((tech) => tech.status === false);
   } else {
     return technicians.value;

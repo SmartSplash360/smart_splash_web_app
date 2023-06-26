@@ -9,7 +9,7 @@
         class="h-full w-full"
       />
     </div>
-    <div class="-mt-32 flex-1">
+    <div class="-mt-14 flex-1 xl:-mt-20 2xl:-mt-32">
       <ul class="flex flex-col gap-10 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link

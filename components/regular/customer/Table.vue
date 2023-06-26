@@ -116,8 +116,6 @@ const getCustomers = (data) => {
   });
 };
 
-console.log(customers.value);
-
 const selectedCustomer = ref();
 
 const dt = ref();
