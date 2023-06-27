@@ -5,7 +5,7 @@
       :value="customers"
       paginator
       ref="dt"
-      v-model:selection="selectedProduct"
+      v-model:selection="selectedCustomer"
       dataKey="id"
       filterDisplay="row"
       :loading="loading"
@@ -116,7 +116,7 @@ const getCustomers = (data) => {
   });
 };
 
-const selectedProduct = ref();
+const selectedCustomer = ref();
 
 const dt = ref();
 const exportCSV = () => {

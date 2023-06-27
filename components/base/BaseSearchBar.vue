@@ -7,6 +7,7 @@
       :class="[
         size === 'lg' ? 'min-w-[300px] xl:min-w-[400px]' : ' w-full min-w-full',
       ]"
+      @input="$emit('handleSearch', value)"
     />
   </span>
 </template>
@@ -18,5 +19,3 @@ const props = defineProps({
   size: String,
 });
 </script>
-
-<style lang="scss" scoped></style>

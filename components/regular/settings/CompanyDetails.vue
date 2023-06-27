@@ -12,12 +12,7 @@
       <div
         class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
       >
-        <Button
-          label="Cancel"
-          severity="secondary"
-          outlined
-          @click="toggleAddAlertModal"
-        />
+        <Button label="Cancel" severity="secondary" outlined />
         <Button label="Save changes" class="!bg-[#0291BF]" />
       </div>
     </div>
@@ -296,8 +291,8 @@
 
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-
 import { useToast } from "primevue/usetoast";
+
 const toast = useToast();
 
 const totalSize = ref(0);
@@ -305,6 +300,7 @@ const totalSizePercent = ref(0);
 const files = ref([]);
 
 const selectedCity = ref();
+const selectedState = ref();
 const cities = ref([
   { name: "Australia", code: "AU" },
   { name: "Brazil", code: "BR" },

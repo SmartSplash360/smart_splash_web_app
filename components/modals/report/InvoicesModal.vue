@@ -4,7 +4,8 @@
     class="flex justify-center lg:fixed lg:bottom-0 lg:left-0 lg:right-0 lg:top-0 lg:z-[1200] lg:justify-normal lg:bg-[#000000aa] lg:py-20"
   >
     <form
-      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[39rem] lg:mt-28 lg:h-[268px] lg:min-w-[437px] lg:gap-5"
+      @click.stop=""
+      class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[25rem] lg:mt-28 lg:h-[268px] lg:min-w-[437px] lg:gap-5 xl:ml-[39rem]"
     >
       <div class="flex items-center justify-between">
         <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
