@@ -1,6 +1,7 @@
 <template>
   <section class="flex flex-col gap-10">
-    <div class="card">
+    <SkeletonAlert v-if="loading"></SkeletonAlert>
+    <div v-else class="card">
       <div class="hidden w-full justify-end gap-5 hover:shadow-xl sm:flex">
         <BaseAddButton
           :btnText="' Alert'"
@@ -62,4 +63,6 @@ const toggleAddAlertModal = () => (addAlertModal.value = true);
 const closeModal = () => (addAlertModal.value = false);
 
 const active = ref(0);
+
+const loading = ref(true);
 </script>

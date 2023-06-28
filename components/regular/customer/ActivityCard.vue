@@ -3,27 +3,31 @@
     :icon="ActiveRouteIcon"
     :alt="'active-route-icon'"
     :status="'Active (routed)'"
-    :count="131"
+    :count="routes.activeRoute"
+    :loading="loading"
     :bg="'primary'"
   ></BaseActivityCard>
   <BaseActivityCard
     :icon="ActiveNoRoute"
     :alt="'active-no-route'"
     :status="'Active (no route)'"
-    :count="41"
+    :count="routes.activeNoRoute"
+    :loading="loading"
   ></BaseActivityCard>
   <BaseActivityCard
     :icon="InactiveRoute"
     :alt="'inactive-route'"
     :status="'Inactive'"
-    :count="56"
+    :count="routes.inactive"
+    :loading="loading"
     :bg="'primary'"
   ></BaseActivityCard>
   <BaseActivityCard
     :icon="Leads"
     :alt="'user-leads-icons'"
     :status="'Leads'"
-    :count="0"
+    :count="routes.leads"
+    :loading="loading"
     :isLead="true"
   ></BaseActivityCard>
 </template>
@@ -34,4 +38,9 @@ import ActiveNoRoute from "@/assets/icons/ic_baseline-people.svg";
 import InactiveRoute from "@/assets/icons/inactive-users.svg";
 import Leads from "@/assets/icons/users-leads.svg";
 import BaseActivityCard from "~/components/base/BaseActivityCard.vue";
+
+defineProps({
+  routes: Object,
+  loading: Boolean,
+});
 </script>
