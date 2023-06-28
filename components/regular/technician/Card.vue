@@ -1,7 +1,7 @@
 <template>
   <Card
     @click="viewTechnician"
-    class="card align-items-center justify-content-center flex w-full cursor-pointer flex-col justify-center hover:shadow-md"
+    class="card align-items-center justify-content-center flex w-full cursor-pointer flex-col justify-center hover:shadow-md dark:bg-gray-600 dark:text-gray-300"
   >
     <template #header>
       <div class="flex flex-col gap-10 px-4 py-2">

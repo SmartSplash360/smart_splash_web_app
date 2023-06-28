@@ -8,7 +8,18 @@ export default defineNuxtConfig({
     "primeicons/primeicons.css",
   ],
 
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxtjs/color-mode"],
+  colorMode: {
+    classSuffix: "",
+  },
+  tailwindcss: {
+    cssPath: "~/assets/css/tailwind.css",
+    configPath: "tailwind.config",
+    exposeConfig: false,
+    exposeLevel: 2,
+    injectPosition: "first",
+    viewer: true,
+  },
   plugins: ["~/plugins/ckEditor"],
   build: {
     transpile: ["primevue"],

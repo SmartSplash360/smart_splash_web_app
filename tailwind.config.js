@@ -37,13 +37,6 @@ module.exports = {
     "grey-8": "#F7F7F7",
     "grey-9": "#D1D1D1",
     "grey-10": "#EFEFF0",
-    white: "#ffffff",
-    black: "#000",
-    "table-blue": "#003173",
-    "bg-transparent": "transparent",
-    lightGray: "#F6F8F9",
-    "light-black": "#454343",
-    "bg-grayLight": "#E5E5E5",
   },
   fontFamily: {
     sans: ["Poppins", "sans-serif"],
@@ -57,4 +50,5 @@ module.exports = {
     ringOpacity: false,
   },
   plugins: [],
+  darkMode: "class",
 };
