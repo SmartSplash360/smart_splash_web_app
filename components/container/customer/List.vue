@@ -1,6 +1,8 @@
 <template>
   <section class="flex flex-col gap-10">
+    <SkeletonCustomer v-if="loading"></SkeletonCustomer>
     <div
+      v-if="!loading"
       class="hidden flex-wrap items-center justify-between sm:flex xl:gap-10"
     >
       <ul class="flex w-full items-center justify-between gap-4 xl:w-3/4">
@@ -11,7 +13,7 @@
       </ul>
       <BaseExportButton></BaseExportButton>
     </div>
-    <div class="flex flex-col gap-5">
+    <div v-if="!loading" class="flex flex-col gap-5">
       <div
         class="-mt-12 flex w-full justify-between gap-5 rounded-xl bg-white px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
       >
@@ -35,7 +37,7 @@
 </template>
 
 <script setup>
-const loading = ref(true);
+const loading = ref(false);
 const addCustomerModal = ref(false);
 
 const routes = reactive({

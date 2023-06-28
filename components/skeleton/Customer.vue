@@ -1,20 +1,19 @@
 <template>
-  <div class="mt-20 flex flex-col gap-12">
-    <div class="flex flex-col justify-between gap-10 border-b py-5 lg:flex-row">
-      <div role="status" class="w-full animate-pulse">
-        <div class="mt-10 flex items-center gap-10">
-          <div class="h-4 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-          <div class="h-4 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-          <div class="h-4 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-        </div>
+  <div class="flex flex-col gap-10 sm:mt-24">
+    <div role="status" class="w-full animate-pulse">
+      <div class="-mt-20 hidden items-center gap-10 sm:flex">
+        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
       </div>
-      <div role="status" class="-order-1 animate-pulse lg:order-1">
-        <div
-          class="mb-2.5 ml-auto h-12 w-64 rounded-lg bg-gray-200 dark:bg-gray-700"
-        ></div>
+    </div>
+    <div role="status" class="w-full animate-pulse">
+      <div
+        class="ml-auto h-8 w-8 rounded-lg bg-gray-200 dark:bg-gray-700 sm:h-12 sm:w-64"
+      ></div>
 
-        <span class="sr-only">Loading...</span>
-      </div>
+      <span class="sr-only">Loading...</span>
     </div>
     <div
       role="status"

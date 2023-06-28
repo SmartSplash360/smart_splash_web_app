@@ -64,5 +64,5 @@ const closeModal = () => (addAlertModal.value = false);
 
 const active = ref(0);
 
-const loading = ref(true);
+const loading = ref(false);
 </script>
