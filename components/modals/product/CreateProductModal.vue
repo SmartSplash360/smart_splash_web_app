@@ -70,5 +70,3 @@ const status = ref([
 
 const description = ref("");
 </script>
-
-<style lang="scss" scoped></style>

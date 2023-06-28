@@ -1,10 +1,16 @@
 <template>
-  <section class="flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonCustomer></SkeletonCustomer>
+  </section>
+  <section v-else class="flex flex-col gap-10">
     <div
       class="hidden flex-wrap items-center justify-between sm:flex xl:gap-10"
     >
       <ul class="flex w-full items-center justify-between gap-4 xl:w-3/4">
-        <RegularCustomerActivityCard></RegularCustomerActivityCard>
+        <RegularCustomerActivityCard
+          :loading="loading"
+          :routes="routes"
+        ></RegularCustomerActivityCard>
       </ul>
       <BaseExportButton></BaseExportButton>
     </div>
@@ -24,14 +30,21 @@
           :toggleAddCustomerModal="closeModal"
         ></ModalsCustomerCreateCustomerModal>
       </div>
-
       <RegularCustomerTable></RegularCustomerTable>
     </div>
   </section>
 </template>
 
 <script setup>
+const loading = ref(false);
 const addCustomerModal = ref(false);
+
+const routes = reactive({
+  activeRoute: 131,
+  activeNoRoute: 41,
+  inactive: 56,
+  leads: 0,
+});
 
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 const closeModal = () => (addCustomerModal.value = false);
