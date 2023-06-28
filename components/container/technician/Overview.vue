@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonTechDetail></SkeletonTechDetail>
+    <SkeletonDetailPage></SkeletonDetailPage>
   </section>
   <section v-else class="flex flex-col gap-12">
     <div class="flex items-center gap-2 sm:gap-5">
@@ -49,4 +49,3 @@ const switchTabs = (tab) => {
 };
 </script>
 
-<style lang="scss" scoped></style>

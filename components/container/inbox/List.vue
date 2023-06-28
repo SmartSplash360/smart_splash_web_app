@@ -19,6 +19,5 @@
 
 <script setup>
 import { inboxService } from "@/services/InboxServices";
-
 const loading = ref(false);
 </script>

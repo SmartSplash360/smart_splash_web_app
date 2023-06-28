@@ -18,6 +18,5 @@
 
 <script setup>
 const loading = ref(false);
-
 const active = ref(0);
 </script>
