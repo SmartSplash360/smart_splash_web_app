@@ -30,8 +30,8 @@ export const useCustomerStore = defineStore("customer", {
                 console.log(res.data.data.data);
                 this.customers = res.data.data.data;
             } catch (error) {
-                alert(error);
                 console.log(error);
+                return error
             }
         },
         async fetchCustomer(id: number | string) {
@@ -46,15 +46,18 @@ export const useCustomerStore = defineStore("customer", {
                 console.log(error);
             }
         },
-        async createCustomer(customerPayload: Customer) {
+        async createCustomer(customerPayload: Object) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`http://localhost:8000/api/v1/customers`, customerPayload);
-                console.log(res.data);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
-                alert(error);
-                console.log(error);
+                console.log(error)
+                throw error
             }
         },
         async updateCustomer(id: number, customerPayload: Customer) {

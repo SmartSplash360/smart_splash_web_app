@@ -26,5 +26,6 @@ provide("customer-view", {
 
 definePageMeta({
   layout: "dashboard",
+  middleware: 'auth',
 });
 </script>

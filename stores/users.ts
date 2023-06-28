@@ -52,8 +52,7 @@ export const useUserStore = defineStore("user", {
                 }
 
             } catch (error) {
-                alert(error);
-                console.log(error);
+                throw error
             }
         },
         async register(userPayload: {}) {
