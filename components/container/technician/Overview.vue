@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col gap-12">
+  <section v-if="loading">
+    <SkeletonTechDetail></SkeletonTechDetail>
+  </section>
+  <section v-else class="flex flex-col gap-12">
     <div class="flex items-center gap-2 sm:gap-5">
       <div class="h-[60px] w-[60px] rounded-full sm:h-[120px] sm:w-[120px]">
         <Avatar
@@ -30,14 +33,14 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
 
 const currentTab = ref("JOBS");
-
+const loading = ref(false);
 const switchTabs = (tab) => {
   if (tab) {
     currentTab.value = tab;
