@@ -30,9 +30,7 @@
           :toggleAddCustomerModal="closeModal"
         ></ModalsCustomerCreateCustomerModal>
       </div>
-
-      <SkeletonTable v-if="loading"></SkeletonTable>
-      <RegularCustomerTable v-else></RegularCustomerTable>
+      <RegularCustomerTable></RegularCustomerTable>
     </div>
   </section>
 </template>

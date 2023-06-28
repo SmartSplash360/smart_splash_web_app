@@ -1,6 +1,6 @@
 <template>
   <section class="flex flex-col gap-10">
-    <SkeletonAlert v-if="loading"></SkeletonAlert>
+    <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card">
       <div class="hidden w-full justify-end gap-5 hover:shadow-xl sm:flex">
         <BaseAddButton
@@ -59,10 +59,10 @@ import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
 
 const addAlertModal = ref(false);
 
-const toggleAddAlertModal = () => (addAlertModal.value = true);
-const closeModal = () => (addAlertModal.value = false);
-
 const active = ref(0);
 
 const loading = ref(false);
+
+const toggleAddAlertModal = () => (addAlertModal.value = true);
+const closeModal = () => (addAlertModal.value = false);
 </script>

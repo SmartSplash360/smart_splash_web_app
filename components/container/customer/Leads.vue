@@ -1,5 +1,9 @@
 <template>
-  <div
+  <section v-if="loading">
+    <SkeletonChatListing></SkeletonChatListing>
+  </section>
+  <section
+    v-else
     class="flex max-h-[95vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
   >
     <div
@@ -15,9 +19,11 @@
     <div class="xl:w-[20%]">
       <RegularCustomerChatProfile></RegularCustomerChatProfile>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
 import { inboxService } from "@/services/InboxServices";
+
+const loading = ref(false);
 </script>

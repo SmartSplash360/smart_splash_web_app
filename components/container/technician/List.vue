@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonTechnician></SkeletonTechnician>
+    <SkeletonCardListing></SkeletonCardListing>
   </section>
   <section v-else class="sm:gap-13 flex flex-col gap-10">
     <RegularTechnicianBoard
@@ -26,7 +26,7 @@
 <script setup>
 import { TechniciansList } from "@/services/Technicians";
 
-const loading = ref(true);
+const loading = ref(false);
 
 const addTechnicianModal = ref(false);
 const technicians = ref();
