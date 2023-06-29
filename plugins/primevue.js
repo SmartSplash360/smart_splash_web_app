@@ -24,6 +24,7 @@ import RadioButton from "primevue/radiobutton";
 import SelectButton from "primevue/selectbutton";
 import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
+import Tooltip from 'primevue/tooltip';
 
 import ToastService from "primevue/toastservice";
 
@@ -54,6 +55,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("InputSwitch", InputSwitch);
   nuxtApp.vueApp.component("Checkbox", Checkbox);
   nuxtApp.vueApp.component("Badge", Badge);
+  nuxtApp.vueApp.component("Badge", Badge);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
+  nuxtApp.vueApp.directive('tooltip', Tooltip);
 });

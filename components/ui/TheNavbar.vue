@@ -12,6 +12,7 @@
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
       <button
         class="mx-10 mt-2"
+        v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
         @click="
           setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')
         "
