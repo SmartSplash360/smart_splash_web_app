@@ -1,7 +1,7 @@
 <template>
   <div class="card border">
     <DataTable
-      :value="customers"
+      :value="jobs"
       v-model:selection="job"
       selectionMode="single"
       dataKey="id"
@@ -9,12 +9,20 @@
       :rows="4"
       tableStyle="min-width: 50rem; min-height : 25rem"
     >
-      <Column field="date" header="Date" style="width: 20%"> </Column>
-      <Column field="type" header="Type" style="width: 20%"></Column>
+      <Column field="date" header="Date" style="width: 20%">
+        <template #body="slotProps">
+          {{ slotProps.data?.start_date }}
+        </template>
+      </Column>
+      <Column field="type" header="Type" style="width: 20%">
+        <template #body="slotProps">
+          Route
+        </template>
+      </Column>
       <Column field="address" header="Address" style="width: 20%">
         <template #body="slotProps">
           <div class="p-2 text-sm leading-8">
-            {{ slotProps.data.address }}
+            {{ slotProps.data?.customer?.address[0]?.address_line1 }}
           </div>
         </template></Column
       >
@@ -23,7 +31,7 @@
           <div
             class="rounded-lg bg-[#d4ecf4] p-2 text-center text-xs text-[#0291BF]"
           >
-            {{ slotProps.data.bodyOfWater }}
+            Route
           </div>
         </template></Column
       >
@@ -44,7 +52,7 @@
                 : 'border-[#BF0202] bg-[#f8cccc] p-2 text-[#BF0202]',
             ]"
           >
-            {{ slotProps.data.status }}
+            {{ slotProps.data?.status == 'in_progress' ? 'in progress' : slotProps.data?.status }}
           </div>
         </template></Column
       >
@@ -52,7 +60,11 @@
         field="technicians"
         header="Technicians"
         style="width: 12.5%"
-      ></Column>
+      >
+        <template #body="slotProps">
+          {{ slotProps.data?.technician?.name }} {{ slotProps.data?.technician?.surname ?? '' }}
+        </template>
+      </Column>
       <Column field="price" header="Price" style="width: 12.5%"></Column>
     </DataTable>
   </div>
@@ -61,6 +73,14 @@
 <script setup>
 import { onMounted } from "vue";
 import { CustomerJobs } from "@/services/CustomerJobs";
+
+const props = defineProps({
+  jobs: {
+    type: Array,
+    required: true,
+    default: () => CustomerJobs.getCustomersJobsMedium().then((data) => data),
+  },
+});
 
 onMounted(() => {
   CustomerJobs.getCustomersJobsMedium().then(

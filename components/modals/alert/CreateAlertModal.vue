@@ -69,6 +69,12 @@ const props = defineProps({
 
 const selectedCity = ref();
 const status = ref([]);
+const date = ref(null);
+const time = ref(null);
+const notes = ref('');
+const alertType = ref(null);
+const bodyOfWater = ref(null);
+const technician = ref(null);
 </script>
 
 <style lang="scss" scoped></style>

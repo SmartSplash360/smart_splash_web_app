@@ -7,31 +7,31 @@
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
-          <InputText type="text" :model="newCustomer.name"></InputText>
+          <InputText type="text" v-model="name"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Surname* </label>
-          <InputText type="text" :model="newCustomer.surname"></InputText>
+          <InputText type="text" v-model="surname"></InputText>
         </div>
       </div>
       <div class="flex flex-col justify-between gap-5">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="email address"> Email address* </label>
-          <InputText type="email" :model="newCustomer.email"></InputText>
+          <InputText type="email" v-model="email"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="cell number"> Cell number </label>
-          <InputText type="text" :model="newCustomer.phoneNumber"></InputText>
+          <InputText type="text" v-model="phoneNumber"></InputText>
         </div>
       </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Password* </label>
-          <InputText type="text" :model="newCustomer.password"></InputText>
+          <InputText type="text" v-model="password"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Password Confirmation* </label>
-          <InputText type="text" :model="newCustomer.passwordConfirmation"></InputText>
+          <InputText type="text" v-model="passwordConfirmation"></InputText>
         </div>
       </div>
       <div class="mt-20 flex flex-col justify-end gap-5 sm:flex-row">
@@ -49,7 +49,6 @@
             @click="createCustomer"
         />
       </div>
-      <Toast class="z-5"/>
     </form>
   </div>
 </template>
@@ -59,7 +58,6 @@ import {useCustomerStore} from "~/stores/customer";
 import {useToast} from "primevue/usetoast";
 
 const store = useCustomerStore();
-const toast = useToast();
 
 const props = defineProps({
   toggleAddCustomerModal: {
@@ -70,27 +68,28 @@ const props = defineProps({
   }
 });
 
-const newCustomer = reactive({
-  name: "",
-  surname: "",
-  email: "",
-  phoneNumber: "",
-  password: "",
-  passwordConfirmation: "",
-  company: 1
-});
+
+const name = ref('Test')
+const surname = ref('User')
+const email = ref('test1@user.com')
+const phoneNumber = ref('0760970734')
+const password = ref('password')
+const passwordConfirmation = ref('password')
+const company = ref('1')
 
 const createCustomer = async () => {
   // TODO: add validation
+
+
   try {
     await store.createCustomer({
-      name: newCustomer.name,
-      surname: newCustomer.surname,
-      email: newCustomer.email,
-      phone_number: newCustomer.phoneNumber,
-      password: newCustomer.password,
-      password_confirmation: newCustomer.passwordConfirmation,
-      company: newCustomer.company
+      name: name.value,
+      surname: surname.value,
+      email: email.value,
+      phone_number: phoneNumber.value,
+      password: password.value,
+      password_confirmation: passwordConfirmation.value,
+      company: company.value
     });
     props.toggleAddCustomerModal({success: "Customer created successfully"});
   } catch (e) {

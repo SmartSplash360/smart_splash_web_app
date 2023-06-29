@@ -52,7 +52,7 @@
       >
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data.id}`">
-            <Avatar :image="slotProps.data.photo || ''" class="mr-2" size="large" shape="circle"/>
+            <Avatar :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'" :alt="slotProps.data.name" class="mr-2" size="large" shape="circle"/>
           </nuxt-link>
         </template>
       </Column>
@@ -117,7 +117,7 @@ import Tag from 'primevue/tag';
 
 const store = useCustomerStore();
 
-const customers = ref();
+const customers = ref([]);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},

@@ -1,5 +1,9 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import {useUserStore} from "~/stores/users";
+
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 export const useProductStore = defineStore("product", {
     persist: {
@@ -9,45 +13,56 @@ export const useProductStore = defineStore("product", {
         products: [],
     }),
     getters: {
-        getServices(state) {
+        getProducts(state) {
             return state.products
         }
     },
     actions: {
-        async getServices() {
+        async fetchProducts() {
             try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.get("http://localhost:8000/api/v1/products");
-                this.products = res.data.data
+                console.log(res.data.data.data)
+                this.products = res.data.data.data
             } catch (error) {
                 console.log(error);
             }
         },
-        async getService(id: number) {
+        async fetchProduct(id: number) {
             try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.get(`http://localhost:8000/api/v1/products/${id}`);
                 return res.data.data
             } catch (error) {
                 console.log(error);
             }
         },
-        async createService(productPayload: Product) {
+        async createProduct(productPayload: Product) {
             try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post("http://localhost:8000/api/v1/products", productPayload);
                 return res.data.data
             } catch (error) {
                 console.log(error);
             }
         },
-        async updateService(id: number, productPayload: Product) {
+        async updateProduct(id: number, productPayload: Product) {
             try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post(`http://localhost:8000/api/v1/products/${id}`, productPayload);
                 return res.data.data
             } catch (error) {
                 console.log(error)
             }
         },
-        async deleteService(id: number) {
+        async deleteProduct(id: number) {
             try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.delete(`http://localhost:8000/api/v1/products/${id}`);
                 return res.data.data
             } catch (error) {

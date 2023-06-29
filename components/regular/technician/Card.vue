@@ -1,35 +1,37 @@
 <template>
   <div
-    @click="viewTechnician"
-    class="card align-items-center justify-content-center flex cursor-pointer justify-center"
+      @click="viewTechnician"
+      class="card align-items-center justify-content-center flex cursor-pointer justify-center"
   >
     <Card class="max-w-full hover:shadow-md">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2">
           <div class="relative flex items-center justify-between">
-            <span class="rounded-md px-5 py-2 text-xs text-[#02BF70] shadow-md"
-              >Active</span
+            <span
+                :class="technician?.status == 1 ? 'text-[#02BF70]' : 'text-red-500'"
+                class="rounded-md px-5 py-2 text-xs shadow-md"
+            >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
-              <img :src="AlignDotIcons" alt="align-dot-icon" />
+              <img :src="AlignDotIcons" alt="align-dot-icon"/>
             </span>
             <div
-              v-if="showMenu"
-              class="absolute -right-16 top-8 z-10 flex min-h-[81px] min-w-[171px] flex-col items-center justify-center rounded-md bg-white shadow-md"
+                v-if="showMenu"
+                class="absolute -right-16 top-8 z-10 flex min-h-[81px] min-w-[171px] flex-col items-center justify-center rounded-md bg-white shadow-md"
             >
               <nuxt-link
-                :to="`technicians/${34}`"
-                class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-b-none px-3 py-2 hover:bg-gray-200"
+                  :to="`technicians/${props.technician.id}`"
+                  class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-b-none px-3 py-2 hover:bg-gray-200"
               >
-                <img :src="BarsIcon" alt="bars-icon" />
+                <img :src="BarsIcon" alt="bars-icon"/>
                 <span class="min-w-max text-sm font-medium">
                   View Technician</span
                 >
               </nuxt-link>
               <div
-                class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
+                  class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
               >
-                <img :src="TrashIcon" alt="trash-icons" />
+                <img :src="TrashIcon" alt="trash-icons"/>
 
                 <span class="min-w-max text-sm font-medium">
                   Delete Technician</span
@@ -40,28 +42,28 @@
           <div class="flex items-center gap-5">
             <div class="h-[120px] w-[120px] rounded-full">
               <Avatar
-                :image="userProfile"
-                class="mr-2 !h-full !w-full"
-                shape="circle"
+                  :image="technician?.photo ?? 'https://plchldr.co/i/500x500'"
+                  class="mr-2 !h-full !w-full"
+                  shape="circle"
               />
             </div>
             <div class="flex flex-col gap-2">
-              <h2 class="text-3xl font-[500] leading-9">Evan Kings</h2>
+              <h2 class="text-3xl font-[500] leading-9">{{ technician?.name }} {{ technician?.surname || '' }}</h2>
               <p class="text-md leading-4">Cleaning Tech</p>
               <div class="mt-4 flex justify-between">
                 <div class="flex items-center gap-3">
                   <img
-                    :src="LikeIcon"
-                    alt="like-icon"
-                    class="h-[24px] w-[24px]"
+                      :src="LikeIcon"
+                      alt="like-icon"
+                      class="h-[24px] w-[24px]"
                   />
                   <span class="text-sm font-semibold">64</span>
                 </div>
                 <div class="flex items-center gap-3">
                   <img
-                    :src="DislikeIcon"
-                    alt="dislike-icon"
-                    class="h-[24px] w-[24px]"
+                      :src="DislikeIcon"
+                      alt="dislike-icon"
+                      class="h-[24px] w-[24px]"
                   />
                   <span class="text-sm font-semibold">10</span>
                 </div>
@@ -79,17 +81,18 @@
         <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
           <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
-              ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
+            ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
             /></span>
-            <span class="text-xs xl:text-[16px]">evan@tmail.com</span>
+            <span class="text-xs xl:text-[16px]">{{ technician?.email }}</span>
           </div>
           <div class="flex items-center gap-3 pt-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
-              ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
+            ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
             /></span>
-            <span class="text-xs xl:text-[16px]">407-717-1755</span>
+            <span class="text-xs xl:text-[16px]">{{ technician?.phone_number }}</span>
           </div>
-        </div></template
+        </div>
+      </template
       >
     </Card>
   </div>
@@ -107,12 +110,28 @@ import AlignDotIcons from "@/assets/icons/align-dot-icon.svg";
 
 const showMenu = ref(false);
 
+const props = defineProps({
+  technician: {
+    type: Object,
+    default: () => {
+      return {
+        name: "Evan",
+        surname: "Kings",
+        email: "test@user.com",
+        phone_number: "0760970734",
+        role: 'technician',
+        photo: 'https://plchldr.co/i/500x500',
+        status: 1
+      }
+    }
+  },
+});
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;
 };
 
 const router = useRouter();
 const viewTechnician = () => {
-  router.push("/technicians/34");
+  router.push(`/technicians/${props.technician?.id}`);
 };
 </script>

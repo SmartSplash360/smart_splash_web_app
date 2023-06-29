@@ -1,4 +1,5 @@
 interface User {
+    id: number | null | undefined
     name: String
     surname: String
     email: String
@@ -7,4 +8,6 @@ interface User {
     company: Number
     role: String
     photo: String
+    created_at: String | null | undefined
+    updated_at: String | null | undefined
 }

@@ -1,7 +1,6 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
-import {tryCatch} from "standard-as-callback/built/utils";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -46,7 +45,7 @@ export const useCustomerStore = defineStore("customer", {
                 console.log(error);
             }
         },
-        async createCustomer(customerPayload: Object) {
+        async createCustomer(customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {

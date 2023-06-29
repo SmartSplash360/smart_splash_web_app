@@ -1,60 +1,56 @@
-import {defineStore} from "pinia";
 import axios from "axios";
+import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
-export const useAlertStore = defineStore("alert", {
+export const useJobStore = defineStore("job", {
     persist: {
         storage: persistedState.localStorage,
     },
     state: () => ({
-        alerts: [],
+        jobs: [],
     }),
     getters: {
-        getAlerts(state) {
-            return state.alerts;
+        getJobs(state) {
+            return state.jobs
         }
     },
     actions: {
-        async fetchAlerts() {
+        async fetchJobs() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/alerts");
-                console.log(res.data.data.data);
-                this.alerts = res.data.data.data;
+                const res = await axios.get("http://localhost:8000/api/v1/jobs");
+                this.jobs = res.data.data.data
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchTechnicianJobs(id: number | string) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.get(`http://localhost:8000/api/v1/jobs/technician/${id}`);
+                console.log(res.data.data);
+                return res.data.data
             } catch (error) {
                 console.log(error);
                 return error
             }
         },
-        async fetchAlert(id: number | string) {
+        async fetchCustomerJobs(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/alerts/${id}`);
+                const res = await axios.get(`http://localhost:8000/api/v1/jobs/customer/${id}`);
                 console.log(res.data.data);
                 return res.data.data
             } catch (error) {
-                alert(error);
                 console.log(error);
-            }
-        },
-        async createAlert(alertPayload: any) {
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            try {
-                const res = await axios.post(`http://localhost:8000/api/v1/alerts`, alertPayload);
-
-                if (!res.data.success) {
-                    throw new Error(res.data.message);
-                }
-            } catch (error) {
-                console.log(error)
-                throw error
+                return error
             }
         }
     }
-});
+})
