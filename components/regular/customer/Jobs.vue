@@ -47,7 +47,7 @@
           <div
             class="rounded-lg border p-2 text-center text-xs"
             :class="[
-              slotProps.data.status === 'Completed'
+              slotProps.data.status === 'in_progress'
                 ? 'border-[#009F10] bg-[#cbf2e2] p-2 text-[#009F10]'
                 : 'border-[#BF0202] bg-[#f8cccc] p-2 text-[#BF0202]',
             ]"

@@ -23,12 +23,13 @@ import RadioButton from "primevue/radiobutton";
 import SelectButton from "primevue/selectbutton";
 import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
-
+import Calendar from "primevue/calendar";
 import ToastService from "primevue/toastservice";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
   nuxtApp.vueApp.use(ToastService);
+  nuxtApp.vueApp.component("Calendar", Calendar);
   nuxtApp.vueApp.component("Button", Button);
   nuxtApp.vueApp.component("InputText", InputText);
   nuxtApp.vueApp.component("Toast", Toast);

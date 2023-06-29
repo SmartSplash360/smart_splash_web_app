@@ -84,8 +84,8 @@
           header="Status"
       >
         <template #body="slotProps">
-          <Tag :value="slotProps.data.status === 1 ? 'Active': 'Inactive'"
-               :severity="slotProps.data.status === 1 ? 'success': 'danger'"/>
+          <Tag :value="slotProps.data?.status === 1 ? 'Active': 'Inactive'"
+               :severity="slotProps.data?.status === 1 ? 'success': 'danger'"/>
         </template>
       </Column>
     </DataTable>
