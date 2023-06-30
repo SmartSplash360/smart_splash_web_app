@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import router from "#app/plugins/router";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -65,10 +66,12 @@ export const useUserStore = defineStore("user", {
             }
         },
         async logout() {
+            const router = useRouter();
             const res = await axios.post("http://localhost:8000/api/v1/auth/logout");
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;
+            await router.push('/customers');
         },
         async forgotPassword() {
         },

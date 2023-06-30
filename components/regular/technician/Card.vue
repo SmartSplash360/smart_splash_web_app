@@ -55,7 +55,8 @@
             <div class="h-[120px] w-[120px] rounded-full">
               <Avatar
                   :image="technician?.photo ?? 'https://plchldr.co/i/500x500'"
-                  class="mr-2 !h-full !w-full"
+                  class="mr-2"
+                  style="width: 100px; height: 100px"
                   shape="circle"
               />
             </div>

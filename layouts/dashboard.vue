@@ -4,7 +4,7 @@
       <UiTheSidebar></UiTheSidebar>
     </div>
     <div
-      class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto"
+        class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto"
     >
       <UiTheNavbar></UiTheNavbar>
       <div class="lg:hidden">

@@ -74,6 +74,7 @@ export const useProductStore = defineStore("product", {
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
+                return res.data
             } catch (error) {
                 console.log(error)
                 throw error

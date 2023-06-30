@@ -2,7 +2,7 @@
   <div
     class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20"
   >
-    <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
+    <div class="max-h-[150px] lg:max-w-[298px]">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
@@ -60,13 +60,8 @@ const showActiveRoute = () => {
 
 <style scoped>
 .side-bar-container {
-  background: rgb(108, 106, 153);
-  background: linear-gradient(
-    180deg,
-    rgba(108, 106, 153, 1) 0%,
-    rgba(245, 235, 235, 1) 0%,
-    rgba(4, 132, 173, 1) 33%
-  );
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 12%, rgba(1,93,123,1) 32%);
 }
 </style>
 

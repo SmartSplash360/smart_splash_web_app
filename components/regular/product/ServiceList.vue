@@ -151,13 +151,13 @@ const closeModal = ({success, error}) => {
   service.value = null;
 
   if (success) {
-    toast.add({severity: 'success', summary: 'Create Product Success', detail: success, life: 3000});
+    toast.add({severity: 'success', summary: 'Create Service Success', detail: success, life: 3000});
   }
 
   if (error) {
     toast.add({
       severity: 'error',
-      summary: 'Create Product Error',
+      summary: 'Create Service Error',
       detail: `Failed to create product, an error has occurred: ${error}`,
       life: 3000
     });

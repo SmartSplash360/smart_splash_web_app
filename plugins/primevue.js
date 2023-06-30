@@ -29,11 +29,13 @@ import InputNumber from "primevue/inputnumber";
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
+import ContextMenu from "primevue/contextmenu";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
   nuxtApp.vueApp.use(ToastService);
   nuxtApp.vueApp.use(ConfirmationService);
+  nuxtApp.vueApp.component("ContextMenu", ContextMenu);
   nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
   nuxtApp.vueApp.component("Calendar", Calendar);
   nuxtApp.vueApp.component("Button", Button);
