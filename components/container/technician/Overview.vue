@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col gap-12">
+  <section v-if="loading">
+    <SkeletonDetailPage></SkeletonDetailPage>
+  </section>
+  <section v-else class="flex flex-col gap-12">
     <div class="flex items-center gap-2 sm:gap-5">
       <div class="h-[60px] w-[60px] rounded-full sm:h-[120px] sm:w-[120px]">
         <Avatar
@@ -31,7 +34,7 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -62,6 +65,7 @@ onMounted(async () => {
 const profileImage = computed(() => {
   return technician.value?.photo ?? '';
 });
+const loading = ref(false);
 const switchTabs = (tab) => {
   if (tab) {
     currentTab.value = tab;
@@ -70,4 +74,3 @@ const switchTabs = (tab) => {
 };
 </script>
 
-<style lang="scss" scoped></style>

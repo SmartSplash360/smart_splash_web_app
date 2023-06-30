@@ -11,15 +11,15 @@
       </div>
       <div class="flex flex-col justify-end gap-5 sm:flex-row">
         <Button
+          class="hover:shadow-lg"
           label="Cancel"
           severity="secondary"
           outlined
-          @click="toggleAddAlertModal"
         />
-        <Button label="Save changes" class="!bg-[#0291BF]" />
+        <Button label="Save changes" class="!bg-[#0291BF] hover:shadow-lg" />
       </div>
     </div>
-    <div class="flex flex-col gap-10 border-b py-10 sm:flex-row sm:gap-64">
+    <div class="flex flex-col gap-10 border-b py-10 sm:flex-row xl:gap-64">
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Card details</h2>
         <span class="text-sm font-[400] leading-normal"

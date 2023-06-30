@@ -1,5 +1,9 @@
 <template>
   <div class="sn:gap-20 flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonDetailPage></SkeletonDetailPage>
+  </section>
+ <section v-else class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
     <div
       class="sm:min-:w-[30rem] flex items-center justify-center self-center text-[#025E7C] sm:gap-20"
@@ -75,6 +79,7 @@
         v-else-if="currentTab === 'PAYMENTS'"
       ></RegularCustomerPayments>
     </div>
+  </section>
   </div>
 </template>
 
@@ -90,6 +95,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const loading = ref(false)
 const currentTab = ref("JOBS");
 
 const report = ref();

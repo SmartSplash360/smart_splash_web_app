@@ -12,7 +12,7 @@
           :product="product"
       ></ModalsProductCreateProductModal>
     </div>
-    <div class="card">
+    <div class="card border border-t-0">
       <DataTable
           v-model:selection="selectedProduct"
           v-model:filters="filters"
@@ -87,7 +87,6 @@
               <span>{{ slotProps?.data?.updated_at }}</span>
             </div>
           </template>
-
         </Column>
         <Column>
           <template #body="slotProps">

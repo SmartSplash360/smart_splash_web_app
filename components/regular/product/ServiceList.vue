@@ -12,7 +12,7 @@
           :service="service"
       ></ModalsProductCreateServiceModal>
     </div>
-    <div class="card">
+    <div class="card border border-t-0">
       <DataTable
           v-model:selection="selectedService"
           v-model:filters="filters"
@@ -142,7 +142,7 @@ const services = computed(() => serviceStore.getServices.map((service) => {
 const service = ref();
 const addServiceModal = ref(false);
 const loading = ref(true);
-const selectedService = ref();
+const selectedProduct = ref();
 
 const toggleAddServiceModal = () => (addServiceModal.value = true);
 

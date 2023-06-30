@@ -1,72 +1,29 @@
 <template>
-  <div
-    class="flex max-h-[88vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
+  <section v-if="loading">
+    <SkeletonChatListing></SkeletonChatListing>
+  </section>
+  <section
+    v-else
+    class="flex max-h-[95vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
   >
     <div
-      class="flex max-h-[130px] w-full flex-col gap-5 border-r sm:max-h-full sm:w-1/4 sm:pt-12"
+      class="flex w-full flex-col gap-5 sm:max-h-full sm:pt-12 xl:w-[25%] xl:border-r"
     >
-      <RegularCustomerChatPreview :chats="chats"></RegularCustomerChatPreview>
+      <RegularCustomerChatPreview
+        :chats="inboxService"
+      ></RegularCustomerChatPreview>
     </div>
-    <RegularCustomerChat></RegularCustomerChat>
-    <RegularCustomerChatProfile></RegularCustomerChatProfile>
-  </div>
+    <div class="xl:w-[55%]">
+      <RegularCustomerChat></RegularCustomerChat>
+    </div>
+    <div class="xl:w-[20%]">
+      <RegularCustomerChatProfile></RegularCustomerChatProfile>
+    </div>
+  </section>
 </template>
 
 <script setup>
-const chats = ref([
-  {
-    username: "Sarah Johns",
-    message: "New conversation",
-  },
-  {
-    username: "A.J Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Mike Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Sarah Johns",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "A.J Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Mike Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "A.J Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Mike Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Sarah Johns",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "A.J Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-  {
-    username: "Mike Beson",
-    message:
-      "Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae fringilla rhoncus..",
-  },
-]);
+import { inboxService } from "@/services/InboxServices";
+
+const loading = ref(false);
 </script>

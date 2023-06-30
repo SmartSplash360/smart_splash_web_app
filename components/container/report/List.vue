@@ -1,13 +1,16 @@
 <template>
-  <section class="flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonReportPage></SkeletonReportPage>
+  </section>
+  <section v-else class="flex flex-col gap-10">
     <RegularReportBoard></RegularReportBoard>
     <div
-      class="flex flex-col rounded-lg border py-5 lg:flex-row lg:rounded-none lg:border-0"
+      class="flex flex-col rounded-lg border py-5 lg:rounded-none lg:border-0 xl:flex-row"
     >
-      <div class="w-full lg:w-2/3">
+      <div class="w-full xl:w-2/3">
         <RegularReportRouteProfitBreakdown></RegularReportRouteProfitBreakdown>
       </div>
-      <div class="-order-1 w-full lg:order-1 lg:w-1/3">
+      <div class="-order-1 w-full xl:order-1 xl:w-1/3">
         <RegularReportActiveProperties></RegularReportActiveProperties>
       </div>
     </div>
@@ -15,4 +18,6 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+const loading = ref(false);
+</script>

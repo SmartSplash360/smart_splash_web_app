@@ -160,7 +160,7 @@ const getCustomers = (data) => {
   });
 };
 
-const selectedProduct = ref();
+const selectedCustomer = ref();
 
 const dt = ref();
 const exportCSV = (event) => {

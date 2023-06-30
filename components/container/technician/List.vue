@@ -1,5 +1,8 @@
 <template>
-  <div class="sm:gap-13 flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonCardListing></SkeletonCardListing>
+  </section>
+  <section v-else class="sm:gap-13 flex flex-col gap-10">
     <RegularTechnicianBoard
         @open-modal="toggleAddTechnicianModal"
     ></RegularTechnicianBoard>
@@ -24,7 +27,7 @@
     </div>
     <Toast/>
     <ConfirmDialog></ConfirmDialog>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -97,6 +100,8 @@ const deleteItem = async ({id}) => {
 
 <style scoped>
 .card-container {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  row-gap: 50px;
+  column-gap: 50px;
 }
 </style>

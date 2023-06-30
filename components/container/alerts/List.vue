@@ -1,6 +1,7 @@
 <template>
   <section class="flex flex-col gap-10">
-    <div class="card">
+    <SkeletonTableListing v-if="loading"></SkeletonTableListing>
+    <div v-else class="card">
       <div class="hidden w-full justify-end gap-5 hover:shadow-xl sm:flex">
         <BaseAddButton
           :btnText="' Alert'"
@@ -70,6 +71,10 @@ const addAlertModal = ref(false);
 const alerts = ref([]);
 const alert = ref()
 
+const active = ref(0);
+
+const loading = ref(false);
+
 const toggleAddAlertModal = () => (addAlertModal.value = true);
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false
@@ -111,7 +116,4 @@ onMounted(async () => {
 const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'high'));
 const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
 const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
-
-
-const active = ref(0);
 </script>

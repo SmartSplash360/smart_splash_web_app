@@ -1,5 +1,8 @@
 <template>
-  <section class="flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonTableListing></SkeletonTableListing>
+  </section>
+  <section v-else class="flex flex-col gap-10">
     <div class="card">
       <TabView v-model:activeIndex="active">
         <TabPanel header="Products">
@@ -14,6 +17,6 @@
 </template>
 
 <script setup>
-
+const loading = ref(false);
 const active = ref(0);
 </script>
