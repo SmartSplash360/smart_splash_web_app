@@ -9,6 +9,7 @@
       <ModalsProductCreateProductModal
           v-if="addProductModal"
           :toggleAddProductModal="closeModal"
+          :product="product"
       ></ModalsProductCreateProductModal>
     </div>
     <div class="card">
@@ -69,7 +70,11 @@
                  severity="success"/>
           </template>
         </Column>
-        <Column field="price" header="Price" class="w-[5%] lg:w-[10%]"></Column>
+        <Column field="price" header="Price" class="w-[5%] lg:w-[10%]">
+          <template #body="slotProps">
+            <span class="font-bold">${{ slotProps.data?.price }}</span>
+          </template>
+        </Column>
         <Column
             field="modified_at"
             header="Modified Date"
@@ -84,9 +89,27 @@
           </template>
 
         </Column>
+        <Column>
+          <template #body="slotProps">
+            <div class="flex flex-row gap-2">
+              <Button
+                  icon="pi pi-pencil"
+                  text raised rounded
+                  @click="editItem(slotProps.data)"
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="deleteItem(slotProps?.data?.id)"
+              />
+            </div>
+          </template>
+        </Column>
       </DataTable>
     </div>
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </div>
 </template>
 
@@ -97,9 +120,11 @@ import BoxIcon from "@/assets/icons/box-icon.svg";
 import Tag from 'primevue/tag';
 import { format } from 'date-fns'
 import {useToast} from "primevue/usetoast";
+import {useConfirm} from "primevue/useconfirm";
 
 const productStore = useProductStore()
 const toast = useToast();
+const confirm = useConfirm();
 
 onMounted(() => {
   loading.value = false;
@@ -114,10 +139,10 @@ const products = computed(() =>  productStore.getProducts.map((product) => {
     ...product,
     created_at: format(new Date(product?.created_at), 'dd/MM/yyyy'),
     updated_at: format(new Date(product?.updated_at), 'dd/MM/yyyy'),
-    price: `$${product?.price}`
   }
 }))
 
+const product = ref();
 const addProductModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
@@ -126,6 +151,7 @@ const toggleAddProductModal = () => (addProductModal.value = true);
 
 const closeModal = ({ success, error }) => {
   addProductModal.value = false
+  product.value = false
 
   if (success) {
     toast.add({ severity: 'success', summary: 'Create Product Success', detail: success, life: 3000 });
@@ -135,4 +161,29 @@ const closeModal = ({ success, error }) => {
     toast.add({ severity: 'error', summary: 'Create Product Error', detail: `Failed to create product, an error has occurred: ${error}`, life: 3000 });
   }
 };
+
+const editItem = (item) => {
+  product.value = item
+  toggleAddProductModal()
+}
+
+const deleteItem = async (id) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Delete Product',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      // delete item
+      try {
+        const res = await productStore.deleteProduct(id)
+        await productStore.fetchProducts();
+        toast.add({severity: 'info', summary: 'Delete Product', detail: res?.message, life: 3000});
+      } catch (e) {
+        toast.add({severity: 'error', summary: 'Delete Product', detail: `an error has occurred: ${e}`, life: 3000});
+      }
+    },
+    reject: () => {
+    }
+  })
+}
 </script>

@@ -59,15 +59,33 @@ export const useCustomerStore = defineStore("customer", {
                 throw error
             }
         },
-        async updateCustomer(id: number, customerPayload: Customer) {
+        async updateCustomer(id: number | string, customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`http://localhost:8000/api/v1/customers/${id}`, customerPayload);
-                console.log(res.data);
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
-                alert(error);
                 console.log(error);
+                throw error
+            }
+        },
+        async deleteCustomer(customerId: number | string) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.delete(`http://localhost:8000/api/v1/customers/${customerId}`);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+
+                return res.data
+            } catch (error) {
+                console.log(error)
+                throw error
             }
         }
     }

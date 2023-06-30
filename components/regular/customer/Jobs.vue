@@ -9,6 +9,7 @@
       :rows="4"
       tableStyle="min-width: 50rem; min-height : 25rem"
     >
+      <template #empty> No jobs found. </template>
       <Column field="date" header="Date" style="width: 20%">
         <template #body="slotProps">
           {{ slotProps.data?.start_date }}

@@ -59,15 +59,33 @@ export const useTechnicianStore = defineStore("technician", {
                 throw error
             }
         },
-        async updateTechnician(id: number, technicianPayload: any) {
+        async updateTechnician(id: number | string, technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`http://localhost:8000/api/v1/technicians/${id}`, technicianPayload);
-                console.log(res.data);
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
-                alert(error);
                 console.log(error);
+                throw error
+            }
+        },
+        async deleteTechnician(id: number | string) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.delete(`http://localhost:8000/api/v1/technicians/${id}`);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+
+                return res.data
+            } catch (error) {
+                console.log(error)
+                throw error
             }
         }
     }

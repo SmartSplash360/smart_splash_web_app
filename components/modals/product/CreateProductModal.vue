@@ -7,7 +7,7 @@
           class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
         <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
-          New Product
+          {{ product ? 'Edit' : 'New' }} Product {{ product ? `#${product?.id}` : '' }}
         </h3>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
@@ -44,11 +44,12 @@
               @click="toggleAddProductModal( { show: false })"
               class="hover:shadow-xl"
           />
-          <Button label="Submit" icon="pi pi-check" @click="createProduct"/>
+          <Button label="Submit" icon="pi pi-check"
+                  @click="product ? updateProduct() : createProduct() "/>
         </div>
       </form>
       <div
-          @click="toggleAddProductModal"
+          @click="toggleAddProductModal( { show: false })"
           class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
       >
         x
@@ -62,6 +63,11 @@ import {useProductStore} from "~/stores/products";
 
 const props = defineProps({
   toggleAddProductModal: Function,
+  product: {
+    type: Object,
+    default: () => null,
+    required: false,
+  },
 });
 
 const productStore = useProductStore();
@@ -72,21 +78,53 @@ const name = ref("");
 const description = ref("");
 const price = ref(1.00);
 
+onMounted(() => {
+  if (props.product) {
+    isAvailable.value = props.product.is_available === 1;
+    notes.value = props.product.notes;
+    name.value = props.product.name;
+    description.value = props.product.description;
+    price.value = props.product.price;
+  }
+})
+
 const createProduct = async () => {
   try {
     // TODO: validation
-
-    await productStore.createProduct({
+    const data = {
       name: name.value,
       description: description.value,
       price: price.value,
       notes: notes.value,
       is_available: isAvailable.value,
-    });
+    }
+
+    await productStore.createProduct(data);
+    await productStore.fetchProducts();
 
     props.toggleAddProductModal({success: "Product created successfully"});
   } catch (e) {
     props.toggleAddProductModal({error: e});
+  }
+}
+
+const updateProduct = async () => {
+  // TODO: validation
+  try {
+    const data = {
+      name: name.value,
+      description: description.value,
+      price: price.value,
+      notes: notes.value,
+      is_available: isAvailable.value,
+    };
+
+    await productStore.updateProduct(props.product?.id, data);
+    await productStore.fetchProducts();
+
+    props.toggleAddProductModal({success: `Product ${props.product?.id} updated successfully`});
+  } catch (e) {
+    props.toggleAddProductModal({error: e})
   }
 }
 </script>

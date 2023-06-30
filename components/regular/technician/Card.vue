@@ -1,6 +1,5 @@
 <template>
   <div
-      @click="viewTechnician"
       class="card align-items-center justify-content-center flex cursor-pointer justify-center"
   >
     <Card class="max-w-full hover:shadow-md">
@@ -23,15 +22,27 @@
                   :to="`technicians/${props.technician.id}`"
                   class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-b-none px-3 py-2 hover:bg-gray-200"
               >
-                <img :src="BarsIcon" alt="bars-icon"/>
+                <i class="pi pi-eye"></i>
+
                 <span class="min-w-max text-sm font-medium">
                   View Technician</span
                 >
               </nuxt-link>
               <div
+                  @click="editTechnician"
                   class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
               >
-                <img :src="TrashIcon" alt="trash-icons"/>
+                <i class="pi pi-pencil"></i>
+
+                <span class="min-w-max text-sm font-medium">
+                  Edit Technician</span
+                >
+              </div>
+              <div
+                  @click="deleteTechnician"
+                  class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
+              >
+                <i class="pi pi-trash"></i>
 
                 <span class="min-w-max text-sm font-medium">
                   Delete Technician</span
@@ -39,6 +50,7 @@
               </div>
             </div>
           </div>
+          <nuxt-link :to="`technicians/${props.technician.id}`">
           <div class="flex items-center gap-5">
             <div class="h-[120px] w-[120px] rounded-full">
               <Avatar
@@ -70,6 +82,7 @@
               </div>
             </div>
           </div>
+          </nuxt-link>
         </div>
       </template>
       <template #title>
@@ -78,6 +91,7 @@
         </div>
       </template>
       <template #content>
+        <nuxt-link :to="`technicians/${props.technician.id}`">
         <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
           <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
@@ -92,6 +106,7 @@
             <span class="text-xs xl:text-[16px]">{{ technician?.phone_number }}</span>
           </div>
         </div>
+        </nuxt-link>
       </template
       >
     </Card>
@@ -125,10 +140,22 @@ const props = defineProps({
       }
     }
   },
+  deleteItem: Function,
+  editItem: Function
 });
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;
 };
+
+const deleteTechnician = () => {
+  console.log("delete technician");
+  props.deleteItem({ id: props.technician?.id });
+};
+
+const editTechnician = () => {
+  console.log("edit technician");
+  props.editItem({ item: props.technician });
+}
 
 const router = useRouter();
 const viewTechnician = () => {

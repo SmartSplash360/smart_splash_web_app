@@ -88,6 +88,23 @@
                :severity="slotProps.data?.status === 1 ? 'success': 'danger'"/>
         </template>
       </Column>
+      <Column>
+        <template #body="slotProps">
+          <div class="flex flex-row gap-2">
+            <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                @click="editAlert(slotProps.data)"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger"
+                @click="deleteAlert(slotProps?.data?.id)"
+            />
+          </div>
+        </template>
+      </Column>
     </DataTable>
   </div>
   <div class="mobile- flex flex-col gap-2 sm:hidden">
@@ -117,6 +134,11 @@ import Tag from 'primevue/tag';
 
 const store = useCustomerStore();
 
+const props = defineProps({
+  editItem: Function,
+  deleteItem: Function
+});
+
 const customers = ref([]);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -143,5 +165,15 @@ const selectedProduct = ref();
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
+};
+
+const editAlert = (customer) => {
+  // console.log(customer)
+  props.editItem({ id: customer.id, item: { ...customer } })
+};
+
+const deleteAlert = async (id) => {
+  // console.log(id)
+  props.deleteItem({ id })
 };
 </script>

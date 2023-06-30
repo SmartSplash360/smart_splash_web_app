@@ -55,6 +55,36 @@ export const useAlertStore = defineStore("alert", {
                 console.log(error)
                 throw error
             }
+        },
+        async updateAlert(alertId: number | string, alertPayload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.post(`http://localhost:8000/api/v1/alerts/${alertId}`, alertPayload);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        },
+        async deleteAlert(alertId: number | string){
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.delete(`http://localhost:8000/api/v1/alerts/${alertId}`);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+
+                return res.data
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
         }
     }
 });

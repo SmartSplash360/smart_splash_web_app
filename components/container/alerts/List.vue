@@ -10,6 +10,7 @@
       <CreateAlertModal
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
+        :alert="alert"
       ></CreateAlertModal>
       <TabView v-model:activeIndex="active">
         <TabPanel>
@@ -22,7 +23,7 @@
               >
             </div>
           </template>
-          <RegularAlertHighAlert :alerts="highAlerts"></RegularAlertHighAlert>
+          <RegularAlertHighAlert :alerts="highAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertHighAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -51,23 +52,28 @@
       </TabView>
     </div>
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
 <script setup>
 import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
 import {useToast} from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
 import {useAlertStore} from "~/stores/alert";
 
 const toast = useToast();
+const confirm = useConfirm();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
 const alerts = ref([]);
+const alert = ref()
 
 const toggleAddAlertModal = () => (addAlertModal.value = true);
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false
+  alert.value = null
 
   if (success) {
     toast.add({ severity: 'success', summary: 'Create Customer Success', detail: success, life: 3000 });
@@ -77,6 +83,26 @@ const closeModal = ({ success, error }) => {
     toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
   }
 };
+
+const editItem = ({ id, item }) => {
+  console.log(id, item)
+  alert.value = item
+  toggleAddAlertModal()
+}
+
+const deleteItem = async ({ id }) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Delete Alert',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      // delete item
+      const res = await alertStore.deleteAlert(id)
+      toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 3000 });
+    },
+    reject: () => {}
+  })
+}
 
 onMounted(async () => {
   alerts.value = alertStore.getAlerts;

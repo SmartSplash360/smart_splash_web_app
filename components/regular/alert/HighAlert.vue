@@ -65,6 +65,23 @@
                  :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
           </template>
         </Column>
+        <Column>
+          <template #body="slotProps">
+            <div class="flex flex-row gap-2">
+              <Button
+                  icon="pi pi-pencil"
+                  text raised rounded
+                  @click="editAlert(slotProps.data)"
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="deleteAlert(slotProps?.data?.id)"
+              />
+            </div>
+          </template>
+        </Column>
       </DataTable>
     </div>
   </div>
@@ -78,6 +95,8 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  editItem: Function,
+  deleteItem: Function
 });
 
 onMounted(async () => {
@@ -85,4 +104,14 @@ onMounted(async () => {
 });
 
 const loading = ref(true);
+
+const editAlert = (alert) => {
+  // console.log(alert)
+  props.editItem({ id: alert.id, item: { ...alert } })
+};
+
+const deleteAlert = async (id) => {
+  // console.log(id)
+  props.deleteItem({ id })
+};
 </script>

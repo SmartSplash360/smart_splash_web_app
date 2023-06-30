@@ -39,7 +39,7 @@ export const useProductStore = defineStore("product", {
                 console.log(error);
             }
         },
-        async createProduct(productPayload: Product) {
+        async createProduct(productPayload: any) {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
@@ -52,14 +52,17 @@ export const useProductStore = defineStore("product", {
                 throw error
             }
         },
-        async updateProduct(id: number, productPayload: Product) {
+        async updateProduct(id: number | string, productPayload: any) {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post(`http://localhost:8000/api/v1/products/${id}`, productPayload);
-                return res.data.data
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
                 console.log(error)
+                throw error
             }
         },
         async deleteProduct(id: number) {
@@ -67,9 +70,13 @@ export const useProductStore = defineStore("product", {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.delete(`http://localhost:8000/api/v1/products/${id}`);
-                return res.data.data
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
                 console.log(error)
+                throw error
             }
         }
     },

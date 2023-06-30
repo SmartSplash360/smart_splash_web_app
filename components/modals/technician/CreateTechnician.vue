@@ -7,7 +7,7 @@
         class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
         <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
-          New Technician
+          {{ technician ? 'Edit' : 'New' }} Technician {{ technician ? `#${technician?.id}` : '' }}
         </h3>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
@@ -29,7 +29,7 @@
             <InputText type="text" v-model="phoneNumber"></InputText>
           </div>
         </div>
-        <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div v-if="!technician" class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="name"> Password* </label>
             <InputText type="text" v-model="password"></InputText>
@@ -39,7 +39,7 @@
             <InputText type="text" v-model="passwordConfirmation"></InputText>
           </div>
         </div>
-        <div class="mt-20 flex flex-col justify-end gap-5 sm:flex-row">
+        <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
           <Button
             label="Cancel"
             severity="secondary"
@@ -51,12 +51,12 @@
               label="Submit"
               icon="pi pi-check"
               class="!bg-[#0291BF] hover:shadow-xl"
-              @click="createTechnician"
+              @click="technician ? updateTechnician() : createTechnician()"
           />
         </div>
       </form>
       <div
-        @click="toggleAddTechnicianModal"
+        @click="toggleAddTechnicianModal({ show: false })"
         class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
       >
         x
@@ -75,21 +75,34 @@ const props = defineProps({
     type: Function,
     default: () => {},
     required: true
+  },
+  technician: {
+    type: Object,
+    default: () => null,
+    required: false
   }
 });
 
-const name = ref('Test')
-const surname = ref('Technician')
-const email = ref('test1@technician.com')
-const phoneNumber = ref('0760970734')
-const password = ref('password')
-const passwordConfirmation = ref('password')
+const name = ref('')
+const surname = ref('')
+const email = ref('')
+const phoneNumber = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
 const company = ref('1')
+
+onMounted(() => {
+  if (props.technician) {
+    name.value = props.technician.name
+    surname.value = props.technician.surname
+    email.value = props.technician.email
+    phoneNumber.value = props.technician.phone_number
+  }
+})
 
 
 const createTechnician = async () => {
   // TODO: add validation
-
 
   try {
     await store.createTechnician({
@@ -102,6 +115,26 @@ const createTechnician = async () => {
       company: company.value
     });
     props.toggleAddTechnicianModal({success: "Customer created successfully"});
+  } catch (e) {
+    props.toggleAddTechnicianModal({error: e});
+  }
+}
+
+const updateTechnician = async () => {
+  // TODO: add validation
+
+  try {
+    const data = {
+      id: props.technician.id,
+      name: name.value,
+      surname: surname.value,
+      email: email.value,
+      phone_number: phoneNumber.value,
+    }
+    await store.updateTechnician(props.technician?.id, data);
+    await store.fetchTechnicians()
+
+    props.toggleAddTechnicianModal({success: `Technician ${props.technician?.id} updated successfully`});
   } catch (e) {
     props.toggleAddTechnicianModal({error: e});
   }

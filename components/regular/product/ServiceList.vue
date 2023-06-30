@@ -9,6 +9,7 @@
       <ModalsProductCreateServiceModal
           v-if="addServiceModal"
           :toggleAddServiceModal="closeModal"
+          :service="service"
       ></ModalsProductCreateServiceModal>
     </div>
     <div class="card">
@@ -69,7 +70,11 @@
                  severity="success"/>
           </template>
         </Column>
-        <Column field="price" header="Price" class="w-[5%] lg:w-[15%]"></Column>
+        <Column field="price" header="Price" class="w-[5%] lg:w-[15%]">
+          <template #body="slotProps">
+            <span class="font-bold">${{ slotProps.data?.price }}</span>
+          </template>
+        </Column>
         <Column
             field="modified_at"
             header="Modified Date"
@@ -80,6 +85,23 @@
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
               <span>{{ slotProps?.data?.updated_at }}</span>
+            </div>
+          </template>
+        </Column>
+        <Column>
+          <template #body="slotProps">
+            <div class="flex flex-row gap-2">
+              <Button
+                  icon="pi pi-pencil"
+                  text raised rounded
+                  @click="editItem(slotProps.data)"
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="deleteItem(slotProps?.data?.id)"
+              />
             </div>
           </template>
         </Column>
@@ -95,9 +117,11 @@ import BoxIcon from "@/assets/icons/box-icon.svg";
 import Tag from "primevue/tag";
 import {format} from "date-fns";
 import {useToast} from "primevue/usetoast";
+import {useConfirm} from "primevue/useconfirm";
 
 const toast = useToast();
 const serviceStore = useServiceStore();
+const confirm = useConfirm();
 
 onMounted(() => {
   loading.value = false;
@@ -112,11 +136,10 @@ const services = computed(() => serviceStore.getServices.map((service) => {
     ...service,
     created_at: format(new Date(service?.created_at), 'dd/MM/yyyy'),
     updated_at: format(new Date(service?.updated_at), 'dd/MM/yyyy'),
-    price: `$${service?.price}`
-
   }
 }))
 
+const service = ref();
 const addServiceModal = ref(false);
 const loading = ref(true);
 const selectedService = ref();
@@ -125,6 +148,7 @@ const toggleAddServiceModal = () => (addServiceModal.value = true);
 
 const closeModal = ({success, error}) => {
   addServiceModal.value = false
+  service.value = null;
 
   if (success) {
     toast.add({severity: 'success', summary: 'Create Product Success', detail: success, life: 3000});
@@ -139,4 +163,28 @@ const closeModal = ({success, error}) => {
     });
   }
 };
+
+const editItem = (item) => {
+  service.value = item
+  toggleAddServiceModal()
+}
+
+const deleteItem = async (id) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Delete Service',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      // delete item
+      try {
+        const res = await serviceStore.deleteService(id)
+        await serviceStore.fetchServices();
+        toast.add({severity: 'info', summary: 'Delete Service', detail: res?.message, life: 3000});
+      } catch (e) {
+        toast.add({severity: 'error', summary: 'Delete Service', detail: `an error has occurred: ${e}`, life: 3000});
+      }
+    },
+    reject: () => {}
+  })
+}
 </script>

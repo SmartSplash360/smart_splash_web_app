@@ -22,25 +22,36 @@
         <ModalsCustomerCreateCustomerModal
           v-if="addCustomerModal"
           :toggleAddCustomerModal="closeModal"
+          :customer="customer"
         ></ModalsCustomerCreateCustomerModal>
       </div>
 
-      <RegularCustomerTable></RegularCustomerTable>
+      <RegularCustomerTable
+        :editItem="editItem"
+        :deleteItem="deleteItem"
+      ></RegularCustomerTable>
     </div>
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
 <script setup>
 import {useToast} from "primevue/usetoast";
+import {useConfirm} from "primevue/useconfirm";
+import {useCustomerStore} from "~/stores/customer";
 
 const toast = useToast();
+const confirm = useConfirm();
+const customerStore = useCustomerStore();
 
 const addCustomerModal = ref(false);
+const customer = ref()
 
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 const closeModal = ({ success, error }) => {
   addCustomerModal.value = false
+  customer.value = null
 
   if (success) {
     toast.add({ severity: 'success', summary: 'Create Customer Success', detail: 'Customer has been created successfully', life: 3000 });
@@ -50,4 +61,29 @@ const closeModal = ({ success, error }) => {
     toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
   }
 };
+
+const editItem = ({ id, item }) => {
+  console.log(id, item)
+  customer.value = item
+  toggleAddCustomerModal()
+}
+
+const deleteItem = async ({ id }) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Delete Customer',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      // delete item
+      try {
+        const res = await customerStore.deleteCustomer(id)
+        toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 3000 });
+      } catch (e) {
+        toast.add({ severity: 'error', summary: 'Delete Alert', detail: `an error has occurred: ${e}`, life: 3000 });
+      }
+    },
+    reject: () => {}
+  })
+}
+
 </script>

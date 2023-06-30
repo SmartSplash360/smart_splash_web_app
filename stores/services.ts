@@ -53,14 +53,17 @@ export const useServiceStore = defineStore("service", {
                 throw error
             }
         },
-        async updateService(id: number, servicePayload: Service) {
+        async updateService(id: number | string, servicePayload: any) {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post(`http://localhost:8000/api/v1/services/${id}`, servicePayload);
-                return res.data.data
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
                 console.log(error)
+                throw error
             }
         },
         async deleteService(id: number) {
@@ -71,6 +74,7 @@ export const useServiceStore = defineStore("service", {
                 return res.data.data
             } catch (error) {
                 console.log(error)
+                throw error
             }
         }
     },

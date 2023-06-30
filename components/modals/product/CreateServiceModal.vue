@@ -1,13 +1,13 @@
 <template>
   <div
-    class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
+      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
   >
     <div class="flex min-h-[500px] gap-2 rounded-md sm:gap-5">
       <form
-        class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
+          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
         <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
-          New Service
+          {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
         </h3>
 
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -39,18 +39,19 @@
 
         <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
           <Button
-            label="Cancel"
-            severity="secondary"
-            outlined
-            @click="toggleAddServiceModal({ show: false })"
-            class="hover:shadow-xl"
+              label="Cancel"
+              severity="secondary"
+              outlined
+              @click="toggleAddServiceModal({ show: false })"
+              class="hover:shadow-xl"
           />
-          <Button label="Submit" icon="pi pi-check" @click="createService" />
+          <Button label="Submit" icon="pi pi-check"
+                  @click="service ? updateService() : createService()"/>
         </div>
       </form>
       <div
-        @click="toggleAddServiceModal"
-        class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
+          @click="toggleAddServiceModal({ show: false })"
+          class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
       >
         x
       </div>
@@ -63,6 +64,11 @@ import {useServiceStore} from "~/stores/services";
 
 const props = defineProps({
   toggleAddServiceModal: Function,
+  service: {
+    type: Object,
+    default: () => null,
+    required: false,
+  }
 });
 
 const serviceStore = useServiceStore();
@@ -72,6 +78,16 @@ const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.00);
+
+onMounted(() => {
+  if (props.service) {
+    isAvailable.value = props.service.is_available === 1;
+    notes.value = props.service.notes;
+    name.value = props.service.name;
+    description.value = props.service.description;
+    price.value = props.service.price;
+  }
+})
 
 const createService = async () => {
   try {
@@ -88,6 +104,26 @@ const createService = async () => {
     props.toggleAddServiceModal({success: "Service created successfully"});
   } catch (e) {
     props.toggleAddServiceModal({error: e});
+  }
+}
+
+const updateService = async () => {
+  // TODO: validation
+  try {
+    const data = {
+      name: name.value,
+      description: description.value,
+      price: price.value,
+      notes: notes.value,
+      is_available: isAvailable.value,
+    };
+
+    await serviceStore.updateService(props.service?.id, data);
+    await serviceStore.fetchServices();
+
+    props.toggleAddServiceModal({success: `Service ${props.service?.id} updated successfully`});
+  } catch (e) {
+    props.toggleAddServiceModal({error: e})
   }
 }
 </script>
