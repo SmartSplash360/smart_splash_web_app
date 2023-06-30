@@ -56,7 +56,6 @@ const handleSearchChat = (status) => {
 
 const handleChatView = (inboxId) => {
 if(screen.width <= 1024){
-  console.log((screen.width))
   router.push(`/inbox/${inboxId}`)
 }
 }

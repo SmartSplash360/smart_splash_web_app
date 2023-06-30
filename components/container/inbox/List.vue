@@ -21,11 +21,8 @@
 <script setup>
 import { inboxService } from "@/services/InboxServices";
 
-
-
-
 const loading = ref(false);
-const selectedChat = ref()
+const selectedChat = ref(inboxService[0])
 
 const selectChat = (chat) => {
   selectedChat.value = chat
