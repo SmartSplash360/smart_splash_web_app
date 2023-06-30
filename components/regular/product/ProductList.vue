@@ -33,6 +33,7 @@
             </div>
           </div>
         </template>
+        <template #empty> No products found. </template>
         <Column
             field="created_at"
             header="Created Date"

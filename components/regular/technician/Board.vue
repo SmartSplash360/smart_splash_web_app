@@ -6,7 +6,7 @@
       <h3
         class="order-1 min-w-max text-[22px] font-[600] leading-7 sm:-order-1"
       >
-        3 Technicians
+        {{ techniciansCount }} Technicians
       </h3>
       <div class="card justify-content-center flex w-full sm:w-fit">
         <Dropdown
@@ -27,6 +27,12 @@
 </template>
 
 <script setup>
+import { useTechnicianStore} from "~/stores/technician";
+
+const technicianStore = useTechnicianStore();
+
+const techniciansCount = computed(() => technicianStore.technicians.length);
+
 const status = ref();
 const statuses = ref([
   {

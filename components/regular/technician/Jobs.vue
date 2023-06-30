@@ -65,10 +65,5 @@ const props = defineProps({
   },
 });
 
-onMounted(async () => {
-  CustomerJobs.getCustomersJobsMedium().then(
-      (data) => (customers.value = data)
-  );
-});
 const customers = ref();
 </script>

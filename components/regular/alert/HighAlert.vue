@@ -8,6 +8,7 @@
           tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
           :loading="loading"
       >
+        <template #empty> No alerts found. </template>
         <Column
             field="id"
             header="Alert"

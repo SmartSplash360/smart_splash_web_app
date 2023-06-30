@@ -9,11 +9,15 @@
     ></ModalsTechnicianCreateTechnician>
     <div
         class="card-container grid items-center justify-between gap-x-5 gap-y-10"
+        v-if="technicians.length > 0"
     >
       <RegularTechnicianCard v-for="technician in technicians" :key="technician.id"
                              :technician="technician"></RegularTechnicianCard>
-      <Toast />
     </div>
+    <div class="flex items-center justify-center" v-else>
+      <span class="text-[#BDBDBD]">No Technicians</span>
+    </div>
+    <Toast/>
   </div>
 </template>
 
@@ -31,15 +35,25 @@ const technicians = ref([]);
 
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
 
-const closeModal = ({ success, error }) => { 
+const closeModal = ({success, error}) => {
   addTechnicianModal.value = false
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Create Technician Success', detail: 'Technician has been created successfully', life: 3000 });
+    toast.add({
+      severity: 'success',
+      summary: 'Create Technician Success',
+      detail: 'Technician has been created successfully',
+      life: 3000
+    });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Create Technician Error', detail: `Failed to create technician, an error has occurred: ${error}`, life: 3000 });
+    toast.add({
+      severity: 'error',
+      summary: 'Create Technician Error',
+      detail: `Failed to create technician, an error has occurred: ${error}`,
+      life: 3000
+    });
   }
 };
 

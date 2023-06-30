@@ -33,6 +33,7 @@
             </div>
           </div>
         </template>
+        <template #empty> No services found. </template>
         <Column
             field="id"
             header="Created Date"
