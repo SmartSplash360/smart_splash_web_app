@@ -6,16 +6,18 @@
   <ul class="flex flex-col overflow-x-auto overflow-y-hidden sm:overflow-auto">
     <li
       v-for="chat in chatList"
-      class="min-h-[150px] border-b xl:min-h-[180px]"
+      @click="$emit('select-chat',chat)"
+      class="sm:min-h-[150px] border-b xl:min-h-[180px]"
     >
       <div
+      @click="handleChatView(chat.id)"
         class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 xl:py-0"
       >
         <img
           :src="chat.image"
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover xl:h-[65px] xl:w-[65px]"
         />
-        <div class="flex flex-col gap-2 px-5">
+        <div    class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
             <h4 class="xl:text-md text-sm font-[500] text-gray-700">
               {{ chat.name }}
@@ -41,11 +43,21 @@
 const props = defineProps({
   chats: Array,
 });
+const emits = defineEmits(['select-chat']);
 
 const chatList = ref([...props.chats]);
+const router = useRouter()
+
 const handleSearchChat = (status) => {
   chatList.value = props.chats.filter((chat) =>
     chat.name.toLowerCase().includes(status.toLowerCase())
   );
 };
+
+const handleChatView = (inboxId) => {
+if(screen.width <= 1024){
+  console.log((screen.width))
+  router.push(`/inbox/${inboxId}`)
+}
+}
 </script>

@@ -1,17 +1,13 @@
 <template>
-  <div class="hidden w-full flex-col pb-5 xl:flex">
+  <div v-if="selectedChat" class="hidden w-full flex-col pb-5 xl:flex">
     <div class="flex items-center justify-between gap-2 border-b px-5 py-3">
-      <div>
-        <Avatar
-          :image="userProfile"
-          class="mr-2"
-          size="xlarge"
-          shape="circle"
+      <img
+          :src="selectedChat.image"
+          class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"
         />
-      </div>
       <div class="flex w-full flex-col justify-between gap-1">
-        <h4 class="text-lg font-bold">Sahra Johns</h4>
-        <span class="self-start text-sm">9042349945</span>
+        <h4 class="text-lg font-bold">{{  selectedChat.name }}</h4>
+        <span class="self-start text-sm">{{ selectedChat.phone_number}}</span>
       </div>
       <img
         :src="CameraIcon"
@@ -50,8 +46,12 @@
 </template>
 
 <script setup>
-import userProfile from "@/assets/images/profile_user.jpg";
 import CameraIcon from "@/assets/icons/camera-icon.svg";
+
+defineProps({
+  selectedChat : Object
+})
+
 
 const value = ref("");
 </script>

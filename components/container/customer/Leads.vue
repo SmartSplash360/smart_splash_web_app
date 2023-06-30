@@ -11,13 +11,14 @@
     >
       <RegularCustomerChatPreview
         :chats="inboxService"
+        @select-chat="(chat) => selectChat(chat)"
       ></RegularCustomerChatPreview>
     </div>
     <div class="xl:w-[55%]">
-      <RegularCustomerChat></RegularCustomerChat>
+      <RegularCustomerChat :selectedChat="selectedChat"></RegularCustomerChat>
     </div>
     <div class="xl:w-[20%]">
-      <RegularCustomerChatProfile></RegularCustomerChatProfile>
+      <RegularCustomerChatProfile :selectedChat="selectedChat"></RegularCustomerChatProfile>
     </div>
   </section>
 </template>
@@ -25,5 +26,9 @@
 <script setup>
 import { inboxService } from "@/services/InboxServices";
 
-const loading = ref(false);
+const loading = ref(false);const selectedChat = ref()
+
+const selectChat = (chat) => {
+  selectedChat.value = chat
+}
 </script>
