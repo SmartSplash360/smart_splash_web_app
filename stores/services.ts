@@ -45,9 +45,12 @@ export const useServiceStore = defineStore("service", {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post("http://localhost:8000/api/v1/services", servicePayload);
-                return res.data.data
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
-                console.log(error);
+                throw error
             }
         },
         async updateService(id: number, servicePayload: Service) {

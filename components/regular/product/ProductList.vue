@@ -85,16 +85,20 @@
         </Column>
       </DataTable>
     </div>
+    <Toast />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {FilterMatchMode} from "primevue/api";
 import {useProductStore} from "~/stores/products";
 import BoxIcon from "@/assets/icons/box-icon.svg";
 import Tag from 'primevue/tag';
+import { format } from 'date-fns'
+import {useToast} from "primevue/usetoast";
 
 const productStore = useProductStore()
+const toast = useToast();
 
 onMounted(() => {
   loading.value = false;
@@ -103,12 +107,31 @@ onMounted(() => {
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
 });
-const products = computed(() =>  productStore.getProducts);
+
+const products = computed(() =>  productStore.getProducts.map((product) => {
+  return {
+    ...product,
+    created_at: format(new Date(product?.created_at), 'dd/MM/yyyy'),
+    updated_at: format(new Date(product?.updated_at), 'dd/MM/yyyy'),
+    price: `$${product?.price}`
+  }
+}))
+
 const addProductModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
 
 const toggleAddProductModal = () => (addProductModal.value = true);
 
-const closeModal = () => (addProductModal.value = false);
+const closeModal = ({ success, error }) => {
+  addProductModal.value = false
+
+  if (success) {
+    toast.add({ severity: 'success', summary: 'Create Product Success', detail: success, life: 3000 });
+  }
+
+  if (error) {
+    toast.add({ severity: 'error', summary: 'Create Product Error', detail: `Failed to create product, an error has occurred: ${error}`, life: 3000 });
+  }
+};
 </script>

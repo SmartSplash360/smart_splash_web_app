@@ -35,7 +35,7 @@
         </template>
         <Column
             field="id"
-            header="Created at"
+            header="Created Date"
             sortable
             class="w-[1%] lg:w-[20%]"
         >
@@ -71,7 +71,7 @@
         <Column field="price" header="Price" class="w-[5%] lg:w-[15%]"></Column>
         <Column
             field="modified_at"
-            header="Modified at"
+            header="Modified Date"
             sortable
             class="w-[5%] lg:w-[25%]"
         >
@@ -88,13 +88,14 @@
 </template>
 
 <script setup>
-import {onMounted} from "vue";
 import {FilterMatchMode} from "primevue/api";
 import {useServiceStore} from "~/stores/services";
 import BoxIcon from "@/assets/icons/box-icon.svg";
 import Tag from "primevue/tag";
+import {format} from "date-fns";
+import {useToast} from "primevue/usetoast";
 
-
+const toast = useToast();
 const serviceStore = useServiceStore();
 
 onMounted(() => {
@@ -105,12 +106,36 @@ const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
 });
 
-const services = computed(() => serviceStore.getServices);
+const services = computed(() => serviceStore.getServices.map((service) => {
+  return {
+    ...service,
+    created_at: format(new Date(service?.created_at), 'dd/MM/yyyy'),
+    updated_at: format(new Date(service?.updated_at), 'dd/MM/yyyy'),
+    price: `$${service?.price}`
+
+  }
+}))
+
 const addServiceModal = ref(false);
 const loading = ref(true);
 const selectedService = ref();
 
 const toggleAddServiceModal = () => (addServiceModal.value = true);
 
-const closeModal = () => (addServiceModal.value = false);
+const closeModal = ({success, error}) => {
+  addServiceModal.value = false
+
+  if (success) {
+    toast.add({severity: 'success', summary: 'Create Product Success', detail: success, life: 3000});
+  }
+
+  if (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Create Product Error',
+      detail: `Failed to create product, an error has occurred: ${error}`,
+      life: 3000
+    });
+  }
+};
 </script>

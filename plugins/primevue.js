@@ -24,6 +24,7 @@ import SelectButton from "primevue/selectbutton";
 import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
 import Calendar from "primevue/calendar";
+import InputNumber from "primevue/inputnumber";
 import ToastService from "primevue/toastservice";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -32,6 +33,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Calendar", Calendar);
   nuxtApp.vueApp.component("Button", Button);
   nuxtApp.vueApp.component("InputText", InputText);
+  nuxtApp.vueApp.component("InputNumber", InputNumber);
   nuxtApp.vueApp.component("Toast", Toast);
   nuxtApp.vueApp.component("Dropdown", Dropdown);
   nuxtApp.vueApp.component("Avatar", Avatar);

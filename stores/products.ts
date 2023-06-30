@@ -44,9 +44,12 @@ export const useProductStore = defineStore("product", {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.post("http://localhost:8000/api/v1/products", productPayload);
-                return res.data.data
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
-                console.log(error);
+                throw error
             }
         },
         async updateProduct(id: number, productPayload: Product) {
