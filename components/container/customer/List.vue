@@ -69,10 +69,5 @@ const closeModal = () => (addCustomerModal.value = false);
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value
 };
-const toggleCustomerView = () => {
-};
 
-provide("customer-view", {
-  toggleCustomerView,
-});
 </script>
