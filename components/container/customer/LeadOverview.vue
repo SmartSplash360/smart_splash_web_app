@@ -11,7 +11,7 @@
 <script setup>
   
 const props =   defineProps({
-    inboxId : String 
+  leadId : String 
   })
 
 
