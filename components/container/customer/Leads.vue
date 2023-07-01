@@ -9,16 +9,17 @@
     <div
       class="flex w-full flex-col gap-5 sm:max-h-full sm:pt-12 xl:w-[30%] xl:border-r"
     >
-      <RegularCustomerChatPreview
+      <RegularMessagingChatPreview
+        :path="'customers/leads'"
         :chats="inboxService"
         @select-chat="(chat) => selectChat(chat)"
-      ></RegularCustomerChatPreview>
+      ></RegularMessagingChatPreview>
     </div>
     <div class="xl:w-[50%]">
-      <RegularCustomerChat :selectedChat="selectedChat"></RegularCustomerChat>
+      <RegularMessagingChat :selectedChat="selectedChat"></RegularMessagingChat>
     </div>
     <div class="xl:w-[20%]">
-      <RegularCustomerChatProfile :selectedChat="selectedChat"></RegularCustomerChatProfile>
+      <RegularMessagingChatProfile :selectedChat="selectedChat"></RegularMessagingChatProfile>
     </div>
   </section>
 </template>
