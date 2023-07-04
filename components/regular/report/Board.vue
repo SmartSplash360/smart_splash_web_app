@@ -8,7 +8,7 @@
         <img :src="WorkCaseIcon" alt="work-case-icon" />
 
         <span
-          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
+          class="tmin-w-max ext-center lg:text-md font-light  sm:text-sm xl:text-[18px]"
           >Jobs</span
         >
       </div>
@@ -23,7 +23,7 @@
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span
-          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
+          class="tmin-w-max ext-center lg:text-md font-light  sm:text-sm xl:text-[18px]"
           >Quotes</span
         >
       </div>
@@ -37,7 +37,7 @@
       >
         <img :src="InvoiceIcon" alt="invoice-icon" />
         <span
-          class="lg:text-md min-w-max text-center font-light leading-8 sm:text-sm xl:text-[18px]"
+          class="lg:text-md min-w-max text-center font-light  sm:text-sm xl:text-[18px]"
           >Invoices</span
         >
       </div>
@@ -51,7 +51,7 @@
       >
         <img :src="ChemicalIcon" alt="chemical-tank-icon" />
         <span
-          class="lg:text-md min-w-max text-center font-light leading-8 sm:text-sm xl:text-[18px]"
+          class="lg:text-md min-w-max text-center font-light  sm:text-sm xl:text-[18px]"
           >Chemical Cost</span
         >
       </div>
@@ -64,7 +64,7 @@
       >
         <img :src="CardIcon" alt="card-icon" />
         <span
-          class="tmin-w-max ext-center lg:text-md font-light leading-8 sm:text-sm xl:text-[18px]"
+          class="tmin-w-max ext-center lg:text-md font-light  sm:text-sm xl:text-[18px]"
           >Payments</span
         >
       </div>
@@ -76,7 +76,7 @@
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="sm:text-md text-sm font-[500] leading-7">Active Customer</p>
+          <p class="sm:text-md text-sm font-[500] ">Active Customer</p>
           <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
             >156</span
           >
@@ -86,7 +86,7 @@
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="sm:text-md text-sm font-[500] leading-7">
+          <p class="sm:text-md text-sm font-[500] ">
             Prpoerties Serviced
           </p>
           <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
@@ -98,7 +98,7 @@
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="sm:text-md text-sm font-[500] leading-7">Jobs Completed</p>
+          <p class="sm:text-md text-sm font-[500] ">Jobs Completed</p>
           <span class="text-sm font-[600] text-[#015D7B] sm:text-[20px]"
             >754</span
           >

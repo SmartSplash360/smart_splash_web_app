@@ -10,7 +10,7 @@
       </div>
       <div class="flex flex-col gap-1 sm:gap-2">
         <h2 class="text-lg font-[500] sm:text-3xl">Evan Kings</h2>
-        <p class="sm:text-md text-sm leading-4">Cleaning Tech</p>
+        <p class="sm:text-md text-sm ">Cleaning Tech</p>
       </div>
       <div class="ml-auto flex flex-1 justify-end">
         <Button label="View Reports" class="!bg-[#0291BF] hover:shadow-xl" />

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between py-5">
       <div class="flex flex-col gap-4">
         <h2 class="text-[22px] font-[500]">Users</h2>
-        <span class="text-sm font-[400] leading-normal">Update users Role</span>
+        <span class="text-sm font-[400] ">Update users Role</span>
       </div>
     </div>
     <div class="card border-b pb-14">

@@ -13,7 +13,7 @@
       <Column field="type" header="Type" style="width: 20%"></Column>
       <Column field="address" header="Address" style="width: 20%">
         <template #body="slotProps">
-          <div class="p-2 text-sm leading-8">
+          <div class="p-2 text-sm ">
             {{ slotProps.data.address }}
           </div>
         </template></Column
@@ -29,7 +29,7 @@
       >
       <Column field="serviceLevel" header="Service level" style="width: 14%">
         <template #body="slotProps">
-          <div class="p-2 text-center text-sm leading-8">
+          <div class="p-2 text-center text-sm ">
             {{ slotProps.data.serviceLevel }}
           </div>
         </template></Column

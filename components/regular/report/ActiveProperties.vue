@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center gap-8 lg:gap-5">
-    <h2 class="text-[20px] font-[500] leading-[30px] lg:text-center">
+    <h2 class="text-[20px] font-[500] lg:text-center">
       Active Properties
     </h2>
     <div class="card justify-content-center flex">
@@ -12,18 +12,18 @@
       />
     </div>
     <div class="flex w-full flex-col items-center gap-5 sm:my-10 sm:w-4/5">
-      <h3 class="lg:text-md text-xl font-[600] leading-8">Totals</h3>
+      <h3 class="lg:text-md text-xl font-[600] ">Totals</h3>
       <div class="flex w-full flex-col gap-4 px-10">
         <p class="flex items-center justify-between">
-          <span class="text-md font-[300] leading-[32px]">Invoiced</span>
+          <span class="text-md font-[300] ">Invoiced</span>
           <span class="text-md font-[600] text-[#015D7B]">$23,106.49</span>
         </p>
         <p class="flex items-center justify-between">
-          <span class="text-md font-[300] leading-[32px]">Invoiced</span>
+          <span class="text-md font-[300] ">Invoiced</span>
           <span class="text-md font-[600] text-[#015D7B]">$23,106.49</span>
         </p>
         <p class="flex items-center justify-between">
-          <span class="text-md font-[300] leading-[32px]">Invoiced</span>
+          <span class="text-md font-[300] ">Invoiced</span>
           <span class="text-md font-[600] text-[#015D7B]">$23,106.49</span>
         </p>
       </div>

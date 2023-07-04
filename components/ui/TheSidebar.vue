@@ -1,6 +1,6 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20"
+    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20 dark:bg-[#1B2028]"
   >
     <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
       <img
@@ -21,7 +21,7 @@
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="text-sm font-bold leading-7">{{ link.name }}</span>
+            <span class="text-sm font-bold ">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>

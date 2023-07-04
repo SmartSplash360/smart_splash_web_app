@@ -49,8 +49,8 @@
             />
           </div>
           <div class="flex flex-col gap-2">
-            <h2 class="text-xl font-[500] leading-9">{{ name }}</h2>
-            <p class="text-md leading-4">{{ position }}</p>
+            <h2 class="text-xl font-[500] ">{{ name }}</h2>
+            <p class="text-md ">{{ position }}</p>
             <div class="mt-4 flex justify-between">
               <div class="flex items-center gap-3">
                 <img

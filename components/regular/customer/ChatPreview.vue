@@ -9,7 +9,7 @@
       class="min-h-[150px] border-b xl:min-h-[180px]"
     >
       <div
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 xl:py-0"
+        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:p-0 xl:py-0"
       >
         <img
           :src="chat.image"

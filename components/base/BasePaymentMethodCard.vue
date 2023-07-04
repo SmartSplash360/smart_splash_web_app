@@ -7,7 +7,7 @@
       <img :src="icon" :alt="icon" class="h-full w-full" />
     </div>
     <div class="flex flex-col gap-2 sm:gap-3">
-      <h4 class="sm:text-md text-sm font-[500] leading-5 sm:text-lg">
+      <h4 class="sm:text-md text-sm font-[500]  sm:text-lg">
         {{ name }} ending in 1234
       </h4>
       <p class="text-sm">Expiring {{ expiringDate }}</p>

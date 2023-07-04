@@ -30,7 +30,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'JOBS' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="text-center text-[16px] font-normal "
             >Jobs</span
           >
         </div>
@@ -39,7 +39,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'QUOTES' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="text-center text-[16px] font-normal "
             >Quotes</span
           >
         </div>
@@ -48,7 +48,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'INVOICES' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="text-center text-[16px] font-normal "
             >Invoices</span
           >
         </div>
@@ -57,7 +57,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'PAYMENTS' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="text-center text-[16px] font-normal "
             >Payments</span
           >
         </div>

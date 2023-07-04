@@ -2,7 +2,7 @@
   <div
     class="hidden min-h-[80px] w-full items-center justify-between px-10 shadow-md lg:flex"
   >
-    <p class="flex items-baseline gap-2 text-[22px] font-[600] leading-8">
+    <p class="flex items-baseline gap-2 text-[22px] font-[600] dark:text-white">
       <span class="inline-flex items-center justify-center"
         ><font-awesome-icon icon="user-group"
       /></span>
@@ -46,7 +46,7 @@
         <span class="inline-flex h-[60px] w-[60px] items-center justify-center"
           ><img :src="BellIcon" alt="bell-icons"
         /></span>
-        <span class="text-[16px] leading-6">Josh Greg</span>
+        <span class="text-[16px] ">Josh Greg</span>
         <div class="flex items-center gap-2">
           <div class="h-[50px] w-[50px] rounded-full">
             <Avatar
@@ -102,7 +102,7 @@
               class="inline-flex h-[16px] w-[16px] items-center justify-center text-xl"
               ><font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="text-sm font-bold leading-7">{{ link.name }}</span>
+            <span class="text-sm font-bold ">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>

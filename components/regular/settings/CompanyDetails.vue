@@ -5,7 +5,7 @@
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Company Profile</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Update your company logo and details here</span
         >
       </div>
@@ -21,7 +21,7 @@
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Company Logo</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Update company logo
         </span>
       </div>
@@ -168,7 +168,7 @@
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Company Name</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Update company name
         </span>
       </div>
@@ -185,7 +185,7 @@
     >
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Company Address</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Update company address
         </span>
       </div>

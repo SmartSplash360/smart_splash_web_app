@@ -40,7 +40,7 @@
     </div>
     <div class="flex flex-col gap-3">
       <button
-        class="h-[40px] w-[350px] rounded-md bg-[#3B5998] text-sm font-[400] leading-[21px] text-white"
+        class="h-[40px] w-[350px] rounded-md bg-[#3B5998] text-sm font-[400]  text-white"
       >
         <span>
           <font-awesome-icon icon="fa-brands fa-facebook" />
@@ -48,7 +48,7 @@
         <span>Continue with Faceboook</span>
       </button>
       <button
-        class="h-[40px] w-[350px] rounded-md border bg-[#FFF] text-sm font-[400] leading-[21px] text-black"
+        class="h-[40px] w-[350px] rounded-md border bg-[#FFF] text-sm font-[400]  text-black"
       >
         <span>Continue with Google</span>
       </button>

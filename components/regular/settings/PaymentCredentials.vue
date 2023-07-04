@@ -5,7 +5,7 @@
     >
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Payment Method</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Update your billing deatils and address</span
         >
       </div>
@@ -22,7 +22,7 @@
     <div class="flex flex-col gap-10 border-b py-10 sm:flex-row xl:gap-64">
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max text-[22px] font-[500]">Card details</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <span class="text-sm font-[400] "
           >Select default payment method
         </span>
       </div>
@@ -43,8 +43,8 @@
         ></BasePaymentMethodCard>
 
         <div class="mt-5 flex items-center gap-3 px-6">
-          <span class="text-xl leading-7">+</span>
-          <span class="text-lg leading-7">Add new payment method</span>
+          <span class="text-xl ">+</span>
+          <span class="text-lg ">Add new payment method</span>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
           <img :src="QuickBookIcon" alt="quick-book-icon" />
           <div class="flex flex-col gap-3">
             <h2 class="text-[22px] font-[500]">QuickBooks</h2>
-            <span class="text-sm font-[400] leading-normal"
+            <span class="text-sm font-[400] "
               >Lorem ipsum dolor sit amet consectetur. Turpis ultricies in eu
               proin nullam.</span
             >
