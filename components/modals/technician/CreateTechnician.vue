@@ -53,5 +53,3 @@ const props = defineProps({
   toggleAddTechnicianModal: Function,
 });
 </script>
-
-<style lang="scss" scoped></style>

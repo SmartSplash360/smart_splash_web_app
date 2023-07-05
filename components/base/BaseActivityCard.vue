@@ -40,6 +40,7 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  loading: Boolean,
 });
 
 const { toggleCustomerView } = inject("customer-view");

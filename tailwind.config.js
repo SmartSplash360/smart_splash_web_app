@@ -6,6 +6,7 @@ module.exports = {
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
     "./plugins/**/*.{js,ts}",
+    "./node_modules/flowbite/**/*.{js,ts}",
   ],
   theme: {
     extend: {
@@ -51,4 +52,6 @@ module.exports = {
   },
   plugins: [],
   darkMode: "class",
+  plugins: [require("flowbite/plugin")],
+
 };

@@ -1,5 +1,8 @@
 <template>
-  <div class="sm:gap-13 flex flex-col gap-10">
+  <section v-if="loading">
+    <SkeletonCardListing></SkeletonCardListing>
+  </section>
+  <section v-else class="sm:gap-13 flex flex-col gap-10">
     <RegularTechnicianBoard
       :statuses="statuses"
       @selectStatus="filterTechnicians"
@@ -17,11 +20,13 @@
         :technician="technician"
       ></RegularTechnicianCard>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
 import { TechniciansList } from "@/services/Technicians";
+
+const loading = ref(false);
 
 const addTechnicianModal = ref(false);
 const technicians = ref();
