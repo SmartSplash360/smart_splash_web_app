@@ -38,7 +38,7 @@
       >
       <Column field="serviceLevel" header="Service level" style="width: 14%">
         <template #body="slotProps">
-          <div class="p-2 text-center text-sm leading-8">
+          <div class="p-2 text-center text-sm ">
             {{ slotProps.data.serviceLevel }}
           </div>
         </template></Column

@@ -26,6 +26,7 @@ import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
 import Calendar from "primevue/calendar";
 import InputNumber from "primevue/inputnumber";
+import Tooltip from 'primevue/tooltip';
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
@@ -65,4 +66,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Badge", Badge);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
+  nuxtApp.vueApp.directive('tooltip', Tooltip);
 });

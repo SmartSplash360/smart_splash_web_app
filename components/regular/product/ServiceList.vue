@@ -43,7 +43,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps.data.created_at }}</span>
+              <span class="span__element">{{ slotProps.data.created_at }}</span>
             </div>
           </template>
         </Column
@@ -83,7 +83,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps?.data?.updated_at }}</span>
+              <span class="span__element">{{ slotProps?.data?.updated_at }}</span>
             </div>
           </template>
         </Column>

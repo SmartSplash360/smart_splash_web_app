@@ -1,6 +1,6 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20"
+    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20 dark:bg-[#1B2028]"
   >
     <div class="max-h-[150px] lg:max-w-[298px]">
       <img
@@ -17,11 +17,11 @@
             class="flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2 hover:bg-white hover:text-black"
           >
             <span
-              class="inline-flex h-[16px] w-[16px] items-center justify-center text-xl"
+              class="inline-flex h-[16px] w-[16px] items-center justify-center span__element"
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="text-sm font-bold leading-7">{{ link.name }}</span>
+            <span class="span__element">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>

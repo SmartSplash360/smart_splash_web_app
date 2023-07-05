@@ -23,7 +23,7 @@
       ></RegularTechnicianCard>
     </div>
     <div class="flex items-center justify-center" v-else>
-      <span class="text-[#BDBDBD]">No Technicians</span>
+      <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
     <Toast/>
     <ConfirmDialog></ConfirmDialog>

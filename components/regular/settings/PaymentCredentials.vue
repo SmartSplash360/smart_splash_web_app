@@ -4,8 +4,8 @@
       class="flex flex-col justify-between gap-8 border-b py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max text-[22px] font-[500]">Payment Method</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <h2 class="min-w-max heading__h2">Payment Method</h2>
+        <span class="span__element"
           >Update your billing deatils and address</span
         >
       </div>
@@ -21,8 +21,8 @@
     </div>
     <div class="flex flex-col gap-10 border-b py-10 sm:flex-row xl:gap-64">
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max text-[22px] font-[500]">Card details</h2>
-        <span class="text-sm font-[400] leading-normal"
+        <h2 class="min-w-max heading__h2">Card details</h2>
+        <span class="span__element"
           >Select default payment method
         </span>
       </div>
@@ -43,19 +43,19 @@
         ></BasePaymentMethodCard>
 
         <div class="mt-5 flex items-center gap-3 px-6">
-          <span class="text-xl leading-7">+</span>
-          <span class="text-lg leading-7">Add new payment method</span>
+          <span class="span__element">+</span>
+          <span class="span__element">Add new payment method</span>
         </div>
       </div>
     </div>
     <div class="flex items-center justify-between py-5">
       <div class="flex flex-col gap-10">
-        <h2 class="text-[22px] font-[500]">Integratios</h2>
+        <h2 class="heading__h2">Integrations</h2>
         <div class="flex gap-5 px-5">
           <img :src="QuickBookIcon" alt="quick-book-icon" />
           <div class="flex flex-col gap-3">
-            <h2 class="text-[22px] font-[500]">QuickBooks</h2>
-            <span class="text-sm font-[400] leading-normal"
+            <h2 class="heading__h2">QuickBooks</h2>
+            <span class="span__element"
               >Lorem ipsum dolor sit amet consectetur. Turpis ultricies in eu
               proin nullam.</span
             >

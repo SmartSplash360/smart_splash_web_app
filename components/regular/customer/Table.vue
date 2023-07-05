@@ -1,5 +1,5 @@
 <template>
-  <div class="laptop+ card hidden border border-b-0 border-t-0 sm:block">
+  <div class="laptop+ card hidden border border-b-0 border-t-0 sm:block dark:bg-[#1B2028]">
     <DataTable
         v-model:filters="filters"
         :value="customers"

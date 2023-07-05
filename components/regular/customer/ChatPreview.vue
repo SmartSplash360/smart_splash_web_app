@@ -9,7 +9,7 @@
       class="min-h-[150px] border-b xl:min-h-[180px]"
     >
       <div
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 xl:py-0"
+        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:p-0 xl:py-0"
       >
         <img
           :src="chat.image"
@@ -17,17 +17,17 @@
         />
         <div class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
-            <h4 class="xl:text-md text-sm font-[500] text-gray-700">
+            <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="text-[8px] text-gray-700 xl:text-[10px]">
+            <span class="span__element">
               {{ chat.time }} AM</span
             >
           </div>
-          <span class="text-[10px] text-xs font-bold xl:text-sm">
+          <span class="span__element">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis text-sm">
+          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element">
             {{ chat.message }}
           </span>
         </div>

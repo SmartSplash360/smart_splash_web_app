@@ -6,7 +6,7 @@
       <form
           class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           {{ alert ? 'Edit' : 'New' }} Alert {{ alert ? `#${alert?.id}` : '' }}
         </h3>
 

@@ -15,7 +15,7 @@
       >
         <template #header>
           <div class="py-5 text-center">
-            <span class="text-[22px] font-[500]"> Route Profit Breakdown </span>
+            <span class="span__element"> Route Profit Breakdown </span>
           </div>
         </template>
         <Column

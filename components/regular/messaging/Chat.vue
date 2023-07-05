@@ -6,8 +6,8 @@
           class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"
         />
       <div class="flex w-full flex-col justify-between gap-1">
-        <h4 class="text-lg font-bold">{{  selectedChat.name }}</h4>
-        <span class="self-start text-sm">{{ selectedChat.phone_number}}</span>
+        <h4 class="heading__h4">{{  selectedChat.name }}</h4>
+        <span class="self-start span__element">{{ selectedChat.phone_number}}</span>
       </div>
       <img
         :src="CameraIcon"
@@ -16,7 +16,7 @@
       />
     </div>
     <div class="flex flex-1 flex-col py-10">
-      <span class="text-center text-sm">Today, 12:33 AM</span>
+      <span class="text-center span__element">Today, 12:33 AM</span>
     </div>
     <!-- <div class="relative flex hidden justify-center">
       <div class="card justify-content-center flex px-5">

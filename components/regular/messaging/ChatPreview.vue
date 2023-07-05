@@ -20,18 +20,18 @@
         />
         <div    class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
-            <h4 class=" text-sm font-[500] text-gray-700">
+            <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="text-[8px] text-gray-700 ">
+            <span class="span__element">
               {{ chat.time }} AM</span
             >
           </div>
 
-          <span class="text-[10px] text-xs font-bold xl:text-sm">
+          <span class="span__element">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis text-sm">
+          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element">
             {{ chat.message }}
           </span>
         </div>
@@ -51,17 +51,17 @@
         />
         <div    class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
-            <h4 class="xl:text-md text-sm font-[500] text-gray-700">
+            <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="text-[8px] text-gray-700 xl:text-[10px]">
+            <span class="span__element">
               {{ chat.time }} AM</span
             >
           </div>
-          <span class="text-[10px] text-xs font-bold xl:text-sm">
+          <span class="span__element">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis text-sm">
+          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element">
             {{ chat.message }}
           </span>
         </div>

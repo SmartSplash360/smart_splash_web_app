@@ -8,7 +8,7 @@
       class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-80 lg:mt-28 lg:h-[268px] lg:min-w-[437px] lg:gap-5"
     >
       <div class="flex items-center justify-between">
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           Jobs
         </h3>
         <div class="card justify-content-center flex">

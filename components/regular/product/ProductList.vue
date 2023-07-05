@@ -44,7 +44,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps.data.created_at }}</span>
+              <span class="span__element">{{ slotProps.data.created_at }}</span>
             </div>
           </template>
         </Column
@@ -72,7 +72,7 @@
         </Column>
         <Column field="price" header="Price" class="w-[5%] lg:w-[10%]">
           <template #body="slotProps">
-            <span class="font-bold">${{ slotProps.data?.price }}</span>
+            <span class="span__element">${{ slotProps.data?.price }}</span>
           </template>
         </Column>
         <Column
@@ -84,7 +84,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps?.data?.updated_at }}</span>
+              <span class="span__element">{{ slotProps?.data?.updated_at }}</span>
             </div>
           </template>
         </Column>

@@ -2,8 +2,8 @@
   <form class="flex flex-col gap-5">
     <div class="flex items-center justify-between py-5">
       <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Users</h2>
-        <span class="text-sm font-[400] leading-normal">Update users Role</span>
+        <h2 class="heading__h2">Users</h2>
+        <span class="span__element">Update users Role</span>
       </div>
     </div>
     <div class="card border-b pb-14">
@@ -38,7 +38,7 @@
                 :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
                 style="width: 32px"
               />
-              <span>{{ data.name }}</span>
+              <span class="span__element">{{ data.name }}</span>
             </div>
           </template>
         </Column>
@@ -49,7 +49,7 @@
         >
           <template #body="{ data }">
             <div class="align-items-center flex gap-2">
-              <span>{{
+              <span class="span__element">{{
                 data.date.toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "long",
@@ -68,7 +68,7 @@
         >
           <template #body="{ data }">
             <div class="align-items-center flex gap-2">
-              <span>{{
+              <span class="span__element">{{
                 data.date.toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "long",

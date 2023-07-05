@@ -6,7 +6,7 @@
       <form
           class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           {{ product ? 'Edit' : 'New' }} Product {{ product ? `#${product?.id}` : '' }}
         </h3>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">

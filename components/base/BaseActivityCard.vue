@@ -13,14 +13,12 @@
     <div
       class="flex w-full items-center justify-between text-white sm:flex-col"
     >
-      <span
-        class="min-w-max text-sm font-[300] leading-6"
-        :class="[bg === 'primary' ? 'text-white' : 'text-black']"
+      <span class="min-w-max span__element "
+        :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"
         >{{ status }}</span
       >
-      <span
-        class="text-sm font-[600]"
-        :class="[bg === 'primary' ? 'text-white' : 'text-black']"
+      <span  class="span__element"
+        :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"
         >{{ count }}</span
       >
     </div>

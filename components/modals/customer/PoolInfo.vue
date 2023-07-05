@@ -7,7 +7,7 @@
     >
       <form class="flex w-full flex-col gap-8 rounded-md bg-white p-10">
         <div class="flex items-center justify-between">
-          <h3>Pool</h3>
+          <h3 class="heading__h3">Pool</h3>
           <p>+ Body of water</p>
         </div>
         <div class="flex items-center justify-between gap-5">
@@ -50,7 +50,7 @@
           <div
             class="flex w-full items-center justify-between rounded-lg border border-gray-500 p-5"
           >
-            <h3>Tile cleaning</h3>
+            <h3 class="heading__h3">Tile cleaning</h3>
             <p>...</p>
           </div>
           <Button

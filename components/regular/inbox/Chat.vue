@@ -9,23 +9,23 @@
           class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"
         />
       <div class="flex w-full flex-col justify-between gap-2">
-        <h4 class="text-lg font-medium">{{  selectedChat.name }}</h4>
-        <span class="self-start text-sm font-medium">{{selectedChat.email}}</span>
+        <h4 class="heading__h4">{{  selectedChat.name }}</h4>
+        <span class="self-start span__element">{{selectedChat.email}}</span>
       </div>
     </div>
     <div class="flex min-h-[40%] flex-1 flex-col gap-8">
-      <h2 class="text-xl font-bold">{{  selectedChat.subject }}</h2>
-      <p class="text-md font-normal tracking-wider">{{selectedChat.message}}</p>
+      <h2 class="heading__h2">{{  selectedChat.subject }}</h2>
+      <p class="paragraph__p">{{selectedChat.message}}</p>
 
-      <p class="text-sm font-medium">
+      <p class="paragraph__p">
         Lorem ipsum dolor sit amet consectetur. Ut volutpat duis nulla est. Sit
         vel odio blandit fermentum commodo sed. Sed nisi eleifend at etiam arcu
         eleifend proin eget. Tincidunt gravida dictumst lacus facilisis morbi.
         Viverra non pharetra integer sit volutpat massa est.
       </p>
-      <p class="text-sm font-medium">
-        <span class="block">Lorem ipsum</span>
-        <span
+      <p class="paragraph__p">
+        <span class="span__element block">Lorem ipsum</span>
+        <span class="span__element"
           >Lorem ipsum dolor sit amet consectetur. Pellentesque egestas cursus
           eu volutpat.</span
         >

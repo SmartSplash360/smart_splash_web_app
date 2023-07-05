@@ -7,7 +7,7 @@
       <TabPanel>
         <template #header>
           <div class="flex min-w-max items-center justify-center">
-            <span class="text-[18px] font-[500]">Company Details</span>
+            <span class="span__element">Company Details</span>
           </div>
         </template>
         <RegularSettingsCompanyDetails></RegularSettingsCompanyDetails>
@@ -15,7 +15,7 @@
       <TabPanel>
         <template #header>
           <div class="flex min-w-max items-center justify-center">
-            <span class="text-[18px] font-[500]">Payment Credentials</span>
+            <span class="span__element">Payment Credentials</span>
           </div>
         </template>
         <RegularSettingsPaymentCredentials></RegularSettingsPaymentCredentials>
@@ -23,7 +23,7 @@
       <TabPanel>
         <template #header>
           <div class="flex min-w-max items-center justify-center">
-            <span class="text-[18px] font-[500]">User Settings</span>
+            <span class="span__element">User Settings</span>
           </div>
         </template>
         <RegularSettingsUserSetting></RegularSettingsUserSetting>
