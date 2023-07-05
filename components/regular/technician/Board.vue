@@ -30,6 +30,11 @@
 <script setup>
 import { useTechnicianStore} from "~/stores/technician";
 
+const statuses = ref([
+  { state : 'Active'},
+  {state : 'Inactive'}
+])
+
 const technicianStore = useTechnicianStore();
 
 const techniciansCount = computed(() => technicianStore.technicians.length);

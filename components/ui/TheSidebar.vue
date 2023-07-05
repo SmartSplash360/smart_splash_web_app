@@ -27,35 +27,14 @@
       </ul>
     </div>
   </div>
-  <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 sm:hidden">
-    <div class="flex items-center justify-between">
-      <BaseSearchBar :size="'lg'"></BaseSearchBar>
-      <div class="text-white">
-        <span
-          @click="showActiveRoute"
-          class="inline-flex h-[30px] w-[30px] items-center justify-center"
-          ><font-awesome-icon icon="bars" class="cursor-pointer text-2xl"
-        /></span>
-      </div>
-    </div>
-    <div v-if="activeRoute" class="flex flex-col gap-2 sm:hidden">
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <BaseExportButton></BaseExportButton>
-    </div>
-  </div>
+
 </template>
 
 <script setup>
+
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { sideBarLinks } from "~/utils/sidebarLinks";
 
-const activeRoute = ref(false);
-const showActiveRoute = () => {
-  activeRoute.value = !activeRoute.value;
-};
 </script>
 
 <style scoped>
@@ -64,5 +43,3 @@ const showActiveRoute = () => {
   background: linear-gradient(180deg, rgba(255,255,255,1) 12%, rgba(1,93,123,1) 32%);
 }
 </style>
-
-<!-- :class="[link.name ? 'bg-white text-black' : '']" -->

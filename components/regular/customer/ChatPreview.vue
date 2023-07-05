@@ -24,7 +24,6 @@
               {{ chat.time }} AM</span
             >
           </div>
-
           <span class="text-[10px] text-xs font-bold xl:text-sm">
             {{ chat.subject }}
           </span>

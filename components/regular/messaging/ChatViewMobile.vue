@@ -1,19 +1,21 @@
 <template>
-  <div
-  v-if="selectedChat"
-    class="hidden h-full w-full flex-1 flex-col gap-20 px-8 py-5 pb-5 sm:flex"
+    <section
+    class=" h-full w-full flex-col gap-20  flex lg:hidden"
   >
-    <div class="flex items-center justify-between gap-3">
+    <div class="flex items-center justify-between gap-1">
+        <span @click="handlePreviousPage" class="text-xl font-[800] mr-8 cursor-pointer"> 
+            <font-awesome-icon icon="chevron-left" />
+        </span>
         <img
           :src="selectedChat.image"
-          class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"
+          class="mr-3 h-[75px] w-[75px] rounded-full object-cover "
         />
-      <div class="flex w-full flex-col justify-between gap-2">
-        <h4 class="text-lg font-medium">{{  selectedChat.name }}</h4>
+      <div class="flex w-full flex-col justify-between gap-1">
+        <h4 class="text-xl font-bold">{{  selectedChat.name }}</h4>
         <span class="self-start text-sm font-medium">{{selectedChat.email}}</span>
       </div>
     </div>
-    <div class="flex min-h-[40%] flex-1 flex-col gap-8">
+    <div class="flex flex-col gap-8">
       <h2 class="text-xl font-bold">{{  selectedChat.subject }}</h2>
       <p class="text-md font-normal tracking-wider">{{selectedChat.message}}</p>
 
@@ -31,24 +33,17 @@
         >
       </p>
     </div>
-    <div>
-      <ckeditor
-        :editor="editor"
-        v-model="editorData"
-        :config="editorConfig"
-      ></ckeditor>
-    </div>
-  </div>
-</template>
-
+  </section>
+  </template>
+  
 <script setup>
-import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
-
-defineProps({
-  selectedChat : Object
-})
-
-const editor = ClassicEditor;
-const editorData = ref("<p>Content of the editor.</p>");
-const editorConfig = reactive({});
-</script>
+  
+const props =   defineProps({
+    selectedChat : Object,
+    path : String
+  })
+  
+const router = useRouter()
+  const handlePreviousPage = () => router.go(-1)
+  </script>
+  

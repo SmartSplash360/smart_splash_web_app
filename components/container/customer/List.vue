@@ -2,17 +2,34 @@
   <section v-if="loading">
     <SkeletonCustomer></SkeletonCustomer>
   </section>
-  <section v-else class="flex flex-col gap-10">
-    <div
-      class="hidden flex-wrap items-center justify-between sm:flex xl:gap-10"
-    >
-      <ul class="flex w-full items-center justify-between gap-4 xl:w-3/4">
+  <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
+    <div class="hidden flex-wrap items-center justify-between lg:flex xl:gap-10">
+      <ul class="hidden lg:flex w-full items-center justify-between gap-4 xl:w-3/4">
         <RegularCustomerActivityCard
           :loading="loading"
           :routes="routes"
         ></RegularCustomerActivityCard>
       </ul>
       <BaseExportButton></BaseExportButton>
+    </div>
+    <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
+        <div class="flex items-center justify-between">
+          <BaseSearchBar :size="'lg'"></BaseSearchBar>
+          <div class="text-white">
+            <span
+              @click="showActiveRoute"
+              class="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center"
+              ><font-awesome-icon icon="bars" class="text-2xl"
+            /></span>
+          </div>
+        </div>
+        <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
+          <RegularCustomerActivityCard           
+            :loading="loading"
+              :routes="routes">
+          </RegularCustomerActivityCard>
+          <BaseExportButton></BaseExportButton>
+        </div>
     </div>
     <div class="flex flex-col gap-5">
       <div
@@ -61,6 +78,13 @@ const routes = reactive({
   inactive: 56,
   leads: 0,
 });
+
+const toggleActiveRoute = ref(true);
+
+const showActiveRoute = () => {
+  toggleActiveRoute.value = !toggleActiveRoute.value
+};
+
 
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 const closeModal = ({ success, error }) => {

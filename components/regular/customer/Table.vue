@@ -5,7 +5,6 @@
         :value="customers"
         paginator
         ref="dt"
-        v-model:selection="selectedProduct"
         dataKey="id"
         filterDisplay="row"
         :loading="loading"

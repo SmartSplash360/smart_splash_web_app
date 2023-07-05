@@ -16,10 +16,10 @@
         v-if="technicians.length > 0"
     >
       <RegularTechnicianCard v-for="technician in technicians"
-                             :key="technician.id"
-                             :technician="technician"
-                             :editItem="editItem"
-                             :deleteItem="deleteItem"
+        :key="technician.id"
+        :technician="technician"
+        :editItem="editItem"
+        :deleteItem="deleteItem"
       ></RegularTechnicianCard>
     </div>
     <div class="flex items-center justify-center" v-else>
@@ -37,12 +37,12 @@ import { useConfirm } from "primevue/useconfirm";
 
 const toast = useToast();
 const confirm = useConfirm();
+const loading = ref();
 
 const addTechnicianModal = ref(false);
+const technician = ref();
 
 const store = useTechnicianStore();
-
-const technician = ref();
 
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
 

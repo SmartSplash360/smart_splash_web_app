@@ -14,7 +14,6 @@
     </div>
     <div class="card border border-t-0">
       <DataTable
-          v-model:selection="selectedService"
           v-model:filters="filters"
           :value="services"
           selectionMode="single"
