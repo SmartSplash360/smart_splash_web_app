@@ -4,9 +4,9 @@
   >
     <p class="flex items-baseline gap-2 text-[22px] font-[600] leading-8">
       <span class="inline-flex items-center justify-center"
-      ><font-awesome-icon icon="user-group"
+      ><font-awesome-icon :icon="pageIcon"
       /></span>
-      <span>Customer</span>
+      <span>{{ pageName }}</span>
     </p>
     <div class="min-w-2/5 ml-auto flex items-center justify-between">
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
@@ -88,6 +88,8 @@ import BellIcon from "@/assets/icons/bell-notification-outline.svg";
 import {sideBarLinks} from "@/utils/sidebarLinks";
 import {useUserStore} from "~/stores/users";
 
+const route = useRoute();
+
 const sideBarVisible = ref(false);
 
 const userStore = useUserStore();
@@ -106,6 +108,17 @@ const onImageRightClick = (event) => {
 const toggleSideBar = () => {
   sideBarVisible.value = !sideBarVisible.value;
 };
+
+const pageName = computed(() => {
+  let name = route.name;
+  return name[0].toUpperCase() + name.slice(1);
+})
+
+const pageIcon = computed(() => {
+  let name = route.name;
+  let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
+  return sideBarLink.icon
+})
 </script>
 
 <style lang="scss" scoped></style>
