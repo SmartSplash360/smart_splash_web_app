@@ -8,17 +8,21 @@
           tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
           :loading="loading"
       >
-        <template #empty> No alerts found. </template>
+        <template #empty>
+           <div class="flex items-center justify-center">
+            <h3 class="heading__h3">No alerts found. </h3>
+           </div>
+        </template>
         <Column
             field="id"
             header="Alert"
             sortable
-            class="w-[1%] lg:w-[20%]"
+            class="w-[1%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
         ></Column>
         <Column
             field="name"
             header="Customer name"
-            class="w-[5%] lg:w-[20%]"
+            class="w-[5%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
             sortable
         >
           <template #body="slotProps">
@@ -106,12 +110,10 @@ onMounted(async () => {
 const loading = ref(true);
 
 const editAlert = (alert) => {
-  // console.log(alert)
   props.editItem({ id: alert.id, item: { ...alert } })
 };
 
 const deleteAlert = async (id) => {
-  // console.log(id)
   props.deleteItem({ id })
 };
 </script>

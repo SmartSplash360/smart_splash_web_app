@@ -1,5 +1,5 @@
 <template>
-  <div class="laptop+ card hidden border border-b-0 border-t-0 sm:block dark:bg-[#1B2028]">
+  <div class="laptop+ card hidden border-r border-l sm:block">
     <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -15,14 +15,14 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between ">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-left w-full">
               <i class="pi pi-search"/>
               <InputText
                   v-model="filters['global'].value"
-                  placeholder="Keyword Search"
-                  class="w-full"
+                  placeholder=" Search"
+                  class="w-full dark:bg-[#1B2028] !rounded-xl"
               />
             </span>
           </div>
@@ -176,3 +176,15 @@ const deleteAlert = async (id) => {
   props.deleteItem({ id })
 };
 </script>
+<style>
+/* .p-datatable-header-dark{
+  background-color: #31353F !important;
+}
+.p-datatable-footer ,.p-datatable-table{
+  background-color: green !important;
+}
+
+.p-datatable-wrapper, .p-datatable-tbody {
+  background-color:  blue !important;
+} */
+</style>

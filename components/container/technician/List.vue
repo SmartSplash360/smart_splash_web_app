@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonCardListing></SkeletonCardListing>
   </section>
-  <section v-else class="sm:gap-13 flex flex-col gap-10">
+  <section v-else class="sm:gap-13 flex flex-col gap-16">
     <RegularTechnicianBoard
         @open-modal="toggleAddTechnicianModal"
     ></RegularTechnicianBoard>

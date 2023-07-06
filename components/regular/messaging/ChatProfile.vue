@@ -1,7 +1,7 @@
 <template>
-  <div v-if="selectedChat" class="hidden h-full flex-col border-l border-r xl:flex">
+  <div v-if="selectedChat" class="hidden h-full flex-col border-l border-r  dark:border-l-gray-600 dark:border-r-gray-600 xl:flex">
     <div
-      class="flex flex-col items-center gap-5 border-b py-5 pt-5 text-center"
+      class="flex flex-col items-center gap-5 border-b  dark:border-b-gray-600 py-5 pt-5 text-center"
     >
     <img
           :src="selectedChat.image"

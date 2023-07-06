@@ -7,12 +7,14 @@
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="block sm:min-h-[150px] border-b xl:min-h-[180px] lg:hidden"
+      class="block sm:min-h-[150px] border-b  xl:min-h-[180px] lg:hidden"
     >
       <div
 
         @click="handleChatView(chat.id)"
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 "
+        class="sm:h-full
+        hover:bg-[#D9D9D9]  sm:bg-white
+        flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 "
       >
         <img
           :src="chat.image"
@@ -40,10 +42,10 @@
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="hidden lg:block sm:min-h-[150px] border-b xl:min-h-[180px]"
+      class="hidden lg:block sm:min-h-[150px] border-b dark:border-b-gray-600 xl:min-h-[180px]"
     >
       <div
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 xl:py-0"
+        class="hover:bg-[#D9D9D9] dark:hover:bg-[inherit] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 xl:py-0"
       >
         <img
           :src="chat.image"
@@ -61,7 +63,7 @@
           <span class="span__element">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element">
+          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element dark:text-gray-400">
             {{ chat.message }}
           </span>
         </div>

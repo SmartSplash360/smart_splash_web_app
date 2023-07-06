@@ -1,10 +1,10 @@
 <template>
   <div class="flex w-full items-start justify-between sm:items-center">
     <div
-      class="flex flex-col items-end gap-3 sm:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
+      class="flex flex-col items-end gap-3 lg:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
     >
       <h3
-        class="order-1 min-w-max rounded-md px-5 py-2 heading__h3 shadow-md sm:-order-1"
+        class="order-1 min-w-max rounded-md px-5 py-2 heading__h3 shadow-md sm:-order-1 dark:bg-[#1B2028]"
       >
         {{ techniciansCount }} Technicians
       </h3>
@@ -15,7 +15,7 @@
           :options="statuses"
           optionLabel="state"
           placeholder="Status"
-          class="w-full md:w-48"
+          class="w-full md:w-52 dark:bg-[#1B2028]"
         />
       </div>
     </div>

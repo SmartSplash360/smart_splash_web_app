@@ -1,14 +1,12 @@
 <template>
-  <div class="relative flex flex-col gap-8">
+  <div class="relative flex flex-col gap-14">
     <div class="hidden gap-5 rounded-xl lg:flex">
       <div
         @click="toggleJobModal"
         class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
       >
         <img :src="WorkCaseIcon" alt="work-case-icon" />
-
-        <span class="tmin-w-max text-center span__element"
-          >Jobs</span
+        <span class="tmin-w-max text-center span__element" >Jobs</span
         >
       </div>
       <ModalsReportJobModal
@@ -18,11 +16,10 @@
 
       <div
         @click="toggleQuoteModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="tmin-w-max text-center span__element"
-          >Quotes</span
+        <span class="tmin-w-max text-center span__element">Quotes</span
         >
       </div>
       <ModalsReportQuotesModal
@@ -44,7 +41,7 @@
       ></ModalsReportInvoicesModal>
       <div
         @click="toggleChemCostModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
       >
         <img :src="ChemicalIcon" alt="chemical-tank-icon" />
         <span class="lg:text-md min-w-max text-center span__element"
@@ -65,7 +62,7 @@
       </div>
     </div>
     <div
-      class="flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border"
+      class="flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028]"
     >
       <div class="lg:flex-1 lg:border-r">
         <div
@@ -105,7 +102,7 @@
           :options="numberOfDays"
           optionLabel="name"
           placeholder="90 days"
-          class="xl:w-[12rem]"
+          class="xl:w-[12rem] dark:bg-[#1B2028]"
         />
       </div>
     </div>

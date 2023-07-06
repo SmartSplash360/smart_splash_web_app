@@ -28,7 +28,7 @@
             <div class="justify-content-end flex">
               <span class="p-input-icon-left">
                 <i class="pi pi-search"/>
-                <InputText placeholder="Keyword Search"/>
+                <InputText placeholder="Keyword Search" class="dark:bg-[#1B2028]"/>
               </span>
             </div>
           </div>

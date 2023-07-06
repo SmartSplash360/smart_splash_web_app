@@ -14,7 +14,7 @@
           :options="reports"
           optionLabel="name"
           placeholder="View Reports"
-          class="w-full !border-0 md:w-56"
+          class="w-full !border-0 md:w-56 dark:bg-[#1B2028]"
         />
       </div>
       <div class="card flex justify-center">
@@ -23,7 +23,7 @@
           :options="jobsInprogress"
           optionLabel="name"
           placeholder="Jobs in Progress"
-          class="w-full !border-0 md:w-56"
+          class="w-full !border-0 md:w-56 dark:bg-[#1B2028]"
         />
       </div>
     </div>

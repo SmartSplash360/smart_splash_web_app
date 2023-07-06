@@ -24,7 +24,7 @@
               <InputText
                 v-model="filters['global'].value"
                 placeholder="Search user"
-                class="w-full sm:w-[25rem]"
+                class="w-full sm:w-[25rem] dark:bg-[#1B2028]"
               />
             </span>
           </div>
@@ -92,7 +92,7 @@
                 :options="roles"
                 optionLabel="name"
                 placeholder="Role"
-                class="w-[12rem] !bg-gray-200 !text-white"
+                class="w-[12rem] !bg-gray-200 !text-white dark:bg-[#1B2028]"
               />
             </div>
           </template>

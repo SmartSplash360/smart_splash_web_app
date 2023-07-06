@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedChat" class="hidden w-full flex-col pb-5 xl:flex">
-    <div class="flex items-center justify-between gap-2 border-b px-5 py-3">
+    <div class="flex items-center justify-between gap-2 border-b dark:border-b-gray-600 px-5 py-3">
       <img
           :src="selectedChat.image"
           class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"

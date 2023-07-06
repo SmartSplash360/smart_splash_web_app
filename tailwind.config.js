@@ -22,8 +22,8 @@ module.exports = {
     },
   },
   colors: {
-    'bg-dark' : '#31353F',
-    'bg-dark-container' : '#1B2028',
+    'dark-background' : '#31353F',
+    'dark-container' : '#1B2028',
     'dark-green' : '#0291BF',
     'green' : '#D4ECF4',
     'light-green' : '#009F10',

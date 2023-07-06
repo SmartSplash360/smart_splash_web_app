@@ -1,10 +1,11 @@
 <template>
   <div
+      @click="toggleAddServiceModal({ show: false })"
       class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
   >
-    <div class="flex min-h-[500px] gap-2 rounded-md sm:gap-5">
       <form
-          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
+          @click.stop
+          class="flex min-w-full flex-col gap-8 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[950px]"
       >
         <h3 class="heading__h3 text-[#025E7C]">
           {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
@@ -49,13 +50,6 @@
                   @click="service ? updateService() : createService()"/>
         </div>
       </form>
-      <div
-          @click="toggleAddServiceModal({ show: false })"
-          class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
-      >
-        x
-      </div>
-    </div>
   </div>
 </template>
 

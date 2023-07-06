@@ -6,7 +6,7 @@
     v-else
     class="flex max-h-[90vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
   >
-    <div class="flex w-full flex-col gap-5 sm:pt-12 lg:w-1/3 lg:border-r">
+    <div class="flex w-full flex-col gap-5 sm:pt-12 lg:w-1/3 lg:border-r dark:border-r-gray-600">
       <RegularMessagingChatPreview
         :path="'inbox'"
         :chats="inboxService"

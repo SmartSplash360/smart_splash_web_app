@@ -175,7 +175,7 @@
       <div class="card justify-content-center flex sm:w-[40rem]">
         <InputText
           type="text"
-          class="w-full"
+          class="w-full dark:bg-[#1B2028]"
           :placeholder="'SMART SPLAH360'"
         ></InputText>
       </div>
@@ -201,7 +201,7 @@
               showClear
               optionLabel="name"
               placeholder="Select a City"
-              class="md:w-14rem w-full"
+              class="md:w-14rem w-full dark:bg-[#1B2028]"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="align-items-center flex">
@@ -241,7 +241,7 @@
               showClear
               optionLabel="name"
               placeholder="Select State"
-              class="md:w-14rem w-full"
+              class="md:w-14rem w-full dark:bg-[#1B2028]"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="align-items-center flex">
@@ -277,7 +277,7 @@
           <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
-              class="w-full"
+              class="w-full dark:bg-[#1B2028]"
               :placeholder="'32211'"
             ></InputText>
 

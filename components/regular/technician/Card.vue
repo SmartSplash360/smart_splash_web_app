@@ -1,14 +1,14 @@
 <template>
   <div
-      class="card align-items-center justify-content-center flex cursor-pointer justify-center dark:bg-gray-600 dark:text-gray-300"
+      class="card align-items-center  min-w-full min-h-full justify-content-center flex cursor-pointer justify-center  dark:text-gray-300"
   >
-    <Card class="max-w-full hover:shadow-md">
+    <Card class="min-w-full  hover:shadow-md dark:bg-[#1B2028]">
       <template #header>
-        <div class="flex flex-col gap-10 px-4 py-2">
+        <div class="flex flex-col gap-10 px-4 py-2 min-h-[250px] max-h-[250px] ">
           <div class="relative flex items-center justify-between">
             <span
                 :class="technician?.status == 1 ? 'text-[#02BF70]' : 'text-red-500'"
-                class="rounded-md px-5 py-2 span__element shadow-md"
+                class="rounded-md px-5 py-2 span__element shadow-md dark:bg-[#0291BF] dark:text-white"
             >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
@@ -63,7 +63,7 @@
             <div class="flex flex-col gap-2">
               <h2 class="heading__h2">{{ technician?.name }} {{ technician?.surname || '' }}</h2>
               <p class="paragraph__p">Cleaning Tech</p>
-              <div class="mt-4 flex justify-between">
+              <div class="mt-4 flex gap-8">
                 <div class="flex items-center gap-3">
                   <img
                       :src="LikeIcon"
@@ -93,8 +93,8 @@
       </template>
       <template #content>
         <nuxt-link :to="`technicians/${props.technician.id}`">
-        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
-          <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
+        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#313542]  dark:text-white p-5">
+          <div class="flex items-center gap-3  pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
             ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
             /></span>
@@ -115,7 +115,6 @@
 </template>
 
 <script setup>
-import userProfile from "@/assets/images/profile_user.jpg";
 import LikeIcon from "@/assets/icons/like-icon.svg";
 import DislikeIcon from "@/assets/icons/dislike-icon.svg";
 import EmailIcon from "@/assets/icons/email-icon.svg";

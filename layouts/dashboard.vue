@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex max-h-[100vh] flex-col bg-white dark:bg-slate-900 dark:text-gray-500 sm:flex-row"
+    class="flex max-h-[100vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
   >
     <div class="hidden lg:block">
       <UiTheSidebar></UiTheSidebar>
@@ -20,9 +20,13 @@
 </template>
 
 <script setup lang="ts">
+
+
 type Theme = "light" | "dark";
 
 const setColorTheme = (newTheme: Theme) => {
   useColorMode().preference = newTheme;
 };
+
+
 </script>
