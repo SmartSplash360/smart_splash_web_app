@@ -5998,7 +5998,8 @@
     padding: 1rem;
     margin-top: 10px;
 } 
-.customer-table .p-datatable .p-paginator-bottom {
+.customer-table .p-datatable .p-paginator-bottom,
+.user-setting-table .p-datatable .p-paginator-bottom{
     border : 0;
     margin-top: 2rem;
 }
@@ -6012,7 +6013,8 @@
     border-width: 0;
     padding: 1rem 0;
 }
-.report-table .p-datatable .p-datatable-header  {
+.report-table .p-datatable .p-datatable-header,
+.user-setting-table .p-datatable .p-datatable-header  {
     background: inherit;
     color: #343a40;
     border: 1px solid #dee2e6;
@@ -6026,7 +6028,8 @@
 .customer-table .p-datatable-wrapper, 
 .products-table .p-datatable-wrapper, 
 .services-table .p-datatable-wrapper,
-.report-table .p-datatable-wrapper {
+.report-table .p-datatable-wrapper,
+.user-setting-table .p-datatable-wrapper {
     border: 1px solid #dee2e6;
     border-bottom: 0;
     background-color: inherit ;
@@ -6034,7 +6037,8 @@
 
 .products-table .p-datatable .p-datatable-thead > tr > th, 
 .services-table .p-datatable .p-datatable-thead > tr > th,
-.report-table .p-datatable .p-datatable-thead > tr > th{
+.report-table .p-datatable .p-datatable-thead > tr > th,
+.user-setting-table .p-datatable .p-datatable-thead > tr > th{
     padding: 1.25rem 1rem;
     /* border: 1px solid #0291BF; */
     color: #FFF;

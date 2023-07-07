@@ -2,11 +2,11 @@
   <form class="flex flex-col gap-5">
     <div class="flex items-center justify-between py-5">
       <div class="flex flex-col gap-4">
-        <h2 class="heading__h2">Users</h2>
-        <span class="span__element">Update users Role</span>
+        <h2 class="min-w-max heading__h3">Users</h2>
+        <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="card border-b pb-14">
+    <div class="card pb-14 user-setting-table">
       <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -15,7 +15,6 @@
         dataKey="id"
         :loading="loading"
         tableStyle="min-height: 30rem"
-        class="border border-t-0"
       >
         <template #header>
           <div class="flex w-full justify-center py-3">

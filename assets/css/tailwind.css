@@ -137,7 +137,7 @@ body {
   }
 
   .heading__h2 {
-    @apply text-lg font-medium sm:text-3xl
+    @apply text-xl font-medium 
   }
 
   .heading__h3 {
@@ -179,7 +179,9 @@ body {
   .span__element-large {
     @apply text-lg font-normal leading-7
   }
-
+  .span__element-light {
+    @apply text-sm font-[400]
+  }
   .span__element-bolder {
     @apply text-xl font-bold leading-7
   }

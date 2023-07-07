@@ -4,8 +4,8 @@
       class="flex flex-col justify-between gap-8 border-b py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h2">Company Profile</h2>
-        <span class="span__element"
+        <h2 class="min-w-max heading__h3">Company Profile</h2>
+        <span class="min-w-max span__element span__element-light"
           >Update your company logo and details here</span
         >
       </div>
@@ -17,16 +17,16 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b py-5 sm:flex-row sm:items-center sm:gap-20 sm:py-10"
+      class="flex flex-col gap-10 border-b py-5 sm:flex-row sm:gap-20 sm:py-10"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h2">Company Logo</h2>
-        <span class="span__element"
+        <h2 class="min-w-max heading__h3">Company Logo</h2>
+        <span class="min-w-max span__element span__element-light"
           >Update company logo
         </span>
       </div>
       <div
-        class="flex flex-col gap-5 sm:flex-1 sm:flex-row sm:items-center lg:gap-14"
+        class="flex flex-col gap-5 sm:flex-1 sm:flex-row sm:items-center sm:justify-center lg:gap-14"
       >
         <div class="max-h-[120px] max-w-[225px]">
           <img
@@ -167,15 +167,15 @@
       class="flex flex-col gap-10 border-b py-10 sm:flex-row sm:items-center sm:gap-64"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h2">Company Name</h2>
-        <span class="span__element"
+        <h2 class="min-w-max heading__h3">Company Name</h2>
+        <span class="min-w-max span__element span__element-light"
           >Update company name
         </span>
       </div>
-      <div class="card justify-content-center flex sm:w-[40rem]">
+      <div class="card justify-content-center flex sm:w-[30rem]">
         <InputText
           type="text"
-          class="w-full dark:bg-[#1B2028]"
+          class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
           :placeholder="'SMART SPLAH360'"
         ></InputText>
       </div>
@@ -184,8 +184,8 @@
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h2">Company Address</h2>
-        <span class="span__element"
+        <h2 class="min-w-max heading__h3">Company Address</h2>
+        <span class="min-w-max span__element span__element-light"
           >Update company address
         </span>
       </div>
@@ -201,7 +201,7 @@
               showClear
               optionLabel="name"
               placeholder="Select a City"
-              class="md:w-14rem w-full dark:bg-[#1B2028]"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="align-items-center flex">
@@ -241,7 +241,7 @@
               showClear
               optionLabel="name"
               placeholder="Select State"
-              class="md:w-14rem w-full dark:bg-[#1B2028]"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300"
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="align-items-center flex">
@@ -277,7 +277,7 @@
           <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
-              class="w-full dark:bg-[#1B2028]"
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-lg"
               :placeholder="'32211'"
             ></InputText>
 
