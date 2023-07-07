@@ -21,17 +21,18 @@
           <nuxt-link
             :to="link.to"
             :class="[$colorMode.value == 'dark' && 'dark-router-link-active']"
-            class=" flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3
+            class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3
+            nav-link-item
             dark:text-[#717275]
             dark:hover:bg-[#0291BF] 
             dark:hover:text-white "
           >
             <span
-              class="inline-flex h-[16px] w-[16px] items-center justify-center span__element"
+              class="inline-flex h-[16px] w-[16px] items-center justify-center nav-link-item"
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="span__element">{{ link.name }}</span>
+            <span class="nav-link-item">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>

@@ -33,6 +33,17 @@
         >
       </p>
     </div>
+    <div class="relative flex  justify-center ">
+      <div class="card justify-content-center flex min-w-full h-full">
+        <Textarea v-model="value" autoResize  class=" min-w-full min-h-[180px] px-5 dark:bg-[#1B2028] dark:text-gray-300" placeholder="Write a message here..." />
+      </div>
+      <div class="absolute bottom-7 flex w-4/5 items-center gap-5">
+        <BaseTextAreaIcon :icon="'fa-paperclip'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon :icon="'image'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon :icon="'face-smile'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon  class="ml-auto" :icon="'paper-plane'"></BaseTextAreaIcon>
+      </div>
+    </div>
   </section>
   </template>
   
@@ -43,7 +54,10 @@ const props =   defineProps({
     path : String
   })
   
+
+const value = ref("");
 const router = useRouter()
-  const handlePreviousPage = () => router.go(-1)
+const handlePreviousPage = () => router.go(-1)
+
   </script>
   

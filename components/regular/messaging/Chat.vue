@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedChat" class="hidden w-full flex-col pb-5 xl:flex">
+  <div v-if="selectedChat" class="hidden w-full flex-col pb-5 xl:flex h-full">
     <div class="flex items-center justify-between gap-2 border-b dark:border-b-gray-600 px-5 py-3">
       <img
           :src="selectedChat.image"
@@ -15,33 +15,20 @@
         class="ml-auto h-[40px] w-[40px] cursor-pointer"
       />
     </div>
-    <div class="flex flex-1 flex-col py-10">
+    <div class="flex  flex-col flex-1 pt-10 ">
       <span class="text-center span__element">Today, 12:33 AM</span>
     </div>
-    <!-- <div class="relative flex hidden justify-center">
-      <div class="card justify-content-center flex px-5">
-        <Textarea v-model="value" autoResize rows="10" cols="90" />
+    <div class="relative flex  justify-center  min-h-[180px]">
+      <div class="card justify-content-center flex  p-3 min-w-full h-full">
+        <Textarea v-model="value" autoResize  class=" min-w-full min-h-full px-5 dark:bg-[#1B2028] dark:text-gray-300" placeholder="Write a message here..." />
       </div>
-      <div class="absolute bottom-6 flex w-4/5 items-center gap-5">
-        <span
-          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
-        >
-          <font-awesome-icon icon=" fa-paperclip"
-        /></span>
-        <span
-          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
-          ><font-awesome-icon icon="image"
-        /></span>
-        <span
-          class="inline-flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-md text-xl text-[#9C9C9C]"
-          ><font-awesome-icon icon="face-smile"
-        /></span>
-        <span
-          class="ml-auto inline-flex h-[20px] w-[20px] flex-1 cursor-pointer items-center justify-end rounded-md text-xl text-[#9C9C9C]"
-          ><font-awesome-icon icon="paper-plane"
-        /></span>
+      <div class="absolute bottom-7 flex w-4/5 items-center gap-5">
+        <BaseTextAreaIcon :icon="'fa-paperclip'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon :icon="'image'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon :icon="'face-smile'"></BaseTextAreaIcon>
+        <BaseTextAreaIcon  class="ml-auto" :icon="'paper-plane'"></BaseTextAreaIcon>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 

@@ -15,7 +15,7 @@
       >
         <template #header>
           <div class="py-5 text-center">
-            <span class="span__element"> Route Profit Breakdown </span>
+            <h3 class="heading__h3"> Route Profit Breakdown </h3>
           </div>
         </template>
         <Column
@@ -71,4 +71,7 @@ const filters = ref({
 const reports = ref();
 const loading = ref(true);
 const selectedProduct = ref();
+
+
 </script>
+

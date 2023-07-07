@@ -137,51 +137,59 @@ body {
   }
 
   .heading__h2 {
-    @apply text-lg font-[500] sm:text-3xl
+    @apply text-lg font-medium sm:text-3xl
   }
 
   .heading__h3 {
-    @apply text-[20px] font-[500] leading-[30px]
+    @apply text-xl font-medium leading-normal
   }
 
   .heading__h4 {
-    @apply text-sm  font-[500]  sm:text-lg
+    @apply text-lg  font-medium
+  }
+
+  .heading__h4-light {
+    @apply text-[16px]  font-light
   }
 
   .heading__h5 {
-    @apply text-sm  font-[500]  sm:text-lg
+    @apply text-sm  font-medium 
   }
 
   .paragraph__p {
-    @apply text-sm font-[500]
+    @apply text-sm font-normal
   }
 
   .paragraph__p_bold {
-    @apply text-sm font-[500]
+    @apply text-sm font-bold
   }
 
   .paragraph__p_light {
-    @apply text-sm font-[500]
+    @apply text-sm font-light
   }
 
   .span__element {
-    @apply text-xs 
-  }
-/*   
-  .span_small {
-
+    @apply text-sm font-medium leading-7 
   }
 
-  .span_normal {
-    
+  .span__element-small {
+    @apply text-xs font-normal
   }
 
-  .span__large {
+  .span__element-large {
+    @apply text-lg font-normal leading-7
+  }
 
-  } */
+  .span__element-bolder {
+    @apply text-xl font-bold leading-7
+  }
 
   .anchor__nuxt-link {
     @apply text-sm
+  }
+
+  .nav-link-item {
+    @apply text-sm font-medium leading-normal
   }
 }
 

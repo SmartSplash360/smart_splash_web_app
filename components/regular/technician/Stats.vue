@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col border">
-    <div class="flex items-center justify-between border-b px-5 py-4">
+  <div class="flex flex-col border dark:border-gray-600">
+    <div class="flex items-center justify-between border-b dark:border-b-gray-600 px-5 py-4">
       <h3 class="heading__h3">Stats</h3>
       <div class="card justify-content-center flex">
         <Dropdown
@@ -16,7 +16,7 @@
       class="grid grid-cols-2 justify-between sm:grid-cols-4 sm:items-center"
     >
       <div
-        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5"
+        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5 dark:border-r-gray-600"
       >
         <h4 class="heading__h4">
           Average Start time
@@ -26,7 +26,7 @@
         </h2>
       </div>
       <div
-        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5"
+        class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5 dark:border-r-gray-600"
       >
         <h4 class="heading__h4">
           Average Finish time
@@ -35,7 +35,7 @@
           6:01 pm
         </h2>
       </div>
-      <div class="flex flex-col justify-center gap-3 border-r px-3 sm:p-5">
+      <div class="flex flex-col justify-center gap-3 border-r px-3 sm:p-5 dark:border-r-gray-600 ">
         <h4 class="heading__h4">
           Average time on site
         </h4>

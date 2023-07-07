@@ -7,29 +7,25 @@
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="block sm:min-h-[150px] border-b  xl:min-h-[180px] lg:hidden"
+      class="block sm:min-h-[150px] border-b  xl:min-h-[180px] lg:hidden dark:border-b-gray-600"
     >
       <div
-
         @click="handleChatView(chat.id)"
-        class="sm:h-full
-        hover:bg-[#D9D9D9]  sm:bg-white
-        flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 "
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-7 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover "
         />
-        <div    class="flex flex-col gap-2 px-5">
+        <div class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
             <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="span__element">
+            <span class="span__element-small">
               {{ chat.time }} AM</span
             >
           </div>
-
           <span class="span__element">
             {{ chat.subject }}
           </span>
@@ -42,10 +38,10 @@
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="hidden lg:block sm:min-h-[150px] border-b dark:border-b-gray-600 xl:min-h-[180px]"
+      class="hidden lg:block sm:min-h-[150px] border-b  xl:min-h-[180px] dark:border-b-gray-600" 
     >
       <div
-        class="hover:bg-[#D9D9D9] dark:hover:bg-[inherit] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 xl:py-0"
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 xl:py-0 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
@@ -56,14 +52,14 @@
             <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="span__element">
+            <span class="span__element-small">
               {{ chat.time }} AM</span
             >
           </div>
-          <span class="span__element">
+          <span class="span__element ">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element dark:text-gray-400">
+          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small dark:text-gray-400">
             {{ chat.message }}
           </span>
         </div>
@@ -89,7 +85,6 @@ const handleSearchChat = (status) => {
 };
 
 const handleChatView = (inboxId) => {
-
   router.push("/"+ props.path+ "/"+ inboxId)
 }
 </script>

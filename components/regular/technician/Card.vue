@@ -2,13 +2,15 @@
   <div
       class="card align-items-center  min-w-full min-h-full justify-content-center flex cursor-pointer justify-center  dark:text-gray-300"
   >
-    <Card class="min-w-full  hover:shadow-md dark:bg-[#1B2028]">
+    <Card class="min-w-full  shadow-xl hover:shadow-2xl dark:bg-[#1B2028]">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2 min-h-[250px] max-h-[250px] ">
-          <div class="relative flex items-center justify-between">
+          <div class="relative flex items-center justify-between" >
             <span
-                :class="technician?.status == 1 ? 'text-[#02BF70]' : 'text-red-500'"
-                class="rounded-md px-5 py-2 span__element shadow-md dark:bg-[#0291BF] dark:text-white"
+                :class="technician?.status == 1 ? 
+                'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#0291BF] dark:text-white' : 
+                'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
+                class="rounded-md px-5  span__element shadow-md "
             >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
@@ -61,7 +63,7 @@
               />
             </div>
             <div class="flex flex-col gap-2">
-              <h2 class="heading__h2">{{ technician?.name }} {{ technician?.surname || '' }}</h2>
+              <h3 class="heading__h3">{{ technician?.name }} {{ technician?.surname || '' }}</h3>
               <p class="paragraph__p">Cleaning Tech</p>
               <div class="mt-4 flex gap-8">
                 <div class="flex items-center gap-3">

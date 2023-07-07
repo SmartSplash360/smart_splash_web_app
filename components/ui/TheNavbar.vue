@@ -2,12 +2,12 @@
   <div
       class="hidden min-h-[80px] w-full items-center justify-between px-10 shadow-md lg:flex"
   >
-    <p class="flex items-baseline gap-2 paragraph__p dark:text-white">
+    <div class="flex items-baseline gap-2  dark:text-white">
       <span class="inline-flex items-center justify-center"
       ><font-awesome-icon icon="user-group"
       /></span>
-      <span>Customer</span>
-    </p>
+      <h1 class="heading__h3" >Customer</h1>
+    </div>
     <div class="min-w-2/5 ml-auto flex items-center justify-between">
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
       <button

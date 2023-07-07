@@ -16,7 +16,7 @@ import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Badge from "primevue/badge";
-import Editor from "primevue/editor";
+// import Editor from "primevue/editor";
 import Chart from "primevue/chart";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
@@ -55,7 +55,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Card", Card);
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
-  nuxtApp.vueApp.component("Editor", Editor);
+  // nuxtApp.vueApp.component("Editor", Editor);
   nuxtApp.vueApp.component("Chart", Chart);
   nuxtApp.vueApp.component("Accordion", Accordion);
   nuxtApp.vueApp.component("AccordionTab", AccordionTab);
