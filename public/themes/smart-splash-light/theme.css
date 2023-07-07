@@ -6074,7 +6074,8 @@
     color: #FFF;
 }
 
-.customer-table .p-datatable .p-datatable-tbody > tr {
+.customer-table .p-datatable .p-datatable-tbody > tr,
+.alert-table .p-datatable .p-datatable-tbody > tr {
     background: inherit;
     color: inherit;
     transition: box-shadow 0.2s;

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-10 alert-table">
+  <div class="flex flex-col gap-10 alert-table dark:text-white">
     <div class="card ">
       <DataTable
           :value="alerts"
