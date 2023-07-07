@@ -1,6 +1,6 @@
 <template>
   <div class="hidden flex-col gap-10 sm:flex">
-    <div class="card rounded-t-lg border border-t-0">
+    <div class="card rounded-t-lg report-table">
       <DataTable
         v-model:selection="selectedProduct"
         v-model:filters="filters"
@@ -14,7 +14,7 @@
         :globalFilterFields="['customer', 'representative.name']"
       >
         <template #header>
-          <div class="py-5 text-center">
+          <div class="py-2 text-center">
             <h3 class="heading__h3"> Route Profit Breakdown </h3>
           </div>
         </template>
@@ -22,33 +22,27 @@
           field="property"
           header="Prpoerty"
           sortable
-          class="w-[1%] lg:w-[20%]"
         ></Column>
         <Column
           field="invoiced"
           header="Invoiced"
-          class="w-[5%] lg:w-[20%]"
           sortable
         ></Column>
         <Column
           field="chemSpend"
           header="Chem Spend"
-          class="w-[5%] lg:w-[20%]"
         ></Column>
         <Column
           field="techPay"
           header="Tech Pay"
-          class="w-[5%] lg:w-[15%]"
         ></Column>
         <Column
           field="profit"
           header="Profit"
-          class="w-[5%] lg:w-[10%]"
         ></Column>
         <Column
           field="profitRate"
           header="Profit%"
-          class="w-[5%] lg:w-[10%]"
         ></Column>
       </DataTable>
     </div>

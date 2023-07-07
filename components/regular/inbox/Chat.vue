@@ -10,7 +10,7 @@
         />
       <div class="flex w-full flex-col justify-between gap-2">
         <h4 class="heading__h4">{{  selectedChat.name }}</h4>
-        <span class="self-start span__element">{{selectedChat.email}}</span>
+        <span class="self-start span__element text-gray-500">{{selectedChat.email}}</span>
       </div>
     </div>
     <div class="flex min-h-[40%] flex-1 flex-col gap-8">

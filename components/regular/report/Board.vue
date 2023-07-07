@@ -62,7 +62,7 @@
       </div>
     </div>
     <div
-      class="flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028]"
+      class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028]"
     >
       <div class="lg:flex-1 lg:border-r">
         <div

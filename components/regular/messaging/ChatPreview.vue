@@ -1,8 +1,17 @@
 <template>
-  <BaseSearchBar
+  <div class="flex flex-col gap-5 items-center border-b pb-5">
+    <Dropdown
+          v-model="report"
+          :options="reports"
+          optionLabel="name"
+          placeholder="Recents"
+          class="w-full !border-0 md:w-36 dark:bg-[#1B2028] self-end"
+        />
+    <BaseSearchBar
     class="w-full self-center sm:w-11/12"
     @handleSearch="handleSearchChat"
   />
+  </div>
   <ul class="flex flex-col overflow-x-auto overflow-y-hidden sm:overflow-auto">
     <li
       v-for="chat in chatList"
@@ -52,14 +61,14 @@
             <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="span__element-small">
+            <span class="span__element-small text-gray-400">
               {{ chat.time }} AM</span
             >
           </div>
           <span class="span__element ">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small dark:text-gray-400">
+          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small text-gray-500 dark:text-gray-400">
             {{ chat.message }}
           </span>
         </div>

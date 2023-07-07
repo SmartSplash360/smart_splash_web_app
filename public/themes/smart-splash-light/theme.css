@@ -749,7 +749,7 @@
     border: 0 none;
 }
 .p-dropdown .p-dropdown-label.p-placeholder {
-    color: #646c73;
+    color: inherit;
 }
 .p-dropdown .p-dropdown-label:focus,
 .p-dropdown .p-dropdown-label:enabled:focus {
@@ -758,7 +758,7 @@
 }
 .p-dropdown .p-dropdown-trigger {
     background: transparent;
-    color: #646c73;
+    color: inherit;
     width: 3rem;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -2634,7 +2634,7 @@
     color: #343a40;
     border: 1px solid #dee2e6;
     border-width: 1px 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem 0;
     font-weight: 700;
 }
 .p-datatable .p-datatable-footer {
@@ -2665,7 +2665,7 @@
     background: #f8f9fa;
 }
 .p-datatable .p-sortable-column .p-sortable-column-icon {
-    color: #343a40;
+    color: inherit;
     margin-left: 0.5rem;
 }
 .p-datatable .p-sortable-column .p-sortable-column-badge {
@@ -6002,20 +6002,45 @@
     border : 0;
     margin-top: 2rem;
 }
-.customer-table .p-datatable .p-datatable-header {
+.customer-table .p-datatable .p-datatable-header, 
+.products-table .p-datatable .p-datatable-header, 
+.services-table .p-datatable .p-datatable-header,
+.report-table .p-datatable .p-datatable-header  {
     background: inherit;
     color: #343a40;
     border: 0;
     border-width: 0;
     padding: 1rem 0;
 }
+.report-table .p-datatable .p-datatable-header  {
+    background: inherit;
+    color: #343a40;
+    border: 1px solid #dee2e6;
+    border-bottom: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
 
 /* LIGHT MODE CUSTOMER TABLE  */
 
-.customer-table .p-datatable-wrapper {
+.customer-table .p-datatable-wrapper, 
+.products-table .p-datatable-wrapper, 
+.services-table .p-datatable-wrapper,
+.report-table .p-datatable-wrapper {
     border: 1px solid #dee2e6;
     border-bottom: 0;
     background-color: inherit ;
+}
+
+.products-table .p-datatable .p-datatable-thead > tr > th, 
+.services-table .p-datatable .p-datatable-thead > tr > th,
+.report-table .p-datatable .p-datatable-thead > tr > th{
+    padding: 1.25rem 1rem;
+    /* border: 1px solid #0291BF; */
+    color: #FFF;
+    font-weight: 500;
+    background: #025E7C;
+    transition: box-shadow 0.2s;
 }
 
 .customer-table .p-datatable .p-datatable-footer {
@@ -6025,10 +6050,19 @@
     border-width:  0;
 }
 
-.customer-table .p-datatable .p-paginator-bottom {
+.customer-table .p-datatable .p-paginator-bottom,
+.report-table .p-datatable .p-paginator-bottom {
     margin-top: 2rem;
     border-width: 0;
     border-radius: 0;
+}
+
+.report-board .p-dropdown {
+    background: #025E7C;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    color: #FFF;
 }
 
 .customer-table .p-datatable .p-datatable-tbody > tr {

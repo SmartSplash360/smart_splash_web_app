@@ -12,7 +12,7 @@
           :product="product"
       ></ModalsProductCreateProductModal>
     </div>
-    <div class="card border border-t-0">
+    <div class="card products-table">
       <DataTable
           v-model:selection="selectedProduct"
           v-model:filters="filters"
@@ -20,20 +20,23 @@
           selectionMode="single"
           dataKey="id"
           :rows="10"
-          tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
+          tableStyle="min-width: 50rem; min-height : 35rem"
+          class="mt-5"
           :loading="loading"
           :globalFilterFields="['product', 'name']"
       >
-        <template #header>
-          <div class="flex gap-5">
-            <div class="justify-content-end flex">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"/>
-                <InputText placeholder="Keyword Search"/>
-              </span>
-            </div>
+      <template #header>
+        <div class="flex  dark:border-0 mb-5">
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-search"/>
+              <InputText
+                  v-model="filters['global'].value"
+                  placeholder=" Search"
+                  class="dark:bg-[#1B2028] !rounded-xl w-2/5"
+              />
+            </span>
           </div>
-        </template>
+      </template>
         <template #empty> No products found. </template>
         <Column
             field="created_at"
