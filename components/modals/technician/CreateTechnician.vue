@@ -1,9 +1,10 @@
 <template>
   <div
+    @click="toggleAddTechnicianModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]"
   >
-    <div class="flex min-h-[500px] gap-2 rounded-md sm:gap-5">
       <form
+      @click.stop
         class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
       >
         <h3 class="heading__h3 text-[#025E7C]">
@@ -55,13 +56,6 @@
           />
         </div>
       </form>
-      <div
-        @click="toggleAddTechnicianModal({ show: false })"
-        class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
-      >
-        x
-      </div>
-    </div>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <span class="p-input-icon-left">
+  <span class="p-input-icon-right">
     <i class="pi pi-search" />
     <InputText
       v-model="value"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-5 items-center border-b pb-5">
+  <div class="flex flex-col gap-5 items-center xl:border-b pb-5">
     <Dropdown
           v-model="report"
           :options="reports"
@@ -20,7 +20,7 @@
     >
       <div
         @click="handleChatView(chat.id)"
-        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-7 dark:hover:bg-[#1B2028] dark:rounded-none"
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg py-5 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
@@ -56,7 +56,7 @@
           :src="chat.image"
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover xl:h-[65px] xl:w-[65px]"
         />
-        <div    class="flex flex-col gap-2 px-5">
+        <div    class="flex flex-col gap-2 px-2">
           <div class="flex w-full items-center justify-between">
             <h4 class="heading__h4">
               {{ chat.name }}

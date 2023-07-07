@@ -8,54 +8,55 @@
       /></span>
       <h1 class="heading__h3" >Customer</h1>
     </div>
-    <div class="min-w-2/5 ml-auto flex items-center justify-between">
+    <div class="ml-auto flex items-center justify-between">
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
-      <button
-        class="mx-10 mt-2"
-        v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
-        @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
-      >
-        <svg
-          v-if="$colorMode.value == 'dark'"
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-8 w-8 text-gray-50"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+      <div class="min-w-[300px] flex items-center justify-between ml-14">
+        <button
+          v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
+          @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
         >
-          <path
-            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-          />
-        </svg>
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-8 w-8"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
-      <div class="flex items-center justify-between gap-4">
-        <span class="inline-flex h-[60px] w-[60px] items-center justify-center"
-        ><img :src="BellIcon" alt="bell-icons"
-        /></span>
-        <span class="span__element">{{ user?.name }} {{ user?.surname || '' }}</span>
+          <svg
+            v-if="$colorMode.value == 'dark'"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-gray-50"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <span class="inline-flex items-center justify-center cursor-pointer">
+          <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl"/>
+        </span>
+        <span class="span__element font-light">{{ user?.name }} {{ user?.surname || '' }}</span>
         <div class="flex items-center gap-2">
-          <div class="h-[50px] w-[50px] rounded-full">
+          <div class="rounded-full">
             <Avatar
                 @contextmenu="onImageRightClick"
                 aria-haspopup="true"
                 :image="user?.photo || userProfile"
-                class="mr-2"
-                size="xlarge"
+                class="mr-2 min-w-[50px] min-h-[50px]"
                 shape="circle"
             />
           </div>
+          <span class="inline-flex items-center justify-center cursor-pointer">
+            <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3"/>
+          </span>
           <ContextMenu ref="menu" :model="items" />
         </div>
       </div>
@@ -73,8 +74,37 @@
         />
       </div>
       <div class="flex items-center justify-between gap-4">
+        <button
+          v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
+          @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
+        >
+          <svg
+            v-if="$colorMode.value == 'dark'"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-gray-50"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
         <span class="inline-flex items-center justify-center"
-        ><font-awesome-icon :icon="['far', 'bell']" class="text-3xl"
+        ><font-awesome-icon :icon="['far', 'bell']" class="text-xl"
         /></span>
         <div class="flex items-center gap-2">
           <Avatar
@@ -114,7 +144,6 @@
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-import BellIcon from "@/assets/icons/bell-notification-outline.svg";
 import {sideBarLinks} from "@/utils/sidebarLinks";
 import {useUserStore} from "~/stores/users";
 

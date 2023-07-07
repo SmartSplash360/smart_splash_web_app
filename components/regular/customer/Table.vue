@@ -17,7 +17,7 @@
       <template #header>
         <div class="flex items-center justify-between dark:border-0 mb-5">
           <div class="flex w-80 justify-start">
-            <span class="p-input-icon-left w-full">
+            <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
               <InputText
                   v-model="filters['global'].value"

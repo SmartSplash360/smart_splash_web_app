@@ -8,7 +8,7 @@
           <div class="relative flex items-center justify-between" >
             <span
                 :class="technician?.status == 1 ? 
-                'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#0291BF] dark:text-white' : 
+                'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#1f504a] dark:text-[#27C498]' : 
                 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
                 class="rounded-md px-5  span__element shadow-md "
             >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
@@ -62,7 +62,7 @@
                   shape="circle"
               />
             </div>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 dark:text-white">
               <h3 class="heading__h3">{{ technician?.name }} {{ technician?.surname || '' }}</h3>
               <p class="paragraph__p">Cleaning Tech</p>
               <div class="mt-4 flex gap-8">
@@ -95,7 +95,7 @@
       </template>
       <template #content>
         <nuxt-link :to="`technicians/${props.technician.id}`">
-        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#313542]  dark:text-white p-5">
+        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#0291BF]  dark:text-white p-5">
           <div class="flex items-center gap-3  pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
             ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
