@@ -113,7 +113,7 @@
           :value="customers"
           paginator
           :rows="10"
-          tableStyle="width : 100%; background : red; overflow : hidden"
+          tableStyle="width : 100%; overflow : hidden"
           :loading="loading"
           :globalFilterFields="['customer', 'representative.name']"
       >
@@ -174,8 +174,6 @@ const deleteAlert = async (id) => {
 </script>
 <style scoped>
 
-.p-datatable .p-datatable-header {
-  background-color: red !important;
-}
+
 
 </style>

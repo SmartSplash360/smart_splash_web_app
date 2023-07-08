@@ -91,7 +91,7 @@
                 :options="roles"
                 optionLabel="name"
                 placeholder="Role"
-                class="w-[12rem] !bg-gray-200 !text-white dark:bg-[#1B2028]"
+                class="w-[12rem] bg-black !text-white dark:bg-[#1B2028]"
               />
             </div>
           </template>

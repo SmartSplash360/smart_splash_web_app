@@ -13,7 +13,7 @@
           <p class="paragraph__p font-normal">
             {{ setting.title }}
           </p>
-          <span class="span__element font-light text-[#565656] "> {{ setting.subtitle }}</span>
+          <span class="span__element font-light text-[#565656] dark:text-white "> {{ setting.subtitle }}</span>
         </div>
       </div>
     </div>

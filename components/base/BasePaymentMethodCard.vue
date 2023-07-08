@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-5 rounded-2xl border p-5 py-5 hover:shadow-md sm:min-h-[86px] sm:gap-12 sm:px-8"
+    class="flex gap-5 rounded-2xl border p-5 py-5 hover:shadow-md sm:min-h-[86px] sm:gap-12 sm:px-8 dark:bg-[#1B2028]"
     :class="[method && 'border-[#0291BF] bg-[#f2fafc]']"
   >
     <div class="h-[55px] w-[55px]">

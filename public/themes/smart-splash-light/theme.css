@@ -727,7 +727,7 @@
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .p-dropdown {
-    background: #fff;
+    background: inherit;
     border: 1px solid #ced4da;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 8px;
@@ -1053,7 +1053,7 @@
 .p-inputtext {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 1rem;
-    color: #404245;
+    color: inherit;
     background: #fff;
     padding: 0.75rem 0.75rem;
     border: 1px solid #ced4da;
@@ -1803,8 +1803,8 @@
 .p-button.p-button-secondary,
 .p-buttonset.p-button-secondary > .p-button,
 .p-splitbutton.p-button-secondary > .p-button {
-    color: #fff;
-    background: #64748b;
+    color: inherit;
+    background: inherit;
     border: 1px solid #64748b;
 }
 .p-button.p-button-secondary:enabled:hover,
@@ -1830,7 +1830,7 @@
 .p-buttonset.p-button-secondary > .p-button.p-button-outlined,
 .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
     background-color: transparent;
-    color: #64748b;
+    color: inherit;
     border: 1px solid;
 }
 .p-button.p-button-secondary.p-button-outlined:enabled:hover,
@@ -4149,7 +4149,7 @@
     background: inherit;
     padding: 1.25rem 0;
     border: 0 none;
-    color: #404245;
+    color: inherit;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
@@ -4376,10 +4376,10 @@
     border-bottom-color: #404245;
 }
 .p-fileupload .p-fileupload-buttonbar {
-    background: #f8f9fa;
+    background: inherit;
     padding: 1.25rem;
     border: 1px solid #dee2e6;
-    color: #343a40;
+    color: inherit;
     border-bottom: 0 none;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
@@ -4391,10 +4391,10 @@
     box-shadow: 0 0 0 0.2rem #b8deea;
 }
 .p-fileupload .p-fileupload-content {
-    background: #fff;
+    background: inherit;
     padding: 2rem 1rem;
     border: 1px solid #dee2e6;
-    color: #404245;
+    color: inherit;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
@@ -5999,12 +5999,14 @@
     margin-top: 10px;
 } 
 .customer-table .p-datatable .p-paginator-bottom,
+.customer-job-table .p-datatable .p-paginator-bottom,
 .user-setting-table .p-datatable .p-paginator-bottom,
 .p-datatable-wrapper .p-datatable .p-paginator-bottom{
     border : 0;
     margin-top: 2rem;
 }
 .customer-table .p-datatable .p-datatable-header, 
+.customer-job-table .p-datatable .p-datatable-header,
 .products-table .p-datatable .p-datatable-header, 
 .services-table .p-datatable .p-datatable-header,
 .report-table .p-datatable .p-datatable-header  {
@@ -6027,6 +6029,7 @@
 /* LIGHT MODE CUSTOMER TABLE  */
 
 .customer-table .p-datatable-wrapper, 
+.customer-job-table .p-datatable-wrapper,
 .products-table .p-datatable-wrapper, 
 .services-table .p-datatable-wrapper,
 .report-table .p-datatable-wrapper,
@@ -6037,6 +6040,8 @@
     background-color: inherit ;
 }
 
+.customer-table .p-datatable .p-datatable-thead > tr > th, 
+.customer-job-table .p-datatable .p-datatable-thead > tr > th,
 .products-table .p-datatable .p-datatable-thead > tr > th, 
 .services-table .p-datatable .p-datatable-thead > tr > th,
 .report-table .p-datatable .p-datatable-thead > tr > th,
@@ -6044,7 +6049,7 @@
 .technician-job-table .p-datatable .p-datatable-thead > tr > th,
 .alert-table .p-datatable .p-datatable-thead > tr > th{
     padding: 1.25rem 1rem;
-    /* border: 1px solid #0291BF; */
+    border: 1px solid #025E7C;
     color: #FFF;
     font-weight: 500;
     background: #025E7C;
@@ -6126,6 +6131,20 @@
     transition: box-shadow 0.2s;
 }
  
+.customer-table .p-datatable .p-datatable-thead > tr > th, 
+.products-table .p-datatable .p-datatable-thead > tr > th, 
+.services-table .p-datatable .p-datatable-thead > tr > th,
+.report-table .p-datatable .p-datatable-thead > tr > th,
+.user-setting-table .p-datatable .p-datatable-thead > tr > th,
+.technician-job-table .p-datatable .p-datatable-thead > tr > th,
+.alert-table .p-datatable .p-datatable-thead > tr > th{
+    padding: 1.25rem 1rem;
+    /* border: 1px solid #0291BF; */
+    color: #FFF;
+    font-weight: 500;
+    background: #025E7C;
+    transition: box-shadow 0.2s;
+}
 
 .dark-mode  .p-tabview .p-tabview-panels {
     background: #1B2028;

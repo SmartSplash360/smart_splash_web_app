@@ -1,5 +1,5 @@
 <template>
-  <div class="card border">
+  <div class="card customer-job-table">
     <DataTable
       :value="jobs"
       v-model:selection="job"

@@ -45,6 +45,7 @@
             accept="image/*"
             :maxFileSize="1000000"
             @select="onSelectedFiles"
+            class="bg-yellow-300"
           >
             <template #header="{ chooseCallback, uploadCallback, files }">
               <div
