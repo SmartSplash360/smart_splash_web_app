@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-10 border-b py-10 sm:flex-row sm:justify-between sm:gap-0"
+    class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:justify-between sm:gap-0"
   >
     <div class="flex flex-col gap-2">
       <h4 class="heading__h4">{{ role }} Settings</h4>

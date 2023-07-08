@@ -62,9 +62,9 @@
       </div>
     </div>
     <div
-      class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028]"
+      class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028] dark:border-gray-600"
     >
-      <div class="lg:flex-1 lg:border-r">
+      <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
@@ -74,7 +74,7 @@
           >
         </div>
       </div>
-      <div class="lg:flex-1 lg:border-r">
+      <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
@@ -86,7 +86,7 @@
           >
         </div>
       </div>
-      <div class="lg:flex-1 lg:border-r">
+      <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >

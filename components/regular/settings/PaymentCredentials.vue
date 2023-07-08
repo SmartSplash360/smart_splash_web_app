@@ -1,7 +1,7 @@
 <template>
   <form class="flex flex-col gap-3">
     <div
-      class="flex flex-col justify-between gap-8 border-b py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
+      class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">Payment Method</h2>
@@ -19,7 +19,7 @@
         <Button label="Save changes" class="!bg-[#0291BF] hover:shadow-lg" />
       </div>
     </div>
-    <div class="flex flex-col gap-10 border-b py-10 sm:flex-row xl:gap-64">
+    <div class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row xl:gap-64">
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">Card details</h2>
         <span class="min-w-max span__element span__element-light"

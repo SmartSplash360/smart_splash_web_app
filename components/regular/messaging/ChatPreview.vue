@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-5 items-center xl:border-b pb-5">
+  <div class="flex flex-col gap-5 items-center xl:border-b dark:border-b-gray-600 pb-5">
     <Dropdown
           v-model="report"
           :options="reports"
@@ -68,7 +68,7 @@
           <span class="span__element ">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small text-gray-500 dark:text-gray-400">
+          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small text-gray-700 dark:text-gray-400">
             {{ chat.message }}
           </span>
         </div>

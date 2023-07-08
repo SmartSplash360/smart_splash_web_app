@@ -1,7 +1,7 @@
 <template>
   <form class="flex flex-col sm:gap-3">
     <div
-      class="flex flex-col justify-between gap-8 border-b py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
+      class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max heading__h3">Company Profile</h2>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b py-5 sm:flex-row sm:gap-20 sm:py-10"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-5 sm:flex-row sm:gap-20 sm:py-10"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max heading__h3">Company Logo</h2>
@@ -165,7 +165,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b py-10 sm:flex-row sm:items-center sm:gap-64"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:items-center sm:gap-64"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max heading__h3">Company Name</h2>

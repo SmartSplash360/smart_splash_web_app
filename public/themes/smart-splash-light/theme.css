@@ -2762,8 +2762,8 @@
     box-shadow: inset 0 -2px 0 0 #eef2ff;
 }
 .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
-    background: #e9ecef;
-    color: #404245;
+    background: inherit;
+    color: inherit;
 }
 .p-datatable .p-column-resizer-helper {
     background: #0291c2;
@@ -6056,6 +6056,18 @@
     transition: box-shadow 0.2s;
 }
 
+
+.customer-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.customer-job-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.products-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.services-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.report-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.user-setting-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.technician-job-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.alert-table .p-datatable .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover{
+    background: #025E7C;
+    color: #FFF;
+}
 .customer-table .p-datatable .p-datatable-footer {
     background: inherit;
     color: #343a40;

@@ -6,7 +6,7 @@
         <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="card pb-14 user-setting-table">
+    <div class="card pb-14 user-setting-table border-b dark:border-b-gray-600 ">
       <DataTable
         v-model:filters="filters"
         :value="customers"
