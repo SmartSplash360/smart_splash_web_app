@@ -14,7 +14,7 @@
           :options="reports"
           optionLabel="name"
           placeholder="View Reports"
-          class="w-full !border-0 md:w-56"
+          class="w-full !border-0 md:w-56 dark:bg-[#1B2028]"
         />
       </div>
       <div class="card flex justify-center">
@@ -23,7 +23,7 @@
           :options="jobsInprogress"
           optionLabel="name"
           placeholder="Jobs in Progress"
-          class="w-full !border-0 md:w-56"
+          class="w-full !border-0 md:w-56 dark:bg-[#1B2028]"
         />
       </div>
     </div>
@@ -34,7 +34,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'JOBS' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="span__element"
             >Jobs</span
           >
         </div>
@@ -43,7 +43,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'QUOTES' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="span__element"
             >Quotes</span
           >
         </div>
@@ -52,7 +52,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'INVOICES' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="span__element"
             >Invoices</span
           >
         </div>
@@ -61,7 +61,7 @@
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'PAYMENTS' && 'bg-[#0291BF]'"
         >
-          <span class="text-center text-[16px] font-normal leading-8"
+          <span class="span__element"
             >Payments</span
           >
         </div>

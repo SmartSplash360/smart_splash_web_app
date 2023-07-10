@@ -3,10 +3,10 @@
     <button
       class="ml-auto flex h-[50px] w-full items-center justify-center gap-3 rounded-md bg-[#3C8F53] text-white hover:shadow-xl sm:w-[150px]"
     >
-      <span class="text-sm font-[600] leading-6">
+      <span class="span__element">
         <font-awesome-icon :icon="['fas', 'upload']"
       /></span>
-      <span class="text-sm font-[600] leading-6">Export</span>
+      <span class="span__element">Export</span>
     </button>
   </div>
 </template>

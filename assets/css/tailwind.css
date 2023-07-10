@@ -132,38 +132,67 @@ body {
 }
 
 @layer components {
-  .nav-link {
-    @apply text-[16px] font-[400] leading-7;
-  }
-  .heading-h1 {
-    @apply text-[50px] font-[600] leading-[75px] text-white;
+  .heading__h1 {
+    @apply text-[50px] font-[600] leading-[75px]  w-full
   }
 
-  .heading-h3 {
-    @apply text-[20px] font-[500] leading-[30px] text-black;
-  }
-  .heading-h4 {
-    @apply text-[20px] font-[400] leading-[30px] tracking-wider text-white;
-  }
-  .custom-paragraph {
-    @apply text-[15px] font-[400] leading-[22px];
+  .heading__h2 {
+    @apply text-xl font-medium 
   }
 
-  .custom-logger-btn {
-    @apply flex w-full items-center justify-center rounded-md bg-[#0291BF] py-3 text-[15px] text-white;
+  .heading__h3 {
+    @apply text-xl font-medium leading-normal
   }
 
-  .input-group {
-    @apply flex w-full flex-col gap-4;
-  }
-  .custom-label {
-    @apply text-[15px] font-[400] leading-[22px];
-  }
-  .custom-input {
-    @apply h-[40px] w-full rounded-md border border-gray-200 p-5 text-xs font-[400] leading-[18px];
+  .heading__h4 {
+    @apply text-lg  font-medium
   }
 
-  .form-container {
-    @apply flex flex-col items-center gap-6 px-5 py-5 sm:gap-4 lg:px-20;
+  .heading__h4-light {
+    @apply text-[16px]  font-light
+  }
+
+  .heading__h5 {
+    @apply text-sm  font-medium 
+  }
+
+  .paragraph__p {
+    @apply text-sm font-normal
+  }
+
+  .paragraph__p_bold {
+    @apply text-sm font-bold
+  }
+
+  .paragraph__p_light {
+    @apply text-sm font-light
+  }
+
+  .span__element {
+    @apply text-sm font-medium leading-7 
+  }
+
+  .span__element-small {
+    @apply text-xs font-normal
+  }
+
+  .span__element-large {
+    @apply text-lg font-normal leading-7
+  }
+  .span__element-light {
+    @apply text-sm font-[400]
+  }
+  .span__element-bolder {
+    @apply text-xl font-bold leading-7
+  }
+
+  .anchor__nuxt-link {
+    @apply text-sm
+  }
+
+  .nav-link-item {
+    @apply text-sm font-medium leading-normal
   }
 }
+
+

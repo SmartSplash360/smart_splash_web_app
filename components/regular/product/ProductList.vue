@@ -12,7 +12,7 @@
           :product="product"
       ></ModalsProductCreateProductModal>
     </div>
-    <div class="card border border-t-0">
+    <div class="card products-table">
       <DataTable
           v-model:selection="selectedProduct"
           v-model:filters="filters"
@@ -20,20 +20,23 @@
           selectionMode="single"
           dataKey="id"
           :rows="10"
-          tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
+          tableStyle="min-width: 50rem; min-height : 35rem"
+          class="mt-5"
           :loading="loading"
           :globalFilterFields="['product', 'name']"
       >
-        <template #header>
-          <div class="flex gap-5">
-            <div class="justify-content-end flex">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search"/>
-                <InputText placeholder="Keyword Search"/>
-              </span>
-            </div>
+      <template #header>
+        <div class="flex  dark:border-0 mb-5">
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-search"/>
+              <InputText
+                  v-model="filters['global'].value"
+                  placeholder=" Search"
+                  class="dark:bg-[#1B2028] !rounded-xl w-2/5"
+              />
+            </span>
           </div>
-        </template>
+      </template>
         <template #empty> No products found. </template>
         <Column
             field="created_at"
@@ -44,7 +47,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps.data.created_at }}</span>
+              <span class="span__element">{{ slotProps.data.created_at }}</span>
             </div>
           </template>
         </Column
@@ -72,7 +75,7 @@
         </Column>
         <Column field="price" header="Price" class="w-[5%] lg:w-[10%]">
           <template #body="slotProps">
-            <span class="font-bold">${{ slotProps.data?.price }}</span>
+            <span class="span__element">${{ slotProps.data?.price }}</span>
           </template>
         </Column>
         <Column
@@ -84,7 +87,7 @@
           <template #body="slotProps">
             <div class="flex items-center gap-5">
               <img :src="BoxIcon" alt="box-icon"/>
-              <span>{{ slotProps?.data?.updated_at }}</span>
+              <span class="span__element">{{ slotProps?.data?.updated_at }}</span>
             </div>
           </template>
         </Column>

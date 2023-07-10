@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col gap-10">
-    <div class="card">
+  <div class="flex flex-col gap-10 alert-table dark:text-white">
+    <div class="card alert-table">
       <DataTable
           :value="alerts"
           dataKey="id"

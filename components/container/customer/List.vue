@@ -33,7 +33,7 @@
     </div>
     <div class="flex flex-col gap-5">
       <div
-        class="-mt-12 flex w-full justify-between gap-5 rounded-xl bg-white px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
+        class="-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
       >
         <div class="flex-1 md:hidden">
           <BaseSearchBar></BaseSearchBar>

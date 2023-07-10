@@ -1,5 +1,5 @@
 <template>
-  <form class="form-container">
+  <form class="flex flex-col items-center gap-6 px-5 py-5 sm:gap-4 lg:px-20">
     <div class="h-[125px] w-[300px]">
       <img
           :src="SmartPlashLogo"
@@ -25,7 +25,6 @@
         <nuxt-link to="/signin" class="text-[#4D6977]">Sign In</nuxt-link>
       </p>
     </div>
-
   </form>
 </template>
 

@@ -1,37 +1,44 @@
 <template>
-  <BaseSearchBar
+  <div class="flex flex-col gap-5 items-center xl:border-b dark:border-b-gray-600 pb-5">
+    <Dropdown
+          v-model="report"
+          :options="reports"
+          optionLabel="name"
+          placeholder="Recents"
+          class="w-full !border-0 md:w-36 dark:bg-[#1B2028] self-end"
+        />
+    <BaseSearchBar
     class="w-full self-center sm:w-11/12"
     @handleSearch="handleSearchChat"
   />
+  </div>
   <ul class="flex flex-col overflow-x-auto overflow-y-hidden sm:overflow-auto">
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="block sm:min-h-[150px] border-b xl:min-h-[180px] lg:hidden"
+      class="block sm:min-h-[150px] border-b  xl:min-h-[180px] lg:hidden dark:border-b-gray-600"
     >
       <div
-
         @click="handleChatView(chat.id)"
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 "
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg py-5 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover "
         />
-        <div    class="flex flex-col gap-2 px-5">
+        <div class="flex flex-col gap-2 px-5">
           <div class="flex w-full items-center justify-between">
-            <h4 class=" text-sm font-[500] text-gray-700">
+            <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="text-[8px] text-gray-700 ">
+            <span class="span__element-small">
               {{ chat.time }} AM</span
             >
           </div>
-
-          <span class="text-[10px] text-xs font-bold xl:text-sm">
+          <span class="span__element">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis text-sm">
+          <span class="max-h-[60px] overflow-hidden text-ellipsis span__element">
             {{ chat.message }}
           </span>
         </div>
@@ -40,28 +47,28 @@
     <li
       v-for="chat in chatList"
       @click="$emit('select-chat',chat)"
-      class="hidden lg:block sm:min-h-[150px] border-b xl:min-h-[180px]"
+      class="hidden lg:block sm:min-h-[150px] border-b  xl:min-h-[180px] dark:border-b-gray-600" 
     >
       <div
-        class="flex cursor-pointer items-center rounded-lg px-2 py-4 hover:bg-[#D9D9D9] sm:h-full sm:bg-white sm:p-0 xl:py-0"
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 xl:py-0 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover xl:h-[65px] xl:w-[65px]"
         />
-        <div    class="flex flex-col gap-2 px-5">
+        <div    class="flex flex-col gap-2 px-2">
           <div class="flex w-full items-center justify-between">
-            <h4 class="xl:text-md text-sm font-[500] text-gray-700">
+            <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
-            <span class="text-[8px] text-gray-700 xl:text-[10px]">
+            <span class="span__element-small text-gray-400">
               {{ chat.time }} AM</span
             >
           </div>
-          <span class="text-[10px] text-xs font-bold xl:text-sm">
+          <span class="span__element ">
             {{ chat.subject }}
           </span>
-          <span class="max-h-[60px] overflow-hidden text-ellipsis text-sm">
+          <span class="max-h-[45px] overflow-hidden text-ellipsis span__element-small text-gray-700 dark:text-gray-400">
             {{ chat.message }}
           </span>
         </div>
@@ -87,7 +94,6 @@ const handleSearchChat = (status) => {
 };
 
 const handleChatView = (inboxId) => {
-
   router.push("/"+ props.path+ "/"+ inboxId)
 }
 </script>

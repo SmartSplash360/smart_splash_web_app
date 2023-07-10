@@ -5,8 +5,8 @@
         class="flex max-w-[350px] flex-col items-center gap-6 rounded-lg bg-white px-8 py-10 text-center"
       >
         <img :src="img_pool" alt="img__pool" class="h-[137px] w-[200px]" />
-        <h3 class="heading-h3">A Revolutionary Pool Maintenance Software</h3>
-        <p class="custom-paragraph">
+        <h3 class="heading__h3 text-black">A Revolutionary Pool Maintenance Software</h3>
+        <p class="paragraph__p">
           Offers far more than other common pool maintenance software in the
           market
         </p>
@@ -14,7 +14,7 @@
     </div>
     <div class="hero-signin-container" v-else="login">
       <h1
-        class="text-center text-[40px] font-[600] leading-[60px] text-[#0291BF]"
+        class="text-center heading_h1 text-[#0291BF]"
       >
         Welcome Back!
       </h1>

@@ -1,37 +1,41 @@
 <template>
-  <div class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]">
-    <form class="flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]">
-      <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+  <div 
+    @click="toggleAddCustomerModal({ show: false })"
+    class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]">
+    <form 
+    @click.stop
+      class="flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
+      <h3 class="heading__h3 text-[#025E7C]">
         {{ customer ? 'Edit' : 'New' }} Customer {{ customer ? `#${customer?.id}` : '' }}
       </h3>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
-          <InputText type="text" v-model="name"></InputText>
+          <InputText type="text" class="dark:bg-[#1B2028]" v-model="name"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Surname* </label>
-          <InputText type="text" v-model="surname"></InputText>
+          <InputText type="text" class="dark:bg-[#1B2028]" v-model="surname"></InputText>
         </div>
       </div>
       <div class="flex flex-col justify-between gap-5">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="email address"> Email address* </label>
-          <InputText type="email" v-model="email"></InputText>
+          <InputText type="email" class="dark:bg-[#1B2028]" v-model="email"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="cell number"> Cell number </label>
-          <InputText type="text" v-model="phoneNumber"></InputText>
+          <InputText type="text" class="dark:bg-[#1B2028]" v-model="phoneNumber"></InputText>
         </div>
       </div>
       <div v-if="!customer" class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Password* </label>
-          <InputText type="text" v-model="password"></InputText>
+          <InputText type="text" class="dark:bg-[#1B2028]" v-model="password"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Password Confirmation* </label>
-          <InputText type="text" v-model="passwordConfirmation"></InputText>
+          <InputText type="text" class="dark:bg-[#1B2028]" v-model="passwordConfirmation"></InputText>
         </div>
       </div>
       <div class="mt-20 flex flex-col justify-end gap-5 sm:flex-row">

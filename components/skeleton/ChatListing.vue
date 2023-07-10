@@ -1,6 +1,6 @@
 <template>
   <div role="status" class="flex w-full animate-pulse justify-between gap-2">
-    <ul class="flex w-full flex-col gap-5 p-2 lg:w-1/4 lg:border-r">
+    <ul class="flex w-full flex-col gap-5 p-2 lg:w-1/4 lg:border-r dark:lg:border-r-gray-600">
       <li class="rounded bg-gray-100 p-4">
         <div
           role="status"

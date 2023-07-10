@@ -3,7 +3,7 @@
     v-on="isLead ? { click: toggleCustomerView } : {}"
     class="flex w-full gap-5 lg:gap-0 items-center rounded-xl p-2 sm:justify-between xl:p-4"
     :class="[
-      bg === 'primary' ? 'bg-[#0291BF]' : 'bg-[#E9E9E9]',
+      bg === 'primary' ? 'bg-[#0291BF]' : 'bg-[#E9E9E9] dark:bg-[#1B2028]',
       isLead && 'cursor-pointer hover:shadow-lg',
     ]"
   >
@@ -13,14 +13,12 @@
     <div
       class="flex w-full items-center justify-between text-white sm:flex-col"
     >
-      <span
-        class="min-w-max text-sm font-[300] leading-6"
-        :class="[bg === 'primary' ? 'text-white' : 'text-black']"
+      <span class="min-w-max span__element "
+        :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"
         >{{ status }}</span
       >
-      <span
-        class="text-sm font-[600]"
-        :class="[bg === 'primary' ? 'text-white' : 'text-black']"
+      <span  class="span__element"
+        :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"
         >{{ count }}</span
       >
     </div>

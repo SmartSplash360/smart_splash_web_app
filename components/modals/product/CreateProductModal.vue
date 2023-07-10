@@ -1,39 +1,46 @@
 <template>
   <div
+      @click="toggleAddProductModal( { show: false })"
       class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
   >
-    <div class="flex min-h-[500px] gap-2 rounded-md sm:gap-5">
       <form
-          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
+      @click.stop
+          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F] dark:text-white"
       >
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           {{ product ? 'Edit' : 'New' }} Product {{ product ? `#${product?.id}` : '' }}
         </h3>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Name* </label>
-            <InputText type="text" v-model="name"></InputText>
+            <InputText type="text" class="dark:bg-[#1B2028] dark:text-white" v-model="name"></InputText>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Price* </label>
-            <InputNumber v-model="price" inputId="currency-us" mode="currency" currency="USD"
-                         locale="en-US"></InputNumber>
+            <InputNumber 
+              class="dark:bg-[#1B2028] dark:text-white" 
+              v-model="price" 
+              inputId="currency-us" 
+              mode="currency" 
+              currency="USD"
+              locale="en-US">
+            </InputNumber>
           </div>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label for="description"> Description </label>
-          <Textarea v-model="description" autoResize rows="3" cols="70"/>
+          <Textarea class="dark:bg-[#1B2028] dark:text-white" v-model="description" autoResize rows="3" cols="70"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label for="notes"> Notes </label>
-          <Textarea v-model="notes" autoResize rows="3" cols="70"/>
+          <Textarea class="dark:bg-[#1B2028] dark:text-white" v-model="notes" autoResize rows="3" cols="70"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label for="notes"> Is Available? </label>
-          <InputSwitch v-model="isAvailable"/>
+          <InputSwitch  v-model="isAvailable"/>
         </div>
 
         <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
@@ -42,19 +49,12 @@
               severity="secondary"
               outlined
               @click="toggleAddProductModal( { show: false })"
-              class="hover:shadow-xl"
+              class="hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
           />
           <Button label="Submit" icon="pi pi-check"
                   @click="product ? updateProduct() : createProduct() "/>
         </div>
       </form>
-      <div
-          @click="toggleAddProductModal( { show: false })"
-          class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
-      >
-        x
-      </div>
-    </div>
   </div>
 </template>
 

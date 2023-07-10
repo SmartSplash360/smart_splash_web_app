@@ -1,5 +1,5 @@
 <template>
-  <div class="card mt-3 border">
+  <div class="card mt-3 technician-job-table">
     <DataTable
         :value="jobs"
         selectionMode="single"

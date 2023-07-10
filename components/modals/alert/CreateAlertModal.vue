@@ -1,12 +1,13 @@
 <template>
   <div
+      @click="toggleAddAlertModal"
       class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
   >
-    <div class="flex min-h-[500px] gap-2 rounded-md sm:gap-5">
       <form
-          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
+          @click.stop
+          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
       >
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           {{ alert ? 'Edit' : 'New' }} Alert {{ alert ? `#${alert?.id}` : '' }}
         </h3>
 
@@ -19,7 +20,7 @@
                 optionLabel="name"
                 optionValue="id"
                 placeholder="Select an alert type"
-                class="md:w-14rem w-full"
+                class="md:w-14rem w-full dark:bg-[#1B2028]"
             />
           </div>
           <div class="flex w-full flex-col gap-3">
@@ -30,7 +31,7 @@
                 optionValue="id"
                 optionLabel="name"
                 placeholder="Select a body of water"
-                class="md:w-14rem w-full"
+                class="md:w-14rem w-full dark:bg-[#1B2028]"
             />
           </div>
         </div>
@@ -44,7 +45,7 @@
                   optionLabel="name"
                   optionValue="id"
                   placeholder="Select a technician"
-                  class="md:w-14rem w-full"
+                  class="md:w-14rem w-full dark:bg-[#1B2028]"
               />
             </div>
           </div>
@@ -52,15 +53,23 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label for="notes"> Notes</label>
-            <Textarea v-model="notes" rows="5" cols="30"/>
+            <Textarea v-model="notes" rows="5" cols="30" class="dark:bg-[#1B2028]"/>
           </div>
         </div>
 
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label for="date"> Date</label>
-            <Calendar id="date" v-model="dateTime" :minDate="minDate" :maxDate="maxDate" :manualInput="false" showTime
-                      hourFormat="24"/>
+            <Calendar 
+              id="date" 
+              class="dark:!bg-[#1B2028]"
+              v-model="dateTime" 
+              :minDate="minDate" 
+              :maxDate="maxDate" 
+              :manualInput="false" 
+              showTime
+              hourFormat="24"
+            />
           </div>
 
           <div class="flex w-full flex-col gap-3">
@@ -72,7 +81,7 @@
                   optionLabel="label"
                   option-value="value"
                   placeholder="Select a status"
-                  class="md:w-14rem w-full"
+                  class="md:w-14rem w-full dark:bg-[#1B2028]"
               />
             </div>
           </div>
@@ -86,7 +95,7 @@
                   optionLabel="label"
                   option-value="value"
                   placeholder="Select a status"
-                  class="md:w-14rem w-full"
+                  class="md:w-14rem w-full dark:bg-[#1B2028]"
               />
             </div>
           </div>
@@ -108,13 +117,6 @@
           />
         </div>
       </form>
-      <div
-          @click="toggleAddAlertModal"
-          class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white sm:h-8 sm:w-8"
-      >
-        x
-      </div>
-    </div>
   </div>
 </template>
 

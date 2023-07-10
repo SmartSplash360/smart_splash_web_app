@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonCardListing></SkeletonCardListing>
   </section>
-  <section v-else class="sm:gap-13 flex flex-col gap-10">
+  <section v-else class="sm:gap-13 flex flex-col gap-16">
     <RegularTechnicianBoard
         @open-modal="toggleAddTechnicianModal"
     ></RegularTechnicianBoard>
@@ -23,7 +23,7 @@
       ></RegularTechnicianCard>
     </div>
     <div class="flex items-center justify-center" v-else>
-      <span class="text-[#BDBDBD]">No Technicians</span>
+      <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
     <Toast/>
     <ConfirmDialog></ConfirmDialog>

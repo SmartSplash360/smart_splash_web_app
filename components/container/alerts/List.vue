@@ -1,8 +1,8 @@
 <template>
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
-    <div v-else class="card">
-      <div class="hidden w-full justify-end gap-5 hover:shadow-xl sm:flex">
+    <div v-else class="card flex flex-col gap-10">
+      <div class="hidden w-full justify-end gap-5 sm:flex">
         <BaseAddButton
           :btnText="' Alert'"
           @click="toggleAddAlertModal"
@@ -17,9 +17,9 @@
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">High</span>
+              <span class="span__element">High</span>
               <span
-                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
+                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
                 >{{ highAlerts.length }}</span
               >
             </div>
@@ -29,7 +29,7 @@
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">Medium</span>
+              <span class="span__element">Medium</span>
               <span
                 class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#FFA500] shadow-md"
                 >{{ mediumAlerts.length }}</span
@@ -41,7 +41,7 @@
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">Low</span>
+              <span class="span__element">Low</span>
               <span
                 class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#02BF70] shadow-md"
                 >{{ lowAlerts.length }}</span
@@ -117,3 +117,5 @@ const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority =
 const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
 const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
 </script>
+
+

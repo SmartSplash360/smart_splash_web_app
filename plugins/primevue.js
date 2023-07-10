@@ -16,7 +16,7 @@ import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Badge from "primevue/badge";
-import Editor from "primevue/editor";
+// import Editor from "primevue/editor";
 import Chart from "primevue/chart";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
@@ -26,6 +26,7 @@ import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";
 import Calendar from "primevue/calendar";
 import InputNumber from "primevue/inputnumber";
+import Tooltip from 'primevue/tooltip';
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
@@ -56,7 +57,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Card", Card);
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
-  nuxtApp.vueApp.component("Editor", Editor);
+  // nuxtApp.vueApp.component("Editor", Editor);
   nuxtApp.vueApp.component("Chart", Chart);
   nuxtApp.vueApp.component("Accordion", Accordion);
   nuxtApp.vueApp.component("AccordionTab", AccordionTab);
@@ -69,4 +70,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Tag", Tag);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
+  nuxtApp.vueApp.directive('tooltip', Tooltip);
 });

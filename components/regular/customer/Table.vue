@@ -1,5 +1,5 @@
 <template>
-  <div class="laptop+ card hidden border border-b-0 border-t-0 sm:block">
+  <div class="customer-table laptop+ card hidden sm:block" :class="[currentMode == 'dark' && 'dark-mode']">
     <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -15,14 +15,14 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between dark:border-0 mb-5">
           <div class="flex w-80 justify-start">
-            <span class="p-input-icon-left w-full">
+            <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
               <InputText
                   v-model="filters['global'].value"
-                  placeholder="Keyword Search"
-                  class="w-full"
+                  placeholder=" Search"
+                  class="w-full dark:bg-[#1B2028] !rounded-xl"
               />
             </span>
           </div>
@@ -51,7 +51,7 @@
       >
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data.id}`">
-            <Avatar :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'" :alt="slotProps.data.name" class="mr-2" size="large" shape="circle"/>
+            <Avatar :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'" :alt="slotProps.data.name" class="mr-2 translate-y-4" size="large" shape="circle"/>
           </nuxt-link>
         </template>
       </Column>
@@ -113,7 +113,7 @@
           :value="customers"
           paginator
           :rows="10"
-          tableStyle="width : 100%; background : red; overflow : hidden"
+          tableStyle="width : 100%; overflow : hidden"
           :loading="loading"
           :globalFilterFields="['customer', 'representative.name']"
       >
@@ -138,6 +138,10 @@ const props = defineProps({
   deleteItem: Function
 });
 
+const currentMode = computed(() => localStorage.getItem('theme'))
+console.log(currentMode.value)
+
+
 const customers = ref([]);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -151,15 +155,7 @@ onMounted(() => {
   customers.value = store.getCustomers;
 });
 
-const getCustomers = (data) => {
-  return [...(data || [])].map((d) => {
-    d.date = new Date(d.date);
 
-    return d;
-  });
-};
-
-const selectedCustomer = ref();
 
 const dt = ref();
 const exportCSV = (event) => {
@@ -176,3 +172,8 @@ const deleteAlert = async (id) => {
   props.deleteItem({ id })
 };
 </script>
+<style scoped>
+
+
+
+</style>

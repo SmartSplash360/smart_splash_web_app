@@ -1,5 +1,5 @@
 <template>
-  <form class="form-container">
+  <form class="flex flex-col items-center gap-6 px-5 py-5 sm:gap-4 lg:px-20">
     <div class="mb-10 h-[125px] w-[300px] sm:mb-0">
       <img
           :src="SmartPlashLogo"
@@ -8,7 +8,7 @@
       />
     </div>
     <div class="hidden w-full flex-col gap-3 text-start sm:flex">
-      <h2 class="text-[30px] font-[400] leading-[45px]">Login</h2>
+      <h2 class="heading__h2">Login</h2>
       <p>Please enter your details</p>
     </div>
     <base-input
@@ -21,7 +21,7 @@
     <InputText type="text" placeholder="Email" v-model="email" name="email" class="w-full"/>
     <InputText type="password" placeholder="Password" v-model="password" name="password" class="w-full"/>
 
-    <p class="w-full text-end text-[#4D6977]">Forgot password?</p>
+    <p class="paragraph__p w-full text-end text-[#4D6977]">Forgot password?</p>
     <Button @click="login()" label="Login" class="w-full"/>
     <div class="py-3">
       <p>

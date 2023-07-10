@@ -8,7 +8,7 @@
       class="flex min-w-full flex-col gap-14 rounded-md bg-white sm:p-10 lg:ml-[30rem] lg:mt-28 lg:max-h-[570px] lg:min-w-[487px] lg:gap-5 xl:ml-[51rem]"
     >
       <div class="flex items-center justify-between">
-        <h3 class="text-[25px] font-[700] leading-[38px] text-[#025E7C]">
+        <h3 class="heading__h3 text-[#025E7C]">
           Chemical Spent
         </h3>
         <div class="card justify-content-center flex">
@@ -29,9 +29,9 @@
           class="md:w-30rem w-full"
         />
       </div>
-      <h3>
-        <span>Total = </span>
-        <span class="ml-2 font-[700] text-[#015D7B]">$4,669.85</span>
+      <h3 class="heading__h3">
+        <span class="span__element">Total = </span>
+        <span class="ml-2 span__element text-[#015D7B]">$4,669.85</span>
       </h3>
     </form>
   </div>

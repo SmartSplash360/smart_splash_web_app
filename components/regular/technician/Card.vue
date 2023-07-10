@@ -1,14 +1,16 @@
 <template>
   <div
-      class="card align-items-center justify-content-center flex cursor-pointer justify-center"
+      class="card align-items-center  min-w-full min-h-full justify-content-center flex cursor-pointer justify-center  dark:text-gray-300"
   >
-    <Card class="max-w-full hover:shadow-md">
+    <Card class="min-w-full  shadow-xl hover:shadow-2xl dark:bg-[#1B2028]">
       <template #header>
-        <div class="flex flex-col gap-10 px-4 py-2">
-          <div class="relative flex items-center justify-between">
+        <div class="flex flex-col gap-10 px-4 py-2 min-h-[250px] max-h-[250px] ">
+          <div class="relative flex items-center justify-between" >
             <span
-                :class="technician?.status == 1 ? 'text-[#02BF70]' : 'text-red-500'"
-                class="rounded-md px-5 py-2 text-xs shadow-md"
+                :class="technician?.status == 1 ? 
+                'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#1f504a] dark:text-[#27C498]' : 
+                'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
+                class="rounded-md px-5  span__element shadow-md "
             >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
@@ -24,7 +26,7 @@
               >
                 <i class="pi pi-eye"></i>
 
-                <span class="min-w-max text-sm font-medium">
+                <span class="min-w-max span__element">
                   View Technician</span
                 >
               </nuxt-link>
@@ -34,7 +36,7 @@
               >
                 <i class="pi pi-pencil"></i>
 
-                <span class="min-w-max text-sm font-medium">
+                <span class="min-w-max span__element">
                   Edit Technician</span
                 >
               </div>
@@ -44,7 +46,7 @@
               >
                 <i class="pi pi-trash"></i>
 
-                <span class="min-w-max text-sm font-medium">
+                <span class="min-w-max span__element">
                   Delete Technician</span
                 >
               </div>
@@ -60,10 +62,10 @@
                   shape="circle"
               />
             </div>
-            <div class="flex flex-col gap-2">
-              <h2 class="text-3xl font-[500] leading-9">{{ technician?.name }} {{ technician?.surname || '' }}</h2>
-              <p class="text-md leading-4">Cleaning Tech</p>
-              <div class="mt-4 flex justify-between">
+            <div class="flex flex-col gap-2 dark:text-white">
+              <h3 class="heading__h3">{{ technician?.name }} {{ technician?.surname || '' }}</h3>
+              <p class="paragraph__p">Cleaning Tech</p>
+              <div class="mt-4 flex gap-8">
                 <div class="flex items-center gap-3">
                   <img
                       :src="LikeIcon"
@@ -78,7 +80,7 @@
                       alt="dislike-icon"
                       class="h-[24px] w-[24px]"
                   />
-                  <span class="text-sm font-semibold">10</span>
+                  <span class="span__element">10</span>
                 </div>
               </div>
             </div>
@@ -93,18 +95,18 @@
       </template>
       <template #content>
         <nuxt-link :to="`technicians/${props.technician.id}`">
-        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] p-5">
-          <div class="flex items-center gap-3 border-b pb-2 xl:gap-5">
+        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#0291BF]  dark:text-white p-5">
+          <div class="flex items-center gap-3  pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
             ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
             /></span>
-            <span class="text-xs xl:text-[16px]">{{ technician?.email }}</span>
+            <span class="span__element">{{ technician?.email }}</span>
           </div>
           <div class="flex items-center gap-3 pt-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
             ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
             /></span>
-            <span class="text-xs xl:text-[16px]">{{ technician?.phone_number }}</span>
+            <span class="span__element">{{ technician?.phone_number }}</span>
           </div>
         </div>
         </nuxt-link>
@@ -115,13 +117,10 @@
 </template>
 
 <script setup>
-import userProfile from "@/assets/images/profile_user.jpg";
 import LikeIcon from "@/assets/icons/like-icon.svg";
 import DislikeIcon from "@/assets/icons/dislike-icon.svg";
 import EmailIcon from "@/assets/icons/email-icon.svg";
 import PhoneIcon from "@/assets/icons/phone-icon.svg";
-import BarsIcon from "@/assets/icons/bars-icon.svg";
-import TrashIcon from "@/assets/icons/trash-icon.svg";
 import AlignDotIcons from "@/assets/icons/align-dot-icon.svg";
 
 const showMenu = ref(false);
