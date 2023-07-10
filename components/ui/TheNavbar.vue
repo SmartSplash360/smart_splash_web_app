@@ -187,7 +187,6 @@ const toggle = (event) => {
     menu.value.toggle(event);
 };
 
-const signout = () => {
-  console.log("I am signed out")
-}
+const signout = () =>  userStore.logout()
+
 </script>
