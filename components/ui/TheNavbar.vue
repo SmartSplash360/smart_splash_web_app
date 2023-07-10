@@ -52,10 +52,14 @@
                 shape="circle"
             />
           </div>
-          <span class="inline-flex items-center justify-center cursor-pointer">
-            <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3"/>
-          </span>
-          <ContextMenu ref="menu" :model="items" />
+          <div class="card flex justify-content-center">          
+            <span class="inline-flex items-center justify-center cursor-pointer">
+              <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"/>
+            </span>
+            <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+            <Toast />
+            <ContextMenu ref="menu" :model="items" />
+        </div>
         </div>
       </div>
     </div>
@@ -123,16 +127,22 @@
       <ul class="flex flex-col gap-10 text-white">
         <li v-for="link in sideBarLinks" @click="toggleSideBar">
           <nuxt-link
-              :to="link.to"
+              :to="link?.to"
               class="flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2 hover:bg-white hover:text-black"
               :class="[link.name ? 'bg-white text-black' : '']"
           >
             <span
                 class="inline-flex h-[16px] w-[16px] items-center justify-center span__element"
-            ><font-awesome-icon :icon="link.icon"
+            ><font-awesome-icon :icon="link?.icon"
             /></span>
             <span class="span__element">{{ link.name }}</span>
           </nuxt-link>
+        </li> 
+        <li class="flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2 text-black mb-5">          
+          <span >
+            <i class="pi pi-sign-out text-lg font-light" @click="signout"/>
+          </span>
+          <span class="span__element">Logout</span>
         </li>
       </ul>
     </div>
@@ -160,7 +170,12 @@ const user = computed(() => userStore.getCurrentUser);
 
 const menu = ref();
 const items = ref([
-  {label: 'Logout', icon: 'pi pi-fw pi-key', action: () => {console.log('logout')}}
+  {
+    label: 'Logout',
+    icon: 'pi pi-sign-out',
+    command : () => signout()
+    
+  }
 ]);
 
 const onImageRightClick = (event) => {
@@ -181,6 +196,11 @@ const pageIcon = computed(() => {
   let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
   return sideBarLink?.icon ?? 'user-lock'
 })
-</script>
 
-<style lang="scss" scoped></style>
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
+
+const signout = () =>  userStore.logout()
+
+</script>

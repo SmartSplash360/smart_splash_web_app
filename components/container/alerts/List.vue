@@ -63,6 +63,10 @@ import {useToast} from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import {useAlertStore} from "~/stores/alert";
 
+defineProps({
+  loading : Boolean
+})
+
 const toast = useToast();
 const confirm = useConfirm();
 const alertStore = useAlertStore();
@@ -73,7 +77,6 @@ const alert = ref()
 
 const active = ref(0);
 
-const loading = ref(false);
 
 const toggleAddAlertModal = () => (addAlertModal.value = true);
 const closeModal = ({ success, error }) => {

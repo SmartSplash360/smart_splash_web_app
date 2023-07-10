@@ -1,6 +1,5 @@
 <template>
-  <div class="flex flex-col gap-10 alert-table dark:text-white">
-    <div class="card alert-table">
+  <div class="alert-table flex flex-col gap-10 dark:text-white">
       <DataTable
           :value="alerts"
           dataKey="id"
@@ -13,12 +12,10 @@
             field="id"
             header="Alert"
             sortable
-            class="w-[1%] lg:w-[20%]"
         ></Column>
         <Column
             field="name"
             header="Customer name"
-            class="w-[5%] lg:w-[20%]"
             sortable
         >
           <template #body="slotProps">
@@ -29,7 +26,6 @@
         <Column
             field="description"
             header="Address"
-            class="w-[5%] lg:w-[20%]"
         >
           <template #body="slotProps">
             {{ slotProps.data?.body_of_water?.customer?.address[0]?.address_line1 }}
@@ -38,7 +34,6 @@
         <Column
             field="alert_type_id"
             header="Alert type"
-            class="w-[5%] lg:w-[15%]"
             sortable
         >
           <template #body="slotProps">
@@ -48,7 +43,6 @@
         <Column
             field="price"
             header="Technician"
-            class="w-[5%] lg:w-[15%]"
         >
           <template #body="slotProps">
             {{ slotProps.data?.technician?.name ?? `Technician ${slotProps.data.technician}` }}
@@ -57,7 +51,6 @@
         <Column
             field="status"
             header="Status"
-            class="w-[5%] lg:w-[15%]"
             sortable
         >
           <template #body="slotProps">
@@ -67,7 +60,6 @@
         </Column>
       </DataTable>
     </div>
-  </div>
 </template>
 
 <script setup>

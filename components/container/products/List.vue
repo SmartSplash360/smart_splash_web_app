@@ -17,6 +17,10 @@
 </template>
 
 <script setup>
-const loading = ref(false);
+
+defineProps({
+  loading : Boolean,
+})
 const active = ref(0);
+
 </script>

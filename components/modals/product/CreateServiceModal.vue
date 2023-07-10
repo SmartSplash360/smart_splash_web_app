@@ -14,7 +14,7 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Name* </label>
-            <InputText type="text" v-model="name"></InputText>
+            <InputText type="text" v-model="name" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"></InputText>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Price* </label>
@@ -46,8 +46,11 @@
               @click="toggleAddServiceModal({ show: false })"
               class="hover:shadow-xl"
           />
-          <Button label="Submit" icon="pi pi-check"
-                  @click="service ? updateService() : createService()"/>
+          <Button
+            label="Submit"
+            icon="pi pi-check"
+            class="!bg-[#0291BF] hover:shadow-xl"
+            @click="service ? updateService() : createService()"/>
         </div>
       </form>
   </div>

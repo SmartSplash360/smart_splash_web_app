@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col gap-5 items-center xl:border-b dark:border-b-gray-600 pb-5">
     <Dropdown
-          v-model="report"
-          :options="reports"
-          optionLabel="name"
+          v-model="activity"
+          :options="activities"
+          optionLabel="option"
           placeholder="Recents"
           class="w-full !border-0 md:w-36 dark:bg-[#1B2028] self-end"
         />
@@ -20,7 +20,7 @@
     >
       <div
         @click="handleChatView(chat.id)"
-        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg py-5 dark:hover:bg-[#1B2028] dark:rounded-none"
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg hover:rounded-none py-5 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
@@ -50,7 +50,7 @@
       class="hidden lg:block sm:min-h-[150px] border-b  xl:min-h-[180px] dark:border-b-gray-600" 
     >
       <div
-        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg px-2 py-4  sm:p-0 xl:py-0 dark:hover:bg-[#1B2028] dark:rounded-none"
+        class="hover:bg-[#D9D9D9] sm:h-full flex cursor-pointer items-center rounded-lg hover:rounded-none px-2 py-4  sm:p-0 xl:py-0 dark:hover:bg-[#1B2028] dark:rounded-none"
       >
         <img
           :src="chat.image"
@@ -85,6 +85,11 @@ const props = defineProps({
 const emits = defineEmits(['select-chat']);
 
 const chatList = ref([...props.chats]);
+const activity = ref('')
+const activities = ref([
+  { option : 'Recent'},
+  { option : 'Old chat'},
+])
 const router = useRouter()
 
 const handleSearchChat = (status) => {
@@ -96,4 +101,5 @@ const handleSearchChat = (status) => {
 const handleChatView = (inboxId) => {
   router.push("/"+ props.path+ "/"+ inboxId)
 }
+
 </script>

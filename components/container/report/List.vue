@@ -19,5 +19,7 @@
 </template>
 
 <script setup>
-const loading = ref(false);
+defineProps({
+  loading : Boolean
+})
 </script>

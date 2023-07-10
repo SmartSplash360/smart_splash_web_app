@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-nowrap lg:gap-5"
+    class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-nowrap lg:gap-5 dark:bg-[#1B2028] dark:text-white"
   >
     <div class="flex gap-5 lg:w-1/5">
       <div
@@ -77,7 +77,7 @@
           class="-mt-2 flex flex-col items-center justify-center gap-1 rounded-xl bg-white px-4 py-2"
         >
           <span class="min-w-max span__element text-[#025E7C]">Gate code</span>
-          <span class="span__element">F5JKJGF</span>
+          <span class="span__element dark:text-black">F5JKJGF</span>
         </div>
       </div>
       <img

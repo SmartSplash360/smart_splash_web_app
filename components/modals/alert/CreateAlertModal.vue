@@ -31,7 +31,7 @@
                 optionValue="id"
                 optionLabel="name"
                 placeholder="Select a body of water"
-                class="md:w-14rem w-full dark:bg-[#1B2028]"
+                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
             />
           </div>
         </div>
@@ -45,7 +45,7 @@
                   optionLabel="name"
                   optionValue="id"
                   placeholder="Select a technician"
-                  class="md:w-14rem w-full dark:bg-[#1B2028]"
+                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               />
             </div>
           </div>
@@ -62,7 +62,7 @@
             <label for="date"> Date</label>
             <Calendar 
               id="date" 
-              class="dark:!bg-[#1B2028]"
+                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               v-model="dateTime" 
               :minDate="minDate" 
               :maxDate="maxDate" 
@@ -81,7 +81,7 @@
                   optionLabel="label"
                   option-value="value"
                   placeholder="Select a status"
-                  class="md:w-14rem w-full dark:bg-[#1B2028]"
+                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@
                   optionLabel="label"
                   option-value="value"
                   placeholder="Select a status"
-                  class="md:w-14rem w-full dark:bg-[#1B2028]"
+                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               />
             </div>
           </div>

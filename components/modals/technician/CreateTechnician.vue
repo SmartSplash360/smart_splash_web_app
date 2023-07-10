@@ -13,31 +13,31 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="name"> Name* </label>
-            <InputText type="text" v-model="name"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="name"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="name"> Surname* </label>
-            <InputText type="text" v-model="surname"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="surname"></InputText>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5">
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="email address"> Email address* </label>
-            <InputText type="email" v-model="email"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="email" v-model="email"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="cell number"> Cell number </label>
-            <InputText type="text" v-model="phoneNumber"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="phoneNumber"></InputText>
           </div>
         </div>
         <div v-if="!technician" class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="name"> Password* </label>
-            <InputText type="text" v-model="password"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="password"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="text-sm" for="name"> Password Confirmation* </label>
-            <InputText type="text" v-model="passwordConfirmation"></InputText>
+             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="passwordConfirmation"></InputText>
           </div>
         </div>
         <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">

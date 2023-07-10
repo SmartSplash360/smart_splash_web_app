@@ -115,8 +115,8 @@ const svgMarker = {
 
 onMounted(async () => {
   // TODO:get jobs from current date
-  const date = new Date().toISOString().split('T')[0];
-  // const date = "2023-07-13"
+  // const date = new Date().toISOString().split('T')[0];
+  const date = "2023-07-14"
   const data = await jobStore.fetScheduledJobsByDate(date);
 
   // TODO: iterate data
@@ -140,7 +140,7 @@ onMounted(async () => {
       estimatedWorkTime: technicianJobs.length * 30 // TODO: move to backend  (jobCount * 30min) + estimatedTravelTime
     })
 
-    technicianJobs.forEach(job => {
+    technicianJobs?.forEach(job => {
 
       const location = {
         address: job?.body_of_water?.address,

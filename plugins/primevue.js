@@ -33,6 +33,7 @@ import ConfirmDialog from "primevue/confirmdialog";
 import ContextMenu from "primevue/contextmenu";
 import Divider from "primevue/divider";
 import Tag from "primevue/tag";
+import Menu from 'primevue/menu';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
@@ -68,6 +69,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Badge", Badge);
   nuxtApp.vueApp.component("Divider", Divider);
   nuxtApp.vueApp.component("Tag", Tag);
+  nuxtApp.vueApp.component("Menu", Menu);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
   nuxtApp.vueApp.directive('tooltip', Tooltip);
