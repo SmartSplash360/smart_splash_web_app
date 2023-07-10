@@ -83,7 +83,6 @@ const email = ref('test1@user.com')
 const phoneNumber = ref('0760970734')
 const password = ref('password')
 const passwordConfirmation = ref('password')
-const company = ref('1')
 
 onMounted(() => {
   if (props.customer) {
@@ -91,7 +90,6 @@ onMounted(() => {
     surname.value = props.customer.surname
     email.value = props.customer.email
     phoneNumber.value = props.customer.phone_number
-    company.value = props.customer.company_id
   }
 })
 
@@ -106,7 +104,6 @@ const createCustomer = async () => {
       phone_number: phoneNumber.value,
       password: password.value,
       password_confirmation: passwordConfirmation.value,
-      company: company.value
     });
     props.toggleAddCustomerModal({success: "Customer created successfully"});
   } catch (e) {

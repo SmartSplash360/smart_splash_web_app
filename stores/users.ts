@@ -71,7 +71,7 @@ export const useUserStore = defineStore("user", {
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;
-            await router.push('/customers');
+            await router.push('/');
         },
         async forgotPassword() {
         },

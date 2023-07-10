@@ -2,11 +2,9 @@
   <div
       class="hidden min-h-[80px] w-full items-center justify-between px-10 shadow-md lg:flex"
   >
-    <div class="flex items-baseline gap-2  dark:text-white">
-      <span class="inline-flex items-center justify-center"
-      ><font-awesome-icon icon="user-group"
-      /></span>
-      <h1 class="heading__h3" >Customer</h1>
+    <div class="min-w-2/5 flex items-center justify-between gap-3">
+      <font-awesome-icon :icon="pageIcon"/>
+      <h1 class="heading__h3" >{{ pageName }}</h1>
     </div>
     <div class="ml-auto flex items-center justify-between">
       <BaseSearchBar :size="'lg'"></BaseSearchBar>
@@ -146,11 +144,13 @@ import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import {sideBarLinks} from "@/utils/sidebarLinks";
 import {useUserStore} from "~/stores/users";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
+const route = useRoute();
 
 defineProps({
   setColorTheme: Function,
 });
-
 
 const sideBarVisible = ref(false);
 
@@ -170,6 +170,17 @@ const onImageRightClick = (event) => {
 const toggleSideBar = () => {
   sideBarVisible.value = !sideBarVisible.value;
 };
+
+const pageName = computed(() => {
+  let name = route.name;
+  return name[0].toUpperCase() + name.slice(1);
+})
+
+const pageIcon = computed(() => {
+  let name = route.name;
+  let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
+  return sideBarLink?.icon ?? 'user-lock'
+})
 </script>
 
 <style lang="scss" scoped></style>
