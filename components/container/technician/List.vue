@@ -35,9 +35,12 @@ import {useTechnicianStore} from "~/stores/technician";
 import {useToast} from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
+defineProps({
+  loading : Boolean
+})
+
 const toast = useToast();
 const confirm = useConfirm();
-const loading = ref();
 
 const addTechnicianModal = ref(false);
 const technician = ref();

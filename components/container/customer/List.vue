@@ -64,11 +64,15 @@ import {useToast} from "primevue/usetoast";
 import {useConfirm} from "primevue/useconfirm";
 import {useCustomerStore} from "~/stores/customer";
 
+const props = defineProps({
+  loading : Boolean
+})
+
+console.log(props.loading)
 const toast = useToast();
 const confirm = useConfirm();
 const customerStore = useCustomerStore();
 
-const loading = ref(false);
 const addCustomerModal = ref(false);
 const customer = ref()
 
