@@ -123,7 +123,7 @@ onMounted(async () => {
   for (const key in data) {
     const technicianName = key
     const technicianJobs = data[key]
-    
+
     const locations = [{
       lat: center.value.lat,
       lng: center.value.lng

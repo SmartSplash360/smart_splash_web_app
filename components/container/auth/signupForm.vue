@@ -57,7 +57,6 @@ async function registerUser() {
     email: email.value,
     password: password.value,
     confirmPassword: confirmPassword.value,
-    company: 1,
     role: 'Admin'
   }
   await store.register(userPayload);
