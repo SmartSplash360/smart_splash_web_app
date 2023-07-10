@@ -51,6 +51,17 @@ export const useJobStore = defineStore("job", {
                 console.log(error);
                 return error
             }
+        },
+        async fetScheduledJobsByDate(date: string) {
+          const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.get(`http://localhost:8000/api/v1/jobs/getScheduledJobsByDate/${date}`);
+                return res.data.data
+            } catch (error) {
+                console.log(error);
+                return error
+            }
         }
     }
 })

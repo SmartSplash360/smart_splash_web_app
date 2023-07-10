@@ -108,7 +108,7 @@ const createTechnician = async () => {
       password_confirmation: passwordConfirmation.value,
       company: company.value
     });
-    props.toggleAddTechnicianModal({success: "Customer created successfully"});
+    props.toggleAddTechnicianModal({success: "Technician created successfully"});
   } catch (e) {
     props.toggleAddTechnicianModal({error: e});
   }
