@@ -1,73 +1,60 @@
 <template>
   <div
-    class="side-bar-container hidden h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20"
+    class="hidden 
+    bg-gradient-to-b 
+    from-[#83b2c1] 
+    to-[#015d7b] 
+    dark:bg-[#1B2028]
+    dark:from-inherit
+    h-full flex-col gap-[8rem] px-6 lg:flex 2xl:gap-64 2xl:pb-20 "
   >
-    <div class="max-h-[150px] bg-[#015d7b] lg:max-w-[298px]">
+    <div class="max-h-[150px] lg:max-w-[298px]">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
         class="h-full w-full"
       />
     </div>
-    <div class="-mt-14 flex-1 xl:-mt-20 2xl:-mt-32">
+    <div class="-mt-14 flex-1 xl:-mt-10 2xl:-mt-28">
       <ul class="flex flex-col gap-10 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link
             :to="link.to"
-            class="flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2 hover:bg-white hover:text-black"
+            :class="[$colorMode.value == 'dark' && 'dark-router-link-active']"
+            class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3
+            nav-link-item
+            dark:text-[#717275]
+            dark:hover:bg-[#0291BF] 
+            dark:hover:text-white "
           >
             <span
-              class="inline-flex h-[16px] w-[16px] items-center justify-center text-xl"
+              class="inline-flex h-[16px] w-[16px] items-center justify-center nav-link-item"
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="text-sm font-bold leading-7">{{ link.name }}</span>
+            <span class="nav-link-item">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>
     </div>
   </div>
-  <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 sm:hidden">
-    <div class="flex items-center justify-between">
-      <BaseSearchBar :size="'lg'"></BaseSearchBar>
-      <div class="text-white">
-        <span
-          @click="showActiveRoute"
-          class="inline-flex h-[30px] w-[30px] items-center justify-center"
-          ><font-awesome-icon icon="bars" class="cursor-pointer text-2xl"
-        /></span>
-      </div>
-    </div>
-    <div v-if="activeRoute" class="flex flex-col gap-2 sm:hidden">
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <RegularCustomerActivityCard></RegularCustomerActivityCard>
-      <BaseExportButton></BaseExportButton>
-    </div>
-  </div>
+
 </template>
 
 <script setup>
+
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { sideBarLinks } from "~/utils/sidebarLinks";
 
-const activeRoute = ref(false);
-const showActiveRoute = () => {
-  activeRoute.value = !activeRoute.value;
-};
 </script>
 
-<style scoped>
-.side-bar-container {
-  background: rgb(108, 106, 153);
-  background: linear-gradient(
-    180deg,
-    rgba(108, 106, 153, 1) 0%,
-    rgba(245, 235, 235, 1) 0%,
-    rgba(4, 132, 173, 1) 33%
-  );
+<style>
+.router-link-active {
+  background-color: #FFF;
+  color: #000;
+  font-size: 45px;
+}
+.dark-router-link-active .router-link-active {
+  background-color: #0291BF
 }
 </style>
-
-<!-- :class="[link.name ? 'bg-white text-black' : '']" -->

@@ -1,76 +1,88 @@
 <template>
-  <div class="flex flex-col gap-10">
-    <div class="card">
+  <div class="flex flex-col gap-10 alert-table dark:text-white">
+    <div class="card alert-table">
       <DataTable
-        v-model:selection="selectedService"
-        v-model:filters="filters"
-        :value="services"
-        selectionMode="single"
-        dataKey="id"
-        :rows="10"
-        tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
-        :loading="loading"
-        :globalFilterFields="['product', 'name']"
+          :value="alerts"
+          dataKey="id"
+          :rows="10"
+          tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
+          :loading="loading"
       >
-        <Column field="alert" header="Alert" sortable class="w-[1%] lg:w-[20%]">
-          <template #body="slotProps">
-            <div class="flex items-center gap-5">
-              <img
-                :src="[
-                  slotProps.data.alert === 'PSI trending down'
-                    ? WaterMachineIcon
-                    : slotProps.data.alert === 'Chem cost high'
-                    ? ChemCostIcon
-                    : ClockIcon,
-                ]"
-                alt="alert-icon"
-              />
-              <span>{{ slotProps.data.alert }}</span>
-            </div>
-          </template></Column
+        <template #empty> No alerts found. </template>
+        <Column
+            field="id"
+            header="Alert"
+            sortable
+            class="w-[1%] lg:w-[20%]"
+        ></Column>
+        <Column
+            field="name"
+            header="Customer name"
+            class="w-[5%] lg:w-[20%]"
+            sortable
         >
+          <template #body="slotProps">
+            {{ slotProps.data?.body_of_water?.customer?.name }}
+            {{ slotProps.data?.body_of_water?.customer?.surname ?? '' }}
+          </template>
+        </Column>
         <Column
-          field="name"
-          header="Customer name"
-          class="w-[5%] lg:w-[20%]"
-          sortable
-        ></Column>
+            field="description"
+            header="Address"
+            class="w-[5%] lg:w-[20%]"
+        >
+          <template #body="slotProps">
+            {{ slotProps.data?.body_of_water?.customer?.address[0]?.address_line1 }}
+          </template>
+        </Column>
         <Column
-          field="address"
-          header="Address"
-          class="w-[5%] lg:w-[20%]"
-        ></Column>
+            field="alert_type_id"
+            header="Alert type"
+            class="w-[5%] lg:w-[15%]"
+            sortable
+        >
+          <template #body="slotProps">
+            {{ slotProps.data?.alert_type?.name }}
+          </template>
+        </Column>
         <Column
-          field="pool"
-          header="Pool name"
-          class="w-[5%] lg:w-[15%]"
-        ></Column>
+            field="price"
+            header="Technician"
+            class="w-[5%] lg:w-[15%]"
+        >
+          <template #body="slotProps">
+            {{ slotProps.data?.technician?.name ?? `Technician ${slotProps.data.technician}` }}
+          </template>
+        </Column>
         <Column
-          field="technician"
-          header="Technician responsible"
-          class="w-[5%] lg:w-[15%]"
-        ></Column>
+            field="status"
+            header="Status"
+            class="w-[5%] lg:w-[15%]"
+            sortable
+        >
+          <template #body="slotProps">
+            <Tag :value="slotProps.data?.status"
+                 :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
+          </template>
+        </Column>
       </DataTable>
     </div>
   </div>
 </template>
 
 <script setup>
-import { FilterMatchMode } from "primevue/api";
-import { AlertServices } from "@/services/AlertServices";
-import WaterMachineIcon from "@/assets/icons/water-machine-icon.svg";
-import ChemCostIcon from "@/assets/icons/chem-cost-icon.svg";
-import ClockIcon from "@/assets/icons/clock-icon.svg";
+import Tag from "primevue/tag";
 
-onMounted(() => {
-  AlertServices.getAlertServicesSmall().then((data) => (services.value = data));
+const props = defineProps({
+  alerts: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+onMounted(async () => {
   loading.value = false;
 });
 
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
-const services = ref();
 const loading = ref(true);
-const selectedService = ref();
 </script>

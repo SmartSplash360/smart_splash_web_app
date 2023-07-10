@@ -7,18 +7,18 @@
         class="flex w-full flex-col items-center justify-between gap-5 lg:justify-start xl:flex-row"
       >
         <img
-          :src="userProfile"
+          :src="customerInfo.photo ?? ''"
           alt="user-profile"
           class="h-48 w-48 items-center rounded-full lg:h-[60px] lg:w-[60px] xl:h-28 xl:w-28"
         />
         <div class="flex flex-col gap-1">
-          <h3 class="hidden text-sm font-[400] leading-6 xl:flex">
+          <h3 class="hidden heading__h3  xl:flex">
             CUSTOMER INFO:
           </h3>
           <div class="flex items-center gap-2">
-            <span class="text-sm font-[400] leading-7">{{
+            <span class="span__element">{{
               customerInfo.name
-            }}</span>
+            }} {{ customerInfo.surname ?? '' }}</span>
             <img
               :src="ChatIcon"
               alt="chat-icon"
@@ -37,7 +37,7 @@
             :image="EmailIcon"
             size="medium"
         /></span>
-        <span class="text-sm font-[400] leading-7">{{
+        <span class="span__element">{{
           customerInfo.email
         }}</span>
       </div>
@@ -47,7 +47,7 @@
           alt="phone-icon"
           class="h-5 w-5 lg:h-[20px] lg:w-[20px]"
         />
-        <span class="min-w-max text-sm font-[400] leading-7">{{
+        <span class="min-w-max span__element">{{
           customerInfo.phone_number
         }}</span>
       </div>
@@ -60,7 +60,7 @@
         alt="location-icon"
         class="h-5 w-5 lg:h-[25px] lg:w-[25px]"
       />
-      <span class="text-sm font-[400] leading-7">
+      <span class="span__element">
         {{ customerInfo.address }}</span
       >
     </div>
@@ -76,8 +76,8 @@
         <div
           class="-mt-2 flex flex-col items-center justify-center gap-1 rounded-xl bg-white px-4 py-2"
         >
-          <span class="min-w-max text-sm text-[#025E7C]">Gate code</span>
-          <span class="text-[8px]">F5JKJGF</span>
+          <span class="min-w-max span__element text-[#025E7C]">Gate code</span>
+          <span class="span__element">F5JKJGF</span>
         </div>
       </div>
       <img
@@ -105,7 +105,10 @@ import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
 
 defineProps({
-  customerInfo: Object,
+  customerInfo: {
+    type: Object,
+    required: true,
+  },
 });
 </script>
 

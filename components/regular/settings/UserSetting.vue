@@ -2,11 +2,11 @@
   <form class="flex flex-col gap-5">
     <div class="flex items-center justify-between py-5">
       <div class="flex flex-col gap-4">
-        <h2 class="text-[22px] font-[500]">Users</h2>
-        <span class="text-sm font-[400] leading-normal">Update users Role</span>
+        <h2 class="min-w-max heading__h3">Users</h2>
+        <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="card border-b pb-14">
+    <div class="card pb-14 user-setting-table border-b dark:border-b-gray-600 ">
       <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -15,7 +15,6 @@
         dataKey="id"
         :loading="loading"
         tableStyle="min-height: 30rem"
-        class="border border-t-0"
       >
         <template #header>
           <div class="flex w-full justify-center py-3">
@@ -24,7 +23,7 @@
               <InputText
                 v-model="filters['global'].value"
                 placeholder="Search user"
-                class="w-full sm:w-[25rem]"
+                class="w-full sm:w-[25rem] dark:bg-[#1B2028]"
               />
             </span>
           </div>
@@ -38,7 +37,7 @@
                 :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
                 style="width: 32px"
               />
-              <span>{{ data.name }}</span>
+              <span class="span__element">{{ data.name }}</span>
             </div>
           </template>
         </Column>
@@ -49,7 +48,7 @@
         >
           <template #body="{ data }">
             <div class="align-items-center flex gap-2">
-              <span>{{
+              <span class="span__element">{{
                 data.date.toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "long",
@@ -68,7 +67,7 @@
         >
           <template #body="{ data }">
             <div class="align-items-center flex gap-2">
-              <span>{{
+              <span class="span__element">{{
                 data.date.toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "long",
@@ -92,7 +91,7 @@
                 :options="roles"
                 optionLabel="name"
                 placeholder="Role"
-                class="w-[12rem] !bg-gray-200 !text-white"
+                class="w-[12rem] bg-black !text-white dark:bg-[#1B2028]"
               />
             </div>
           </template>

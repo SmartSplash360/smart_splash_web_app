@@ -1,12 +1,12 @@
 <template>
   <div class="flex w-full items-start justify-between sm:items-center">
     <div
-      class="flex flex-col items-end gap-3 sm:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
+      class="flex flex-col items-end gap-3 lg:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
     >
       <h3
-        class="order-1 min-w-max rounded-md px-5 py-2 text-2xl font-[500] leading-7 shadow-md sm:-order-1"
+        class="order-1 min-w-max rounded-md px-5 py-2 heading__h3 sm:-order-1 dark:bg-[#1B2028]"
       >
-        {{ technicianCount }} Technicians
+        {{ techniciansCount }} Technicians
       </h3>
       <div class="card flex w-full justify-center sm:w-fit">
         <Dropdown
@@ -15,7 +15,7 @@
           :options="statuses"
           optionLabel="state"
           placeholder="Status"
-          class="w-full md:w-48"
+          class="w-full md:w-52 dark:bg-[#1B2028]"
         />
       </div>
     </div>
@@ -28,9 +28,16 @@
 </template>
 
 <script setup>
-defineProps({
-  technicianCount: Number,
-  statuses: Array,
-});
+import { useTechnicianStore} from "~/stores/technician";
+
+const statuses = ref([
+  { state : 'Active'},
+  {state : 'Inactive'}
+])
+
+const technicianStore = useTechnicianStore();
+
+const techniciansCount = computed(() => technicianStore.technicians.length);
+
 const status = ref();
 </script>

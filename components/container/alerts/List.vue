@@ -1,8 +1,8 @@
 <template>
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
-    <div v-else class="card">
-      <div class="hidden w-full justify-end gap-5 hover:shadow-xl sm:flex">
+    <div v-else class="card flex flex-col gap-10">
+      <div class="hidden w-full justify-end gap-5 sm:flex">
         <BaseAddButton
           :btnText="' Alert'"
           @click="toggleAddAlertModal"
@@ -11,58 +11,111 @@
       <CreateAlertModal
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
+        :alert="alert"
       ></CreateAlertModal>
       <TabView v-model:activeIndex="active">
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">High</span>
+              <span class="span__element">High</span>
               <span
-                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
-                >5</span
+                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
+                >{{ highAlerts.length }}</span
               >
             </div>
           </template>
-          <RegularAlertHighAlert></RegularAlertHighAlert>
+          <RegularAlertHighAlert :alerts="highAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertHighAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">Medium</span>
+              <span class="span__element">Medium</span>
               <span
                 class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#FFA500] shadow-md"
-                >3</span
+                >{{ mediumAlerts.length }}</span
               >
             </div>
           </template>
-          <RegularAlertMediumAlert></RegularAlertMediumAlert>
+          <RegularAlertMediumAlert :alerts="mediumAlerts"></RegularAlertMediumAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
             <div class="flex items-center justify-center gap-3">
-              <span class="text-[18px] font-[500]">Low</span>
+              <span class="span__element">Low</span>
               <span
                 class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#02BF70] shadow-md"
-                >3</span
+                >{{ lowAlerts.length }}</span
               >
             </div>
           </template>
-          <RegularAlertLowAlert></RegularAlertLowAlert>
+          <RegularAlertLowAlert :alerts="lowAlerts"></RegularAlertLowAlert>
         </TabPanel>
       </TabView>
     </div>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
 <script setup>
 import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
+import {useToast} from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
+import {useAlertStore} from "~/stores/alert";
+
+const toast = useToast();
+const confirm = useConfirm();
+const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
+const alerts = ref([]);
+const alert = ref()
 
 const active = ref(0);
 
 const loading = ref(false);
 
 const toggleAddAlertModal = () => (addAlertModal.value = true);
-const closeModal = () => (addAlertModal.value = false);
+const closeModal = ({ success, error }) => {
+  addAlertModal.value = false
+  alert.value = null
+
+  if (success) {
+    toast.add({ severity: 'success', summary: 'Create Customer Success', detail: success, life: 3000 });
+  }
+
+  if (error) {
+    toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
+  }
+};
+
+const editItem = ({ id, item }) => {
+  console.log(id, item)
+  alert.value = item
+  toggleAddAlertModal()
+}
+
+const deleteItem = async ({ id }) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Delete Alert',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      // delete item
+      const res = await alertStore.deleteAlert(id)
+      toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 3000 });
+    },
+    reject: () => {}
+  })
+}
+
+onMounted(async () => {
+  alerts.value = alertStore.getAlerts;
+});
+
+const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'high'));
+const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
+const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
 </script>
+
+

@@ -6,18 +6,28 @@
     v-else
     class="flex max-h-[90vh] flex-col overflow-y-auto sm:flex-row lg:-mx-10 lg:-mt-10"
   >
-    <div class="flex w-full flex-col gap-5 sm:pt-12 lg:w-1/3 lg:border-r">
-      <RegularCustomerChatPreview
+    <div class="flex w-full flex-col gap-5 sm:pt-5 lg:w-1/3 lg:border-r dark:border-r-gray-600">
+      <RegularMessagingChatPreview
+        :path="'inbox'"
         :chats="inboxService"
-      ></RegularCustomerChatPreview>
+        @select-chat="(chat) => selectChat(chat)"
+      ></RegularMessagingChatPreview>
     </div>
     <div class="hidden w-full sm:w-2/3 lg:block">
-      <RegularInboxChat></RegularInboxChat>
+      <RegularInboxChat :selectedChat="selectedChat"></RegularInboxChat>
     </div>
   </section>
 </template>
 
 <script setup>
 import { inboxService } from "@/services/InboxServices";
+
 const loading = ref(false);
+const selectedChat = ref(inboxService[0])
+
+const selectChat = (chat) => {
+  selectedChat.value = chat
+}
+
+
 </script>
