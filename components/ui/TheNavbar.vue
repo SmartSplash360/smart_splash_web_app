@@ -177,10 +177,6 @@ const items = ref([
     
   }
 ]);
-const sideBarVisible = ref(false);const user = computed(() => userStore.getCurrentUser);
-
-const userStore = useUserStore();
-
 
 const onImageRightClick = (event) => {
   menu.value.show(event);
