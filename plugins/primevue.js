@@ -30,6 +30,8 @@ import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
 import ContextMenu from "primevue/contextmenu";
+import Divider from "primevue/divider";
+import Tag from "primevue/tag";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
@@ -63,6 +65,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("InputSwitch", InputSwitch);
   nuxtApp.vueApp.component("Checkbox", Checkbox);
   nuxtApp.vueApp.component("Badge", Badge);
+  nuxtApp.vueApp.component("Divider", Divider);
+  nuxtApp.vueApp.component("Tag", Tag);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
 });
