@@ -172,8 +172,3 @@ const deleteAlert = async (id) => {
   props.deleteItem({ id })
 };
 </script>
-<style scoped>
-
-
-
-</style>

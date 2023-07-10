@@ -13,12 +13,12 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Name* </label>
-            <InputText type="text" class="dark:bg-[#1B2028] dark:text-white" v-model="name"></InputText>
+            <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="name"></InputText>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label for="name"> Price* </label>
             <InputNumber 
-              class="dark:bg-[#1B2028] dark:text-white" 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
               v-model="price" 
               inputId="currency-us" 
               mode="currency" 
@@ -30,12 +30,12 @@
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label for="description"> Description </label>
-          <Textarea class="dark:bg-[#1B2028] dark:text-white" v-model="description" autoResize rows="3" cols="70"/>
+          <Textarea class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="description" autoResize rows="3" cols="70"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label for="notes"> Notes </label>
-          <Textarea class="dark:bg-[#1B2028] dark:text-white" v-model="notes" autoResize rows="3" cols="70"/>
+          <Textarea class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="notes" autoResize rows="3" cols="70"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
@@ -50,9 +50,13 @@
               outlined
               @click="toggleAddProductModal( { show: false })"
               class="hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
+          />        
+          <Button
+            label="Submit"
+            icon="pi pi-check"
+            class="!bg-[#0291BF] hover:shadow-xl"
+            @click="product ? updateProduct() : createProduct() "
           />
-          <Button label="Submit" icon="pi pi-check"
-                  @click="product ? updateProduct() : createProduct() "/>
         </div>
       </form>
   </div>

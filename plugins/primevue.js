@@ -31,6 +31,7 @@ import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
 import ContextMenu from "primevue/contextmenu";
+import Menu from 'primevue/menu';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
@@ -64,6 +65,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("InputSwitch", InputSwitch);
   nuxtApp.vueApp.component("Checkbox", Checkbox);
   nuxtApp.vueApp.component("Badge", Badge);
+  nuxtApp.vueApp.component("Menu", Menu);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
   nuxtApp.vueApp.directive('tooltip', Tooltip);
