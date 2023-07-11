@@ -221,9 +221,9 @@ onMounted(async () => {
       color,
       estimatedTravelDistance: Number(estimatedTravelDistance).toFixed(2),
       estimatedTravelTime,
-      estimatedWorkTime: Number(
-        technicianJobs.length * 30 * 60 + estimatedTravelTime
-      ).toFixed(2),
+      estimatedWorkTime: Math.ceil(
+        technicianJobs.length * 30 + estimatedTravelTime
+      ),
     });
 
     jobLocations.value.push(locations);
@@ -397,7 +397,7 @@ const calculateTravelTime = (distance, speed = 60) => {
   // Convert travel time to minutes
   const travelTimeMinutes = travelTime * 60;
 
-  return Math.round(travelTimeMinutes);
+  return Math.ceil(travelTimeMinutes);
 };
 </script>
 
