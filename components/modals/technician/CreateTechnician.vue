@@ -1,42 +1,40 @@
 <template>
   <div
     @click="toggleAddTechnicianModal({ show: false })"
-    class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]"
-  >
+    class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]">
       <form
       @click.stop
-        class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
-      >
-        <h3 class="heading__h3 text-[#025E7C]">
+      class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
+        <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ technician ? 'Edit' : 'New' }} Technician {{ technician ? `#${technician?.id}` : '' }}
-        </h3>
+        </h2>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Name* </label>
+            <label class="span__element" for="name"> Name* </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="name"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Surname* </label>
+            <label class="span__element" for="name"> Surname* </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="surname"></InputText>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5">
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="email address"> Email address* </label>
+            <label class="span__element" for="email address"> Email address* </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="email" v-model="email"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="cell number"> Cell number </label>
+            <label class="span__element" for="cell number"> Cell number </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="phoneNumber"></InputText>
           </div>
         </div>
         <div v-if="!technician" class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Password* </label>
+            <label class="span__element" for="name"> Password* </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="password"></InputText>
           </div>
           <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Password Confirmation* </label>
+            <label class="span__element" for="name"> Password Confirmation* </label>
              <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="passwordConfirmation"></InputText>
           </div>
         </div>

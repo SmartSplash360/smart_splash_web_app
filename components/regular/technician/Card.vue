@@ -70,7 +70,7 @@
                   <img
                       :src="LikeIcon"
                       alt="like-icon"
-                      class="h-[24px] w-[24px]"
+                      class="h-[28px] w-[28px]"
                   />
                   <span class="text-sm font-semibold">64</span>
                 </div>
@@ -78,7 +78,7 @@
                   <img
                       :src="DislikeIcon"
                       alt="dislike-icon"
-                      class="h-[24px] w-[24px]"
+                      class="h-[28px] w-[28px]"
                   />
                   <span class="span__element">10</span>
                 </div>
@@ -89,13 +89,13 @@
         </div>
       </template>
       <template #title>
-        <div class="relative h-[15px] w-full rounded-xl bg-[#D4382E]">
-          <div class="h-[15px] w-5/6 rounded-l-xl bg-[#009F10]"></div>
+        <div class="relative h-[15px] w-full rounded-xl bg-[#D4382E] dark:bg-[#CD2542]">
+          <div class="h-[15px] w-5/6 rounded-l-xl bg-[#009F10] dark:bg-[#27C498]"></div>
         </div>
       </template>
       <template #content>
         <nuxt-link :to="`technicians/${props.technician.id}`">
-        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#0291BF]  dark:text-white p-5">
+        <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#31353F]  dark:text-white p-5">
           <div class="flex items-center gap-3  pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
             ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"

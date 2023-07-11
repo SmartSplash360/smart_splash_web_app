@@ -5,36 +5,36 @@
     <form 
     @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
-      <h3 class="heading__h3 text-[#025E7C]">
+      <h2 class="heading__h2 font-bold text-[#025E7C]">
         {{ customer ? 'Edit' : 'New' }} Customer {{ customer ? `#${customer?.id}` : '' }}
-      </h3>
+      </h2>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="name"> Name* </label>
+          <label class="span__element text-sm" for="name"> Name* </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="name"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="name"> Surname* </label>
+          <label class="span__element text-sm" for="name"> Surname* </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="surname"></InputText>
         </div>
       </div>
       <div class="flex flex-col justify-between gap-5">
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="email address"> Email address* </label>
+          <label class="span__element text-sm" for="email address"> Email address* </label>
           <InputText type="email" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="email"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="cell number"> Cell number </label>
+          <label class="span__element text-sm" for="cell number"> Cell number </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
       </div>
       <div v-if="!customer" class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="name"> Password* </label>
+          <label class="span__element text-sm" for="name"> Password* </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="name"> Password Confirmation* </label>
+          <label class="span__element text-sm" for="name"> Password Confirmation* </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="passwordConfirmation"></InputText>
         </div>
       </div>

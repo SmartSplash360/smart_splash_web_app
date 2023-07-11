@@ -7,13 +7,13 @@
           @click.stop
           class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
       >
-        <h3 class="heading__h3 text-[#025E7C]">
+        <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ alert ? 'Edit' : 'New' }} Alert {{ alert ? `#${alert?.id}` : '' }}
-        </h3>
+        </h2>
 
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label for="alertType"> Alert Type* </label>
+            <label class="span__element" for="alertType"> Alert Type* </label>
             <Dropdown
                 v-model="alertTypeId"
                 :options="alertTypes"
@@ -24,7 +24,7 @@
             />
           </div>
           <div class="flex w-full flex-col gap-3">
-            <label for="bodyOfWater"> Body of Water* </label>
+            <label class="span__element" for="bodyOfWater"> Body of Water* </label>
             <Dropdown
                 v-model="bodyOfWaterId"
                 :options="bodiesOfWater"
@@ -37,7 +37,7 @@
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label for="technician"> Technician* </label>
+            <label class="span__element" for="technician"> Technician* </label>
             <div class="card justify-content-center flex">
               <Dropdown
                   v-model="technicianId"
@@ -52,14 +52,14 @@
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label for="notes"> Notes</label>
+            <label class="span__element" for="notes"> Notes</label>
             <Textarea v-model="notes" rows="5" cols="30" class="dark:bg-[#1B2028]"/>
           </div>
         </div>
 
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label for="date"> Date</label>
+            <label class="span__element" for="date"> Date</label>
             <Calendar 
               id="date" 
                 class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
@@ -73,7 +73,7 @@
           </div>
 
           <div class="flex w-full flex-col gap-3">
-            <label for="priority"> Priority </label>
+            <label class="span__element" for="priority"> Priority </label>
             <div class="card justify-content-center flex">
               <Dropdown
                   v-model="priority"
@@ -87,7 +87,7 @@
           </div>
 
           <div class="flex w-full flex-col gap-3">
-            <label for="status"> Status </label>
+            <label class="span__element" for="status"> Status </label>
             <div class="card justify-content-center flex">
               <Dropdown
                   v-model="status"
