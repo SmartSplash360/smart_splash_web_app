@@ -155,8 +155,11 @@ import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import {sideBarLinks} from "@/utils/sidebarLinks";
 import {useUserStore} from "~/stores/users";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { useConfirm } from "primevue/useconfirm";
+
 
 const route = useRoute();
+const confirm = useConfirm();
 
 defineProps({
   setColorTheme: Function,
@@ -201,6 +204,12 @@ const toggle = (event) => {
     menu.value.toggle(event);
 };
 
-const signout = () =>  userStore.logout()
-
+const signout = () =>  {
+  confirm.require({
+    message: "Are you sure you want to logout?",
+    accept: () => {
+      userStore.logout()
+    },
+  });
+}
 </script>
