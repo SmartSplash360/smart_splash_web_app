@@ -1,16 +1,20 @@
 <template>
   <div>
+    <div class="mb-3">
+      <!--      <h5 class="pb-2">Route Date:</h5>-->
+      <VueDatePicker v-model="date"></VueDatePicker>
+    </div>
     <GoogleMap
-      api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-      style="width: 100%; height: 700px"
-      :center="center"
-      class="border-2"
-      :zoom="13"
-      :styles="googleMapStyles"
+        api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
+        style="width: 100%; height: 700px"
+        :center="center"
+        class="border-2"
+        :zoom="13"
+        :styles="googleMapStyles"
     >
       <Polyline
-        v-for="jobTechnicianPath in jobTechnicianPaths"
-        :options="jobTechnicianPath"
+          v-for="jobTechnicianPath in jobTechnicianPaths"
+          :options="jobTechnicianPath"
       />
 
       <Marker v-for="marker in jobMarkers" :options="marker">
@@ -20,28 +24,28 @@
               {{ marker?.job?.customer?.name }}
             </div>
             <div>{{ marker.content }}</div>
-            <Divider type="solid" />
+            <Divider type="solid"/>
             <div class="flex justify-between">
               <div class="flex flex-col">
                 <span class="pb-2">TECHNICIAN</span>
                 <span class="font-bold">{{
-                  marker?.job?.technician?.name
-                }}</span>
+                    marker?.job?.technician?.name
+                  }}</span>
               </div>
               <div class="flex flex-col">
                 <span class="pb-2">TIME WINDOW</span>
                 <span class="font-bold">{{
-                  marker?.job?.end_date ?? "(None)"
-                }}</span>
+                    marker?.job?.end_date ?? "(None)"
+                  }}</span>
               </div>
             </div>
-            <Divider type="solid" />
+            <Divider type="solid"/>
             <div class="flex flex-col">
               <div class="flex flex-col pb-5">
                 <span class="pb-2">OFFICE NOTES</span>
                 <span class="font-semibold">{{
-                  marker?.job?.technical_notes ?? "(None)"
-                }}</span>
+                    marker?.job?.technical_notes ?? "(None)"
+                  }}</span>
               </div>
               <div class="flex flex-col">
                 <span class="pb-2">TECH INSTRUCTIONS</span>
@@ -51,9 +55,9 @@
             <div class="my-5 flex w-full justify-center">
               <nuxt-link :to="`technicians/${marker?.job?.technician?.id}`">
                 <Button
-                  size="small"
-                  icon="pi pi-info-circle"
-                  label="OPEN JOB"
+                    size="small"
+                    icon="pi pi-info-circle"
+                    label="OPEN JOB"
                 />
               </nuxt-link>
             </div>
@@ -62,16 +66,21 @@
       </Marker>
     </GoogleMap>
     <div class="mt-5 flex flex-row gap-5">
+
+      <div v-if="technicianDetails.length === 0" class="text-base text-center w-full text-red-700">
+        No technician Routes for {{ date }}
+      </div>
+
       <div
-        v-for="technician in technicianDetails"
-        class="flex w-1/4 flex-col rounded-[0.5rem] border-2 p-3"
+          v-for="technician in technicianDetails"
+          class="flex w-1/4 flex-col rounded-[0.5rem] border-2 p-3"
       >
         <div class="flex flex-row justify-between gap-2">
           <Avatar
-            size="large"
-            icon="pi pi-user"
-            class="text-white"
-            :style="{ backgroundColor: technician?.color }"
+              size="large"
+              icon="pi pi-user"
+              class="text-white"
+              :style="{ backgroundColor: technician?.color }"
           />
           <div class="flex flex-col">
             <span class="pb-3 font-bold">{{ technician?.name }}</span>
@@ -79,9 +88,9 @@
           </div>
           <div class="flex flex-col justify-center gap-2 align-middle">
             <i
-              class="pi pi-map-marker"
-              :style="{ color: technician?.color }"
-              style="font-size: 1.5rem"
+                class="pi pi-map-marker"
+                :style="{ color: technician?.color }"
+                style="font-size: 1.5rem"
             ></i>
             <span class="self-center text-sm">{{ technician?.jobCount }}</span>
           </div>
@@ -91,14 +100,14 @@
           <div class="flex flex-row gap-2">
             <i class="pi pi-car" :style="{ color: technician?.color }"></i>
             <span class="text-sm"
-              >{{ technician?.estimatedTravelTime }}min</span
+            >{{ technician?.estimatedTravelTime }}min</span
             >
           </div>
 
           <div class="flex flex-row gap-2">
             <i class="pi pi-bolt" :style="{ color: technician?.color }"></i>
             <span class="text-sm"
-              >{{ technician?.estimatedTravelDistance }}km</span
+            >{{ technician?.estimatedTravelDistance }}km</span
             >
           </div>
 
@@ -113,14 +122,13 @@
 </template>
 
 <script setup>
-import { GoogleMap, Polyline, Marker, InfoWindow } from "vue3-google-map";
-import { useJobStore } from "~/stores/jobs";
+import {GoogleMap, InfoWindow, Marker, Polyline} from "vue3-google-map";
+import {useJobStore} from "~/stores/jobs";
 import randomcolor from "randomcolor";
-import { formatDuration } from "date-fns";
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ['auth', 'auto-theme'],
 });
 
 const jobStore = useJobStore();
@@ -130,6 +138,95 @@ const jobMarkers = ref([]);
 const jobTechnicianPaths = ref([]);
 const technicianDetails = ref([]);
 
+// my current location
+const center = ref({lat: -33.95908009669137, lng: 18.470931797112016});
+const colorMode = computed(() => useColorMode().preference);
+const googleMapStyles = computed(() => {
+  return colorMode.value === "light"
+      ? []
+      : [
+        {elementType: "geometry", stylers: [{color: "#242f3e"}]},
+        {elementType: "labels.text.stroke", stylers: [{color: "#242f3e"}]},
+        {elementType: "labels.text.fill", stylers: [{color: "#746855"}]},
+        {
+          featureType: "administrative.locality",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#d59563"}],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#d59563"}],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "geometry",
+          stylers: [{color: "#263c3f"}],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#6b9a76"}],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry",
+          stylers: [{color: "#38414e"}],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [{color: "#212a37"}],
+        },
+        {
+          featureType: "road",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#9ca5b3"}],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry",
+          stylers: [{color: "#746855"}],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry.stroke",
+          stylers: [{color: "#1f2835"}],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#f3d19c"}],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [{color: "#2f3948"}],
+        },
+        {
+          featureType: "transit.station",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#d59563"}],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [{color: "#17263c"}],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.fill",
+          stylers: [{color: "#515c6d"}],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.stroke",
+          stylers: [{color: "#17263c"}],
+        },
+      ];
+});
+
+// svg marker
 const svgMarker = {
   viewBox: "0 0 15 20",
   // path: fontawesome.MAP_MARKER,
@@ -140,18 +237,35 @@ const svgMarker = {
   strokeColor: "#fff",
   rotation: 0,
   scale: 1,
-  anchor: { x: 15, y: 20 },
-  origin: { x: 0, y: 0 },
-  labelOrigin: { x: 15, y: 20 },
+  anchor: {x: 15, y: 20},
+  origin: {x: 0, y: 0},
+  labelOrigin: {x: 15, y: 20},
 };
 
-onMounted(async () => {
-  // TODO:get jobs from current date
-  // const date = new Date().toISOString().split('T')[0];
-  const date = "2023-07-14";
-  const data = await jobStore.fetScheduledJobsByDate(date);
+// current date formatted
+const date = ref(new Date());
 
-  // TODO: iterate data
+watch(date, async (newDate, oldDate) => {
+  resetMapData();
+  await initMap();
+});
+
+onMounted(async () => {
+  await initMap();
+});
+
+const initMap = async () => {
+  // const date = new Date().toISOString().split('T')[0];
+  // const date = ref("2023-07-14");
+  // get jobs from current date
+  let data = null;
+  try {
+    data = await jobStore.fetScheduledJobsByDate(date.value.toISOString().split('T')[0]);
+  } catch (e) {
+    return
+  }
+
+  // iterate data
   for (const key in data) {
     const technicianName = key;
     const technicianJobs = data[key];
@@ -163,7 +277,9 @@ onMounted(async () => {
       },
     ]; // add first location as center of map, TODO: replace with office location
     const markers = [];
-    const color = randomcolor();
+    const color = randomcolor({
+      luminosity: colorMode
+    });
 
     technicianJobs?.forEach((job) => {
       const location = {
@@ -200,7 +316,7 @@ onMounted(async () => {
 
     const jobTechnicianPath = {
       path: locations.map((location) => {
-        return { lat: Number(location.lat), lng: Number(location.lng) };
+        return {lat: Number(location.lat), lng: Number(location.lng)};
       }),
       geodesic: true,
       strokeColor: color,
@@ -222,7 +338,7 @@ onMounted(async () => {
       estimatedTravelDistance: Number(estimatedTravelDistance).toFixed(2),
       estimatedTravelTime,
       estimatedWorkTime: Math.ceil(
-        technicianJobs.length * 30 + estimatedTravelTime
+          technicianJobs.length * 30 + estimatedTravelTime
       ),
     });
 
@@ -230,110 +346,14 @@ onMounted(async () => {
     jobMarkers.value.push(...markers);
     jobTechnicianPaths.value.push(jobTechnicianPath);
   }
-});
+}
 
-// my current location
-const center = ref({ lat: -33.95908009669137, lng: 18.470931797112016 });
-
-//TODO:
-// - add to bodies_of_water table: google_place_id, address, lng, lat
-// front end
-// - get list of technician jobs scheduled for current day organized by technician (w/ address details)
-// - get current city of business and set as center of the map
-// - assign randomized color to each technician
-// - create co-ordinate lists for each technician's jobs for the day
-// - create a polyline for each technician's jobs for the day
-// - create a marker for each technician's jobs for the day (with pool's address details)
-// - add a marker for the technician at the first location / or center of city
-// - draw all data on the map
-// - add custom alert type
-
-const colorMode = computed(() => localStorage.getItem("nuxt-color-mode"));
-
-const googleMapStyles = computed(() => {
-  return colorMode.value === "light"
-    ? []
-    : [
-        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-        {
-          featureType: "administrative.locality",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#d59563" }],
-        },
-        {
-          featureType: "poi",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#d59563" }],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "geometry",
-          stylers: [{ color: "#263c3f" }],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#6b9a76" }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry",
-          stylers: [{ color: "#38414e" }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry.stroke",
-          stylers: [{ color: "#212a37" }],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#9ca5b3" }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry",
-          stylers: [{ color: "#746855" }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry.stroke",
-          stylers: [{ color: "#1f2835" }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#f3d19c" }],
-        },
-        {
-          featureType: "transit",
-          elementType: "geometry",
-          stylers: [{ color: "#2f3948" }],
-        },
-        {
-          featureType: "transit.station",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#d59563" }],
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [{ color: "#17263c" }],
-        },
-        {
-          featureType: "water",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#515c6d" }],
-        },
-        {
-          featureType: "water",
-          elementType: "labels.text.stroke",
-          stylers: [{ color: "#17263c" }],
-        },
-      ];
-});
+const resetMapData = () => {
+  jobLocations.value = [];
+  jobMarkers.value = [];
+  jobTechnicianPaths.value = [];
+  technicianDetails.value = [];
+};
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const earthRadius = 6371; // in kilometers
@@ -343,8 +363,8 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const dLon = (lon2 - lon1) * (Math.PI / 180);
 
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) *
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
       Math.cos((lat2 * Math.PI) / 180) *
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
@@ -364,23 +384,23 @@ const calculateDistances = (locations) => {
   }
 
   if (length == 2) {
-    const { lat: lat1, lng: lng1 } = locations[0];
-    const { lat: lat2, lng: lng2 } = locations[1];
+    const {lat: lat1, lng: lng1} = locations[0];
+    const {lat: lat2, lng: lng2} = locations[1];
 
     return calculateDistance(lat1, lng1, lat2, lng2);
   }
 
   if (length > 2) {
     // calculate the first distance
-    const { lat: lat1, lng: lng1 } = locations[0];
-    const { lat: lat2, lng: lng2 } = locations[1];
+    const {lat: lat1, lng: lng1} = locations[0];
+    const {lat: lat2, lng: lng2} = locations[1];
 
     let distance = calculateDistance(lat1, lng1, lat2, lng2);
 
     // calculate the rest of the distances
     for (let i = 1; i < length - 1; i++) {
-      const { lat: lat1, lng: lng1 } = locations[i];
-      const { lat: lat2, lng: lng2 } = locations[i + 1];
+      const {lat: lat1, lng: lng1} = locations[i];
+      const {lat: lat2, lng: lng2} = locations[i + 1];
 
       distance += calculateDistance(lat1, lng1, lat2, lng2);
     }
@@ -405,6 +425,6 @@ const calculateTravelTime = (distance, speed = 60) => {
 .map-label {
   color: white !important;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+  1px 1px 0 #000;
 }
 </style>

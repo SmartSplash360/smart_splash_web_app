@@ -26,6 +26,7 @@ type Theme = "light" | "dark";
 
 const setColorTheme = (newTheme: Theme) => {
   useColorMode().preference = newTheme;
+  // useColorMode().forced = true;
 };
 
 
