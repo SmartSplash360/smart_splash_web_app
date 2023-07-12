@@ -6,5 +6,6 @@
 
 <script setup>
 definePageMeta({
+  middleware: 'auto-theme',
 });
 </script>

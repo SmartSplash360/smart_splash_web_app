@@ -120,7 +120,7 @@ import { formatDuration } from "date-fns";
 
 definePageMeta({
   layout: "dashboard",
-  middleware: "auth",
+  middleware: ['auth','auto-theme'],
 });
 
 const jobStore = useJobStore();
