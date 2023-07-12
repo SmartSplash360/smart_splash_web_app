@@ -14,7 +14,7 @@
             >{{ technician?.status == 1 ? 'Active': 'Inactive' }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">
-              <img :src="AlignDotIcons" alt="align-dot-icon"/>
+                <font-awesome-icon icon="ellipsis-vertical" />
             </span>
             <div
                 v-if="showMenu"
@@ -67,19 +67,11 @@
               <p class="paragraph__p">Cleaning Tech</p>
               <div class="mt-4 flex gap-8">
                 <div class="flex items-center gap-3">
-                  <img
-                      :src="LikeIcon"
-                      alt="like-icon"
-                      class="h-[28px] w-[28px]"
-                  />
+                  <font-awesome-icon icon="thumbs-up" class="text-2xl text-[#009F10]" />
                   <span class="text-sm font-semibold">64</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <img
-                      :src="DislikeIcon"
-                      alt="dislike-icon"
-                      class="h-[28px] w-[28px]"
-                  />
+                  <font-awesome-icon icon="thumbs-down" class="text-2xl text-[#D4382E]"/>
                   <span class="span__element">10</span>
                 </div>
               </div>
@@ -98,14 +90,12 @@
         <div class="mt-5 flex flex-col gap-5 rounded-md bg-[#d0ecf4] dark:bg-[#31353F]  dark:text-white p-5">
           <div class="flex items-center gap-3  pb-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
-            ><Avatar class="p-overlay-badge" :image="EmailIcon" size="xlarge"
-            /></span>
+            ><font-awesome-icon icon="envelope" /></span>
             <span class="span__element">{{ technician?.email }}</span>
           </div>
           <div class="flex items-center gap-3 pt-2 xl:gap-5">
             <span class="flex h-[20px] w-[20px] place-items-center"
-            ><img class="h-full w-full" :src="PhoneIcon" alt="phone-icon"
-            /></span>
+            ><font-awesome-icon icon="phone" /></span>
             <span class="span__element">{{ technician?.phone_number }}</span>
           </div>
         </div>
@@ -119,9 +109,6 @@
 <script setup>
 import LikeIcon from "@/assets/icons/like-icon.svg";
 import DislikeIcon from "@/assets/icons/dislike-icon.svg";
-import EmailIcon from "@/assets/icons/email-icon.svg";
-import PhoneIcon from "@/assets/icons/phone-icon.svg";
-import AlignDotIcons from "@/assets/icons/align-dot-icon.svg";
 
 const showMenu = ref(false);
 
@@ -156,9 +143,4 @@ const editTechnician = () => {
   console.log("edit technician");
   props.editItem({ item: props.technician });
 }
-
-const router = useRouter();
-const viewTechnician = () => {
-  router.push(`/technicians/${props.technician?.id}`);
-};
 </script>
