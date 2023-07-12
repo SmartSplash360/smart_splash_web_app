@@ -4763,6 +4763,13 @@
     color: inherit;
     transition: box-shadow 0.2s;
     border-radius: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.p-menu .p-menuitem:last-child > .p-menuitem-content {
+    color: inherit;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    border-bottom: 0;
 }
 .p-menu .p-menuitem > .p-menuitem-content .p-menuitem-link {
     display: flex;

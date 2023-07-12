@@ -3,7 +3,8 @@ export const LeadService = {
       return [
         {
           id: "1",
-          name: "Lena Justice",
+          name: "Lena",
+          surname: "Justice",
           email: "lenajustice@austech.com",
           created_at: "2022-01-04",
           updated_at: "2019-04-11T03:53:14 -02:00",
@@ -14,7 +15,8 @@ export const LeadService = {
         },
         {
           id: "2",
-          name: "Rae Monroe",
+          name: "Rae",
+          surname: "Monroe",
           email: "raemonroe@austech.com",
           created_at: "2022-01-10",
           updated_at: "2021-06-27T02:30:14 -02:00",
@@ -25,7 +27,8 @@ export const LeadService = {
         },
         {
           id: "3",
-          name: "Valeria Koch",
+          name: "Valeria",
+          surname: "Koch",
           email: "valeriakoch@austech.com",
           created_at: "2019-05-05",
           updated_at: "2020-10-31T04:15:21 -02:00",
@@ -36,7 +39,8 @@ export const LeadService = {
         },
         {
           id: "4",
-          name: "Wells Herrera",
+          name: "Wells",
+          surname: "Herrera",
           email: "wellsherrera@austech.com",
           created_at: "2017-09-18",
           updated_at: "2018-10-01T09:59:18 -02:00",
@@ -47,7 +51,8 @@ export const LeadService = {
         },
         {
           id: "5",
-          name: "Salazar Savage",
+          name: "Salazar",
+          surname: "Savage",
           email: "salazarsavage@austech.com",
           created_at: "2022-11-03",
           updated_at: "2019-09-26T01:58:07 -02:00",
@@ -58,7 +63,8 @@ export const LeadService = {
         },
         {
           id: "6",
-          name: "Ivy Mercer",
+          name: "Ivy",
+          surname: "Mercer",
           email: "ivymercer@austech.com",
           created_at: "2014-12-02",
           updated_at: "2019-12-07T05:49:00 -02:00",
@@ -69,7 +75,8 @@ export const LeadService = {
         },
         {
           id: "7",
-          name: "Clare Wagner",
+          name: "Clare",
+          surname: "Wagner",
           email: "clarewagner@austech.com",
           created_at: "2021-04-09",
           updated_at: "2019-11-19T11:58:23 -02:00",
@@ -80,7 +87,8 @@ export const LeadService = {
         },
         {
           id: "8",
-          name: "Kayla Faulkner",
+          name: "Kayla",
+          surname: "Faulkner",
           email: "kaylafaulkner@austech.com",
           created_at: "2014-03-01",
           updated_at: "2020-05-09T12:01:39 -02:00",
@@ -91,7 +99,8 @@ export const LeadService = {
         },
         {
           id: "9",
-          name: "Meyer Pierce",
+          name: "Meyer",
+          surname: "Pierce",
           email: "meyerpierce@austech.com",
           created_at: "2015-11-17",
           updated_at: "2017-06-10T04:17:26 -02:00",
@@ -102,7 +111,8 @@ export const LeadService = {
         },
         {
           id: "10",
-          name: "Jessie Stein",
+          name: "Jessie",
+          surname: "Stein",
           email: "jessiestein@austech.com",
           created_at: "2018-06-23",
           updated_at: "2017-06-10T04:06:24 -02:00",
@@ -113,7 +123,8 @@ export const LeadService = {
         },
         {
           id: "11",
-          name: "Estes Kemp",
+          name: "Estes",
+          surname: "Kemp",
           email: "esteskemp@austech.com",
           created_at: "2014-02-26",
           updated_at: "2020-07-17T06:15:24 -02:00",
@@ -124,7 +135,8 @@ export const LeadService = {
         },
         {
           id: "12",
-          name: "Tamika Holloway",
+          name: "Tamika",
+          surname: "Holloway",
           email: "tamikaholloway@austech.com",
           created_at: "2017-07-31",
           updated_at: "2020-10-16T08:42:02 -02:00",
@@ -135,7 +147,8 @@ export const LeadService = {
         },
         {
           id: "13",
-          name: "Lenore Glover",
+          name: "Lenore",
+          surname: "Glover",
           email: "lenoreglover@austech.com",
           created_at: "2018-06-15",
           updated_at: "2020-07-30T12:34:42 -02:00",
@@ -146,7 +159,8 @@ export const LeadService = {
         },
         {
           id: "14",
-          name: "Velasquez Hatfield",
+          name: "Velasquez",
+          surname: "Hatfield",
           email: "velasquezhatfield@austech.com",
           created_at: "2014-07-11",
           updated_at: "2015-05-28T07:24:03 -02:00",
@@ -158,7 +172,8 @@ export const LeadService = {
         },
         {
           id: "15",
-          name: "Farmer Gilmore",
+          name: "Farmer",
+          surname: "Gilmore",
           email: "farmergilmore@austech.com",
           created_at: "2015-01-05",
           updated_at: "2018-05-25T10:04:19 -02:00",
@@ -169,7 +184,8 @@ export const LeadService = {
         },
         {
           id: "16",
-          name: "Alisha Owens",
+          name: "Alisha ",
+          surname: "Owens",
           email: "alishaowens@austech.com",
           created_at: "2022-04-01",
           updated_at: "2014-10-03T02:56:27 -02:00",
@@ -180,7 +196,8 @@ export const LeadService = {
         },
         {
           id: "17",
-          name: "Valentine Donaldson",
+          name: "Valentine",
+          surname: "Donaldson",
           email: "valentinedonaldson@austech.com",
           created_at: "2019-10-08",
           updated_at: "2014-07-03T06:36:06 -02:00",
@@ -191,7 +208,8 @@ export const LeadService = {
         },
         {
           id: "18",
-          name: "Martinez Torres",
+          name: "Martinez",
+          surname: "Torres",
           email: "martineztorres@austech.com",
           created_at: "2018-10-13",
           updated_at: "2019-08-06T05:07:19 -02:00",
@@ -202,7 +220,8 @@ export const LeadService = {
         },
         {
           id: "19",
-          name: "Wilma Bentley",
+          name: "Wilma",
+          surname: "Bentley",
           email: "wilmabentley@austech.com",
           created_at: "2018-10-22",
           updated_at: "2017-06-11T01:28:53 -02:00",
@@ -213,7 +232,8 @@ export const LeadService = {
         },
         {
           id: "20",
-          name: "Mclean Keller",
+          name: "Mclean",
+          surname: "Keller",
           email: "mcleankeller@austech.com",
           created_at: "2015-05-09",
           updated_at: "2023-03-11T05:03:59 -02:00",
@@ -224,7 +244,8 @@ export const LeadService = {
         },
         {
           id: "21",
-          name: "Lynne Mcneil",
+          name: "Lynne",
+          surname: "Mcneil",
           email: "lynnemcneil@austech.com",
           created_at: "2016-03-22",
           updated_at: "2014-09-21T03:11:29 -02:00",
@@ -235,7 +256,8 @@ export const LeadService = {
         },
         {
           id: "22",
-          name: "Clarice Gould",
+          name: "Clarice",
+          surname: "Gould",
           email: "claricegould@austech.com",
           created_at: "2022-06-17",
           updated_at: "2022-04-19T02:02:10 -02:00",
@@ -246,7 +268,8 @@ export const LeadService = {
         },
         {
           id: "23",
-          name: "Rodgers Cain",
+          name: "Rodgers",
+          surname: "Cain",
           email: "rodgerscain@austech.com",
           created_at: "2022-10-27",
           updated_at: "2015-07-23T08:38:23 -02:00",
@@ -257,7 +280,8 @@ export const LeadService = {
         },
         {
           id: "24",
-          name: "Craig Moran",
+          name: "Craig",
+          surname: "Moran",
           email: "craigmoran@austech.com",
           created_at: "2022-10-17",
           updated_at: "2016-09-30T04:55:16 -02:00",
@@ -268,7 +292,8 @@ export const LeadService = {
         },
         {
           id: "25",
-          name: "Wanda Berg",
+          name: "Wanda",
+          surname: "Berg",
           email: "wandaberg@austech.com",
           created_at: "2017-11-12",
           updated_at: "2018-08-02T01:16:50 -02:00",
@@ -279,7 +304,8 @@ export const LeadService = {
         },
         {
           id: "26",
-          name: "Liza Hoover",
+          name: "Liza",
+          surname: "Hoover",
           email: "lizahoover@austech.com",
           created_at: "2019-03-26",
           updated_at: "2020-07-13T12:36:39 -02:00",
@@ -290,7 +316,8 @@ export const LeadService = {
         },
         {
           id: "27",
-          name: "Robinson Mcconnell",
+          name: "Robinson",
+          surname: "Mcconnell",
           email: "robinsonmcconnell@austech.com",
           created_at: "2015-03-25",
           updated_at: "2017-04-02T12:01:24 -02:00",
@@ -301,7 +328,8 @@ export const LeadService = {
         },
         {
           id: "28",
-          name: "Thompson Mckinney",
+          name: "Thompson",
+          surname: "Mckinney",
           email: "thompsonmckinney@austech.com",
           created_at: "2017-03-01",
           updated_at: "2023-06-06T09:04:08 -02:00",
@@ -312,7 +340,8 @@ export const LeadService = {
         },
         {
           id: "29",
-          name: "Witt Pitts",
+          name: "Witt",
+          surname: "Pitts",
           email: "wittpitts@austech.com",
           created_at: "2018-07-07",
           updated_at: "2022-07-14T12:05:28 -02:00",
@@ -323,7 +352,8 @@ export const LeadService = {
         },
         {
           id: "30",
-          name: "Santiago Kirby",
+          name: "Santiago",
+          surname: "Kirby",
           email: "santiagokirby@austech.com",
           created_at: "2023-06-18",
           updated_at: "2017-01-11T05:18:36 -02:00",
@@ -334,7 +364,8 @@ export const LeadService = {
         },
         {
           id: "31",
-          name: "Margery Mckee",
+          name: "Margery",
+          surname: "Mckee",
           email: "margerymckee@austech.com",
           created_at: "2019-10-19",
           updated_at: "2018-05-28T09:10:39 -02:00",
@@ -345,7 +376,8 @@ export const LeadService = {
         },
         {
           id: "32",
-          name: "Dorothy Carroll",
+          name: "Dorothy",
+          surname: "Carroll",
           email: "dorothycarroll@austech.com",
           created_at: "2021-04-29",
           updated_at: "2015-09-02T10:51:08 -02:00",

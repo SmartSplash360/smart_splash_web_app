@@ -99,6 +99,23 @@
             </div>
           </template>
         </Column>
+        <Column>
+        <template #body="slotProps">
+          <div class="flex flex-row gap-2">
+            <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                @click="editAlert(slotProps.data)"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger"
+                @click="deleteAlert(slotProps?.data?.id)"
+            />
+          </div>
+        </template>
+      </Column>
     </DataTable>
   </div>
   <div class="mobile- flex flex-col gap-2 sm:hidden">
@@ -137,6 +154,11 @@ import {FilterMatchMode} from "primevue/api";
 import { LeadService } from '@/services/LeadServices';
 import { useToast } from "primevue/usetoast";
 
+const props = defineProps({
+  editItem: Function,
+  deleteItem: Function
+});
+
 const toast = useToast();
 const menu = ref();
 const items = ref([
@@ -165,6 +187,8 @@ const items = ref([
             label: 'Edit',
             icon: 'pi pi-pencil',
             command: () => {
+
+                // props.editItem({ id: customer.id, item: { ...customer } })
                 toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
             }
         },
@@ -172,34 +196,23 @@ const items = ref([
             label: 'Delete',
             icon: 'pi pi-trash',
             command: () => {
-                toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+              // props.deleteItem({ id })
+              toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
             }
         },
 ]);
-
-const toggle = (event) => {
-    menu.value.toggle(event);
-};
-
-const save = () => {
-    toast.add({severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000});
-};
-
-const props = defineProps({
-  editItem: Function,
-  deleteItem: Function
-});
-
 const leads= ref();
-
-const showMenu = ref(false);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
   representative: {value: null, matchMode: FilterMatchMode.IN},
 });
-
 const loading = ref(false);
+
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
+
 
 onMounted(() => {
   LeadService.getLeadsMedium().then((data) => (leads.value = data));
@@ -209,8 +222,14 @@ const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };
-const toggleMenu = () => {
-  showMenu.value = !showMenu.value;
+
+const editAlert = (customer) => {
+  // console.log(customer)
+  props.editItem({ id: customer.id, item: { ...customer } })
 };
 
+const deleteAlert = async (id) => {
+  // console.log(id)
+  props.deleteItem({ id })
+};
 </script>

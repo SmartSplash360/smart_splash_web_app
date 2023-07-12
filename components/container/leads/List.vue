@@ -46,25 +46,29 @@
       </div>
       <Toast />
       <ConfirmDialog></ConfirmDialog>
+      <ModalsLeadEditLeadModal
+          v-if="editLeadModal"
+          :toggleEditLeadModal="closeModal"
+          :lead="lead"
+        ></ModalsLeadEditLeadModal>
     </section>
   </template>
   
   <script setup>
   import {useToast} from "primevue/usetoast";
   import {useConfirm} from "primevue/useconfirm";
-  import {useCustomerStore} from "~/stores/customer";
+  import { useLeadStore } from "~/stores/lead";
   
-  const props = defineProps({
+  defineProps({
     loading : Boolean
   })
   
-  console.log(props.loading)
   const toast = useToast();
   const confirm = useConfirm();
-  const customerStore = useCustomerStore();
+  const leadStore = useLeadStore();
   
-  const addCustomerModal = ref(false);
-  const customer = ref()
+  const editLeadModal = ref(false);
+  const lead = ref()
   
   const routes = reactive({
     activeRoute: 131,
@@ -79,36 +83,24 @@
     toggleActiveRoute.value = !toggleActiveRoute.value
   };
   
-  
-  const toggleAddCustomerModal = () => (addCustomerModal.value = true);
-  const closeModal = ({ success, error }) => {
-    addCustomerModal.value = false
-    customer.value = null
-  
-    if (success) {
-      toast.add({ severity: 'success', summary: 'Create Customer Success', detail: 'Customer has been created successfully', life: 3000 });
-    }
-  
-    if (error) {
-      toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
-    }
-  };
+  const toggleEditLeadModal = () => (editLeadModal.value = true);
+  const closeModal = () => (editLeadModal.value = false);
   
   const editItem = ({ id, item }) => {
     console.log(id, item)
-    customer.value = item
-    toggleAddCustomerModal()
+    lead.value = item
+    toggleEditLeadModal()
   }
   
   const deleteItem = async ({ id }) => {
     confirm.require({
       message: 'Are you sure you want to proceed?',
-      header: 'Delete Customer',
+      header: 'Delete Lead',
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         // delete item
         try {
-          const res = await customerStore.deleteCustomer(id)
+          const res = await leadStore.deleteLead(id)
           toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 3000 });
         } catch (e) {
           toast.add({ severity: 'error', summary: 'Delete Alert', detail: `an error has occurred: ${e}`, life: 3000 });
