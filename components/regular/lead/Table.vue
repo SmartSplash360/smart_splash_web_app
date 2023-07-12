@@ -77,12 +77,12 @@
         </template>
       </Column>
       <Column
-            field="id"
-            header="Created Date"
-            sortable
+          field="id"
+          header="Created Date"
+          sortable
         >
           <template #body="slotProps">
-            <div class="flex items-center gap-5">
+            <div class="flex items-center justify-center gap-5 text-center">
               <span class="span__element">{{ slotProps.data.created_at }}</span>
             </div>
           </template>

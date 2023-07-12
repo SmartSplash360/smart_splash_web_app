@@ -26,15 +26,17 @@
           :globalFilterFields="['product', 'name']"
       >
       <template #header>
-        <div class="flex  dark:border-0 mb-5">
-            <span class="p-input-icon-left w-full">
+        <div class="flex items-center justify-between dark:border-0 mb-5">
+          <div class="flex w-80 justify-start">
+            <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
               <InputText
                   v-model="filters['global'].value"
                   placeholder=" Search"
-                  class="dark:bg-[#1B2028] !rounded-xl w-2/5"
+                  class="w-full dark:bg-[#1B2028] !rounded-xl"
               />
             </span>
+          </div>
           </div>
       </template>
         <template #empty> No products found. </template>

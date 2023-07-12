@@ -28,11 +28,11 @@
       </div>
     </div>
     <div class="flex flex-col gap-10 border-t pt-12">
-      <div class="flex justify-between rounded-xl bg-[#d4ecf4] xl:w-1/2">
+      <div class="flex justify-between rounded-xl bg-[#d4ecf4] dark:bg-[#1B2028] xl:w-1/2">
         <div
           @click="switchTabs('JOBS')"
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
-          :class="currentTab === 'JOBS' && 'bg-[#0291BF]'"
+          :class="currentTab === 'JOBS' && 'bg-[#0291BF] '"
         >
           <span class="span__element"
             >Jobs</span
@@ -41,7 +41,7 @@
         <div
           @click="switchTabs('QUOTES')"
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
-          :class="currentTab === 'QUOTES' && 'bg-[#0291BF]'"
+          :class="currentTab === 'QUOTES' && 'bg-[#0291BF] '"
         >
           <span class="span__element"
             >Quotes</span
@@ -50,7 +50,7 @@
         <div
           @click="switchTabs('INVOICES')"
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
-          :class="currentTab === 'INVOICES' && 'bg-[#0291BF]'"
+          :class="currentTab === 'INVOICES' && 'bg-[#0291BF] '"
         >
           <span class="span__element"
             >Invoices</span
@@ -59,7 +59,7 @@
         <div
           @click="switchTabs('PAYMENTS')"
           class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
-          :class="currentTab === 'PAYMENTS' && 'bg-[#0291BF]'"
+          :class="currentTab === 'PAYMENTS' && 'bg-[#0291BF] '"
         >
           <span class="span__element"
             >Payments</span

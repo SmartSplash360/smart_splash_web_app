@@ -42,11 +42,7 @@
         }}</span>
       </div>
       <div class="flex items-center gap-3">
-        <img
-          :src="PhoneIcon"
-          alt="phone-icon"
-          class="h-5 w-5 lg:h-[20px] lg:w-[20px]"
-        />
+        <font-awesome-icon icon="phone" class="text-lg"/>
         <span class="min-w-max span__element">{{
           customerInfo.phone_number
         }}</span>
@@ -55,11 +51,7 @@
     <div
       class="flex items-start gap-1 overflow-hidden text-ellipsis md:hidden lg:w-1/5 xl:flex xl:h-[75px] xl:gap-3"
     >
-      <img
-        :src="LocationIcon"
-        alt="location-icon"
-        class="h-5 w-5 lg:h-[25px] lg:w-[25px]"
-      />
+      <font-awesome-icon icon="location-dot" class="text-lg"/>
       <span class="span__element">
         {{ customerInfo.address }}</span
       >
@@ -80,16 +72,8 @@
           <span class="span__element dark:text-black">F5JKJGF</span>
         </div>
       </div>
-      <img
-        :src="LockIcon"
-        alt="locker-icon"
-        class="flex h-[35px] w-[35px] items-center justify-center"
-      />
-      <img
-        :src="DogIcon"
-        alt="dog-icon"
-        class="flex h-[35px] w-[35px] items-center justify-center"
-      />
+      <font-awesome-icon icon="lock" class="text-2xl"/>
+      <font-awesome-icon icon="dog" class="text-2xl"/>
     </div>
   </div>
 </template>

@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <section v-if="loading">
+    <SkeletonMapPage ></SkeletonMapPage>
+  </section>
+  <section v-else>
     <GoogleMap api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88" style="width: 100%; height: 700px" :center="center"
                :zoom="13" :styles="googleMapStyles">
 
@@ -76,8 +79,7 @@
         </div>
       </div>
     </div>
-  </div>
-
+  </section>
 </template>
 
 <script setup>
@@ -90,6 +92,8 @@ definePageMeta({
   layout: "dashboard",
   middleware: 'auth',
 });
+
+const loading = ref(false)
 
 const jobStore = useJobStore();
 const jobs = ref([])
