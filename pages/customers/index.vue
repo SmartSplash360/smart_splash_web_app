@@ -1,13 +1,11 @@
 <template>
-  <ContainerCustomerList v-if="customerView" :loading="loading"></ContainerCustomerList>
-  <ContainerCustomerLeads v-else></ContainerCustomerLeads>
+  <ContainerCustomerList :loading="loading"></ContainerCustomerList>
 </template>
 
 <script setup>
 import { useCustomerStore} from "~/stores/customer";
 
 const store = useCustomerStore();
-const customerView = ref(true);
 const loading = ref(true)
 
 onMounted(async () => {
@@ -15,14 +13,6 @@ onMounted(async () => {
   loading.value = false
 });
 
-const toggleCustomerView = () => {
-  customerView.value = !customerView.value;
-};
-
-provide("customer-view", {
-  customerView,
-  toggleCustomerView,
-});
 
 definePageMeta({
   layout: "dashboard",

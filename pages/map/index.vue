@@ -131,6 +131,8 @@ definePageMeta({
   middleware: ['auth', 'auto-theme'],
 });
 
+const loading = ref(false)
+
 const jobStore = useJobStore();
 const jobs = ref([]);
 const jobLocations = ref([]);

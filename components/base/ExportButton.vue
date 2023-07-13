@@ -1,14 +1,23 @@
+
 <template>
-  <div class="card justify-content-center my-5 hidden flex-1 sm:mt-5">
-    <button
-      class="ml-auto flex h-[50px] w-full items-center justify-center gap-3 rounded-md bg-[#3C8F53] text-white hover:shadow-xl sm:w-[150px]"
-    >
-      <span class="span__element">
-        <font-awesome-icon :icon="['fas', 'upload']"
-      /></span>
-      <span class="span__element">Export</span>
-    </button>
+  <div class="card flex justify-content-center text-white w-full sm:w-fit">
+      <Toast />
+      <FileUpload 
+          mode="basic" 
+          name="demo[]" 
+          url="./upload.php" 
+          accept="image/*" 
+          :maxFileSize="1000000" 
+          @upload="onUpload" 
+          />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const onUpload = () => {
+  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+};
+</script>

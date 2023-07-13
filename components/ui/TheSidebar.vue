@@ -15,8 +15,8 @@
         class="h-full w-full"
       />
     </div>
-    <div class="-mt-14 flex-1 xl:-mt-10 2xl:-mt-28">
-      <ul class="flex flex-col gap-10 text-white">
+    <div class="-mt-14 flex-1 xl:-mt-10 2xl:-mt-32">
+      <ul class="flex flex-col gap-8 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link
             :to="link.to"
@@ -48,7 +48,7 @@ import { sideBarLinks } from "~/utils/sidebarLinks";
 
 </script>
 
-<style>
+<style scoped>
 .router-link-active {
   background-color: #0291BF;
   color: #000;
