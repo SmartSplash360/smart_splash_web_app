@@ -3,13 +3,22 @@
       <SkeletonCustomer></SkeletonCustomer>
     </section>
     <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
-      <div class="hidden flex-wrap items-center justify-between lg:flex xl:gap-10">
+      <div class="hidden flex-wrap items-center gap-5 justify-between lg:flex xl:gap-10">
         <ul class="hidden lg:flex w-full items-center justify-between gap-4 xl:w-3/4">
           <RegularCustomerActivityCard
             :loading="loading"
             :routes="routes"
           ></RegularCustomerActivityCard>
         </ul>
+          <BaseAddButton
+            :btnText="'Lead'"
+            @click="toggleEditLeadModal"
+          ></BaseAddButton>
+          <ModalsLeadEditLeadModal
+            v-if="editLeadModal"
+            :toggleEditLeadModal="closeModal"
+            :lead="lead"
+          ></ModalsLeadEditLeadModal>
       </div>
       <div class="mobile flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
           <div class="flex items-center justify-between">
@@ -30,18 +39,11 @@
           </div>
       </div>
       <div class="flex flex-col gap-5">
-        <div
-          class="-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
-        >
+        <div class="flex justify-end px-5 lg:hidden">
           <BaseAddButton
             :btnText="'Lead'"
             @click="toggleEditLeadModal"
           ></BaseAddButton>
-          <ModalsLeadEditLeadModal
-            v-if="editLeadModal"
-            :toggleEditLeadModal="closeModal"
-            :lead="lead"
-          ></ModalsLeadEditLeadModal>
         </div>
         <RegularLeadTable
           :editItem="editItem"

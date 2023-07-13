@@ -10,6 +10,15 @@
           :routes="routes"
         ></RegularCustomerActivityCard>
       </ul>
+      <BaseAddButton
+        :btnText="'Customer'"
+        @click="toggleAddCustomerModal"
+      ></BaseAddButton>
+      <ModalsCustomerCreateCustomerModal
+        v-if="addCustomerModal"
+        :toggleAddCustomerModal="closeModal"
+        :customer="customer"
+      ></ModalsCustomerCreateCustomerModal>
     </div>
     <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
         <div class="flex items-center justify-end">
@@ -26,16 +35,11 @@
           </RegularCustomerActivityCard>
         </div>
     </div>
-    <div class="flex w-full justify-end rounded-xl px-3 md:mt-0 md:rounded-none lg:justify-end lg:p-0">
+    <div class="flex justify-end px-5 lg:hidden">
       <BaseAddButton
         :btnText="'Customer'"
         @click="toggleAddCustomerModal"
       ></BaseAddButton>
-      <ModalsCustomerCreateCustomerModal
-        v-if="addCustomerModal"
-        :toggleAddCustomerModal="closeModal"
-        :customer="customer"
-      ></ModalsCustomerCreateCustomerModal>
     </div>
     <RegularCustomerTable
       :editItem="editItem"
