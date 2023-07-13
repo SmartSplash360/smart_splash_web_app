@@ -2,7 +2,7 @@
   <div class="customer-table laptop+ card hidden sm:block" :class="[currentMode == 'dark' && 'dark-mode']">
     <DataTable
         v-model:filters="filters"
-        :value="customers"
+        :value="bodiesOfWater"
         paginator
         ref="dt"
         dataKey="id"
@@ -12,8 +12,7 @@
         sortMode="multiple"
         :rows="10"
         tableStyle="min-width: 50rem; min-height : 25rem;"
-        :globalFilterFields="['name', 'id']"
-    >
+        :globalFilterFields="['name', 'id']">
       <template #header>
         <div class="flex items-center justify-between dark:border-0 mb-5">
           <div class="flex w-80 justify-start">
@@ -36,33 +35,21 @@
           </div>
         </div>
       </template>
-      <template #empty> No customers found.</template>
-      <template #loading> Loading customers data. Please wait.</template>
+      <template #empty> No bodies Of Water found.</template>
+      <template #loading> Loading bodies Of Water data. Please wait.</template>
       <Column
           field="id"
           header="ID"
-          exportHeader="Customer ID"
+          exportHeader="Body Of Water ID"
           sortable
       ></Column>
       <Column
-          field="photo"
-          header="Photo"
-          exportHeader="Customer Photo"
-      >
-        <template #body="slotProps">
-          <nuxt-link :to="`/customers/${slotProps.data.id}`">
-            <Avatar :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'" :alt="slotProps.data.name" class="mr-2 translate-y-4" size="large" shape="circle"/>
-          </nuxt-link>
-        </template>
-      </Column>
-      <Column
           field="name"
-          header="Customer"
-          sortable
-      >
+          header="Body Of Water"
+          sortable>
         <template #body="slotProps">
-          <nuxt-link :to="`/customers/${slotProps.data.id}`">
-            {{ slotProps.data.name }} {{ slotProps.data.surname ?? '' }}
+          <nuxt-link :to="`/bodiesOfWater/${slotProps.data.id}`">
+            {{ slotProps.data.name }}
           </nuxt-link>
         </template>
       </Column>
@@ -71,21 +58,17 @@
           header="Address"
       ></Column>
       <Column
-          field="phone_number"
-          header="Cell number"
+          field="type"
+          header="Type"
       ></Column>
       <Column
-          field="email"
-          header="Email address"
+          field="size"
+          header="Size"
       ></Column>
       <Column
-          field="status"
-          header="Status"
+          field="condition"
+          header="condition"
       >
-        <template #body="slotProps">
-          <Tag :value="slotProps.data?.status === 1 ? 'Active': 'Inactive'"
-               :severity="slotProps.data?.status === 1 ? 'success': 'danger'"/>
-        </template>
       </Column>
       <Column>
         <template #body="slotProps">
@@ -110,15 +93,15 @@
     <div class="card border border-b-0 border-t-0">
       <DataTable
           v-model:filters="filters"
-          :value="customers"
+          :value="bodiesOfWater"
           paginator
           :rows="10"
           tableStyle="width : 100%; overflow : hidden"
           :loading="loading"
-          :globalFilterFields="['customer', 'representative.name']"
+          :globalFilterFields="['bodyOfWater', 'representative.name']"
       >
         <Column field="id" header="No" sortable></Column>
-        <Column field="name" header="Customer" sortable></Column>
+        <Column field="name" header="Body Of Water" sortable></Column>
         <Column field="representative.name" header="Email"></Column>
       </DataTable>
     </div>
@@ -127,11 +110,9 @@
 
 <script setup>
 import {FilterMatchMode} from "primevue/api";
-import {useCustomerStore} from "~/stores/customer";
-import Avatar from 'primevue/avatar';
-import Tag from 'primevue/tag';
+import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
 
-const store = useCustomerStore();
+const store = useBodyOfWaterStore();
 
 const props = defineProps({
   editItem: Function,
@@ -142,7 +123,7 @@ const currentMode = computed(() => localStorage.getItem('theme'))
 console.log(currentMode.value)
 
 
-const customers = ref([]);
+const bodiesOfWater = ref([]);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
@@ -152,9 +133,8 @@ const filters = ref({
 const loading = ref(false);
 
 onMounted(() => {
-  customers.value = store.getCustomers;
+  bodiesOfWater.value = store.getBodiesOfWater;
 });
-
 
 
 const dt = ref();
@@ -162,13 +142,13 @@ const exportCSV = (event) => {
   dt.value.exportCSV();
 };
 
-const editAlert = (customer) => {
-  // console.log(customer)
-  props.editItem({ id: customer.id, item: { ...customer } })
+const editAlert = (bodyOfWater) => {
+  // console.log(bodyOfWater)
+  props.editItem({id: bodyOfWater.id, item: {...bodyOfWater}})
 };
 
 const deleteAlert = async (id) => {
   // console.log(id)
-  props.deleteItem({ id })
+  props.deleteItem({id})
 };
 </script>

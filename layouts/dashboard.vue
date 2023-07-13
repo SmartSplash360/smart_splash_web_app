@@ -22,11 +22,15 @@
 <script setup lang="ts">
 
 
+import {useUserStore} from "~/stores/users";
+
 type Theme = "light" | "dark";
+
+const userStore = useUserStore();
 
 const setColorTheme = (newTheme: Theme) => {
   useColorMode().preference = newTheme;
-  // useColorMode().forced = true;
+  userStore.userDefinedTheme = true;
 };
 
 

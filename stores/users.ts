@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", {
         currentUser: null,
         jwt: "",
         users: [],
+        userDefinedTheme: true
     }),
     getters: {
         getUsers(state) {
@@ -28,6 +29,9 @@ export const useUserStore = defineStore("user", {
         },
         getLoggedIn(state) {
             return state.loggedIn;
+        },
+        getUserDefinedTheme(state) {
+            return state.userDefinedTheme;
         }
     },
     actions: {
@@ -71,6 +75,7 @@ export const useUserStore = defineStore("user", {
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;
+            this.userDefinedTheme = false;
             await router.push('/');
         },
         async forgotPassword() {

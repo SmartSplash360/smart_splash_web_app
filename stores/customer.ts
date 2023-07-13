@@ -39,10 +39,10 @@ export const useCustomerStore = defineStore("customer", {
             try {
                 const res = await axios.get(`http://localhost:8000/api/v1/customers/${id}`);
                 console.log(res.data.data);
-                return res.data.data as Customer;
+                return res.data.data;
             } catch (error) {
-                alert(error);
                 console.log(error);
+                return error
             }
         },
         async createCustomer(customerPayload: any) {
