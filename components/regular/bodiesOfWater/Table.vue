@@ -65,24 +65,25 @@
           field="size"
           header="Size"
       ></Column>
-      <Column
-          field="condition"
-          header="condition"
-      >
-      </Column>
       <Column>
         <template #body="slotProps">
           <div class="flex flex-row gap-2">
             <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="p-button-success"
+                @click="viewItem(slotProps.data)"
+            />
+            <Button
                 icon="pi pi-pencil"
                 text raised rounded
-                @click="editAlert(slotProps.data)"
+                @click="editItem(slotProps.data)"
             />
             <Button
                 icon="pi pi-trash"
                 text raised rounded
                 class="p-button-danger"
-                @click="deleteAlert(slotProps?.data?.id)"
+                @click="deleteItem(slotProps?.data?.id)"
             />
           </div>
         </template>
@@ -116,14 +117,13 @@ const store = useBodyOfWaterStore();
 
 const props = defineProps({
   editItem: Function,
-  deleteItem: Function
+  deleteItem: Function,
+  viewItem: Function,
+  bodiesOfWater: Array
 });
 
-const currentMode = computed(() => localStorage.getItem('theme'))
-console.log(currentMode.value)
+const currentMode = computed(() => useColorMode().preference)
 
-
-const bodiesOfWater = ref([]);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
@@ -132,22 +132,21 @@ const filters = ref({
 
 const loading = ref(false);
 
-onMounted(() => {
-  bodiesOfWater.value = store.getBodiesOfWater;
-});
-
 
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };
 
-const editAlert = (bodyOfWater) => {
+const viewItem = (bodyOfWater) => {
+  props.viewItem({...bodyOfWater})
+}
+const editItem = (bodyOfWater) => {
   // console.log(bodyOfWater)
   props.editItem({id: bodyOfWater.id, item: {...bodyOfWater}})
 };
 
-const deleteAlert = async (id) => {
+const deleteItem = async (id) => {
   // console.log(id)
   props.deleteItem({id})
 };

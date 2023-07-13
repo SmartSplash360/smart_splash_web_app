@@ -6,51 +6,41 @@
         @click.stop
         class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
       <h3 class="heading__h3 text-[#025E7C]">
-        {{ bodyOfWater ? 'Edit' : 'New' }} Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : '' }}
+        {{ readOnly === true ? 'View' : bodyOfWater && !readOnly ? 'Edit' : 'New' }} Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : '' }}
       </h3>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          <InputText
+              :disabled="readOnly"
+              type="text"
+                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
                      v-model="name"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="type"> Type* </label>
           <Dropdown
+              :disabled="readOnly"
               v-model="type"
               :options="types"
               placeholder="Select a Type"
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"/>
         </div>
-      </div>
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="size"> Customer* </label>
-
-          <Dropdown
-              v-model="customerId"
-              :options="customers"
-              optionLabel="name"
-              optionValue="id"
-              placeholder="Select a Type"
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"/>
-        </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="size"> Size* </label>
-          <InputNumber  class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="size"></InputNumber>
+          <InputText
+              :disabled="readOnly"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              v-model="size"></InputText>
         </div>
-<!--        <div class="flex w-full flex-col gap-2">-->
-<!--          <label class="text-sm" for="condition"> Condition </label>-->
-<!--          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"-->
-<!--                     v-model="condition"></InputText>-->
-<!--        </div>-->
       </div>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="address"> Address* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          <InputText
+              :disabled="readOnly"
+              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
                      v-model="address"></InputText>
         </div>
       </div>
@@ -58,10 +48,10 @@
       <div class="flex w-full">
         <GoogleMap
             api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-            style="width: 100%; height: 200px"
+            style="width: 100%; height: 300px"
             :center="center"
             class="border-2"
-            :zoom="13"
+            :zoom="15"
         >
 
           <Marker :options="locationMarker">
@@ -73,22 +63,28 @@
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="lng"> Longitude* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          <InputText type="text"
+                     :disabled="readOnly"
+                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
                      v-model="lng"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="lat"> Latitude* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          <InputText type="text"
+                     :disabled="readOnly"
+                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
                      v-model="lat"></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="googlePlaceId"> Google Place ID* </label>
-          <InputText type="text" disabled class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          <InputText type="text"
+                     disabled
+                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
                      v-model="googlePlaceId"></InputText>
         </div>
       </div>
 
-      <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+      <div v-if="!readOnly" class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
         <Button
             label="Cancel"
             severity="secondary"
@@ -126,7 +122,9 @@ const props = defineProps({
     type: Object,
     default: () => null,
     required: false
-  }
+  },
+  readOnly: Boolean,
+  customerId: String
 });
 
 const types = ref([
@@ -137,14 +135,12 @@ const types = ref([
 
 const name = ref('')
 const type = ref('')
-const size = ref()
+const size = ref(0)
 const condition = ref('')
 const googlePlaceId = ref('')
 const address = ref('')
 const lng = ref('')
 const lat = ref('')
-const customerId = ref()
-const customers = ref([])
 
 // my current location
 const center = ref({lat: -33.95908009669137, lng: 18.470931797112016});
@@ -155,11 +151,11 @@ const locationMarker = ref({
     fillColor: '#0291c2',
   },
   position: {
-    lat: 0,
-    lng: 0,
+    lat: parseFloat(props?.bodyOfWater?.lat) ?? 0,
+    lng: parseFloat(props?.bodyOfWater?.lng) ?? 0,
   },
   label: {
-    text: 'X',
+    text: props.bodyOfWater?.name ?? 'New Body of Water',
     fontFamily: "Roboto",
     className: "map-label",
     fontSize: "12px",
@@ -169,20 +165,15 @@ const locationMarker = ref({
 })
 
 onMounted(async () => {
-   await customerStore.fetchCustomers()
-
-  customers.value = customerStore.getCustomers
-
   if (props.bodyOfWater) {
     name.value = props.bodyOfWater.name
     type.value = props.bodyOfWater.type
     size.value = props.bodyOfWater.size
     condition.value = props.bodyOfWater.condition
-    googlePlaceId.value = props.bodyOfWater.googlePlaceId
+    googlePlaceId.value = props.bodyOfWater.google_place_id
     address.value = props.bodyOfWater.address
     lng.value = props.bodyOfWater.lng
     lat.value = props.bodyOfWater.lat
-    customerId.value = props.bodyOfWater.customerId
 
     if (lng.value && lat.value) {
       // set map center
@@ -207,11 +198,11 @@ const createBodyOfWater = async () => {
       type: type.value,
       size: size.value,
       condition: condition.value,
-      googlePlaceId: googlePlaceId.value,
+      google_place_id: googlePlaceId.value,
       address: address.value,
       lng: lng.value,
       lat: lat.value,
-      customer_id: customerId.value
+      customer_id: props.customerId
     });
     await store.fetchBodiesOfWaters()
 
@@ -228,7 +219,7 @@ const updateBodyOfWater = async () => {
       type: type.value,
       size: size.value,
       condition: condition.value,
-      googlePlaceId: googlePlaceId.value,
+      google_place_id: googlePlaceId.value,
       address: address.value,
       lng: lng.value,
       lat: lat.value,

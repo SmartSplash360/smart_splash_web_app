@@ -1,5 +1,4 @@
 <template>
-
     <ContainerLeadsList></ContainerLeadsList>
   </template>
   

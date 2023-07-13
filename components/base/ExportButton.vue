@@ -2,7 +2,8 @@
 <template>
   <div class="card flex justify-content-center text-white w-full sm:w-fit">
       <Toast />
-      <FileUpload 
+      <FileUpload
+          chooseLabel="Upload"
           mode="basic" 
           name="demo[]" 
           url="./upload.php" 

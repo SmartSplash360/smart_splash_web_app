@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <BodyOfWaterSkeleton></BodyOfWaterSkeleton>
+    <SkeletonBodyOfWater />
   </section>
   <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
     <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
@@ -29,12 +29,18 @@
         <ModalsBodiesOfWaterCreateBodyOfWaterModal
             v-if="addBodyOfWaterModal"
             :toggleAddBodyOfWaterModal="closeModal"
-            :bodyOfWater="bodyOfWater">
+            :bodyOfWater="bodyOfWater"
+            :readOnly="readOnly"
+            :customerId="props.customerId"
+        >
         </ModalsBodiesOfWaterCreateBodyOfWaterModal>
       </div>
       <RegularBodiesOfWaterTable
+          :viewItem="viewItem"
           :editItem="editItem"
-          :deleteItem="deleteItem">
+          :deleteItem="deleteItem"
+          :bodiesOfWater="bodiesOfWater"
+      >
       </RegularBodiesOfWaterTable>
     </div>
     <Toast/>
@@ -48,7 +54,9 @@ import {useConfirm} from "primevue/useconfirm";
 import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
 
 const props = defineProps({
-  loading: Boolean
+  loading: Boolean,
+  customerId: String,
+  bodiesOfWater: Array
 })
 
 console.log(props.loading)
@@ -58,6 +66,7 @@ const bodyOfWaterStore = useBodyOfWaterStore();
 
 const addBodyOfWaterModal = ref(false);
 const bodyOfWater = ref()
+const readOnly = ref(false);
 
 const routes = reactive({
   activeRoute: 131,
@@ -76,6 +85,7 @@ const toggleAddBodyOfWaterModal = () => (addBodyOfWaterModal.value = true);
 const closeModal = ({success, error}) => {
   addBodyOfWaterModal.value = false
   bodyOfWater.value = null
+  readOnly.value = false
 
   if (success) {
     toast.add({
@@ -95,6 +105,13 @@ const closeModal = ({success, error}) => {
     });
   }
 };
+
+const viewItem = (item) => {
+  console.log(item)
+  readOnly.value = true
+  bodyOfWater.value = item
+  toggleAddBodyOfWaterModal()
+}
 
 const editItem = ({id, item}) => {
   console.log(id, item)

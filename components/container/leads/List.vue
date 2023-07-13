@@ -4,12 +4,7 @@
     </section>
     <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
       <div class="hidden flex-wrap items-center gap-5 justify-between lg:flex xl:gap-10">
-        <ul class="hidden lg:flex w-full items-center justify-between gap-4 xl:w-3/4">
-          <RegularCustomerActivityCard
-            :loading="loading"
-            :routes="routes"
-          ></RegularCustomerActivityCard>
-        </ul>
+        <div class="spacer"></div>
           <BaseAddButton
             :btnText="'Lead'"
             @click="toggleEditLeadModal"

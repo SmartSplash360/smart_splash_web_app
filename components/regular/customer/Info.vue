@@ -18,7 +18,7 @@
           <div class="flex items-center gap-2">
             <span class="span__element">{{
               customerInfo.name
-            }} {{ customerInfo.surname ?? '' }}</span>
+            }} {{ customerInfo?.surname }}</span>
             <img
               :src="ChatIcon"
               alt="chat-icon"
@@ -38,13 +38,13 @@
             size="medium"
         /></span>
         <span class="span__element">{{
-          customerInfo.email
+          customerInfo?.email
         }}</span>
       </div>
       <div class="flex items-center gap-3">
         <font-awesome-icon icon="phone" class="text-lg"/>
         <span class="min-w-max span__element">{{
-          customerInfo.phone_number
+          customerInfo?.phone_number
         }}</span>
       </div>
     </div>
@@ -53,7 +53,7 @@
     >
       <font-awesome-icon icon="location-dot" class="text-lg"/>
       <span class="span__element">
-        {{ customerInfo.address }}</span
+        {{ fullAddress }}</span
       >
     </div>
     <div
@@ -88,12 +88,22 @@ import BuildingIcon from "@/assets/icons/building-icon.svg";
 import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
 
-defineProps({
+const props = defineProps({
   customerInfo: {
     type: Object,
     required: true,
   },
 });
+
+const fullAddress = computed(() => {
+  let address = 'N/A'
+  if (props.customerInfo?.address && props.customerInfo?.address.length > 0) {
+    address = `${props.customerInfo?.address[0]?.address_line1}, ${props.customerInfo?.address[0]?.city}, ${props.customerInfo?.address[0]?.state}
+    ${props.customerInfo?.address[0]?.address_line2}
+    ${props.customerInfo?.address[0]?.country}`
+  }
+  return address
+})
 </script>
 
 <style lang="scss" scoped></style>
