@@ -10,7 +10,6 @@
             :routes="routes"
           ></RegularCustomerActivityCard>
         </ul>
-        <BaseExportButton></BaseExportButton>
       </div>
       <div class="mobile flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
           <div class="flex items-center justify-between">
@@ -28,16 +27,21 @@
               :loading="loading"
                 :routes="routes">
             </RegularCustomerActivityCard>
-            <BaseExportButton></BaseExportButton>
           </div>
       </div>
       <div class="flex flex-col gap-5">
         <div
           class="-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
         >
-          <div class="flex-1 md:hidden">
-            <BaseSearchBar></BaseSearchBar>
-          </div>
+          <BaseAddButton
+            :btnText="'Lead'"
+            @click="toggleEditLeadModal"
+          ></BaseAddButton>
+          <ModalsEditLeadModal
+            v-if="editLeadModal"
+            :toggleEditLeadModal="closeModal"
+            :lead="lead"
+          ></ModalsEditLeadModal>
         </div>
         <RegularLeadTable
           :editItem="editItem"

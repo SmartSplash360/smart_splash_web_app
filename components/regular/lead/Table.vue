@@ -26,13 +26,15 @@
               />
             </span>
           </div>
-          <div>
-            <Button
-                icon="pi pi-external-link"
-                label="Export"
-                @click="exportCSV($event)"
-                severity="success"
-            />
+          <div class="flex gap-10 items-center">
+            <BaseExportButton></BaseExportButton>
+           
+              <Button
+                  icon="pi pi-external-link"
+                  label="Export"
+                  @click="exportCSV($event)"
+                  severity="success"
+              />
           </div>
         </div>
       </template>
@@ -138,7 +140,7 @@
               <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
                 <font-awesome-icon icon="ellipsis-vertical" />
               </Button>
-              <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
+              <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"></Menu>
               <Toast />
             </div>
           </template>
@@ -166,6 +168,7 @@ const items = ref([
             label: 'Convert to Customer',
             icon: 'pi pi-sync',
             command: () => {
+
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
             }
         },
@@ -183,23 +186,23 @@ const items = ref([
                 toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
             }
         },
-        {
-            label: 'Edit',
-            icon: 'pi pi-pencil',
-            command: () => {
-
-                // props.editItem({ id: customer.id, item: { ...customer } })
-                toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
-            }
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-trash',
-            command: () => {
-              // props.deleteItem({ id })
-              toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
-            }
-        },
+        // {
+        //     label: 'Edit',
+        //     icon: 'pi pi-pencil',
+        //     command: (customer) => {
+        //       console.log(customer)
+        //         // props.editItem({ id: customer.id, item: { ...customer } })
+        //         toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+        //     }
+        // },
+        // {
+        //     label: 'Delete',
+        //     icon: 'pi pi-trash',
+        //     command: () => {
+        //       // props.deleteItem({ id })
+        //       toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+        //     }
+        // },
 ]);
 const leads= ref();
 const filters = ref({

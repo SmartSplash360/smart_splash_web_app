@@ -9,7 +9,7 @@
           accept="image/*" 
           :maxFileSize="1000000" 
           @upload="onUpload" 
-          class="!mt-10 sm:mt-0"/>
+          />
   </div>
 </template>
 

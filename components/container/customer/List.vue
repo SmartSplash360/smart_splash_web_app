@@ -10,7 +10,7 @@
           :routes="routes"
         ></RegularCustomerActivityCard>
       </ul>
-      <BaseExportButton></BaseExportButton>
+      <!-- <BaseExportButton></BaseExportButton> -->
     </div>
     <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
         <div class="flex items-center justify-between">
@@ -28,7 +28,7 @@
             :loading="loading"
               :routes="routes">
           </RegularCustomerActivityCard>
-          <BaseExportButton></BaseExportButton>
+          <!-- <BaseExportButton></BaseExportButton> -->
         </div>
     </div>
     <div class="flex flex-col gap-5">

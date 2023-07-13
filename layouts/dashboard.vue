@@ -1,9 +1,13 @@
 <template>
-  <main class="flex max-h-[100vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row">
+  <main
+    class="flex max-h-[100vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
+  >
     <div class="hidden lg:block">
       <UiTheSidebar></UiTheSidebar>
     </div>
-    <div class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto">
+    <div
+        class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto"
+    >
       <UiTheNavbar :setColorTheme="setColorTheme"></UiTheNavbar>
       <div class="lg:hidden">
         <UiTheSidebar></UiTheSidebar>
@@ -15,16 +19,14 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
-// const time = new Date().getHours();
-const time = 19;
 
-if(time <= 18)  useColorMode().preference = 'light';
-if(time < 6) useColorMode().preference = 'dark';
+type Theme = "light" | "dark";
 
-const setColorTheme = (newTheme) => {
+const setColorTheme = (newTheme: Theme) => {
   useColorMode().preference = newTheme;
 };
+
 
 </script>
