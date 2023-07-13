@@ -82,6 +82,7 @@ const showActiveRoute = () => {
 };
 
 const toggleAddBodyOfWaterModal = () => (addBodyOfWaterModal.value = true);
+
 const closeModal = ({success, error}) => {
   addBodyOfWaterModal.value = false
   bodyOfWater.value = null
@@ -128,9 +129,9 @@ const deleteItem = async ({id}) => {
       // delete item
       try {
         const res = await bodyOfWaterStore.deleteBodyOfWater(id)
-        toast.add({severity: 'info', summary: 'Delete Alert', detail: res?.message, life: 3000});
+        toast.add({severity: 'info', summary: 'Delete Body of Water', detail: res?.message, life: 3000});
       } catch (e) {
-        toast.add({severity: 'error', summary: 'Delete Alert', detail: `an error has occurred: ${e}`, life: 3000});
+        toast.add({severity: 'error', summary: 'Delete Body of Water', detail: `an error has occurred: ${e}`, life: 3000});
       }
     },
     reject: () => {
