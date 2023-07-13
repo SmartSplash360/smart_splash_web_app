@@ -15,7 +15,7 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between dark:border-0 mb-5">
+        <div class="flex items-center justify-between dark:border-0 mb-5 px-5">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
@@ -116,7 +116,29 @@
           tableStyle="width : 100%; overflow : hidden"
           :loading="loading"
           :globalFilterFields="['customer', 'representative.name']"
-      >
+      >      
+        <template #header>
+          <div class="flex items-center justify-between dark:border-0 mb-5 px-2">
+            <div class="flex w-64 justify-start">
+              <span class="p-input-icon-right w-full">
+                <i class="pi pi-search"/>
+                <InputText
+                    v-model="filters['global'].value"
+                    placeholder=" Search"
+                    class="w-full dark:bg-[#1B2028] !rounded-xl"
+                />
+              </span>
+            </div>
+            <div>
+              <Button
+                  icon="pi pi-external-link"
+                  label="Export"
+                  @click="exportCSV($event)"
+                  severity="success"
+              />
+            </div>
+          </div>
+        </template>
         <Column field="id" header="No" sortable></Column>
         <Column field="name" header="Customer" sortable></Column>
         <Column field="representative.name" header="Email"></Column>

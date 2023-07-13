@@ -1,12 +1,12 @@
 <template>
   <div 
-    @click="toggleAddCustomerModal({ show: false })"
+    @click="toggleEditLeadModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]">
     <form 
     @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
       <h2 class="heading__h2 font-bold text-[#025E7C]">
-        {{ customer ? 'Edit' : 'New' }} Customer {{ customer ? `#${customer?.id}` : '' }}
+        {{ lead ? 'Edit' : 'New' }} Lead {{ lead ? `#${lead?.id}` : '' }}
       </h2>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
@@ -28,7 +28,7 @@
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
       </div>
-      <div v-if="!customer" class="flex flex-col justify-between gap-5 sm:flex-row">
+      <div v-if="!lead" class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="span__element text-sm" for="name"> Password* </label>
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
@@ -43,34 +43,34 @@
             label="Cancel"
             severity="secondary"
             outlined
-            @click="toggleAddCustomerModal({ show: false })"
+            @click="toggleEditLeadModal({ show: false })"
             class="hover:shadow-xl"
         />
         <Button
-            label="Submit"
+            label="Save"
             icon="pi pi-check"
             class="!bg-[#0291BF] hover:shadow-xl"
-            @click="customer ? updateCustomer() : createCustomer()"
+            @click="lead ? updateLead() : createLead()"
         />
       </div>
     </form>
   </div>
 </template>
 
-<script setup lang="ts">
-import {useCustomerStore} from "~/stores/customer";
-import {useToast} from "primevue/usetoast";
+<script setup>
+import { ref, onMounted } from 'vue'
+import {useLeadStore} from "~/stores/lead";
 
-const store = useCustomerStore();
+const store = useLeadStore();
 
 const props = defineProps({
-  toggleAddCustomerModal: {
+  toggleEditLeadModal: {
     type: Function,
     default: () => {
     },
     required: true
   },
-  customer: {
+  lead: {
     type: Object,
     default: () => null,
     required: false
@@ -85,19 +85,19 @@ const password = ref('password')
 const passwordConfirmation = ref('password')
 
 onMounted(() => {
-  if (props.customer) {
-    name.value = props.customer.name
-    surname.value = props.customer.surname
-    email.value = props.customer.email
-    phoneNumber.value = props.customer.phone_number
+  if (props.lead) {
+    name.value = props.lead.name
+    surname.value = props.lead.surname
+    email.value = props.lead.email
+    phoneNumber.value = props.lead.phone_number
   }
 })
 
-const createCustomer = async () => {
+const createLead = async () => {
   // TODO: add validation
 
   try {
-    await store.createCustomer({
+    await store.createLead({
       name: name.value,
       surname: surname.value,
       email: email.value,
@@ -105,13 +105,13 @@ const createCustomer = async () => {
       password: password.value,
       password_confirmation: passwordConfirmation.value,
     });
-    props.toggleAddCustomerModal({success: "Customer created successfully"});
+    props.toggleEditLeadModal({success: "Lead created successfully"});
   } catch (e) {
-    props.toggleAddCustomerModal({error: e});
+    props.toggleEditLeadModal({error: e});
   }
 }
 
-const updateCustomer = async () => {
+const updateLead = async () => {
   try {
     const data = {
       name: name.value,
@@ -120,12 +120,12 @@ const updateCustomer = async () => {
       phone_number: phoneNumber.value,
     }
 
-    await store.updateCustomer(props.customer?.id, data)
-    await store.fetchCustomers()
+    await store.updateLead(props.lead?.id, data)
+    await store.fetchLeads()
 
-    props.toggleAddCustomerModal({success: `Customer ${props.customer?.id} updated successfully`});
+    props.toggleEditLeadModal({success: `Lead ${props.lead?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddCustomerModal({error: e});
+    props.toggleEditLeadModal({error: e});
   }
 }
 </script>

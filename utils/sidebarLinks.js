@@ -8,6 +8,11 @@ export const sideBarLinks = [
     icon: "user-group",
     name: "Customers",
     to: "/customers",
+  },  
+  {
+    icon: "user-plus",
+    name: "Leads",
+    to: "/leads",
   },
   {
     icon: "user-lock",
