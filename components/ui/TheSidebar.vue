@@ -23,7 +23,7 @@
             :class="[$colorMode.value == 'dark' && 'dark-router-link-active']"
             class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3
             nav-link-item
-            dark:text-[#717275]
+            dark:text-[#FFFFFF]
             dark:hover:bg-[#0291BF] 
             dark:hover:text-white "
           >
@@ -50,7 +50,7 @@ import { sideBarLinks } from "~/utils/sidebarLinks";
 
 <style scoped>
 .router-link-active {
-  background-color: #FFF;
+  background-color: #0291BF;
   color: #000;
   font-size: 45px;
 }

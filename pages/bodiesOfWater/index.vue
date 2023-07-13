@@ -1,14 +1,15 @@
 <template>
-  <ContainerTechnicianList :loading="loading"></ContainerTechnicianList>
+  <ContainerBodyOfWaterList :loading="loading"></ContainerBodyOfWaterList>
 </template>
 
 <script setup>
-import { useTechnicianStore } from '~/stores/technician';
-const store = useTechnicianStore();
+import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
+
+const store = useBodyOfWaterStore();
 const loading = ref(true)
 
 onMounted(async () => {
-  await store.fetchTechnicians();
+  await store.fetchBodiesOfWaters();
   loading.value = false
 });
 

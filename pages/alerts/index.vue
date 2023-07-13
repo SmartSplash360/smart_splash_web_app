@@ -9,7 +9,7 @@ import { useAlertStore} from "~/stores/alert";
 
 definePageMeta({
   layout: "dashboard",
-  middleware: 'auth',
+  middleware: ['auth','auto-theme'],
 });
 
 

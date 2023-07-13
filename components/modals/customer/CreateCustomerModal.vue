@@ -77,12 +77,12 @@ const props = defineProps({
   }
 });
 
-const name = ref('Test')
-const surname = ref('User')
-const email = ref('test1@user.com')
-const phoneNumber = ref('0760970734')
-const password = ref('password')
-const passwordConfirmation = ref('password')
+const name = ref('')
+const surname = ref('')
+const email = ref('')
+const phoneNumber = ref('')
+const password = ref('')
+const passwordConfirmation = ref('')
 
 onMounted(() => {
   if (props.customer) {

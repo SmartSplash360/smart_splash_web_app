@@ -60,7 +60,7 @@ export const useJobStore = defineStore("job", {
                 return res.data.data
             } catch (error) {
                 console.log(error);
-                return error
+                throw error
             }
         }
     }

@@ -33,7 +33,7 @@
       <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>
       <Button icon="pi pi-google" label="Continue with Google" severity="danger" class="w-full"/>
     </div>
-    <Toast />
+    <Toast/>
   </form>
 </template>
 
@@ -45,7 +45,6 @@ import {useToast} from "primevue/usetoast";
 
 import {useUserStore} from "~/stores/users";
 import {useCustomerStore} from "~/stores/customer";
-import {tryCatch} from "standard-as-callback/built/utils";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
@@ -55,15 +54,26 @@ const email = ref('test@user.com');
 const password = ref('password');
 
 const toast = useToast();
+
 async function login() {
   try {
     await store.login(email.value, password.value);
     await customerStore.fetchCustomers();
     await router.push('/customers');
-    toast.add({ severity: 'success', summary: 'Login Success', detail: 'You have been logged in successfully', life: 3000 });
+    toast.add({
+      severity: 'success',
+      summary: 'Login Success',
+      detail: 'You have been logged in successfully',
+      life: 3000
+    });
   } catch (e) {
     console.log(e)
-    toast.add({ severity: 'error', summary: 'Login Error', detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`, life: 3000 });
+    toast.add({
+      severity: 'error',
+      summary: 'Login Error',
+      detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
+      life: 3000
+    });
   }
 
 }
