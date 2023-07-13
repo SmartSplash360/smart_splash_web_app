@@ -37,11 +37,11 @@
             :btnText="'Lead'"
             @click="toggleEditLeadModal"
           ></BaseAddButton>
-          <ModalsEditLeadModal
+          <ModalsLeadEditLeadModal
             v-if="editLeadModal"
             :toggleEditLeadModal="closeModal"
             :lead="lead"
-          ></ModalsEditLeadModal>
+          ></ModalsLeadEditLeadModal>
         </div>
         <RegularLeadTable
           :editItem="editItem"

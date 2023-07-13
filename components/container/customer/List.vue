@@ -10,50 +10,37 @@
           :routes="routes"
         ></RegularCustomerActivityCard>
       </ul>
-      <!-- <BaseExportButton></BaseExportButton> -->
     </div>
     <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
-        <div class="flex items-center justify-between">
-          <BaseSearchBar :size="'lg'"></BaseSearchBar>
-          <div class="text-white">
+        <div class="flex items-center justify-end">
             <span
               @click="showActiveRoute"
-              class="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center"
+              class="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center text-white "
               ><font-awesome-icon icon="bars" class="text-2xl"
             /></span>
-          </div>
         </div>
         <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
           <RegularCustomerActivityCard           
             :loading="loading"
               :routes="routes">
           </RegularCustomerActivityCard>
-          <!-- <BaseExportButton></BaseExportButton> -->
         </div>
     </div>
-    <div class="flex flex-col gap-5">
-      <div
-        class="-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
-      >
-        <div class="flex-1 md:hidden">
-          <BaseSearchBar></BaseSearchBar>
-        </div>
-        <BaseAddButton
-          :btnText="'Customer'"
-          @click="toggleAddCustomerModal"
-        ></BaseAddButton>
-        <ModalsCustomerCreateCustomerModal
-          v-if="addCustomerModal"
-          :toggleAddCustomerModal="closeModal"
-          :customer="customer"
-        ></ModalsCustomerCreateCustomerModal>
-      </div>
-
-      <RegularCustomerTable
-        :editItem="editItem"
-        :deleteItem="deleteItem"
-      ></RegularCustomerTable>
+    <div class="flex w-full justify-end rounded-xl px-3 md:mt-0 md:rounded-none lg:justify-end lg:p-0">
+      <BaseAddButton
+        :btnText="'Customer'"
+        @click="toggleAddCustomerModal"
+      ></BaseAddButton>
+      <ModalsCustomerCreateCustomerModal
+        v-if="addCustomerModal"
+        :toggleAddCustomerModal="closeModal"
+        :customer="customer"
+      ></ModalsCustomerCreateCustomerModal>
     </div>
+    <RegularCustomerTable
+      :editItem="editItem"
+      :deleteItem="deleteItem"
+    ></RegularCustomerTable>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
   </section>
