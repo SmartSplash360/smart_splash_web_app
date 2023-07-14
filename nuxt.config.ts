@@ -20,7 +20,8 @@ export default defineNuxtConfig({
         // "primevue/resources/themes/lara-light-blue/theme.css",
         "primevue/resources/primevue.css",
         "primeicons/primeicons.css",
-        "@vueup/vue-quill/dist/vue-quill.snow.css"
+        "@vueup/vue-quill/dist/vue-quill.snow.css",
+        '@/assets/css/ckeditor-custom.css',
     ],
     modules: [
         "@nuxtjs/tailwindcss",

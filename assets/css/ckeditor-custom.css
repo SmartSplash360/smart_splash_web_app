@@ -1,0 +1,22 @@
+/* ckeditor-custom.css */
+
+/* Change the font size of the editor */
+.ck-editor__editable {
+    font-size: 16px;
+  }
+  
+  /* Change the font family of the editor */
+  .ck-editor__editable {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Change the color of the editor toolbar buttons */
+  .ck-toolbar .ck-button {
+    color: red;
+  }
+  .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+    min-height: 500px;
+  }
+  .ck.ck-editor__main>.ck-editor__editable{
+    min-height: 500px;
+  }

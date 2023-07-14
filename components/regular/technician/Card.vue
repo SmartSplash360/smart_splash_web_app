@@ -107,8 +107,6 @@
 </template>
 
 <script setup>
-import LikeIcon from "@/assets/icons/like-icon.svg";
-import DislikeIcon from "@/assets/icons/dislike-icon.svg";
 
 const showMenu = ref(false);
 
