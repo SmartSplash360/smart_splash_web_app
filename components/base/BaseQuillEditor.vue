@@ -1,38 +1,46 @@
 <template>
-    <div ref="editorContainer" class="dark:bg-[#1B2028]"></div>
-  </template>
-  
-  <script>
-  import { onMounted, ref } from '@vue/composition-api';
-  import Quill from 'quill';
-  
-  export default {
-    setup() {
-      const editorContainer = ref(null);
-      let editor;
-  
-      onMounted(() => {
-      const options = {
-        theme: 'snow', // Choose your desired theme ('snow', 'bubble', or 'default')
-        placeholder: 'Enter text here...', // Placeholder text when the editor is empty
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, 3,4, false] }], // Header options
-            ['bold', 'italic', 'underline','strike'], // Text formatting options
-            ['link', 'image'], // Insert link and image options
-            [{ list: 'ordered' }, { list: 'bullet' }], // Ordered and unordered lists
-            ['clean'], // Remove formatting option
-          ],
-        },
-      };
+  <div ref="editorContainer" v-bind:id="content"></div>
+</template>
 
-      editor = new Quill(editorContainer.value, options);
-    });
-  
-      return {
-        editorContainer,
-      };
-    },
+<script setup>
+import Quill from 'quill';
+
+const props = defineProps({
+  description : String
+})
+
+const emit = defineEmits(['handleEditorChange'])
+const editorContainer = ref(null);
+let editor;
+let content = ref();
+
+onMounted(() => {
+  const options = {
+    theme: 'snow', 
+    placeholder: 'Enter text here...', 
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, 3,4, false] }], 
+        ['bold', 'italic', 'underline','strike'], 
+        ['link', 'image'], 
+        [{ list: 'ordered' }, { list: 'bullet' }], 
+        ['clean'], 
+      ],
+    }
   };
-  </script>
+
+  if(props.description){
+    content.value = props.description
+  }
+  editor = new Quill(editorContainer.value, options);
+
   
+  content.value = editor.root.innerHTML;
+
+  
+  editor.on('text-change', () => {
+    content.value = editor.root.innerHTML;
+    emit('handleEditorChange', content.value)
+  });
+});
+</script>

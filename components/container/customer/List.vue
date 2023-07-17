@@ -94,7 +94,6 @@ const closeModal = ({ success, error }) => {
 };
 
 const editItem = ({ id, item }) => {
-  console.log(id, item)
   customer.value = item
   toggleAddCustomerModal()
 }

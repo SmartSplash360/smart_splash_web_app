@@ -16,12 +16,12 @@
         <slot></slot>
       </div>
     </div>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </main>
 </template>
 
 <script setup lang="ts">
-
-
 import {useUserStore} from "~/stores/users";
 
 type Theme = "light" | "dark";

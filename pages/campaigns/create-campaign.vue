@@ -1,5 +1,5 @@
 <template>
-    <ContainerCampaignNewTemplate></ContainerCampaignNewTemplate>
+    <ContainerCampaignOverview></ContainerCampaignOverview>
 </template>
 
 <script setup>

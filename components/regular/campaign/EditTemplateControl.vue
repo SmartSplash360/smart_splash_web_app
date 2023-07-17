@@ -4,7 +4,7 @@
             <font-awesome-icon icon="arrow-left" />
             <span class="span__element">Back</span>
         </nuxt-link>
-        <h4 class="flex-1 text-center heading__h4">Blank Email template</h4>
+        <h4 class="flex-1 text-center heading__h4"> {{ edit ? 'Edit existing ' : 'Create New'}}  template</h4>
         <div class="hidden lg:flex flex-col justify-end gap-3 sm:flex-row sm:gap-5">
             <Button label="Save Draft" class="!bg-white text-black" />
             <Button label="Review & Send" class="!bg-[#0291BF] text-white" />
@@ -13,4 +13,9 @@
 </template>
 
 <script setup>
+defineProps({
+    edit : Boolean 
+})
+
+// const sendCa
 </script>

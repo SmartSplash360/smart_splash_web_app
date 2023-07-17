@@ -11,7 +11,9 @@
           class="w-full md:w-52 dark:bg-[#1B2028]"
         />
       </div>
-      <BaseSearchBar class="w-full -order-1 lg:order-1"></BaseSearchBar>
+      <BaseSearchBar class="w-full -order-1 lg:order-1" 
+        :value="searchQuery" 
+        @handleSearch="value => searchTemplate(value)"></BaseSearchBar>
     </div>
     <div class="flex-1 flex justify-end mt-5 lg:mt-0">
       <BaseAddButton
@@ -24,13 +26,20 @@
 </template>
 
 <script setup>
+defineProps({
+  searchQuery:String
+})
+const emit = defineEmits(['search-template'])
 
 const statuses = ref([
   { state : 'Email Campaign'},
   {state : 'SMS Campaign'}
 ])
-
 const status = ref();
 const router = useRouter()
+
+const searchTemplate = (value) =>  emit('search-template', value)
+
+
 const createTemplate = () => router.push('campaigns/create-campaign')
 </script>
