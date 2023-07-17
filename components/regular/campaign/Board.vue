@@ -7,7 +7,7 @@
           v-model="status"
           :options="statuses"
           optionLabel="state"
-          placeholder="Email Campaign"
+          placeholder="Campaign Type"
           class="w-full md:w-52 dark:bg-[#1B2028]"
         />
       </div>
@@ -27,7 +27,7 @@
 
 const statuses = ref([
   { state : 'Email Campaign'},
-  {state : 'Email Campaign 2'}
+  {state : 'SMS Campaign'}
 ])
 
 const status = ref();

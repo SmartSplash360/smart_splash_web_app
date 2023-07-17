@@ -44,6 +44,27 @@ export const  TemplateList = {
           image:
             "https://www.vera.org/images/headshots/_800x800_crop_center-center_82_none/Melvin-Washington-V2_200309_203156.jpg?mtime=1646883304",
           position: "Plain",
+        },
+        {
+          id: 1004,
+          title: "Donette Foller",
+          content : "Lorem ipsum dolor sit amet consectetur. Sed molestie pharetra urna gravida sed bibendum id tristique.",          
+          date: "2016-05-20",
+          status: true,
+          activity: 33,
+          image:
+            "https://www.vera.org/images/headshots/_800x800_crop_center-center_82_none/Melvin-Washington-V2_200309_203156.jpg?mtime=1646883304",
+          position: "Plain",
+        },        {
+          id: 1005,
+          title: "Donette Foller",
+          content : "Lorem ipsum dolor sit amet consectetur. Sed molestie pharetra urna gravida sed bibendum id tristique.",          
+          date: "2016-05-20",
+          status: true,
+          activity: 33,
+          image:
+            "https://www.vera.org/images/headshots/_800x800_crop_center-center_82_none/Melvin-Washington-V2_200309_203156.jpg?mtime=1646883304",
+          position: "Plain",
         }
       ];
     },

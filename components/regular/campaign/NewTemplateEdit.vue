@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-10 px-5 lg:px-10">
+    <div class="flex flex-col px-5 lg:px-10">
         <div class="lg:self-end flex gap-5 items-center">
             <h4 class="heading__h4 font-bold w-full">Select</h4>
             <div class="flex lg:flex-col gap-3">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5 my-10">
             <h4 class="heading__h4">Campaign Title*</h4>
             <div class="w-full">
                 <InputText
@@ -23,7 +23,7 @@
                     />
             </div>
         </div>
-        <BaseCKEditor />
+        <BaseQuillEditor />
     </div>
 </template>
 

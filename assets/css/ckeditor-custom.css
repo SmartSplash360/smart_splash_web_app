@@ -20,3 +20,36 @@
   .ck.ck-editor__main>.ck-editor__editable{
     min-height: 500px;
   }
+
+  /* .ck.ck-toolbar.ck-toolbar_grouping > .ck-toolbar__items {
+    background-color: inherit;
+    color: inherit;
+  }
+  .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+   background-color: inherit;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    background-color: inherit;
+  }
+
+  .ck.ck-toolbar[dir=ltr]>.ck-toolbar__items>.ck:last-child, [dir=ltr] .ck.ck-toolbar>.ck-toolbar__items>.ck:last-child {
+    color: inherit
+  }
+
+  .ck.ck-toolbar>.ck-toolbar__items>:not(.ck-toolbar__line-break), .ck.ck-toolbar>.ck.ck-toolbar__grouped-dropdown {
+    color: inherit
+  }
+  .ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+    color: inherit;
+  }
+  .ck.ck-editor__main>.ck-editor__editable{
+    min-height: 500px;
+  }
+  [dir=ltr] .ck.ck-dropdown .ck-dropdown__arrow {
+    color: inherit;
+  }
+  .ck.ck-button:not(.ck-disabled):hover, a.ck.ck-button:not(.ck-disabled):hover {
+    color: inherit;
+  } */
+ 

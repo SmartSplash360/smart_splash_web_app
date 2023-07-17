@@ -1,5 +1,5 @@
 <template>
-    <div
+    <nuxt-link :to="`campaigns/${template.id}`"
         class="card   min-w-full min-h-full flex cursor-pointer justify-center"
     >
       <Card class="min-w-full  shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white">
@@ -18,7 +18,7 @@
             <Button :label="template.position" class="!bg-[#0291BF] text-white rounded-3xl text-xs font-[400]" />
         </template>
       </Card>
-    </div>
+    </nuxt-link>
   </template>
   
   <script setup>
