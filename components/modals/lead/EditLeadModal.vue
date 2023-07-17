@@ -28,16 +28,6 @@
           <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
       </div>
-      <div v-if="!lead" class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Password* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Password Confirmation* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="passwordConfirmation"></InputText>
-        </div>
-      </div>
       <div class="mt-20 flex flex-col justify-end gap-5 sm:flex-row">
         <Button
             label="Cancel"
@@ -59,7 +49,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import {useLeadStore} from "~/stores/lead";
+import {useLeadStore} from "~/stores/leads";
 
 const store = useLeadStore();
 
@@ -77,10 +67,10 @@ const props = defineProps({
   }
 });
 
-const name = ref('Test')
-const surname = ref('User')
-const email = ref('test1@user.com')
-const phoneNumber = ref('0760970734')
+const name = ref('')
+const surname = ref('')
+const email = ref('')
+const phoneNumber = ref('')
 const password = ref('password')
 const passwordConfirmation = ref('password')
 

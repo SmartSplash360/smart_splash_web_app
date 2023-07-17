@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-table laptop+ card hidden sm:block" :class="[currentMode == 'dark' && 'dark-mode']">
+  <div class="customer-table laptop+ card hidden sm:block" :class="[currentMode === 'dark' && 'dark-mode']">
     <DataTable
         v-model:filters="filters"
         :value="bodiesOfWater"
@@ -11,7 +11,6 @@
         selectionMode="single"
         sortMode="multiple"
         :rows="10"
-        tableStyle="min-width: 50rem; min-height : 25rem;"
         :globalFilterFields="['name', 'id']">
       <template #header>
         <div class="flex items-center justify-between dark:border-0 mb-5">

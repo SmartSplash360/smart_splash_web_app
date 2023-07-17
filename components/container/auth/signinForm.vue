@@ -50,7 +50,7 @@ const store = useUserStore();
 const customerStore = useCustomerStore();
 const router = useRouter();
 
-const email = ref('test@user.com');
+const email = ref('test@test.com');
 const password = ref('password');
 
 const toast = useToast();

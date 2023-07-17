@@ -1,21 +1,21 @@
 <template>
-    <ContainerLeadsList></ContainerLeadsList>
-  </template>
-  
-  <script setup>
-  import { useCustomerStore} from "~/stores/customer";
-  
-  const store = useCustomerStore();
-  const loading = ref(true)
-  
-  onMounted(async () => {
-    await store.fetchCustomers();
-    loading.value = false
-  });
+  <ContainerLeadsList></ContainerLeadsList>
+</template>
 
-  definePageMeta({
-    layout: "dashboard",
-    middleware: 'auth',
-  });
-  </script>
+<script setup>
+import {useLeadStore} from "~/stores/leads";
+
+const store = useLeadStore()
+const loading = ref(true)
+
+onMounted(async () => {
+  await store.fetchLeads();
+  loading.value = false
+});
+
+definePageMeta({
+  layout: "dashboard",
+  middleware: ['auth','auto-theme'],
+});
+</script>
   

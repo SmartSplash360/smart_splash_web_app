@@ -43,6 +43,7 @@
         <RegularLeadTable
           :editItem="editItem"
           :deleteItem="deleteItem"
+          :convertToCustomer="convertToCustomer"
         ></RegularLeadTable>
       </div>
       <Toast />
@@ -58,7 +59,7 @@
   <script setup>
   import {useToast} from "primevue/usetoast";
   import {useConfirm} from "primevue/useconfirm";
-  import { useLeadStore } from "~/stores/lead";
+  import { useLeadStore } from "~/stores/leads";
   
   defineProps({
     loading : Boolean
@@ -85,7 +86,38 @@
   };
   
   const toggleEditLeadModal = () => (editLeadModal.value = true);
-  const closeModal = () => (editLeadModal.value = false);
+
+  const closeModal = ({ success, error }) => {
+    editLeadModal.value = false
+    lead.value = null
+
+    if (success) {
+      toast.add({ severity: 'success', summary: 'Create Customer Success', detail: 'Customer has been created successfully', life: 3000 });
+    }
+
+    if (error) {
+      toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
+    }
+  };
+
+  const convertToCustomer = ({ id }) => {
+    confirm.require({
+      message: 'Are you sure you want to proceed?',
+      header: 'Convert Lead to Customer',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async () => {
+        // delete item
+        try {
+          const res = await leadStore.updateLead(id, { role_id: 3 })
+          await leadStore.fetchLeads()
+          toast.add({ severity: 'info', summary: 'Convert Lead to Customer', detail: res?.message , life: 3000 });
+        } catch (e) {
+          toast.add({ severity: 'error', summary: 'Convert Lead to Customer', detail: `an error has occurred: ${e}`, life: 3000 });
+        }
+      },
+      reject: () => {}
+    })
+  }
   
   const editItem = ({ id, item }) => {
     console.log(id, item)

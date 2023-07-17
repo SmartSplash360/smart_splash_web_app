@@ -78,8 +78,8 @@ const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value
 };
 
-
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
+
 const closeModal = ({ success, error }) => {
   addCustomerModal.value = false
   customer.value = null
