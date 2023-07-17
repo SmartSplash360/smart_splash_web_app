@@ -22,14 +22,6 @@
       :loading="loading"
       :bg="'primary'"
   ></BaseActivityCard>
-  <BaseActivityCard v-if="showLeads"
-                    :icon="Leads"
-                    :alt="'user-leads-icons'"
-                    :status="'Leads'"
-                    :count="routes.leads"
-                    :loading="loading"
-                    :isLead="true"
-  ></BaseActivityCard>
 </template>
 
 <script setup>

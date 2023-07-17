@@ -6,7 +6,6 @@
         dataKey="id"
         paginator
         :rows="4"
-        tableStyle="min-width: 50rem; min-height : 25rem"
     >
       <Column field="date" header="Date" style="width: 15%">
         <template #body="slotProps">

@@ -7,7 +7,7 @@
     <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
    <p class="text-2xl">Bodies of Water</p>
    <ContainerBodyOfWaterList :loading="loading" :customerId="customer.value?.id" :bodiesOfWater="customer?.bodies_of_water"></ContainerBodyOfWaterList>
-   <Divider />
+   <Divider class="p-0 m-0"  />
     <div
       class="sm:min-:w-[30rem] flex items-center justify-center self-center text-[#025E7C] sm:gap-20"
     >
@@ -30,12 +30,12 @@
         />
       </div>
     </div>
-   <Divider />
+   <Divider class="p-0 m-0" />
     <div class="flex flex-col gap-10">
       <div class="flex justify-between rounded-xl bg-[#d4ecf4] dark:bg-[#1B2028] xl:w-1/2">
         <div
           @click="switchTabs('JOBS')"
-          class="cursor-pointer rounded-xl px-3 text-white sm:px-10"
+          class="cursor-pointer rounded-xl px-3 py-2 text-white sm:px-10"
           :class="currentTab === 'JOBS' && 'bg-[#0291BF] '"
         >
           <span class="span__element"

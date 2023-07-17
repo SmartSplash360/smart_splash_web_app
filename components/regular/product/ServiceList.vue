@@ -18,8 +18,7 @@
           :value="services"
           selectionMode="single"
           dataKey="id"
-          :rows="10"          
-          tableStyle="min-width: 50rem; min-height : 35rem"
+          :rows="10"
           class="mt-5"
           :loading="loading"
           :globalFilterFields="['product', 'name']"
@@ -155,14 +154,14 @@ const closeModal = ({success, error}) => {
   service.value = null;
 
   if (success) {
-    toast.add({severity: 'success', summary: 'Create Service Success', detail: success, life: 3000});
+    toast.add({severity: 'success', summary: 'Services', detail: success, life: 3000});
   }
 
   if (error) {
     toast.add({
       severity: 'error',
-      summary: 'Create Service Error',
-      detail: `Failed to create product, an error has occurred: ${error}`,
+      summary: 'Services',
+      detail: `An error has occurred: ${error}`,
       life: 3000
     });
   }

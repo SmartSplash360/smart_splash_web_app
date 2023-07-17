@@ -91,8 +91,8 @@ const closeModal = ({success, error}) => {
   if (success) {
     toast.add({
       severity: 'success',
-      summary: 'Create Body of Water Success',
-      detail: 'Body of Water has been created successfully',
+      summary: 'Bodies of Water',
+      detail: success,
       life: 3000
     });
   }
@@ -100,8 +100,8 @@ const closeModal = ({success, error}) => {
   if (error) {
     toast.add({
       severity: 'error',
-      summary: 'Create Body of Water Error',
-      detail: `Failed to create Body of Water, an error has occurred: ${error}`,
+      summary: 'Bodies of Water',
+      detail: `An error has occurred: ${error}`,
       life: 3000
     });
   }

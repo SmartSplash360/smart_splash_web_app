@@ -34,11 +34,13 @@ import ContextMenu from "primevue/contextmenu";
 import Divider from "primevue/divider";
 import Tag from "primevue/tag";
 import Menu from 'primevue/menu';
+import Image from 'primevue/image';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
   nuxtApp.vueApp.use(ToastService);
   nuxtApp.vueApp.use(ConfirmationService);
+  nuxtApp.vueApp.component("Image", Image);
   nuxtApp.vueApp.component("ContextMenu", ContextMenu);
   nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
   nuxtApp.vueApp.component("Calendar", Calendar);

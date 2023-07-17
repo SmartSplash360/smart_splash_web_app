@@ -6,8 +6,7 @@
       selectionMode="single"
       dataKey="id"
       paginator
-      :rows="4"
-      tableStyle="min-width: 50rem; min-height : 25rem"
+      :rows="10"
     >
       <template #empty> No jobs found. </template>
       <Column field="date" header="Date" style="width: 20%">

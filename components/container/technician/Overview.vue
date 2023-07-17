@@ -102,8 +102,8 @@ const closeModal = ({success, error}) => {
   if (success) {
     toast.add({
       severity: 'success',
-      summary: 'Create Job Success',
-      detail: 'Job has been created successfully',
+      summary: 'Jobs',
+      detail: success,
       life: 3000
     });
   }
@@ -111,8 +111,8 @@ const closeModal = ({success, error}) => {
   if (error) {
     toast.add({
       severity: 'error',
-      summary: 'Create Job Error',
-      detail: `Failed to create Job, an error has occurred: ${error}`,
+      summary: 'Jobs',
+      detail: `An error has occurred: ${error}`,
       life: 3000
     });
   }

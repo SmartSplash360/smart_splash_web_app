@@ -11,7 +11,6 @@
         selectionMode="single"
         sortMode="multiple"
         :rows="10"
-        tableStyle="min-width: 50rem; min-height : 25rem;"
         :globalFilterFields="['name', 'id']"
     >
       <template #header>

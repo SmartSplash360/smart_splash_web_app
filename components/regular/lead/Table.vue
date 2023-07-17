@@ -63,7 +63,7 @@
           header="Notes"
       >
       <template #body="slotProps">
-          <div class="px-4 py-2 leading-normal">{{ slotProps.data?.notes || '' }}</div>
+          <div class="px-4 py-2 leading-normal">{{ slotProps.data?.notes || 'N/A' }}</div>
         </template>
       </Column>
       <Column
@@ -71,7 +71,7 @@
           header="Status"
       >
         <template #body="slotProps">
-          <div class="min-w-max px-4 py-2 rounded-lg border"
+          <div class="flex justify-center align-middle min-w-max px-4 py-2 rounded-lg border"
           :class="slotProps.data?.status === 'stage 1' ? 'text-[#D42F24] border-[#D42F24] bg-[#f9e4e3]': 
           slotProps.data?.status === 'stage 2'? 'text-[#DE5307] border-[#DE5307] bg-[#fbe9df]' : 
           'text-[#32A431] border-[#32A431] bg-[#e4f3e4]'">{{ 
@@ -101,12 +101,12 @@
                   </Button>
                 </template>
 
-                <div class="flex flex-col p-2">
-                  <Button icon="pi pi-sync" label="Convert to Customer" class="border-none" @click="convertToCustomer(slotProps.data.id)"/>
-                  <Button icon="pi pi-comments" label="Message" class="border-none" @click="sendMessage(slotProps.data.id)"/>
-                  <Button icon="pi pi-phone" label="Call" class="border-none" @click="callLead(slotProps.data.id)"/>
-                  <Button icon="pi pi-pencil" label="Edit" class="border-none" @click="editLead({ ...slotProps.data })"/>
-                  <Button icon="pi pi-trash" label="Delete" class="border-none" @click="deleteLead(slotProps.data.id)"/>
+                <div class="flex flex-col p-2 w-[280px]">
+                  <Button icon="pi pi-sync" label="Convert to Customer" class="w-full border-none self-start" @click="convertToCustomer(slotProps.data.id)"/>
+                  <Button icon="pi pi-comments" label="Message" class="w-full border-none self-start" @click="sendMessage(slotProps.data.id)"/>
+                  <Button icon="pi pi-phone" label="Call" class="w-full border-none self-start" @click="callLead(slotProps.data)"/>
+                  <Button icon="pi pi-pencil" label="Edit" class="w-full border-none self-start" @click="editLead({ ...slotProps.data })"/>
+                  <Button icon="pi pi-trash" label="Delete" class="w-full border-none self-start font-thin" @click="deleteLead(slotProps.data.id)"/>
                 </div>
               </Dropdown>
           </template>
@@ -173,6 +173,7 @@ const leadStore = useLeadStore()
 
 const props = defineProps({
   convertToCustomer: Function,
+  callLead: Function,
   editItem: Function,
   deleteItem: Function
 });
@@ -198,7 +199,6 @@ const importLeads = async (event) => {
   await leadStore.importLeads(event)
 }
 async function convertToCustomer (id)  {
-  console.log(id)
   props.convertToCustomer({ id })
 }
 
@@ -207,9 +207,9 @@ function sendMessage (id)  {
   router.push('/inbox')
 }
 
-function callLead(id) {
+function callLead(lead) {
   // TODO: call lead
-  router.push('/inbox')
+  props.callLead({ ...lead })
 }
 
 function editLead(lead) {
