@@ -41,5 +41,5 @@ const router = useRouter()
 const searchTemplate = (value) =>  emit('search-template', value)
 
 
-const createTemplate = () => router.push('campaigns/create-campaign')
+const createTemplate = () => router.push('campaigns/create-template')
 </script>
