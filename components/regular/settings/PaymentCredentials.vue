@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-between py-5">
+    <div class="flex-between py-5">
       <div class="flex flex-col gap-10">
         <h2 class="min-w-max heading__h3">Integrations</h2>
         <div class="flex gap-5 px-5">

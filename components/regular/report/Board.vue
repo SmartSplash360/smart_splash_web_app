@@ -96,7 +96,7 @@
           >
         </div>
       </div>
-      <div class="hidden items-center justify-center lg:flex lg:flex-1">
+      <div class="hidden lg:flex-center lg:flex-1">
         <Dropdown
           v-model="days"
           :options="numberOfDays"

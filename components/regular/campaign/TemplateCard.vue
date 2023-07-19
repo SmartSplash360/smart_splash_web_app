@@ -2,7 +2,7 @@
     <div class="min-w-full min-h-full flex cursor-pointer justify-center">
       <Card class="min-w-full  shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white">
         <template #header>
-          <div class="flex items-center justify-center pb-5 text-[#025E7C] px-3 py-5">
+          <div class="flex-center pb-5 text-[#025E7C] px-3 py-5">
             <img :src="template.cover" alt="template-icon">
           </div>
         </template>
@@ -84,14 +84,17 @@
               command: () => viewTemplate()
           },
           {
-              label: 'View Template',
+              label: 'Edit Template',
               icon: 'pi pi-pencil',
-              command: () => viewTemplate()
+              command: () => editTemplate()
           },
           {
               label: 'Delete Template',
               icon: 'pi pi-trash',
-              command: () => deleteTemplate(props.template.id)
+              command: () => {
+                deleteTemplate(props.template.id)
+                router.push('/campaigns')
+              }
           }
   ]);
   const toggle = (event) => {

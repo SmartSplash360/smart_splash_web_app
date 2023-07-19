@@ -9,7 +9,7 @@
       <img :src="icon" :alt="alt" class="h-full w-full" />
     </span>
     <div
-      class="flex w-full items-center justify-between text-white sm:flex-col"
+      class="flex-between w-full  text-white sm:flex-col"
     >
       <span class="min-w-max span__element "
         :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"
@@ -32,7 +32,7 @@
       <img :src="icon" :alt="alt" class="h-full w-full" />
     </span>
     <div
-      class="flex w-full items-center justify-between text-white sm:flex-col"
+      class="flex-between w-full text-white sm:flex-col"
     >
       <span class="min-w-max span__element "
         :class="[bg === 'primary' ? 'text-white' : 'text-black dark:text-white']"

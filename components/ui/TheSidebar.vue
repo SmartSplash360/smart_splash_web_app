@@ -29,7 +29,7 @@
             dark:hover:text-white "
           >
             <span
-              class="inline-flex h-[16px] w-[16px] items-center justify-center nav-link-item"
+              class="flex-center h-[16px] w-[16px] nav-link-item"
             >
               <font-awesome-icon :icon="link.icon"
             /></span>

@@ -1,6 +1,6 @@
 <template>
   <form class="flex flex-col gap-5">
-    <div class="flex items-center justify-between py-5">
+    <div class="flex-between py-5">
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">Users</h2>
         <span class="min-w-max span__element span__element-light">Update users Role</span>

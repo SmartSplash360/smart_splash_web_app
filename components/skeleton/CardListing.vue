@@ -56,7 +56,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32  rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -97,7 +97,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -138,7 +138,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -179,7 +179,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -220,7 +220,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -261,7 +261,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -302,7 +302,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
       <div
@@ -343,7 +343,7 @@
         <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div
-          class="my-8 flex h-32 items-center justify-center rounded bg-gray-200 dark:bg-gray-700"
+          class="my-8 flex-center h-32 rounded bg-gray-200 dark:bg-gray-700"
         ></div>
       </div>
     </div>

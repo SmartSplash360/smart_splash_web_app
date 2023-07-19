@@ -14,15 +14,15 @@
     <div class="flex w-full flex-col items-center gap-5 sm:my-10 sm:w-4/5">
       <h3 class="heading__h3 text-lg font-normal">Totals</h3>
       <div class="flex w-full flex-col gap-4 px-10">
-        <div class="flex items-center justify-between">
+        <div class="flex-between">
           <span class="span__element text-lg font-light leading-normal">Invoiced</span>
           <span class="span__element text-[#015D7B] text-lg font-[600]">$23,106.49</span>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex-between">
           <span class="span__element text-lg font-light leading-normal">Cost</span>
           <span class="span__element text-[#015D7B] text-lg font-[600]">$23,106.49</span>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex-between">
           <span class="span__element text-lg font-light leading-normal">Profit</span>
           <span class="span__element text-[#015D7B] text-lg font-[600]">$23,106.49</span>
         </div>

@@ -5,7 +5,7 @@
     <Card class="min-w-full  shadow-xl hover:shadow-2xl dark:bg-[#1B2028]">
       <template #header>
         <div class="flex flex-col gap-10 px-4 py-2 min-h-[250px] max-h-[250px] ">
-          <div class="relative flex items-center justify-between" >
+          <div class="relative flex-between " >
             <span
                 :class="technician?.status == 1 ? 
                 'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#1f504a] dark:text-[#27C498]' : 
@@ -18,7 +18,7 @@
             </span>
             <div
                 v-if="showMenu"
-                class="absolute -right-16 top-8 z-10 flex min-h-[81px] min-w-[171px] flex-col items-center justify-center rounded-md bg-white shadow-md"
+                class="absolute -right-16 top-8 z-10 flex-center min-h-[81px] min-w-[171px] flex-col rounded-md bg-white shadow-md"
             >
               <nuxt-link
                   :to="`technicians/${props.technician.id}`"

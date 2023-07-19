@@ -15,7 +15,7 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between dark:border-0 mb-5 px-5">
+        <div class="flex-between dark:border-0 mb-5 px-5">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
@@ -118,7 +118,7 @@
           :globalFilterFields="['customer', 'representative.name']"
       >      
         <template #header>
-          <div class="flex items-center justify-between dark:border-0 mb-5 px-2">
+          <div class="flex-between dark:border-0 mb-5 px-2">
             <div class="flex w-64 justify-start">
               <span class="p-input-icon-right w-full">
                 <i class="pi pi-search"/>

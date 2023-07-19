@@ -9,7 +9,7 @@
           :loading="loading"
       >
         <template #empty>
-           <div class="flex items-center justify-center">
+           <div class="flex-center">
             <h3 class="heading__h3">No alerts found. </h3>
            </div>
         </template>

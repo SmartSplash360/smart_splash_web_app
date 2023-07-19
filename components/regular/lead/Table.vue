@@ -15,7 +15,7 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between dark:border-0 mb-5 px-5">
+        <div class="flex-between dark:border-0 mb-5 px-5">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
@@ -84,7 +84,7 @@
           sortable
         >
           <template #body="slotProps">
-            <div class="flex items-center justify-center gap-5 text-center">
+            <div class="flex-center  gap-5 text-center">
               <span class="span__element">{{ slotProps.data.created_at }}</span>
             </div>
           </template>
@@ -132,7 +132,7 @@
           :globalFilterFields="['customer', 'representative.name']"
       >
         <template #header>
-          <div class="flex items-center justify-between dark:border-0 mb-5 px-2">
+          <div class="flex-between dark:border-0 mb-5 px-2">
             <div class="flex w-56 justify-start">
               <span class="p-input-icon-right w-full">
                 <i class="pi pi-search"/>

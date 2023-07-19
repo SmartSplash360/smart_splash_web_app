@@ -191,7 +191,7 @@
         </span>
       </div>
       <div
-        class="flex w-full flex-col items-center justify-between gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
+        class="flex-between w-full flex-col  gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
       >
         <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">

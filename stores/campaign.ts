@@ -11,11 +11,16 @@ export const useCampaignStore = defineStore("camapign", {
     },
     state: () => ({
         campaigns: [],
+        filter : '',
     }),
     getters: {
         getCampaigns(state) {
             return state.campaigns;
         },
+        filterCampaign(state){
+            const filterValue = state.filter.toLowerCase();
+            // return state.campaigns.filter(campaign)
+        }
     },
     actions: {
 
@@ -23,17 +28,24 @@ export const useCampaignStore = defineStore("camapign", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                console.log(campaignPayload)
                 const res = await axios.post(`http://localhost:8000/api/v1/campaigns`, campaignPayload);
-                console.log(res)
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
             } catch (error) {
-                console.log(error)
                 throw error
             }
-        }
+        },
+        // async getCampaigns(){
+        //     const jwt = useUserStore().getJwt;
+        //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+        //     try {
+        //         const res = await axios.get('http://localhost:8000/api/v1/campaigns');
+        //         return res.data.data
+        //     } catch (error) {
+        //         throw error
+        //     }
+        // }
     }
 })

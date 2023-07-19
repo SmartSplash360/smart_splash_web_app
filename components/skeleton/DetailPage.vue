@@ -1,12 +1,12 @@
 <template>
   <div class="mt-10 flex flex-col gap-10">
-    <div class="flex items-center justify-between">
+    <div class="flex-between">
       <div
         role="status"
         class="w-full lg:w-1/4 animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
       >
         <div
-          class="flex h-[4rem] w-[4rem]  md:w-[5rem] lg:w-[6rem] items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+          class="flex-center h-[4rem] w-[4rem]  md:w-[5rem] lg:w-[6rem] rounded-full bg-gray-200 dark:bg-gray-700"
         >
           <svg
             class="h-8 w-8 text-gray-100"
@@ -48,12 +48,12 @@
         <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
       </div>
     </div>
-    <div class="flex flex-col items-center justify-between gap-14 lg:flex-row">
+    <div class="flex-between flex-col gap-14 lg:flex-row">
       <div
         role="status"
         class="h-full w-full max-w-full animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow dark:divide-gray-700 dark:border-gray-700 md:p-6"
       >
-        <div class="flex items-center justify-between">
+        <div class="flex-between">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -66,7 +66,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -79,7 +79,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -92,7 +92,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -105,7 +105,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -118,7 +118,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -131,7 +131,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -144,7 +144,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -157,7 +157,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -170,7 +170,7 @@
             class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           ></div>
         </div>
-        <div class="flex items-center justify-between pt-4">
+        <div class="flex-between pt-4">
           <div>
             <div
               class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"

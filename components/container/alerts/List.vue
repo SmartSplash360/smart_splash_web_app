@@ -2,7 +2,7 @@
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-10">
-      <div class="hidden w-full justify-end gap-5 sm:flex">
+      <div class="w-full justify-end gap-5 flex">
         <BaseAddButton
           :btnText="' Alert'"
           @click="toggleAddAlertModal"
@@ -16,10 +16,10 @@
       <TabView v-model:activeIndex="active">
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">High</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">High</span>
               <span
-                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#D4382E] bg-red-300 shadow-md"
                 >{{ highAlerts.length }}</span
               >
             </div>
@@ -28,10 +28,10 @@
         </TabPanel>
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">Medium</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">Medium</span>
               <span
-                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#FFA500] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#FFA500] shadow-md"
                 >{{ mediumAlerts.length }}</span
               >
             </div>
@@ -40,10 +40,10 @@
         </TabPanel>
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">Low</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">Low</span>
               <span
-                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#02BF70] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#02BF70] shadow-md"
                 >{{ lowAlerts.length }}</span
               >
             </div>
