@@ -7,7 +7,7 @@
         @search-template="(value) => handleSearch(value)">
       </RegularCampaignBoard>
       <div v-if="count > 0">
-      <div class="card-container grid items-center justify-between gap-x-5 gap-y-10">
+      <div class="card-container grid items-center justify-between">
           <RegularCampaignTemplateCard v-for="template in templates"
           :key="template.id"
           :template="template"
@@ -39,8 +39,8 @@ const count = store.getTemplateCount
   
   <style scoped>
   .card-container {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    row-gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    row-gap: 80px;
     column-gap: 50px;
   }
   </style>

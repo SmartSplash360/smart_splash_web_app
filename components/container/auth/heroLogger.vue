@@ -13,13 +13,13 @@
       </div>
     </div>
     <div class="hero-signin-container" v-else="login">
-      <h1
-        class="text-center heading_h1 text-[#0291BF]"
+      <h2
+        class="text-center text-3xl text-[#0291BF]"
       >
         Welcome Back!
-      </h1>
+      </h2>
       <div
-        class="flex h-[30rem] w-[30rem] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
+        class="flex max-h-[30rem] max-w-[30rem] min-w-[18rem] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
       >
         <img
           :src="img_browser_stat"

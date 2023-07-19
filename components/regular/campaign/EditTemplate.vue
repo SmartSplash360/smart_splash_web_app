@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col px-5 lg:px-10">
+    <form class="flex flex-col px-5 lg:px-10">
         <div v-if="edit" class="lg:self-end flex gap-5 items-start">
             <h4 class="heading__h4 font-bold w-full">Select</h4>
             <div class="flex flex-col gap-4">
@@ -13,30 +13,42 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-5 my-10">
-            <h4 class="heading__h4">Campaign Title*</h4>
-            <div class="w-full">
-                <InputText
+        <div v-if="!edit" class="lg:self-end flex gap-5 items-start">
+            <div class="card flex justify-content-center">
+                <InputText 
                     v-model="name"
-                    :placeholder="name? name : 'Lorem ipsum dolor'"
+                    placeholder="Campaign Type"
                     class="dark:bg-[#1B2028] !outline-none w-full min-w-full"
-                    />
+                    required />
             </div>
         </div>
         <div v-if="!edit" class="flex flex-col gap-5 my-10">
             <h4 class="heading__h4">Campaign cover</h4>
             <img :src="imageSrc" alt="Uploaded Image" v-if="imageSrc" class="w-48 h-48 rounded-full"/>
             <div class="card flex justify-content-center">
-                <input type="file" ref="imageInput" @change="handleUpload" accept="image/*" id="image">
+                <input type="file" ref="imageInput" @change="handleUpload" accept="image/*" id="image" required>
             </div>
         </div>
-        <BaseQuillEditor  @handleEditorChange="editorChange" :description="description"/>        
-        <div class="flex justify-end mt-5 gap-5">        
-            <Button label="Cancel"  @click="cancel"/>
-            <Button v-if="!edit" label="Save" class="!bg-[#0291BF] text-white" @click="createTemplate"/>
-            <Button v-if="edit" label="Send data" class="!bg-[#0291BF] text-white" @click="createCampaign({name,description,templateId,lead,customer})"/>
+        <div class="flex flex-col gap-5 my-10">
+            <div class="w-full flex flex-col gap-3">
+                <h4 class="heading__h4">Campaign Title*</h4>
+                <InputText
+                    v-model="name"
+                    :placeholder="name? name : 'Enter Title'"
+                    class="dark:bg-[#1B2028] !outline-none w-full min-w-full"
+                    required
+                    />
+            </div>
+            <div>
+                <BaseQuillEditor  @handleEditorChange="editorChange" :description="description"/>
+            </div>  
         </div>
-    </div>
+        <div class="flex justify-end gap-5">        
+            <Button label="Cancel"  @click="cancel" class="!bg-white text-black"/>
+            <Button type="submit" v-if="!edit" label="Save" class="!bg-[#0291BF] text-white" @click="createTemplate"/>
+            <Button type="submit" v-if="edit" label="Send data" class="!bg-[#0291BF] text-white" @click="createCampaign({name,description,templateId,lead,customer})"/>
+        </div>
+    </form>
 </template>
 
 <script setup>
@@ -60,12 +72,6 @@
     const selectedFile = ref(null);
     const templateId = ref();
     const imageSrc = ref('');
-
-    const data = {
-        title : name.value,
-        message : description.value,
-        templateId : templateId.value
-    }
 
     const router = useRouter();
     const store = useTemplateStore();

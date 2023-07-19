@@ -11,7 +11,7 @@
           class="w-full md:w-52 dark:bg-[#1B2028]"
         />
       </div>
-      <BaseSearchBar class="w-full -order-1 lg:order-1" 
+      <BaseSearchBar class="w-full min-w-[275px] -order-1 lg:order-1" 
         :value="searchQuery" 
         @handleSearch="value => searchTemplate(value)"></BaseSearchBar>
     </div>
@@ -39,7 +39,6 @@ const status = ref();
 const router = useRouter()
 
 const searchTemplate = (value) =>  emit('search-template', value)
-
 
 const createTemplate = () => router.push('campaigns/create-template')
 </script>

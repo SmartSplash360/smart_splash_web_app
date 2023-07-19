@@ -7,7 +7,7 @@
   
   /* Customize Quill editor content area */
   .ql-editor {
-    min-height: 200px;
+    min-height: 45vh;
     padding: 10px;
     font-size: 14px;
   }

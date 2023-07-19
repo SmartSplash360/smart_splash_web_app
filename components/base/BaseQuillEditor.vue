@@ -1,14 +1,14 @@
 <template>
-  <div ref="editorContainer" v-bind:id="content"></div>
+  <div ref="editorContainer">
+    <div v-html="description"></div>
+  </div>
 </template>
 
 <script setup>
 import Quill from 'quill';
-
-const props = defineProps({
+defineProps({
   description : String
 })
-
 const emit = defineEmits(['handleEditorChange'])
 const editorContainer = ref(null);
 let editor;
@@ -26,12 +26,10 @@ onMounted(() => {
         [{ list: 'ordered' }, { list: 'bullet' }], 
         ['clean'], 
       ],
-    }
+    },
+    allowRawHTML: true,
   };
 
-  if(props.description){
-    content.value = props.description
-  }
   editor = new Quill(editorContainer.value, options);
 
   

@@ -4,16 +4,18 @@
             <font-awesome-icon icon="arrow-left" />
             <span class="span__element">Back</span>
         </nuxt-link>
-        <h4 class="flex-1 text-center heading__h4"> {{ edit ? 'Edit Campaign' : 'Create New template'}}  </h4>
-        <div class="hidden flex-col justify-end gap-3 sm:flex-row sm:gap-5">
+        <h4 class="flex-1 text-center heading__h4"> {{ edit ? 'Edit Campaign' : 'Create Campaign Template'}}  </h4>
+        <div class="flex flex-col justify-end gap-3 sm:flex-row sm:gap-5">
             <Button label="Save Draft" class="!bg-white text-black" />
             <Button v-if="edit" label="Send" class="!bg-[#0291BF] text-white" />
+            <Button v-if="!edit" label="Save" class="!bg-[#0291BF] text-white" @click="createTemplate" />
         </div>
     </div>
 </template>
 
 <script setup>
 defineProps({
-    edit : Boolean 
+    edit : Boolean,
+    createTemplate :  Function
 })
 </script>

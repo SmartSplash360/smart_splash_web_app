@@ -1,51 +1,29 @@
 <template>
-    <div
-        class="card   min-w-full min-h-full flex cursor-pointer justify-center"
-    >
+    <div class="min-w-full min-h-full flex cursor-pointer justify-center">
       <Card class="min-w-full  shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white">
         <template #header>
-          <div class="flex items-center justify-center pb-5 text-[#025E7C]">
+          <div class="flex items-center justify-center pb-5 text-[#025E7C] px-3 py-5">
             <img :src="template.cover" alt="template-icon">
           </div>
         </template>
         <template #title>
-          <div class="relative flex flex-col items-start">
+          <div class="flex justify-between items-start">
+            <div class="relative flex flex-col items-start">
             <div class="flex flex-col gap-4">            
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
-              <p class="paragraph__p" v-html="template.description"> </p>
+              <p class="paragraph__p text-gray-400" v-html="template.description"> </p>
             </div>
-
           </div>
+          <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
+            <font-awesome-icon icon="ellipsis-vertical" />
+          </Button>
+          <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
+          <Toast />
+        </div>
         </template>
         <template #content>
             <div class="flex justify-between">
               <Button :label="template.position" class="!bg-[#0291BF] text-white rounded-3xl text-xs font-[400]" v-if="template.status"/>
-              <div class="relative flex items-center justify-between self-end mt-10 ml-auto" >
-                <div class="card flex gap-2">
-                  <Button
-                      icon="pi pi-eye"
-                      text raised rounded
-                      @click="viewTemplate()"
-                  />
-                  <Button
-                      icon="pi pi-pencil"
-                      text raised rounded
-                      class="p-button-danger"
-                      @click="editTemplate(template)"
-                  />
-                  <Button
-                      icon="pi pi-trash"
-                      text raised rounded
-                      class="p-button-danger"
-                      @click="deleteTemplate(template.id)"
-                  />
-                  <!-- <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                    <font-awesome-icon icon="ellipsis-vertical" />
-                  </Button>
-                  <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-                  <Toast /> -->
-                </div>
-              </div>
             </div>
         </template>
       </Card>
@@ -98,20 +76,25 @@
     }
   }
   
-  // const menu = ref();
-  // const items = ref([
-  //         {
-  //             label: 'View Template',
-  //             icon: 'pi pi-eye',
-  //             command: () => viewTemplate()
-  //         },
-  //         {
-  //             label: 'Delete Template',
-  //             icon: 'pi pi-trash',
-  //             command: () => deleteTemplate(props.template.id)
-  //         }
-  // ]);
-// const toggle = (event) => {
-//     menu.value.toggle(event);
-// };
+  const menu = ref();
+  const items = ref([
+          {
+              label: 'View Template',
+              icon: 'pi pi-eye',
+              command: () => viewTemplate()
+          },
+          {
+              label: 'View Template',
+              icon: 'pi pi-pencil',
+              command: () => viewTemplate()
+          },
+          {
+              label: 'Delete Template',
+              icon: 'pi pi-trash',
+              command: () => deleteTemplate(props.template.id)
+          }
+  ]);
+  const toggle = (event) => {
+      menu.value.toggle(event);
+  };
   </script>

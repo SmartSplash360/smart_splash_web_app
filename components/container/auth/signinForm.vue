@@ -11,13 +11,6 @@
       <h2 class="heading__h2">Login</h2>
       <p>Please enter your details</p>
     </div>
-    <base-input
-        :placeHolder="'Email Address'"
-        :type="'email'"
-        :name="'email'"
-        :id="'email'"
-    ></base-input>
-
     <InputText type="text" placeholder="Email" v-model="email" name="email" class="w-full"/>
     <InputText type="password" placeholder="Password" v-model="password" name="password" class="w-full"/>
 
@@ -37,7 +30,7 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -79,5 +72,3 @@ async function login() {
 }
 
 </script>
-
-<style lang="scss" scoped></style>
