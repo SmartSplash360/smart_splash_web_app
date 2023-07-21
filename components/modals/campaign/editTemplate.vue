@@ -5,9 +5,9 @@
     >
     <form           
         @click.stop
-        class="flex min-w-full flex-col rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
+        class="flex min-w-full flex-col rounded-md bg-white p-6 lg:min-w-[950px] dark:bg-[#31353F]">
         <div 
-            class="flex flex-col gap-5 my-10">
+            class="flex flex-col gap-3 my-4">
             <h2 class="heading__h2 font-bold text-[#025E7C]">
             Edit Template {{ `#${template?.id}` }}
         </h2>
@@ -19,7 +19,7 @@
                     />
             </div>
         </div>
-        <div class="flex flex-col gap-5 my-10">
+        <div class="flex flex-col gap-5 my-4">
             <h4 class="heading__h4">Campaign cover</h4>
             <img :src="imageSrc" alt="Uploaded Image" v-if="imageSrc" class="w-48 h-48 rounded-full"/>
             <div class="card flex justify-content-center">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <BaseQuillEditor  @handleEditorChange="editorChange" :description="description"/>        
-        <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+        <div class="mt-5 flex justify-end gap-5">
           <Button
               label="Cancel"
               severity="secondary"

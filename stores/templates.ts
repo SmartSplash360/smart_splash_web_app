@@ -11,7 +11,7 @@ export const useTemplateStore = defineStore("template", {
     },
     state: () => ({
         templates: [],
-        searchQuery : '',
+        searchQuery : '',   
     }),
     getters: {
         getTemplates(state) {
@@ -23,6 +23,12 @@ export const useTemplateStore = defineStore("template", {
         filteredTemplates : (state) => () => {
             const search = state.searchQuery.toLocaleLowerCase();
             return state.templates.filter((template:any) => template.name.toLocaleLowerCase().includes(search));
+        },
+        getTemplateTypeEmail : (state) => {
+            return state.templates.filter((template:any) => template.template_type_id === 1);
+        },
+        getTemplateTypeSMS : (state)  => {
+            return state.templates.filter((template:any) => template.template_type_id === 2);
         },
         getTemplateCount(state){
             return state.templates.length

@@ -24,7 +24,7 @@ export const useCampaignStore = defineStore("camapign", {
     },
     actions: {
 
-        async createCampaign(campaignPayload: any) {
+        async createCampaignEmail(campaignPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
@@ -37,15 +37,5 @@ export const useCampaignStore = defineStore("camapign", {
                 throw error
             }
         },
-        // async getCampaigns(){
-        //     const jwt = useUserStore().getJwt;
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-        //     try {
-        //         const res = await axios.get('http://localhost:8000/api/v1/campaigns');
-        //         return res.data.data
-        //     } catch (error) {
-        //         throw error
-        //     }
-        // }
     }
 })

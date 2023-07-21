@@ -40,7 +40,7 @@ const props = defineProps({
           message : data.description,
           campaign_template_id : data.templateId
         }
-        await campaignStore.createCampaign(leadCampaign);
+        await campaignStore.createCampaignEmail(leadCampaign);
       }
       if(data.customer) {
         const customerCampaign = {
@@ -49,7 +49,7 @@ const props = defineProps({
           message : data.description,
           campaign_template_id : data.templateId
         }
-        await campaignStore.createCampaign(customerCampaign);
+        await campaignStore.createCampaignEmail(customerCampaign);
       }
       toast.add({ severity: 'info', summary: 'Success', detail: '', life: 3000 });
 
