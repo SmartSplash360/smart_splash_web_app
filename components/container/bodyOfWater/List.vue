@@ -22,10 +22,12 @@
         <div class="flex-1 md:hidden">
           <BaseSearchBar></BaseSearchBar>
         </div>
-        <BaseAddButton
-          :btnText="'View Bodies Of Water'"
+        <Button
+        icon="pi pi-map-marker"
+          label="View Bodies Of Water"
           @click="toggleAddBodyOfListModal"
-        ></BaseAddButton>
+          class=" rounded-xl bg-[#0291BF] text-white"
+        />
         <ModalsBodiesOfWaterBodyOfWaterListModal
           v-if="bodyOfWaterListModal"
           :toggleBodyOfWaterListModal="closeBodyOfWaterModal"
