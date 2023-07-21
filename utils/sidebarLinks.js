@@ -36,6 +36,11 @@ export const sideBarLinks = [
     to: "/reports",
   },
   {
+    icon: "bullhorn",
+    name: "Campaigns",
+    to: "/campaigns",
+  },
+  {
     icon: "map",
     name: "Map",
     to: "/map",

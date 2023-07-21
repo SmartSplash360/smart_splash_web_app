@@ -4,12 +4,12 @@
   </section>
   <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
     <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
-      <div class="flex items-center justify-between">
+      <div class="flex-between ">
         <BaseSearchBar :size="'lg'"></BaseSearchBar>
         <div class="text-white">
             <span
                 @click="showActiveRoute"
-                class="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center"
+                class="flex-center h-[30px] w-[30px] cursor-pointer"
             ><font-awesome-icon icon="bars" class="text-2xl"
             /></span>
         </div>

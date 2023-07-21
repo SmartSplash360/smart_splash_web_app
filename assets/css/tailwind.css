@@ -182,6 +182,9 @@ body {
   .span__element-light {
     @apply text-sm font-[400]
   }
+  .span__element-medium {
+    @apply text-sm font-medium leading-normal
+  }
   .span__element-bolder {
     @apply text-xl font-bold leading-7
   }
@@ -192,6 +195,13 @@ body {
 
   .nav-link-item {
     @apply text-sm font-medium leading-normal
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center
+  }
+  .flex-between {
+    @apply flex justify-between items-center
   }
 }
 

@@ -22,7 +22,7 @@
         :deleteItem="deleteItem"
       ></RegularTechnicianCard>
     </div>
-    <div class="flex items-center justify-center" v-else>
+    <div class="flex-center " v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
     <Toast/>

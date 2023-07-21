@@ -9,7 +9,7 @@
    <ContainerBodyOfWaterList :loading="loading" :customerId="customer.value?.id" :bodiesOfWater="customer?.bodies_of_water"></ContainerBodyOfWaterList>
    <Divider class="p-0 m-0"  />
     <div
-      class="sm:min-:w-[30rem] flex items-center justify-center self-center text-[#025E7C] sm:gap-20"
+      class="sm:min-:w-[30rem] flex-center  self-center text-[#025E7C] sm:gap-20"
     >
       <div class="card flex justify-center">
         <Dropdown

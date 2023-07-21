@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-table laptop+ card hidden sm:block" :class="[currentMode == 'dark' && 'dark-mode']">
+  <div class="customer-table laptop+ card hidden lg:block" :class="[currentMode == 'dark' && 'dark-mode']">
     <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -14,7 +14,7 @@
         :globalFilterFields="['name', 'id']"
     >
       <template #header>
-        <div class="flex items-center justify-between dark:border-0 mb-5 px-5">
+        <div class="flex-between dark:border-0 mb-5 px-5">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
@@ -92,57 +92,85 @@
             <Button
                 icon="pi pi-pencil"
                 text raised rounded
-                @click="editAlert(slotProps.data)"
+                @click="editItem(slotProps.data)"
             />
             <Button
                 icon="pi pi-trash"
                 text raised rounded
                 class="p-button-danger"
-                @click="deleteAlert(slotProps?.data?.id)"
+                @click="deleteItem(slotProps?.data?.id)"
             />
           </div>
         </template>
       </Column>
     </DataTable>
   </div>
-  <div class="mobile- flex flex-col gap-2 sm:hidden">
-    <div class="card border border-b-0 border-t-0">
-      <DataTable
-          v-model:filters="filters"
-          :value="customers"
-          paginator
-          :rows="10"
-          tableStyle="width : 100%; overflow : hidden"
-          :loading="loading"
-          :globalFilterFields="['customer', 'representative.name']"
-      >      
-        <template #header>
-          <div class="flex items-center justify-between dark:border-0 mb-5 px-2">
-            <div class="flex w-64 justify-start">
-              <span class="p-input-icon-right w-full">
-                <i class="pi pi-search"/>
-                <InputText
-                    v-model="filters['global'].value"
-                    placeholder=" Search"
-                    class="w-full dark:bg-[#1B2028] !rounded-xl"
-                />
-              </span>
+  <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] mx-5 -mt-8 rounded-t-xl border">
+      <div class="flex-between py-1 px-2">
+        <div class="px-2">
+          <span class="span__element">Sort By</span>
+        </div>
+        <BaseAddButton
+          @click="createCustomer"
+        ></BaseAddButton>
+      </div>
+      <div class="flex-between  py-5 px-5 border-t border-b">
+        <h5 class="heading__h5 flex-1">No</h5>
+        <h5 class="heading__h5 flex-1 flex justify-start">Name</h5>
+        <h5 class="heading__h5 flex-1 flex justify-start">Email address</h5>
+      </div>
+      <div v-if="customercount == 0" class="flex-center">
+        <h5 class="heading__h5">
+          There is no customer
+        </h5>
+      </div>
+      <Accordion v-else :activeIndex="0">
+          <AccordionTab v-for="customer in customerMobiles" :key="customer.id" >
+          <template #header>
+            <div class="flex-between w-full dark:text-white">
+              <div class="mr-5">
+                <span class=" flex-center text-white rounded-md span__element text-xs w-6 h-6 bg-[#025E7C]">{{ customer.id }}</span>
+              </div>
+              <span class="flex-1 paragraph__p">{{ customer.name }}</span>
+              <span class="flex-1 paragraph__p">{{ customer.email }}</span>
+              <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
+                <font-awesome-icon icon="ellipsis-vertical" />
+              </Button>
+              <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
+              <Toast />
             </div>
-            <div>
+          </template>
+          <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
+            <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
+              <span class="text-[#025E7C]  dark:text-white span__element flex-1">Physical Address</span>
+              <span class="text-xs flex-1 flex justify-start">{{customer.address_line1 }}</span>
+            </div>
+            <div class="flex-between px-4 py-2">
+              <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
+              <span class="text-xs flex-1 flex justify-start">{{customer?.phone_number}}</span>
+            </div>
+            <!-- <div class="self-end flex flex-row gap-2 py-1 px-2">
               <Button
-                  icon="pi pi-external-link"
-                  label="Export"
-                  @click="exportCSV($event)"
-                  severity="success"
+                  icon="pi pi-pencil"
+                  text raised rounded
+                  @click="editCustomer(customer)"
               />
-            </div>
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="deleteCustomer(customer?.id)"
+              />
+              <Button
+                  icon="pi pi-eye"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="viewCustomer(customer?.id)"
+              />
+            </div> -->
           </div>
-        </template>
-        <Column field="id" header="No" sortable></Column>
-        <Column field="name" header="Customer" sortable></Column>
-        <Column field="representative.name" header="Email"></Column>
-      </DataTable>
-    </div>
+          </AccordionTab>
+      </Accordion>
   </div>
 </template>
 
@@ -156,11 +184,9 @@ const store = useCustomerStore();
 
 const props = defineProps({
   editItem: Function,
-  deleteItem: Function
+  deleteItem: Function,
+  customerMobiles : Array
 });
-
-const currentMode = computed(() => localStorage.getItem('theme'))
-console.log(currentMode.value)
 
 
 const customers = ref([]);
@@ -169,27 +195,51 @@ const filters = ref({
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
   representative: {value: null, matchMode: FilterMatchMode.IN},
 });
-
 const loading = ref(false);
+const router = useRouter()
+
+const currentMode = computed(() => localStorage.getItem('theme'))
+const customercount = computed(() => props.customerMobiles.lenght)
 
 onMounted(() => {
   customers.value = store.getCustomers;
 });
 
+const createCustomer = () => router.push('/customers/create-customer');
+const viewCustomer = (id) => router.push(`/customers/${id}`);
+const editCustomer = (customer) => props.editItem(customer);
+const deleteCustomer = (id) =>  props.deleteItem(id);
 
+  
+const menu = ref();
+  const items = ref([
+          {
+              label: 'View Template',
+              icon: 'pi pi-eye',
+              command: () => viewTemplate()
+          },
+          {
+              label: 'Edit Template',
+              icon: 'pi pi-pencil',
+              command: () => editTemplate()
+          },
+          {
+              label: 'Delete Template',
+              icon: 'pi pi-trash',
+              command: () => {
+                deleteTemplate(props.template.id)
+                router.push('/campaigns')
+              }
+          }
+  ]);
+  const toggle = (event) => {
+      menu.value.toggle(event);
+  };
+  
 
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };
 
-const editAlert = (customer) => {
-  // console.log(customer)
-  props.editItem({ id: customer.id, item: { ...customer } })
-};
-
-const deleteAlert = async (id) => {
-  // console.log(id)
-  props.deleteItem({ id })
-};
 </script>

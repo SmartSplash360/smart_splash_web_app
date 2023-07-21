@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex max-h-[100vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
+    class="flex max-h-[110vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
   >
     <div class="hidden lg:block">
       <UiTheSidebar></UiTheSidebar>
@@ -16,12 +16,12 @@
         <slot></slot>
       </div>
     </div>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
   </main>
 </template>
 
 <script setup lang="ts">
-
-
 import {useUserStore} from "~/stores/users";
 
 type Theme = "light" | "dark";

@@ -4,7 +4,7 @@
   >
     <div class="flex gap-5 lg:w-1/5">
       <div
-        class="flex w-full flex-col items-center justify-between gap-5 lg:justify-start xl:flex-row"
+        class="flex-between w-full flex-col gap-5 lg:justify-start xl:flex-row"
       >
         <img
           :src="customerInfo.photo ?? ''"
@@ -57,16 +57,16 @@
       >
     </div>
     <div
-      class="lg:1/5 ml-auto flex w-full flex-row items-center justify-between md:flex-col md:justify-end md:gap-6 lg:flex-row xl:flex-1 xl:justify-between 2xl:pl-48"
+      class="lg:1/5 ml-auto flex-between w-full flex-row  md:flex-col md:justify-end md:gap-6 lg:flex-row xl:flex-1 xl:justify-between 2xl:pl-48"
     >
-      <div class="relative flex flex-col items-center justify-center">
+      <div class="relative flex-center flex-col">
         <img
           :src="BuildingIcon"
           alt="building-icon"
-          class="flex h-[45px] w-[45px] items-center justify-center"
+          class="flex-center h-[45px] w-[45px]"
         />
         <div
-          class="-mt-2 flex flex-col items-center justify-center gap-1 rounded-xl bg-white px-4 py-2"
+          class="-mt-2 flex-center flex-col gap-1 rounded-xl bg-white px-4 py-2"
         >
           <span class="min-w-max span__element text-[#025E7C]">Gate code</span>
           <span class="span__element dark:text-black">F5JKJGF</span>

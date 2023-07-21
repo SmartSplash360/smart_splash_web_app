@@ -1,6 +1,7 @@
 <template>
   <section>
-    <UiTheHeroSection></UiTheHeroSection>
+    <UiTheHeroSection>
+    </UiTheHeroSection>
   </section>
 </template>
 

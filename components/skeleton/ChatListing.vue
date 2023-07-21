@@ -7,7 +7,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -40,7 +40,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -73,7 +73,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -106,7 +106,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -139,7 +139,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -172,7 +172,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -205,7 +205,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -238,7 +238,7 @@
           class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
         >
           <div
-            class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+            class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
           >
             <svg
               class="h-4 w-4 text-gray-200"
@@ -274,7 +274,7 @@
         class="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
       >
         <div
-          class="flex h-10 w-12 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+          class="flex-center h-10 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
         >
           <svg
             class="h-4 w-4 text-gray-200"

@@ -32,6 +32,8 @@ export default defineNuxtConfig({
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
     "@vueup/vue-quill/dist/vue-quill.snow.css",
+    '@/assets/css/ckeditor-custom.css',
+    '@/assets/css/quil-custom.css',
   ],
   modules: [
     "@nuxtjs/tailwindcss",

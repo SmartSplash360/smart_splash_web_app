@@ -1,11 +1,17 @@
 <template>
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
-    <div v-else class="card flex flex-col gap-10">
-      <div class="hidden w-full justify-end gap-5 sm:flex">
+    <div v-else class="card flex flex-col gap-5 lg:gap-0">
+      <div class="w-full justify-end gap-5 flex">
         <BaseAddButton
-          :btnText="' Alert'"
+        class="hidden lg:flex"
+          :btnText="'Add Alert'"
           @click="toggleAddAlertModal"
+        ></BaseAddButton>
+        <BaseAddButton
+        class="lg:hidden"
+        :btnText="'Add Alert'"
+          @click="createAlert"
         ></BaseAddButton>
       </div>
       <CreateAlertModal
@@ -16,10 +22,10 @@
       <TabView v-model:activeIndex="active">
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">High</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">High</span>
               <span
-                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#D4382E] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#D4382E] bg-red-300 shadow-md"
                 >{{ highAlerts.length }}</span
               >
             </div>
@@ -28,10 +34,10 @@
         </TabPanel>
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">Medium</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">Medium</span>
               <span
-                class="flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#FFA500] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#FFA500] bg-[#FFEDCC] shadow-md"
                 >{{ mediumAlerts.length }}</span
               >
             </div>
@@ -40,10 +46,10 @@
         </TabPanel>
         <TabPanel>
           <template #header>
-            <div class="flex items-center justify-center gap-3">
-              <span class="span__element">Low</span>
+            <div class="flex-center gap-3">
+              <span class="span__element-medium">Low</span>
               <span
-                class="bg- flex h-[30px] w-[30px] items-center justify-center rounded-md text-[#02BF70] shadow-md"
+                class="flex-center h-[30px] w-[30px] rounded-md text-[#02BF70] bg-[#CCF2E2] shadow-md"
                 >{{ lowAlerts.length }}</span
               >
             </div>
@@ -67,6 +73,7 @@ defineProps({
   loading : Boolean
 })
 
+const router = useRouter()
 const toast = useToast();
 const confirm = useConfirm();
 const alertStore = useAlertStore();
@@ -77,7 +84,7 @@ const alert = ref()
 
 const active = ref(0);
 
-
+const createAlert = () => router.push('alerts/create-alert')
 const toggleAddAlertModal = () => (addAlertModal.value = true);
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false

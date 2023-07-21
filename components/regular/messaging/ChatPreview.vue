@@ -27,7 +27,7 @@
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover "
         />
         <div class="flex flex-col gap-2 px-5">
-          <div class="flex w-full items-center justify-between">
+          <div class="flex-between w-full">
             <h4 class="heading__h4">
               {{ chat.name }}
             </h4>
@@ -57,7 +57,7 @@
           class="ml-5 h-[45px] w-[45px] rounded-full object-cover xl:h-[65px] xl:w-[65px]"
         />
         <div    class="flex flex-col gap-2 px-2">
-          <div class="flex w-full items-center justify-between">
+          <div class="flex-between w-full">
             <h4 class="heading__h4">
               {{ chat.name }}
             </h4>

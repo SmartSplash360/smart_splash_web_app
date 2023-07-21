@@ -1,8 +1,7 @@
 <template>
   <div
-    @click="toggleAddBodyOfWaterModal({ show: false })"
-    class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
-  >
+      @click="toggleAddBodyOfWaterModal({ show: false })"
+      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]">
     <form
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"

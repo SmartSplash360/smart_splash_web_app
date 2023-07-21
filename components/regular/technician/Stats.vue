@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col border dark:border-gray-600">
-    <div class="flex items-center justify-between border-b dark:border-b-gray-600 px-5 py-4">
+    <div class="flex-between border-b dark:border-b-gray-600 px-5 py-4">
       <h3 class="heading__h3">Stats</h3>
       <div class="card justify-content-center flex">
         <Dropdown
