@@ -6130,7 +6130,6 @@
     color: inherit;
 }
 
-
 .dark-mode .customer-table .p-datatable .p-datatable-tbody > tr > td {
     border: 1px solid #4B5566;
     border-width: 0 0 1px 0;
@@ -6240,4 +6239,46 @@
 
 .alert-table .p-datatable .p-datatable-tbody .p-datatable-emptymessage > tr:hover {
     background-color: red;
+}
+
+.alert-accordion .p-accordion .p-accordion-content {
+    padding: 0;
+    border: 0;
+    background: inherit;
+    color: #404245;
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.alert-accordion .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    display: none;
+}
+.alert-accordion .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 1.25rem;
+    border: 0;
+    color: #646c73;
+    background: inherit;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+    border-color: inherit;
+    background: inherit;
+    color: #343a40;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+    background: inherit;
+    border-color: #dee2e6;
+    color: #343a40;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+    border-color: #dee2e6;
+    background: #e9ecef;
+    color: #343a40;
 }

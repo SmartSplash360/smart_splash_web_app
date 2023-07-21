@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonCustomer></SkeletonCustomer>
   </section>
-  <section v-else class="-mx-5 lg:mx-0 flex flex-col gap-10">
+  <section v-else class="-mx-5 lg:mx-0 flex flex-col lg:gap-10">
     <div class="hidden flex-wrap lg:flex-between xl:gap-10">
       <ul class="hidden lg:flex-between w-full gap-4 xl:w-3/4">
         <RegularCustomerActivityCard
@@ -10,24 +10,28 @@
           :routes="routes"
         ></RegularCustomerActivityCard>
       </ul>
+      <div class="flex-1 flex justify-end">
+        <BaseAddButton
+          :btnText="'Add Customer'"
+          @click="toggleAddCustomerModal"
+        ></BaseAddButton>
+      </div>
       <ModalsCustomerCreateCustomerModal
         v-if="addCustomerModal"
         :toggleAddCustomerModal="closeModal"
         :customer="customer"
       ></ModalsCustomerCreateCustomerModal>
-      <div class="flex justify-end">
-        <BaseAddButton
-          :btnText="'Customer'"
-          @click="toggleAddCustomerModal"
-        ></BaseAddButton>
-      </div>
     </div>
-    <div class="flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
-        <div class="flex items-center justify-end">
+    <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
+        <div class="flex-between gap-6">
+            <div class="flex-1">
+              <BaseSearchBar class="w-full" 
+               @handleSearch="value => handleSearch(value)"/>
+            </div>
             <span
               @click="showActiveRoute"
               class="flex-center h-[30px] w-[30px] cursor-pointer text-white "
-              ><font-awesome-icon icon="bars" class="text-2xl"
+              ><font-awesome-icon icon="bars" class="text-2xl" :class="[toggleActiveRoute && 'rotate-90']"
             /></span>
         </div>
         <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
@@ -37,18 +41,11 @@
           </RegularCustomerActivityCard>
         </div>
     </div>
-    <div class="flex justify-end px-5 lg:hidden">
-      <BaseAddButton
-        :btnText="'Customer'"
-        @click="toggleAddCustomerModal"
-      ></BaseAddButton>
-    </div>
     <RegularCustomerTable
       :editItem="editItem"
       :deleteItem="deleteItem"
+      :customerMobiles="customerMobiles"
     ></RegularCustomerTable>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
@@ -66,7 +63,7 @@ const customerStore = useCustomerStore();
 
 const addCustomerModal = ref(false);
 const customer = ref()
-
+const customerMobiles = ref()
 const routes = reactive({
   activeRoute: 131,
   activeNoRoute: 41,
@@ -74,7 +71,15 @@ const routes = reactive({
   leads: 0,
 });
 
-const toggleActiveRoute = ref(true);
+const toggleActiveRoute = ref(false);
+
+customerMobiles.value = customerStore.getCustomers;
+
+const handleSearch = (value) => {
+    customerStore.searchQuery = value
+    customerMobiles.value = customerStore.filterCustomers(value);
+    console.log(value)
+}
 
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value
