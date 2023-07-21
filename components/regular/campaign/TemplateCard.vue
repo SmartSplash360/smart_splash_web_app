@@ -66,36 +66,34 @@
       accept: async () => {
         // delete item
         const res = await store.deleteTemplate(id);
-        router.push('/campaigns');
         toast.add({ severity: 'info', summary: 'Delete Template', detail: res?.message , life: 3000 });
+        window.location.href = 'http://localhost:3000/campaigns';
       },
       reject: () => {}
     })
     } catch (error) {
-      console.log('Something Occurent')
+      toast.add({ severity: 'error', summary: 'Error', detail: 'Error Occured', life: 3000 });
+
     }
   }
   
   const menu = ref();
   const items = ref([
-          {
-              label: 'View Template',
-              icon: 'pi pi-eye',
-              command: () => viewTemplate()
-          },
-          {
-              label: 'Edit Template',
-              icon: 'pi pi-pencil',
-              command: () => editTemplate()
-          },
-          {
-              label: 'Delete Template',
-              icon: 'pi pi-trash',
-              command: () => {
-                deleteTemplate(props.template.id)
-                router.push('/campaigns')
-              }
-          }
+        {
+            label: 'View Template',
+            icon: 'pi pi-eye',
+            command: () => viewTemplate()
+        },
+        {
+            label: 'Edit Template',
+            icon: 'pi pi-pencil',
+            command: () => editTemplate()
+        },
+        {
+            label: 'Delete Template',
+            icon: 'pi pi-trash',
+            command: () =>  deleteTemplate(props.template.id)
+        }
   ]);
   const toggle = (event) => {
       menu.value.toggle(event);

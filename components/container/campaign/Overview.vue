@@ -3,7 +3,7 @@
     <SkeletonCardListing></SkeletonCardListing>
   </section>
   <section v-else class="-mx-5 -my-6 lg:-mx-10 lg:-my-12 sm:gap-13 flex flex-col gap-8 bg-[#f5fbfc] dark:bg-inherit min-h-screen">
-    <RegularCampaignEditTemplateControl :template="template" :edit="edit"></RegularCampaignEditTemplateControl>
+    <RegularCampaignEditTemplateControl :edit="edit"></RegularCampaignEditTemplateControl>
     <RegularCampaignEditTemplate  :campaignId="campaignId" :edit="edit" :createCampaign="createCampaign"></RegularCampaignEditTemplate>
   </section>
 </template>
@@ -19,43 +19,66 @@ const props = defineProps({
   edit : Boolean
 })
   
-  const templateStore = useTemplateStore()
-  const campaignStore = useCampaignStore()
-  const loading = ref(false);
-  const template = ref()
+const templateStore = useTemplateStore()
+const campaignStore = useCampaignStore()
+const loading = ref(false);
+const template = ref()
 
-  onMounted(async () => {
-    if(props.campaignId){
-      template.value = await templateStore.fetchTemplate(props.campaignId);
-    }
-  })
+onMounted(async () => {
+  if(props.campaignId){
+    template.value = await templateStore.fetchTemplate(props.campaignId);
+  }
+})
 
-  const createCampaign = async (data) => {
-    try {
-      // check if lead 
+const createCampaign = async (data) => {
+  try {
+    // check campaign type
+    if(data.templateType === 1){
+        // check if lead 
       if(data.lead){
-        const leadCampaign = {
+        await campaignStore.createCampaignEmail({
           title : data.name,
           role_id : 3 ,
           message : data.description,
           campaign_template_id : data.templateId
-        }
-        await campaignStore.createCampaignEmail(leadCampaign);
+        });
+        toast.add({ severity: 'info', summary: 'Success', detail: 'Email Campaign sent successfully to all Leads', life: 3000 });
       }
       if(data.customer) {
-        const customerCampaign = {
+        await campaignStore.createCampaignEmail({
           title : data.name,
           role_id : 3 ,
           message : data.description,
           campaign_template_id : data.templateId
-        }
-        await campaignStore.createCampaignEmail(customerCampaign);
+        });
+        toast.add({ severity: 'info', summary: 'Success', detail: 'Email Campaign sent successfully to all Customers', life: 3000 });
       }
-      toast.add({ severity: 'info', summary: 'Success', detail: '', life: 3000 });
+    } else if(data.templateType === 2){
+        // check if lead 
+        if(data.lead){
+          await campaignStore.createCampaignSMS({
+            title : data.name,
+            role_id : 3 ,
+            message : data.description,
+            campaign_template_id : data.templateId
+          });
+          toast.add({ severity: 'info', summary: 'Success', detail: 'SMS Campaign sent successfully to all Leads', life: 3000 });
+        }
+        if(data.customer) {
+          await campaignStore.createCampaignSMS({
+            title : data.name,
+            role_id : 3 ,
+            message : data.description,
+            campaign_template_id : data.templateId
+          });
+          toast.add({ severity: 'info', summary: 'Success', detail: 'SMS Campaign sent successfully to all Customers', life: 3000 });
 
-    } catch (error) {
-      toast.add({ severity: 'danger', summary: 'Error', detail: '', life: 3000 });
+        }
     }
+
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'An Error occured', life: 3000 });
   }
+}
 </script>
 

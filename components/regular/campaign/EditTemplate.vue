@@ -14,13 +14,16 @@
             </div>
         </div>
         <div v-if="!edit" class="lg:self-end flex gap-5 items-start">
-            <div class="card flex justify-content-center">
-                <InputText 
-                    v-model="campaignType"
-                    placeholder="Campaign Type"
-                    class="dark:bg-[#1B2028] !outline-none w-full min-w-full"
-                    required 
-                    />
+            <div class="card flex w-full justify-center sm:w-fit b">
+                <Dropdown
+                @change="selectType(templateType)"
+                v-model="templateType"
+                :options="types"
+                optionLabel="state"
+                placeholder="Campaign Type"
+                class="w-full md:w-52 dark:bg-[#1B2028]"
+                required
+                />
             </div>
         </div>
         <div class="flex flex-col gap-5 my-5">
@@ -44,18 +47,18 @@
                     </template>
                 </FileUpload>
             </div>
-            <!-- <div class="card flex justify-content-center">
-                <input type="file" ref="imageInput" @change="handleUpload" accept="image/*" id="image" required>
-            </div> -->
         </div>
             <div>
                 <BaseQuillEditor  @handleEditorChange="editorChange" :description="description"/>
             </div>  
         </div>
-        <div class="flex justify-end gap-5">        
+        <div class="flex justify-end gap-5">      
             <Button label="Cancel"  @click="cancel" class="!bg-white text-black"/>
-            <!-- <Button v-if="!edit" label="Save" class="hidden !bg-[#0291BF] text-white" @click="createTemplate"/>
-            <Button v-if="edit" label="Send data" class="hidden !bg-[#0291BF] text-white" @click="createCampaign({name,description,templateId,lead,customer})"/> -->
+            <Button v-if="!edit" label="Save" class="hidden !bg-[#0291BF] text-white" @click="createTemplate"/>
+            <Button v-if="edit" 
+                :label="templateType === 1 ? 'Send Email Campagin' : 'Send SMS Campaign'" 
+                class="hidden !bg-[#0291BF] text-white" 
+                @click="createCampaign({name,description,templateId,templateType,lead,customer})"/>
         </div>
     </form>
 </template>
@@ -74,18 +77,19 @@
     const confirm = useConfirm();
     const toast = useToast();
 
-
     const lead = ref(null)
     const customer = ref(null)
-
     const name = ref();
     const description = ref();
     const selectedFile = ref(null);
     const imageSrc = ref('');
-    const campaignType = ref('')
     const templateId = ref();
+    const templateType = ref();
+    const types = ref([
+        { state : 'Email Campaign', option : 1},
+        {state : 'SMS Campaign', option : 2}
+    ])
 
-    const router = useRouter();
     const store = useTemplateStore();
 
     onMounted(async () => {
@@ -94,11 +98,14 @@
             templateId.value = template.id
             name.value = template.name
             description.value = template.description
-
-            console.log(template.description)
+            templateType.value = template.template_type_id
         }
     })
 
+    const editorChange = (value) => description.value = value;
+    const selectType = (value) => {
+        templateType.value = value.option;
+    }
     const handleUpload = (event) => {
         selectedFile.value = event.files[0];
         const reader = new FileReader();
@@ -107,47 +114,39 @@
         };
         reader.readAsDataURL(selectedFile.value);
     };
-
-    // const handleClear = () => {
-    //   selectedFile.value = null;
-    // };
-
-    const editorChange = (value) => description.value = value;
-
+    const cancel = () => {
+        try {
+            confirm.require({
+                message: 'Are you sure you want to cancel?',
+                header: 'Cancel Template',
+                icon: 'pi pi-exclamation-triangle',
+                accept: async () => {
+                    // delete item
+                    window.location.href = 'http://localhost:3000/campaigns';
+                },
+                reject: () => {}
+            })
+        } catch (error) {            
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Error Occured', life: 3000 });
+        }
+    }
     const createTemplate = async() => {
         try {
             const formData = new FormData();
             formData.append('name', name.value);
             formData.append('description', description.value);
             formData.append('cover', selectedFile.value);
-            
-            for (const [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`)
-                }
+            formData.append('template_type_id', templateType.value);
+
             await store.createTemplate(formData);
-            toast.add({ severity: 'info', summary: 'Success', detail: 'Template Created', life: 3000 });
-            router.push('/campaigns')
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Template Created', life: 3000 });
+            setTimeout(() => {
+                window.location.href = 'http://localhost:3000/campaigns';
+            },5000)
 
         } catch (error) {
-            console.log(error)
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Error Occured', life: 3000 });
         }
-    }
-
-    const cancel = () => {
-        try {
-      confirm.require({
-        message: 'Are you sure you want to cancel?',
-        header: 'Cancel Template',
-        icon: 'pi pi-exclamation-triangle',
-        accept: async () => {
-            // delete item
-            router.push('/campaigns');
-        },
-        reject: () => {}
-    })
-    } catch (error) {
-      console.log('Something Occurent')
-    }
     }
     
 </script>

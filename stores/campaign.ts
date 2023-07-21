@@ -37,5 +37,19 @@ export const useCampaignStore = defineStore("camapign", {
                 throw error
             }
         },
+        async createCampaignSMS(campaignPayload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                console.log("first called")
+                const res = await axios.post(`http://localhost:8000/api/v1/campaigns/sms`, campaignPayload);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                throw error
+            }
+        },
     }
 })
