@@ -129,14 +129,11 @@ import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useCustomerStore } from "~/stores/customer";
 import SvgMarker from "~/components/base/SvgMarker";
 import { useGeolocation } from "@/utils/useGeolocation";
-import { pl } from "date-fns/locale";
 
 const config = useRuntimeConfig();
 
 const loader = new Loader({
   apiKey: config.public.googleMapsApiKey,
-  // version: "weekly",
-  libraries: ["places"],
 });
 
 const store = useBodyOfWaterStore();
@@ -160,9 +157,9 @@ const props = defineProps({
 const types = ref(["Pool", "Spa", "Pond"]);
 
 const name = ref("");
-const type = ref("");
-const size = ref("");
-const condition = ref("");
+const type = ref("Pool");
+const size = ref("Large");
+const condition = ref("Normal");
 const googlePlaceId = ref("");
 const address = ref("");
 const lng = ref("");
@@ -265,7 +262,7 @@ onMounted(async () => {
     {
       types: ["geocode"],
       componentRestrictions: { country: "ZA" },
-      fields: ["geometry", "place_id", "name"],
+      fields: ["geometry", "place_id", "name", "address_components"],
       bounds: defaultBounds,
     }
   );
@@ -275,6 +272,8 @@ onMounted(async () => {
     let place = autocomplete.value.getPlace();
     // update form field
     console.log(place);
+
+    address.value = document.getElementById("autocomplete").value;
     name.value = name.value == "" ? place.name : name.value;
     lat.value = place.geometry.location.lat();
     lng.value = place.geometry.location.lng();
@@ -323,8 +322,6 @@ onMounted(async () => {
             address.value = results[0].formatted_address;
             googlePlaceId.value = results[0].place_id;
 
-            // console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-
             bodyOfWaterPin.value = {
               lng: results[0].geometry.location.lng(),
               lat: results[0].geometry.location.lat(),
@@ -345,8 +342,6 @@ onMounted(async () => {
           }
         }
       );
-
-      // searchGooglePlaces();
     }
   );
 });
@@ -360,18 +355,21 @@ const createBodyOfWater = async () => {
   // TODO: add validation
 
   try {
-    console.log(props.customerId)
-    await store.createBodyOfWater({
+    const payload = {
       name: name.value,
       type: type.value,
-      size: size.value,
-      condition: condition.value,
+      size: size.value ?? "Large",
+      condition: condition.value ?? "Good",
       google_place_id: googlePlaceId.value,
       address: address.value,
       lng: lng.value,
       lat: lat.value,
       customer_id: props.customerId,
-    });
+    }
+
+
+    await store.createBodyOfWater(payload);
+
     await store.fetchBodiesOfWaters();
 
     props.toggleAddBodyOfWaterModal({
@@ -387,8 +385,8 @@ const updateBodyOfWater = async () => {
     const data = {
       name: name.value,
       type: type.value,
-      size: size.value,
-      condition: condition.value,
+      size: size.value ?? "Large",
+      condition: condition.value ?? "Good",
       google_place_id: googlePlaceId.value,
       address: address.value,
       lng: lng.value,

@@ -6,7 +6,7 @@
  <section v-else class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
    <p class="text-2xl">Bodies of Water</p>
-   <ContainerBodyOfWaterList :loading="loading" :customerId="customer.value?.id" :bodiesOfWater="customer?.bodies_of_water"></ContainerBodyOfWaterList>
+   <ContainerBodyOfWaterList :loading="loading" :customerId="customer?.id" :bodiesOfWater="customer?.bodies_of_water"></ContainerBodyOfWaterList>
    <Divider class="p-0 m-0"  />
     <div
       class="sm:min-:w-[30rem] flex-center  self-center text-[#025E7C] sm:gap-20"
@@ -94,10 +94,7 @@ const store = useCustomerStore();
 const jobStore = useJobStore();
 
 const props = defineProps({
-  customerId: {
-    type: String,
-    required: true,
-  },
+  customerId: String,
 });
 
 const loading = ref(false)
