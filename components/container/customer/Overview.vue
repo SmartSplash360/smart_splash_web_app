@@ -6,7 +6,7 @@
  <section v-else class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
     <div
-      class="sm:min-:w-[30rem] flex items-center justify-center self-center text-[#025E7C] sm:gap-20"
+      class="sm:min-:w-[30rem] flex-center  self-center text-[#025E7C] sm:gap-20"
     >
       <div class="card flex justify-center">
         <Dropdown

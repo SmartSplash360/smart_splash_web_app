@@ -9,7 +9,7 @@
     --text-color-secondary: #646c73;
     --primary-color: #0291c2;
     --primary-color-text: #ffffff;
-    --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    --font-family: "Poppins", sans-serif;
     --surface-0: #ffffff;
     --surface-50: #fafafa;
     --surface-100: #f5f5f5;
@@ -51,7 +51,7 @@
     box-sizing: border-box;
 }
 .p-component {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
     font-size: 1rem;
     font-weight: normal;
 }
@@ -78,7 +78,7 @@
 }
 .p-link {
     font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
     border-radius: 8px;
 }
 .p-link:focus {
@@ -253,7 +253,7 @@
     padding: 0.375rem 0;
 }
 .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-input-token input {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
     font-size: 1rem;
     color: #404245;
     padding: 0;
@@ -702,7 +702,7 @@
     padding: 0.375rem 0;
 }
 .p-chips .p-chips-multiple-container .p-chips-input-token input {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
     font-size: 1rem;
     color: #404245;
     padding: 0;
@@ -1051,7 +1051,7 @@
     border-color: #d4382e;
 }
 .p-inputtext {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
     font-size: 1rem;
     color: inherit;
     background: #fff;
@@ -1659,11 +1659,11 @@
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 8px;
 }
-.p-button:enabled:hover {
+/* .p-button:enabled:hover {
     background: #0291c2;
     color: #fff;
     border-color: #0291c2;
-}
+} */
 .p-button:enabled:active {
     background: #036282;
     color: #fff;
@@ -2677,14 +2677,14 @@
     background: #eef2ff;
     margin-left: 0.5rem;
 }
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
+/* .p-datatable .p-sortable-column:not(.p-highlight):hover {
     background: #e9ecef;
     color: #343a40;
 }
 .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
     color: #343a40;
-}
-.p-datatable .p-sortable-column.p-highlight {
+} */
+/* .p-datatable .p-sortable-column.p-highlight {
     background: #eef2ff;
     color: #11799c;
 }
@@ -2697,7 +2697,7 @@
 }
 .p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
     color: #11799c;
-}
+} */
 .p-datatable .p-sortable-column:focus {
     box-shadow: inset 0 0 0 0.15rem #b8deea;
     outline: 0 none;
@@ -5955,10 +5955,10 @@
 }
 .p-terminal .p-terminal-input {
     font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Poppins", sans-serif;
 }
 .p-button-label {
-    font-weight: 700;
+    font-weight: 400;
 }
 .p-accordion .p-accordion-header .p-accordion-header-link {
     transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
@@ -6130,7 +6130,6 @@
     color: inherit;
 }
 
-
 .dark-mode .customer-table .p-datatable .p-datatable-tbody > tr > td {
     border: 1px solid #4B5566;
     border-width: 0 0 1px 0;
@@ -6232,8 +6231,54 @@
     color: #FFF;
 }
 .alert-table .p-datatable .p-datatable-tbody > tr:hover {
-    background: #025E7C;
+    background: #C6C6C6;
     color: #FFF;
     transition: box-shadow 0.2s;
     cursor: pointer;
+}
+
+.alert-table .p-datatable .p-datatable-tbody .p-datatable-emptymessage > tr:hover {
+    background-color: red;
+}
+
+.alert-accordion .p-accordion .p-accordion-content {
+    padding: 0;
+    border: 0;
+    background: inherit;
+    color: #404245;
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.alert-accordion .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    display: none;
+}
+.alert-accordion .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 1.25rem;
+    border: 0;
+    color: #646c73;
+    background: inherit;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+    border-color: inherit;
+    background: inherit;
+    color: #343a40;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+    background: inherit;
+    border-color: #dee2e6;
+    color: #343a40;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.alert-accordion .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+    border-color: #dee2e6;
+    background: #e9ecef;
+    color: #343a40;
 }

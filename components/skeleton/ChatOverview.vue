@@ -5,7 +5,7 @@
           >
             <div class="flex  items-center gap-5">
                 <div
-                class="flex h-14 w-16 items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+                class="flex-center h-14 w-16 rounded-full bg-gray-300 dark:bg-gray-700"
                 >
                 <svg
                     class="h-4 w-4 text-gray-200"

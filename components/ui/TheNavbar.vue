@@ -1,14 +1,14 @@
 <template>
   <div
-      class="hidden min-h-[80px] w-full items-center justify-between px-10 shadow-md lg:flex"
+      class="hidden min-h-[80px] w-full px-10 shadow-md lg:flex-between"
   >
-    <div class="min-w-2/5 flex items-center justify-between gap-3">
+    <div class="min-w-2/5 flex-between gap-3">
       <font-awesome-icon :icon="pageIcon"/>
       <h1 class="heading__h3" >{{ pageName }}</h1>
     </div>
-    <div class="ml-auto flex items-center justify-between">
-      <BaseSearchBar :size="'lg'"></BaseSearchBar>
-      <div class="min-w-[300px] flex items-center justify-between ml-14">
+    <div class="ml-auto flex-between">
+      <!-- <BaseSearchBar :size="'lg'"></BaseSearchBar> -->
+      <div class="min-w-[300px] flex-between ml-14">
         <button
           v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
           @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
@@ -38,7 +38,7 @@
             />
           </svg>
         </button>
-        <span class="inline-flex items-center justify-center cursor-pointer">
+        <span class="flex-center cursor-pointer">
           <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl"/>
         </span>
         <span class="span__element font-light">{{ user?.name }} {{ user?.surname || '' }}</span>
@@ -53,7 +53,7 @@
             />
           </div>
           <div class="card flex justify-content-center">          
-            <span class="inline-flex items-center justify-center cursor-pointer">
+            <span class="flex-center cursor-pointer">
               <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"/>
             </span>
             <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
@@ -67,7 +67,7 @@
   <div
       class="sticky min-h-[70px] w-full items-center justify-between px-5 sm:shadow-md lg:hidden"
   >
-    <div class="flex items-center justify-between">
+    <div class="flex-between">
       <div class="h-[60px] max-h-[60px] bg-red-400">
         <img
             :src="SmartPlashLogo"
@@ -75,7 +75,7 @@
             class="h-full w-full"
         />
       </div>
-      <div class="flex items-center justify-between gap-4">
+      <div class="flex-between gap-4">
         <button
           v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
           @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
@@ -105,7 +105,7 @@
             />
           </svg>
         </button>
-        <span class="inline-flex items-center justify-center"
+        <span class="flex-center"
         ><font-awesome-icon :icon="['far', 'bell']" class="text-xl"
         /></span>
         <div class="flex items-center gap-2">
@@ -117,7 +117,7 @@
           />
           <span
               @click="toggleSideBar"
-              class="inline-flex h-[30px] w-[30px] items-center justify-center"
+              class="flex-center h-[30px] w-[30px]"
           ><font-awesome-icon icon="bars" class="cursor-pointer text-2xl"
           /></span>
         </div>
@@ -132,7 +132,7 @@
               :class="[link.name ? 'bg-white text-black' : '']"
           >
             <span
-                class="inline-flex h-[16px] w-[16px] items-center justify-center span__element"
+                class="flex-center h-[16px] w-[16px] span__element"
             ><font-awesome-icon :icon="link?.icon"
             /></span>
             <span class="span__element">{{ link.name }}</span>

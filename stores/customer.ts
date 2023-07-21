@@ -11,6 +11,7 @@ export const useCustomerStore = defineStore("customer", {
     },
     state: () => ({
         customers: [],
+        searchQuery : '',
     }),
     getters: {
         getCustomers(state) {
@@ -18,7 +19,14 @@ export const useCustomerStore = defineStore("customer", {
         },
         getCustomerById: (state) => (id: number | string) => {
             return state.customers.find((customer: Customer) => customer.id === id);
-        }
+        },
+        filterCustomers : (state) => () => {
+            const search = state.searchQuery.toLocaleLowerCase();
+            return state.customers.filter((template:any) => template.name.toLocaleLowerCase().includes(search));
+        },
+        // sortCustomers : (state) => () => {
+        //     return state.customers.sort((customerA : Customer , customerB:Customer) => customerA.id - customerB.id) 
+        // },
     },
     actions: {
         async fetchCustomers() {

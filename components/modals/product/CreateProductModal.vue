@@ -1,7 +1,7 @@
 <template>
   <div
       @click="toggleAddProductModal( { show: false })"
-      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
+      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
   >
       <form
       @click.stop

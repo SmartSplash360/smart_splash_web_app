@@ -23,7 +23,6 @@ export const useProductStore = defineStore("product", {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 const res = await axios.get("http://localhost:8000/api/v1/products");
-                console.log(res.data.data.data)
                 this.products = res.data.data.data
             } catch (error) {
                 console.log(error);

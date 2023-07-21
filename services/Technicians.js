@@ -1,4 +1,4 @@
-export const TechniciansList = {
+export default  TechniciansList = {
   getData() {
     return [
       {
@@ -385,7 +385,7 @@ export const TechniciansList = {
   },
 
   getTechniciansMedium() {
-    return Promise.resolve(this.getData().slice(0, 50));
+    return Promise.resolve(this.getData().slice(0, 20));
   },
 
   getTechniciansLarge() {

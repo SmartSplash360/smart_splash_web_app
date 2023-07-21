@@ -3,7 +3,7 @@
   v-if="selectedChat"
     class="hidden h-full w-full flex-1 flex-col gap-20 px-8 py-5 pb-5 sm:flex"
   >
-    <div class="flex items-center justify-between gap-3">
+    <div class="flex-between gap-3">
         <img
           :src="selectedChat.image"
           class="mr-5 h-[55px] w-[55px] rounded-full object-cover xl:h-[75px] xl:w-[75px]"

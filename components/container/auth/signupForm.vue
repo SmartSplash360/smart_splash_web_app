@@ -28,7 +28,7 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -63,5 +63,3 @@ async function registerUser() {
   await router.push('/customers');
 }
 </script>
-
-<style lang="scss" scoped></style>

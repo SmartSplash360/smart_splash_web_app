@@ -16,7 +16,7 @@ export const sideBarLinks = [
   },
   {
     icon: "user-group",
-    name: "BodiesOfWater",
+    name: "Bodies of Water",
     to: "/bodiesOfWater",
   },
   {
@@ -39,6 +39,11 @@ export const sideBarLinks = [
     icon: "file-lines",
     name: "Reports",
     to: "/reports",
+  },
+  {
+    icon: "bullhorn",
+    name: "Campaigns",
+    to: "/campaigns",
   },
   {
     icon: "map",
