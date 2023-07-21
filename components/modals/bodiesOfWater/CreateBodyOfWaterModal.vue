@@ -391,6 +391,7 @@ const updateBodyOfWater = async () => {
       address: address.value,
       lng: lng.value,
       lat: lat.value,
+      customer_id: props.customerId,
     };
 
     await store.updateBodyOfWater(props.bodyOfWater?.id, data);
