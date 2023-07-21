@@ -8,14 +8,13 @@ export function useGeolocation() {
     let watcher = null
 
     onMounted(() => {
-        console.log('useGeolocation')
-        console.log(isSupported)
+        // console.log('useGeolocation')
+        // console.log(isSupported)
         if (isSupported) {
 
             navigator.geolocation.getCurrentPosition(
                 (position) => { 
                     coords.value = position.coords
-                    console.log(coords.value)
                 }
             )
 

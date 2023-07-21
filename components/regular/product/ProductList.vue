@@ -111,8 +111,8 @@
         </Column>
       </DataTable>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </div>
 </template>
 

@@ -58,8 +58,8 @@
         </TabPanel>
       </TabView>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 

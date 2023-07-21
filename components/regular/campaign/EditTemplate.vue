@@ -40,7 +40,7 @@
             <h4 class="heading__h4">Upload cover</h4>
             <img :src="imageSrc" alt="Uploaded Image" v-if="imageSrc" class="w-48 h-48 rounded-full"/>
             <div class="card">
-                <Toast />
+                <!-- <Toast /> -->
                 <FileUpload name="basic" @upload="handleUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000">
                     <template #empty>
                         <p>Drag and drop files to here to upload.</p>

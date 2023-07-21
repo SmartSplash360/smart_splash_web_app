@@ -57,7 +57,7 @@
               <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"/>
             </span>
             <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-            <Toast />
+            <!-- <Toast /> -->
             <ContextMenu ref="menu" :model="items" />
         </div>
         </div>

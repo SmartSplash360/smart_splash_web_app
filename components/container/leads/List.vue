@@ -32,7 +32,7 @@
         <BaseAddButton :btnText="'Lead'" @click="toggleEditLeadModal"></BaseAddButton>
       </div>
     </div>
-    <Toast />
+    <!-- <Toast /> -->
     <ConfirmDialog></ConfirmDialog>
     <ModalsLeadEditLeadModal v-if="editLeadModal" :toggleEditLeadModal="closeModal" :lead="lead">
     </ModalsLeadEditLeadModal>
@@ -60,8 +60,8 @@
       <RegularLeadTable :callLead="callLead" :editItem="editItem" :deleteItem="deleteItem"
         :convertToCustomer="convertToCustomer"></RegularLeadTable>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
     <ModalsLeadEditLeadModal v-if="editLeadModal" :toggleEditLeadModal="closeModal" :lead="lead">
     </ModalsLeadEditLeadModal>
     <ModalsCommunicationVoiceCallModal v-if="voiceCallModal" :toggleCallModal="closeVoiceCallModal" :lead="lead">
