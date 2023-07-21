@@ -1,7 +1,8 @@
 <template>
   <div
-      @click="toggleAddBodyOfWaterModal({ show: false })"
-      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]">
+    @click="toggleAddBodyOfWaterModal({ show: false })"
+    class="flex-center fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-[#000000da]"
+  >
     <form
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"
@@ -56,15 +57,18 @@
       </div>
 
       <div class="flex w-full">
-        <GoogleMap
+        <!-- <GoogleMap
           api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
           style="width: 100%; height: 300px"
-          :center="center"
+          :center="bodyOfWaterPin"
           class="border-2"
           :zoom="15"
         >
+
           <Marker :options="locationMarker"> </Marker>
-        </GoogleMap>
+        </GoogleMap> -->
+
+        <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
       </div>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -125,13 +129,15 @@ import { GoogleMap, Marker } from "vue3-google-map";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useCustomerStore } from "~/stores/customer";
 import SvgMarker from "~/components/base/SvgMarker";
+import { useGeolocation } from "@/utils/useGeolocation";
+import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 
 const config = useRuntimeConfig();
 
 const loader = new Loader({
   apiKey: config.public.googleMapsApiKey,
   // version: "weekly",
-  libraries: ["places"]
+  libraries: ["places"],
 });
 
 const store = useBodyOfWaterStore();
@@ -165,47 +171,97 @@ const lat = ref("");
 const autocomplete = ref();
 
 // my current location
-const center = ref({ lat: -33.95908009669137, lng: 18.470931797112016 });
-
-const locationMarker = ref({
-  icon: {
-    ...SvgMarker,
-    fillColor: "#0291c2",
-  },
-  position: {
-    lat: parseFloat(props?.bodyOfWater?.lat) ?? 0,
-    lng: parseFloat(props?.bodyOfWater?.lng) ?? 0,
-  },
-  label: {
-    text: props.bodyOfWater?.name ?? "New Body of Water",
-    fontFamily: "Roboto",
-    className: "map-label",
-    fontSize: "12px",
-  },
-  clickable: true,
-  // title: 'Selected Location',
+const bodyOfWaterPin = ref({
+  lat: -33.95908009669137,
+  lng: 18.470931797112016,
 });
+const { coords } = useGeolocation();
+
+const mapDiv = ref(null);
+let map = ref(null);
+let dragEndListener = null;
+
+const locationMarker = ref({});
+
+const service = ref();
+const request = ref();
 
 onMounted(async () => {
   // load google maps api
+  const maps = await loader.importLibrary("maps");
+  const marker = await loader.importLibrary("marker");
   const places = await loader.importLibrary("places");
 
-  if (places) {
-    const { Autocomplete } = places;
+  const geocoding = await loader.importLibrary("geocoding")
+  const geocoder =  new geocoding.Geocoder()
 
-    console.log(Autocomplete)
+  console.log(geocoder)
 
-    // console.log("google maps api loaded", google.maps.places.Autocomplete);
 
-    autocomplete.value = Autocomplete(
-      document.getElementById("autocomplete"),
-      {
-        types: ["establishment"],
-        // componentRestrictions: { country: ["ZA"] },
-        fields: ["place_id", "geometry", "name"],
-      }
-    );
-  }
+  map.value = new maps.Map(mapDiv.value, {
+    center: bodyOfWaterPin.value,
+    zoom: 15,
+  });
+
+  locationMarker.value = new marker.Marker({
+    icon: {
+      ...SvgMarker,
+      fillColor: "#0291c2",
+    },
+    position: bodyOfWaterPin.value,
+    label: {
+      text: props.bodyOfWater?.name ?? "New Body of Water",
+      fontFamily: "Roboto",
+      className: "map-label",
+      fontSize: "12px",
+    },
+    clickable: true,
+    map: map.value,
+    draggable: true,
+    title: "Selected Location",
+  });
+
+  service.value = new places.PlacesService(map.value);
+
+  dragEndListener = locationMarker.value.addListener(
+    "dragend",
+    async ({ latLng }) => {
+      console.log("drag end");
+      console.log(latLng.lat(), latLng.lng());
+      locationMarker.value.position = { lat: latLng.lat(), lng: latLng.lng() };
+      lat.value = latLng.lat();
+      lng.value = latLng.lng();
+
+      request.value = {
+        location: latLng,
+        // address: '9 Wilkinson street, Cape Town, South Africa'
+        fields: ["name", "geometry"],
+        // search: ''
+      };
+      
+      geocoder.geocode({  location: latLng, componentRestrictions: {} }, (results, status) => {
+
+        if (status == geocoding.GeocoderStatus.OK) {
+          console.log(results[0])
+          address.value = results[0].formatted_address
+          googlePlaceId.value = results[0].place_id
+          // console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+          locationMarker.value.position = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
+        }
+
+        if (status == geocoding.GeocoderStatus.ERROR) {
+          console.log('ERROR')
+        }
+
+        if (status == geocoding.GeocoderStatus.ZERO_RESULTS) {
+          console.log('ZERO_RESULTS')
+        }
+      })
+
+
+      // searchGooglePlaces();
+    }
+  );
 
   if (props.bodyOfWater) {
     name.value = props.bodyOfWater.name;
@@ -219,7 +275,7 @@ onMounted(async () => {
 
     if (lng.value && lat.value) {
       // set map center
-      center.value = {
+      bodyOfWaterPin.value = {
         lng: parseFloat(lng.value),
         lat: parseFloat(lat.value),
       };
@@ -230,6 +286,22 @@ onMounted(async () => {
     }
   }
 });
+
+onUnmounted(async () => {
+  if (dragEndListener) dragEndListener.remove();
+});
+
+const searchGooglePlaces = () => {
+  service.value.findPlaceFromQuery(request.value, function (results, status) {
+    if (status === places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
+      console(results[0].geometry.location);
+      // map.value.setCenter(results[0].geometry.location);
+    }
+  });
+};
 
 const createBodyOfWater = async () => {
   // TODO: add validation
