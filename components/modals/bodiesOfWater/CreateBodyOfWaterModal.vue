@@ -176,6 +176,16 @@ let autocompleteListener = null;
 const autocomplete = ref();
 const locationMarker = ref({});
 
+watch (name, (newName, oldName ) => {
+  console.log(newName)
+  locationMarker.value.setLabel({
+      text: newName,
+      fontFamily: "Roboto",
+      className: "map-label",
+      fontSize: "12px",
+    });
+})
+
 onMounted(async () => {
   // load google maps api
   const maps = await loader.importLibrary("maps");
