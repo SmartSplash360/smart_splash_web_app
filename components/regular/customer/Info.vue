@@ -12,7 +12,7 @@
           class="h-48 w-48 items-center rounded-full lg:h-[60px] lg:w-[60px] xl:h-28 xl:w-28"
         />
         <div class="flex flex-col gap-1">
-          <h3 class="hidden heading__h3  xl:flex">
+          <h3 class="hidden heading__h4F  xl:flex">
             CUSTOMER INFO:
           </h3>
           <div class="flex items-center gap-2">

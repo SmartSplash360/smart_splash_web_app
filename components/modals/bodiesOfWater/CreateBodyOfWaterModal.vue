@@ -1,37 +1,45 @@
 <template>
   <div
-      @click="toggleAddBodyOfWaterModal({ show: false })"
-      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]">
+    @click="toggleAddBodyOfWaterModal({ show: false })"
+    class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
+  >
     <form
-        @click.stop
-        class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
+      @click.stop
+      class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"
+    >
       <h3 class="heading__h3 text-[#025E7C]">
-        {{ readOnly === true ? 'View' : bodyOfWater && !readOnly ? 'Edit' : 'New' }} Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : '' }}
+        {{
+          readOnly === true ? "View" : bodyOfWater && !readOnly ? "Edit" : "New"
+        }}
+        Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : "" }}
       </h3>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
           <InputText
-              :disabled="readOnly"
-              type="text"
-                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="name"></InputText>
+            :disabled="readOnly"
+            type="text"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="name"
+          ></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="type"> Type* </label>
           <Dropdown
-              :disabled="readOnly"
-              v-model="type"
-              :options="types"
-              placeholder="Select a Type"
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"/>
+            :disabled="readOnly"
+            v-model="type"
+            :options="types"
+            placeholder="Select a Type"
+            class="md:w-14rem w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+          />
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="size"> Size* </label>
           <InputText
-              :disabled="readOnly"
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-              v-model="size"></InputText>
+            :disabled="readOnly"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="size"
+          ></InputText>
         </div>
       </div>
 
@@ -39,64 +47,73 @@
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="address"> Address* </label>
           <InputText
-              :disabled="readOnly"
-              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="address"></InputText>
+            :disabled="readOnly"
+            id="autocomplete"
+            type="text"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="address"
+          ></InputText>
         </div>
       </div>
 
       <div class="flex w-full">
         <GoogleMap
-            api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-            style="width: 100%; height: 300px"
-            :center="center"
-            class="border-2"
-            :zoom="15"
+          api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
+          style="width: 100%; height: 300px"
+          :center="center"
+          class="border-2"
+          :zoom="15"
         >
-
-          <Marker :options="locationMarker">
-
-          </Marker>
+          <Marker :options="locationMarker"> </Marker>
         </GoogleMap>
       </div>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="lng"> Longitude* </label>
-          <InputText type="text"
-                     :disabled="readOnly"
-                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="lng"></InputText>
+          <InputText
+            type="text"
+            :disabled="readOnly"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="lng"
+          ></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="lat"> Latitude* </label>
-          <InputText type="text"
-                     :disabled="readOnly"
-                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="lat"></InputText>
+          <InputText
+            type="text"
+            :disabled="readOnly"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="lat"
+          ></InputText>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="googlePlaceId"> Google Place ID* </label>
-          <InputText type="text"
-                     disabled
-                     class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                     v-model="googlePlaceId"></InputText>
+          <InputText
+            type="text"
+            disabled
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="googlePlaceId"
+          ></InputText>
         </div>
       </div>
 
-      <div v-if="!readOnly" class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+      <div
+        v-if="!readOnly"
+        class="mt-5 flex flex-col justify-end gap-5 sm:flex-row"
+      >
         <Button
-            label="Cancel"
-            severity="secondary"
-            outlined
-            @click="toggleAddBodyOfWaterModal({ show: false })"
-            class="hover:shadow-xl"
+          label="Cancel"
+          severity="secondary"
+          outlined
+          @click="toggleAddBodyOfWaterModal({ show: false })"
+          class="hover:shadow-xl"
         />
         <Button
-            label="Submit"
-            icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
-            @click="bodyOfWater ? updateBodyOfWater() : createBodyOfWater()"
+          label="Submit"
+          icon="pi pi-check"
+          class="!bg-[#0291BF] hover:shadow-xl"
+          @click="bodyOfWater ? updateBodyOfWater() : createBodyOfWater()"
         />
       </div>
     </form>
@@ -104,10 +121,19 @@
 </template>
 
 <script setup>
-import {GoogleMap, Marker } from "vue3-google-map";
-import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
-import {useCustomerStore} from "~/stores/customer";
+import { Loader } from "@googlemaps/js-api-loader";
+import { GoogleMap, Marker } from "vue3-google-map";
+import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
+import { useCustomerStore } from "~/stores/customer";
 import SvgMarker from "~/components/base/SvgMarker";
+
+const config = useRuntimeConfig();
+
+const loader = new Loader({
+  apiKey: config.public.googleMapsApiKey,
+  // version: "weekly",
+  libraries: ["places"]
+});
 
 const store = useBodyOfWaterStore();
 const customerStore = useCustomerStore();
@@ -116,78 +142,95 @@ const props = defineProps({
   toggleAddBodyOfWaterModal: {
     type: Function,
     default: () => {},
-    required: true
+    required: true,
   },
   bodyOfWater: {
     type: Object,
     default: () => null,
-    required: false
+    required: false,
   },
   readOnly: Boolean,
-  customerId: String
+  customerId: String,
 });
 
-const types = ref([
-  'Pool',
-  'Spa',
-  'Pond'
-]);
+const types = ref(["Pool", "Spa", "Pond"]);
 
-const name = ref('')
-const type = ref('')
-const size = ref(0)
-const condition = ref('')
-const googlePlaceId = ref('')
-const address = ref('')
-const lng = ref('')
-const lat = ref('')
+const name = ref("");
+const type = ref("");
+const size = ref(0);
+const condition = ref("");
+const googlePlaceId = ref("");
+const address = ref("");
+const lng = ref("");
+const lat = ref("");
+const autocomplete = ref();
 
 // my current location
-const center = ref({lat: -33.95908009669137, lng: 18.470931797112016});
+const center = ref({ lat: -33.95908009669137, lng: 18.470931797112016 });
 
 const locationMarker = ref({
   icon: {
     ...SvgMarker,
-    fillColor: '#0291c2',
+    fillColor: "#0291c2",
   },
   position: {
     lat: parseFloat(props?.bodyOfWater?.lat) ?? 0,
     lng: parseFloat(props?.bodyOfWater?.lng) ?? 0,
   },
   label: {
-    text: props.bodyOfWater?.name ?? 'New Body of Water',
+    text: props.bodyOfWater?.name ?? "New Body of Water",
     fontFamily: "Roboto",
     className: "map-label",
     fontSize: "12px",
   },
   clickable: true,
   // title: 'Selected Location',
-})
+});
 
 onMounted(async () => {
+  // load google maps api
+  const places = await loader.importLibrary("places");
+
+  if (places) {
+    const { Autocomplete } = places;
+
+    console.log(Autocomplete)
+
+    // console.log("google maps api loaded", google.maps.places.Autocomplete);
+
+    autocomplete.value = Autocomplete(
+      document.getElementById("autocomplete"),
+      {
+        types: ["establishment"],
+        // componentRestrictions: { country: ["ZA"] },
+        fields: ["place_id", "geometry", "name"],
+      }
+    );
+  }
+
   if (props.bodyOfWater) {
-    name.value = props.bodyOfWater.name
-    type.value = props.bodyOfWater.type
-    size.value = props.bodyOfWater.size
-    condition.value = props.bodyOfWater.condition
-    googlePlaceId.value = props.bodyOfWater.google_place_id
-    address.value = props.bodyOfWater.address
-    lng.value = props.bodyOfWater.lng
-    lat.value = props.bodyOfWater.lat
+    name.value = props.bodyOfWater.name;
+    type.value = props.bodyOfWater.type;
+    size.value = props.bodyOfWater.size;
+    condition.value = props.bodyOfWater.condition;
+    googlePlaceId.value = props.bodyOfWater.google_place_id;
+    address.value = props.bodyOfWater.address;
+    lng.value = props.bodyOfWater.lng;
+    lat.value = props.bodyOfWater.lat;
 
     if (lng.value && lat.value) {
       // set map center
-      center.value  = {
+      center.value = {
         lng: parseFloat(lng.value),
-        lat: parseFloat(lat.value)
-      }
+        lat: parseFloat(lat.value),
+      };
 
       // set map marker
-      locationMarker.value.position.lat = parseFloat(props.bodyOfWater.lat)
-      locationMarker.value.position.lng = parseFloat(props.bodyOfWater.lng)
+      locationMarker.value.position.lat = parseFloat(props.bodyOfWater.lat);
+      locationMarker.value.position.lng = parseFloat(props.bodyOfWater.lng);
     }
   }
-})
+});
 
 const createBodyOfWater = async () => {
   // TODO: add validation
@@ -202,15 +245,17 @@ const createBodyOfWater = async () => {
       address: address.value,
       lng: lng.value,
       lat: lat.value,
-      customer_id: props.customerId
+      customer_id: props.customerId,
     });
-    await store.fetchBodiesOfWaters()
+    await store.fetchBodiesOfWaters();
 
-    props.toggleAddBodyOfWaterModal({success: "BodyOfWater created successfully"});
+    props.toggleAddBodyOfWaterModal({
+      success: "BodyOfWater created successfully",
+    });
   } catch (e) {
-    props.toggleAddBodyOfWaterModal({error: e});
+    props.toggleAddBodyOfWaterModal({ error: e });
   }
-}
+};
 
 const updateBodyOfWater = async () => {
   try {
@@ -223,19 +268,21 @@ const updateBodyOfWater = async () => {
       address: address.value,
       lng: lng.value,
       lat: lat.value,
-    }
+    };
 
-    await store.updateBodyOfWater(props.bodyOfWater?.id, data)
-    await store.fetchBodiesOfWaters()
+    await store.updateBodyOfWater(props.bodyOfWater?.id, data);
+    await store.fetchBodiesOfWaters();
 
-    props.toggleAddBodyOfWaterModal({success: `BodyOfWater ${props.bodyOfWater?.id} updated successfully`});
+    props.toggleAddBodyOfWaterModal({
+      success: `BodyOfWater ${props.bodyOfWater?.id} updated successfully`,
+    });
   } catch (e) {
-    props.toggleAddBodyOfWaterModal({error: e});
+    props.toggleAddBodyOfWaterModal({ error: e });
   }
-}
+};
 
 // TODO: add map selected function to get lat/lng, address and google place id
 const pinDropped = (locationData) => {
-  console.log(locationData)
-}
+  console.log(locationData);
+};
 </script>
