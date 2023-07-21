@@ -373,7 +373,7 @@ const createBodyOfWater = async () => {
     await store.fetchBodiesOfWaters();
 
     props.toggleAddBodyOfWaterModal({
-      success: "BodyOfWater created successfully",
+      success: "Body Of Water created successfully",
     });
   } catch (e) {
     props.toggleAddBodyOfWaterModal({ error: e });
@@ -398,7 +398,7 @@ const updateBodyOfWater = async () => {
     await store.fetchBodiesOfWaters();
 
     props.toggleAddBodyOfWaterModal({
-      success: `BodyOfWater ${props.bodyOfWater?.id} updated successfully`,
+      success: `Body Of Water ${props.bodyOfWater?.id} updated successfully`,
     });
   } catch (e) {
     props.toggleAddBodyOfWaterModal({ error: e });
