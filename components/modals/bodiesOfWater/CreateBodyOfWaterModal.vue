@@ -125,12 +125,11 @@
 
 <script setup>
 import { Loader } from "@googlemaps/js-api-loader";
-import { GoogleMap, Marker } from "vue3-google-map";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useCustomerStore } from "~/stores/customer";
 import SvgMarker from "~/components/base/SvgMarker";
 import { useGeolocation } from "@/utils/useGeolocation";
-import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
+import { pl } from "date-fns/locale";
 
 const config = useRuntimeConfig();
 
@@ -162,106 +161,31 @@ const types = ref(["Pool", "Spa", "Pond"]);
 
 const name = ref("");
 const type = ref("");
-const size = ref(0);
+const size = ref("");
 const condition = ref("");
 const googlePlaceId = ref("");
 const address = ref("");
 const lng = ref("");
 const lat = ref("");
-const autocomplete = ref();
 
 // my current location
-const bodyOfWaterPin = ref({
-  lat: -33.95908009669137,
-  lng: 18.470931797112016,
-});
 const { coords } = useGeolocation();
+const bodyOfWaterPin = ref();
 
 const mapDiv = ref(null);
 let map = ref(null);
 let dragEndListener = null;
-
+let autocompleteListener = null;
+const autocomplete = ref();
 const locationMarker = ref({});
-
-const service = ref();
-const request = ref();
 
 onMounted(async () => {
   // load google maps api
   const maps = await loader.importLibrary("maps");
   const marker = await loader.importLibrary("marker");
   const places = await loader.importLibrary("places");
-
-  const geocoding = await loader.importLibrary("geocoding")
-  const geocoder =  new geocoding.Geocoder()
-
-  console.log(geocoder)
-
-
-  map.value = new maps.Map(mapDiv.value, {
-    center: bodyOfWaterPin.value,
-    zoom: 15,
-  });
-
-  locationMarker.value = new marker.Marker({
-    icon: {
-      ...SvgMarker,
-      fillColor: "#0291c2",
-    },
-    position: bodyOfWaterPin.value,
-    label: {
-      text: props.bodyOfWater?.name ?? "New Body of Water",
-      fontFamily: "Roboto",
-      className: "map-label",
-      fontSize: "12px",
-    },
-    clickable: true,
-    map: map.value,
-    draggable: true,
-    title: "Selected Location",
-  });
-
-  service.value = new places.PlacesService(map.value);
-
-  dragEndListener = locationMarker.value.addListener(
-    "dragend",
-    async ({ latLng }) => {
-      console.log("drag end");
-      console.log(latLng.lat(), latLng.lng());
-      locationMarker.value.position = { lat: latLng.lat(), lng: latLng.lng() };
-      lat.value = latLng.lat();
-      lng.value = latLng.lng();
-
-      request.value = {
-        location: latLng,
-        // address: '9 Wilkinson street, Cape Town, South Africa'
-        fields: ["name", "geometry"],
-        // search: ''
-      };
-      
-      geocoder.geocode({  location: latLng, componentRestrictions: {} }, (results, status) => {
-
-        if (status == geocoding.GeocoderStatus.OK) {
-          console.log(results[0])
-          address.value = results[0].formatted_address
-          googlePlaceId.value = results[0].place_id
-          // console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-          locationMarker.value.position = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
-        }
-
-        if (status == geocoding.GeocoderStatus.ERROR) {
-          console.log('ERROR')
-        }
-
-        if (status == geocoding.GeocoderStatus.ZERO_RESULTS) {
-          console.log('ZERO_RESULTS')
-        }
-      })
-
-
-      // searchGooglePlaces();
-    }
-  );
+  const geocoding = await loader.importLibrary("geocoding");
+  const geocoder = new geocoding.Geocoder();
 
   if (props.bodyOfWater) {
     name.value = props.bodyOfWater.name;
@@ -281,32 +205,162 @@ onMounted(async () => {
       };
 
       // set map marker
-      locationMarker.value.position.lat = parseFloat(props.bodyOfWater.lat);
-      locationMarker.value.position.lng = parseFloat(props.bodyOfWater.lng);
+      bodyOfWaterPin.value = {
+        lng: parseFloat(lng.value),
+        lat: parseFloat(lat.value),
+      };
+      // locationMarker.value.position.lat = parseFloat(props.bodyOfWater.lat);
+      // locationMarker.value.position.lng = parseFloat(props.bodyOfWater.lng);
+    } else {
+      bodyOfWaterPin.value = {
+        lng: parseFloat(coords.value.longitude),
+        lat: parseFloat(coords.value.latitude),
+      };
     }
+  } else {
+    console.log(coords.value)
+    bodyOfWaterPin.value = {
+        lng: parseFloat(coords.value.longitude),
+        lat: parseFloat(coords.value.latitude),
+      };
   }
+
+
+  // init map
+  map.value = new maps.Map(mapDiv.value, {
+    center: bodyOfWaterPin.value,
+    zoom: 15,
+  });
+
+  // set location marker
+  locationMarker.value = new marker.Marker({
+    icon: {
+      ...SvgMarker,
+      fillColor: "#0291c2",
+    },
+    position: bodyOfWaterPin.value, // set to body of water pin
+    label: {
+      text: props.bodyOfWater?.name ?? "New Body of Water",
+      fontFamily: "Roboto",
+      className: "map-label",
+      fontSize: "12px",
+    },
+    clickable: true,
+    map: map.value,
+    draggable: !props.readOnly,
+    title: "Selected Location",
+  });
+
+  // set default search bound to limit result
+  const defaultBounds = {
+    north: bodyOfWaterPin.value.lat + 0.5,
+    south: bodyOfWaterPin.value.lat - 0.5,
+    east: bodyOfWaterPin.value.lng + 0.5,
+    west: bodyOfWaterPin.value.lng - 0.5,
+  };
+
+  // init auto complete
+  autocomplete.value = new places.Autocomplete(
+    document.getElementById("autocomplete"),
+    {
+      types: ["geocode"],
+      componentRestrictions: { country: "ZA" },
+      fields: ["geometry", "place_id", "name"],
+      bounds: defaultBounds,
+    }
+  );
+
+  // set auto complete listener
+  autocompleteListener = autocomplete.value.addListener("place_changed", () => {
+    let place = autocomplete.value.getPlace();
+    // update form field
+    console.log(place);
+    name.value = name.value == "" ? place.name : name.value;
+    lat.value = place.geometry.location.lat();
+    lng.value = place.geometry.location.lng();
+    googlePlaceId.value = place.place_id;
+
+    bodyOfWaterPin.value = {
+      lng: place.geometry.location.lng(),
+      lat: place.geometry.location.lat(),
+    };
+
+    locationMarker.value.setLabel({
+      text: name.value ?? place.name,
+      fontFamily: "Roboto",
+      className: "map-label",
+      fontSize: "12px",
+    });
+
+    locationMarker.value.setPosition({
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+    });
+
+
+    map.value.setCenter({
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+    });
+
+  });
+
+  // set drag listener
+  dragEndListener = locationMarker.value.addListener(
+    "dragend",
+    async ({ latLng }) => {
+      console.log("drag end");
+      console.log(latLng.lat(), latLng.lng());
+      locationMarker.value.position = { lat: latLng.lat(), lng: latLng.lng() };
+      lat.value = latLng.lat();
+      lng.value = latLng.lng();
+
+      geocoder.geocode(
+        { location: latLng, componentRestrictions: {} },
+        (results, status) => {
+          if (status == geocoding.GeocoderStatus.OK) {
+            console.log(results[0]);
+            address.value = results[0].formatted_address;
+            googlePlaceId.value = results[0].place_id;
+
+            // console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+
+            bodyOfWaterPin.value = {
+              lng: results[0].geometry.location.lng(),
+              lat: results[0].geometry.location.lat(),
+            };
+
+            locationMarker.value.position = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng(),
+            };
+          }
+
+          if (status == geocoding.GeocoderStatus.ERROR) {
+            console.log("ERROR");
+          }
+
+          if (status == geocoding.GeocoderStatus.ZERO_RESULTS) {
+            console.log("ZERO_RESULTS");
+          }
+        }
+      );
+
+      // searchGooglePlaces();
+    }
+  );
 });
 
 onUnmounted(async () => {
   if (dragEndListener) dragEndListener.remove();
+  if (autocompleteListener) autocompleteListener.remove();
 });
-
-const searchGooglePlaces = () => {
-  service.value.findPlaceFromQuery(request.value, function (results, status) {
-    if (status === places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i]);
-      }
-      console(results[0].geometry.location);
-      // map.value.setCenter(results[0].geometry.location);
-    }
-  });
-};
 
 const createBodyOfWater = async () => {
   // TODO: add validation
 
   try {
+    console.log(props.customerId)
     await store.createBodyOfWater({
       name: name.value,
       type: type.value,
