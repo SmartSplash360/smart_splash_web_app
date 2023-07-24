@@ -1,11 +1,15 @@
 <template>
+  <!-- <div class="flex w-full">
+    {{ bodyOfWater }}
+  </div> -->
+
   <div
     @click="toggleAddBodyOfWaterModal({ show: false })"
     class="flex-center fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-[#000000da]"
   >
     <form
       @click.stop
-      class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"
+      class="flex min-h-[500px] flex-col gap-6 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"
     >
       <h3 class="heading__h3 text-[#025E7C]">
         {{
@@ -13,7 +17,7 @@
         }}
         Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : "" }}
       </h3>
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+      <div class="flex flex-col justify-between gap-2 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
           <InputText
@@ -57,17 +61,6 @@
       </div>
 
       <div class="flex w-full">
-        <!-- <GoogleMap
-          api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-          style="width: 100%; height: 300px"
-          :center="bodyOfWaterPin"
-          class="border-2"
-          :zoom="15"
-        >
-
-          <Marker :options="locationMarker"> </Marker>
-        </GoogleMap> -->
-
         <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
       </div>
 
@@ -102,10 +95,18 @@
       </div>
 
       <div
-        v-if="!readOnly"
-        class="mt-5 flex flex-col justify-end gap-5 sm:flex-row"
+        class="flex flex-col justify-center gap-5 sm:flex-row"
       >
+      <Button
+      v-if="readOnly"
+          label="Close"
+          severity="secondary"
+          outlined
+          @click="toggleAddBodyOfWaterModal({ show: false })"
+          class="hover:shadow-xl"
+        />
         <Button
+        v-if="!readOnly"
           label="Cancel"
           severity="secondary"
           outlined
@@ -113,6 +114,7 @@
           class="hover:shadow-xl"
         />
         <Button
+        v-if="!readOnly"
           label="Submit"
           icon="pi pi-check"
           class="!bg-[#0291BF] hover:shadow-xl"
@@ -121,6 +123,7 @@
       </div>
     </form>
   </div>
+
 </template>
 
 <script setup>
@@ -137,7 +140,6 @@ const loader = new Loader({
 });
 
 const store = useBodyOfWaterStore();
-const customerStore = useCustomerStore();
 
 const props = defineProps({
   toggleAddBodyOfWaterModal: {
@@ -151,7 +153,7 @@ const props = defineProps({
     required: false,
   },
   readOnly: Boolean,
-  customerId: String,
+  customerId: Number,
 });
 
 const types = ref(["Pool", "Spa", "Pond"]);
@@ -176,15 +178,15 @@ let autocompleteListener = null;
 const autocomplete = ref();
 const locationMarker = ref({});
 
-watch (name, (newName, oldName ) => {
-  console.log(newName)
+watch(name, (newName, oldName) => {
+  console.log(newName);
   locationMarker.value.setLabel({
-      text: newName,
-      fontFamily: "Roboto",
-      className: "map-label",
-      fontSize: "12px",
-    });
-})
+    text: newName,
+    fontFamily: "Roboto",
+    className: "map-label",
+    fontSize: "12px",
+  });
+});
 
 onMounted(async () => {
   // load google maps api
@@ -225,13 +227,12 @@ onMounted(async () => {
       };
     }
   } else {
-    console.log(coords.value)
+    console.log(coords.value);
     bodyOfWaterPin.value = {
-        lng: parseFloat(coords.value.longitude),
-        lat: parseFloat(coords.value.latitude),
-      };
+      lng: parseFloat(coords.value.longitude),
+      lat: parseFloat(coords.value.latitude),
+    };
   }
-
 
   // init map
   map.value = new maps.Map(mapDiv.value, {
@@ -306,12 +307,10 @@ onMounted(async () => {
       lng: place.geometry.location.lng(),
     });
 
-
     map.value.setCenter({
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     });
-
   });
 
   // set drag listener
@@ -375,8 +374,7 @@ const createBodyOfWater = async () => {
       lng: lng.value,
       lat: lat.value,
       customer_id: props.customerId,
-    }
-
+    };
 
     await store.createBodyOfWater(payload);
 

@@ -24,18 +24,18 @@
         <Marker v-for="marker in jobMarkers" :options="marker">
           <InfoWindow :options="{ position: marker.position }">
             <div class="flex flex-col text-black">
-              <div class="tx pb-5 font-bold">
+              <nuxt-link :to="`/customers/${marker?.job?.customer?.id}`" class="tx pb-5 font-bold">
                 {{ marker?.job?.customer?.name }}
-              </div>
+              </nuxt-link>
               <div>{{ marker.content }}</div>
               <Divider type="solid" />
               <div class="flex justify-between">
-                <div class="flex flex-col">
+                <nuxt-link :to="`/technicians/${marker?.job?.technician?.id}`" class="flex flex-col">
                   <span class="pb-2">TECHNICIAN</span>
                   <span class="font-bold">{{
                     marker?.job?.technician?.name
                   }}</span>
-                </div>
+                </nuxt-link>
                 <div class="flex flex-col">
                   <span class="pb-2">TIME WINDOW</span>
                   <span class="font-bold">{{

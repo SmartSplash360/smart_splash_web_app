@@ -36,7 +36,7 @@
           />
         </div>
         <div class="card min-w-[330px]">
-          <Toast />
+          <!-- <Toast /> -->
           <FileUpload
             name="demo[]"
             url="./upload.php"

@@ -26,6 +26,7 @@ export const useLeadStore = defineStore("lead", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get("http://localhost:8000/api/v1/leads");
+                console.log(res.data.data.data)
                 this.leads = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -37,10 +38,11 @@ export const useLeadStore = defineStore("lead", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get(`http://localhost:8000/api/v1/leads/${id}`);
-                return res.data.data as Customer;
+                console.log(res.data.data);
+                return res.data.data;
             } catch (error) {
-                alert(error);
                 console.log(error);
+                return error
             }
         },
         async createLead(leadPayload: any) {
@@ -74,13 +76,35 @@ export const useLeadStore = defineStore("lead", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/lead/${leadId}`);
+                const res = await axios.delete(`http://localhost:8000/api/v1/leads/${leadId}`);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
 
                 return res.data
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        },
+        async importLeads(payload: any) {
+
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            try {
+                const formData = new FormData();
+                formData.append("lead_file", payload.files[0], `leads-import-${Date.now()}.csv`);
+
+                const res = await axios.post(`http://localhost:8000/api/v1/leads/imports`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
             } catch (error) {
                 console.log(error)
                 throw error

@@ -58,8 +58,8 @@
         </TabPanel>
       </TabView>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 
@@ -91,11 +91,11 @@ const closeModal = ({ success, error }) => {
   alert.value = null
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Create Customer Success', detail: success, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 3000 });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 3000 });
   }
 };
 

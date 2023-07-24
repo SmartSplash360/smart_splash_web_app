@@ -4,7 +4,6 @@
           :value="alerts"
           dataKey="id"
           :rows="10"
-          tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
           :loading="loading"
       >
         <template #empty> No alerts found. </template>
@@ -81,7 +80,7 @@
                   <font-awesome-icon icon="ellipsis-vertical" />
                 </Button>
                 <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-                <Toast />
+                <!-- <Toast /> -->
               </span>
             </div>
           </template>

@@ -85,18 +85,18 @@ const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value
 };
 
-
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
+
 const closeModal = ({ success, error }) => {
   addCustomerModal.value = false
   customer.value = null
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Create Customer Success', detail: 'Customer has been created successfully', life: 3000 });
+    toast.add({ severity: 'success', summary: 'Customers', detail: success, life: 3000 });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Create Customer Error', detail: `Failed to create customer, an error has occurred: ${error}`, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Customers', detail: `An error has occurred: ${error}`, life: 3000 });
   }
 };
 

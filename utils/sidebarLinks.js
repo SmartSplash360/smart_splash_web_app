@@ -15,11 +15,6 @@ export const sideBarLinks = [
     to: "/leads",
   },
   {
-    icon: "user-group",
-    name: "Bodies of Water",
-    to: "/bodiesOfWater",
-  },
-  {
     icon: "user-lock",
     name: "Technicians",
     to: "/technicians",

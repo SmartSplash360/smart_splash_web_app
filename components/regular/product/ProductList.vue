@@ -20,7 +20,6 @@
           selectionMode="single"
           dataKey="id"
           :rows="10"
-          tableStyle="min-width: 50rem; min-height : 35rem"
           class="mt-5"
           :loading="loading"
           :globalFilterFields="['product', 'name']"
@@ -112,8 +111,8 @@
         </Column>
       </DataTable>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </div>
 </template>
 
@@ -158,11 +157,11 @@ const closeModal = ({ success, error }) => {
   product.value = false
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Create Product Success', detail: success, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Products', detail: success, life: 3000 });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Create Product Error', detail: `Failed to create product, an error has occurred: ${error}`, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Products', detail: `An error has occurred: ${error}`, life: 3000 });
   }
 };
 

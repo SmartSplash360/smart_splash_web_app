@@ -25,8 +25,8 @@
     <div class="flex-center " v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
-    <Toast/>
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast/> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 
@@ -56,8 +56,8 @@ const closeModal = ({success, error}) => {
   if (success) {
     toast.add({
       severity: 'success',
-      summary: 'Create Technician Success',
-      detail: 'Technician has been created successfully',
+      summary: 'Technicians',
+      detail: success,
       life: 3000
     });
   }
@@ -65,8 +65,8 @@ const closeModal = ({success, error}) => {
   if (error) {
     toast.add({
       severity: 'error',
-      summary: 'Create Technician Error',
-      detail: `Failed to create technician, an error has occurred: ${error}`,
+      summary: 'Technicians',
+      detail: `An error has occurred: ${error}`,
       life: 3000
     });
   }

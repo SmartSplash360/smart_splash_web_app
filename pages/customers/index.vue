@@ -13,7 +13,6 @@ onMounted(async () => {
   loading.value = false
 });
 
-
 definePageMeta({
   layout: "dashboard",
   middleware: ['auth','auto-theme'],

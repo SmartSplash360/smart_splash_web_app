@@ -5,7 +5,6 @@
           :value="alerts"
           dataKey="id"
           :rows="10"
-          tableStyle="min-width: 50rem; min-height : 35rem; border : 1px solid #dee2e6; margin-top : 2.5rem"
           :loading="loading"
       >
         <template #empty>

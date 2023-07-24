@@ -8,37 +8,42 @@
       <h2 class="heading__h2 font-bold text-[#025E7C]">
         {{ lead ? 'Edit' : 'New' }} Lead {{ lead ? `#${lead?.id}` : '' }}
       </h2>
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Name* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="name"></InputText>
+
+      <div class="flex gap-5">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col justify-between gap-5 sm:flex-row">
+            <div class="flex w-full flex-col gap-2">
+              <label class="span__element text-sm" for="name"> Name* </label>
+              <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+                         v-model="name"></InputText>
+            </div>
+            <div class="flex w-full flex-col gap-2">
+              <label class="span__element text-sm" for="name"> Surname* </label>
+              <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+                         v-model="surname"></InputText>
+            </div>
+          </div>
+          <div class="flex flex-col justify-between gap-5">
+            <div class="flex w-full flex-col gap-2">
+              <label class="span__element text-sm" for="email address"> Email address* </label>
+              <InputText type="email" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+                         v-model="email"></InputText>
+            </div>
+            <div class="flex w-full flex-col gap-2">
+              <label class="span__element text-sm" for="cell number"> Cell number </label>
+              <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+                         v-model="phoneNumber"></InputText>
+            </div>
+          </div>
         </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Surname* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="surname"></InputText>
+
+        <div class="flex flex-col gap-2">
+          <label class="span__element text-sm" for="cell number"> Notes </label>
+          <Textarea class="w-full" cols="50" rows="8" />
         </div>
       </div>
-      <div class="flex flex-col justify-between gap-5">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="email address"> Email address* </label>
-          <InputText type="email" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="email"></InputText>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="cell number"> Cell number </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
-        </div>
-      </div>
-      <div v-if="!lead" class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Password* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Password Confirmation* </label>
-          <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="passwordConfirmation"></InputText>
-        </div>
-      </div>
-      <div class="mt-20 flex flex-col justify-end gap-5 sm:flex-row">
+
+      <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
         <Button
             label="Cancel"
             severity="secondary"
@@ -58,8 +63,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import {useLeadStore} from "~/stores/lead";
+import {onMounted, ref} from 'vue'
+import {useLeadStore} from "~/stores/leads";
 
 const store = useLeadStore();
 
@@ -77,10 +82,10 @@ const props = defineProps({
   }
 });
 
-const name = ref('Test')
-const surname = ref('User')
-const email = ref('test1@user.com')
-const phoneNumber = ref('0760970734')
+const name = ref('')
+const surname = ref('')
+const email = ref('')
+const phoneNumber = ref('')
 const password = ref('password')
 const passwordConfirmation = ref('password')
 
