@@ -2,63 +2,35 @@
   <section v-if="loading">
     <SkeletonCustomer></SkeletonCustomer>
   </section>
-
   <section v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
-    <div class="hidden flex-wrap items-center justify-between gap-5 lg:flex xl:gap-10">
-      <ul class="lg:flex-between hidden w-full gap-4 xl:w-3/4">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes"></RegularCustomerActivityCard>
-      </ul>
-      <BaseAddButton :btnText="'Lead'" @click="toggleEditLeadModal"></BaseAddButton>
-      <ModalsLeadEditLeadModal v-if="editLeadModal" :toggleEditLeadModal="closeModal" :lead="lead">
-      </ModalsLeadEditLeadModal>
-    </div>
-
-    <div class="mobile flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
-      <div class="flex-between">
-        <BaseSearchBar :size="'lg'"></BaseSearchBar>
-        <div class="text-white">
-          <span @click="showActiveRoute" class="flex-center h-[30px] w-[30px] cursor-pointer"><font-awesome-icon
-              icon="bars" class="text-2xl" /></span>
+      <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
+        <div class="flex-between gap-6">
+            <div class="flex-1">
+              <BaseSearchBar class="w-full" 
+               @handleSearch="value => handleSearch(value)"/>
+            </div>
+            <span
+              @click="showActiveRoute"
+              class="flex-center h-[30px] w-[30px] cursor-pointer text-white "
+              ><font-awesome-icon icon="bars" class="text-2xl" :class="[toggleActiveRoute && 'rotate-90']"
+            /></span>
         </div>
-      </div>
-      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes">
-        </RegularCustomerActivityCard>
-      </div>
-    </div>
-
-    <div class="flex flex-col gap-5">
-      <div class="flex justify-end px-5 lg:hidden">
-        <BaseAddButton :btnText="'Lead'" @click="toggleEditLeadModal"></BaseAddButton>
-      </div>
-    </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
-    <ModalsLeadEditLeadModal v-if="editLeadModal" :toggleEditLeadModal="closeModal" :lead="lead">
-    </ModalsLeadEditLeadModal>
-  </section>
-
-  <section>
-    <div class="mobile flex flex-col gap-8 bg-[#015d7b] px-5 py-10 lg:hidden">
-      <div class="flex items-center justify-between">
-        <BaseSearchBar :size="'lg'"></BaseSearchBar>
-        <div class="text-white">
-          <span @click="showActiveRoute"
-            class="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center"><font-awesome-icon
-              icon="bars" class="text-2xl" /></span>
+        <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
+          <RegularCustomerActivityCard           
+              :loading="loading"
+              :routes="routes">
+          </RegularCustomerActivityCard>
         </div>
-      </div>
-      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes">
-        </RegularCustomerActivityCard>
-      </div>
     </div>
     <div class="flex flex-col gap-5">
-      <div class="flex justify-end px-5 lg:hidden">
-        <BaseAddButton :btnText="'Lead'" @click="toggleEditLeadModal"></BaseAddButton>
-      </div>
-      <RegularLeadTable :callLead="callLead" :editItem="editItem" :deleteItem="deleteItem"
-        :convertToCustomer="convertToCustomer"></RegularLeadTable>
+      <RegularLeadTable 
+        :callLead="callLead" 
+        :editItem="editItem" 
+        :deleteItem="deleteItem"
+        :convertToCustomer="convertToCustomer"
+        :leadsMobiles="leadsMobiles"
+        :handleSort="handleSort">
+      </RegularLeadTable>
     </div>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
@@ -85,6 +57,7 @@ const leadStore = useLeadStore();
 const editLeadModal = ref(false);
 const voiceCallModal = ref(false);
 const lead = ref();
+const leadsMobiles = ref()
 
 const routes = reactive({
   activeRoute: 131,
@@ -93,12 +66,22 @@ const routes = reactive({
   leads: 0,
 });
 
-const toggleActiveRoute = ref(true);
+const toggleActiveRoute = ref(false);
+
+
+leadsMobiles.value = leadStore.getLeads;
+const handleSearch = (value) => {
+  leadStore.searchQuery = value
+  leadsMobiles.value = leadStore.filterLeads(value);
+}
+
+const handleSort = () => {
+    leadsMobiles.value = leadStore.sortLeads();
+}
 
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value;
 };
-
 const toggleEditLeadModal = () => (editLeadModal.value = true);
 
 const toggleVoiceCallModal = () => (voiceCallModal.value = true);

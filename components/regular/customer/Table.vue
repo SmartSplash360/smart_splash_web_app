@@ -107,8 +107,9 @@
   </div>
   <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] mx-5 -mt-8 rounded-t-xl border">
       <div class="flex-between py-1 px-2">
-        <div class="px-2">
-          <span class="span__element">Sort By</span>
+        <div class="flex-center gap-2 px-2 cursor-pointer" @click="handleSort">
+          <img :src="SortIcon" alt="sort-icon">
+          <span class="span__element">Sort By Name</span>
         </div>
         <BaseAddButton
           @click="createCustomer"
@@ -149,25 +150,6 @@
               <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
               <span class="text-xs flex-1 flex justify-start">{{customer?.phone_number}}</span>
             </div>
-            <!-- <div class="self-end flex flex-row gap-2 py-1 px-2">
-              <Button
-                  icon="pi pi-pencil"
-                  text raised rounded
-                  @click="editCustomer(customer)"
-              />
-              <Button
-                  icon="pi pi-trash"
-                  text raised rounded
-                  class="p-button-danger"
-                  @click="deleteCustomer(customer?.id)"
-              />
-              <Button
-                  icon="pi pi-eye"
-                  text raised rounded
-                  class="p-button-danger"
-                  @click="viewCustomer(customer?.id)"
-              />
-            </div> -->
           </div>
           </AccordionTab>
       </Accordion>
@@ -178,6 +160,7 @@
 import {FilterMatchMode} from "primevue/api";
 import {useCustomerStore} from "~/stores/customer";
 import Avatar from 'primevue/avatar';
+import SortIcon from '~/assets/icons/arrow-sort.svg'
 import Tag from 'primevue/tag';
 
 const store = useCustomerStore();
@@ -185,7 +168,8 @@ const store = useCustomerStore();
 const props = defineProps({
   editItem: Function,
   deleteItem: Function,
-  customerMobiles : Array
+  customerMobiles : Array,
+  handleSort : Function,
 });
 
 
@@ -212,29 +196,29 @@ const deleteCustomer = (id) =>  props.deleteItem(id);
 
   
 const menu = ref();
-  const items = ref([
-          {
-              label: 'View Template',
-              icon: 'pi pi-eye',
-              command: () => viewTemplate()
-          },
-          {
-              label: 'Edit Template',
-              icon: 'pi pi-pencil',
-              command: () => editTemplate()
-          },
-          {
-              label: 'Delete Template',
-              icon: 'pi pi-trash',
-              command: () => {
-                deleteTemplate(props.template.id)
-                router.push('/campaigns')
-              }
-          }
-  ]);
-  const toggle = (event) => {
-      menu.value.toggle(event);
-  };
+const items = ref([
+        {
+            label: 'View Customer',
+            icon: 'pi pi-eye',
+            command: () => viewCustomer()
+        },
+        {
+            label: 'Edit Customer',
+            icon: 'pi pi-pencil',
+            command: () => editCustomer()
+        },
+        {
+            label: 'Delete Customer',
+            icon: 'pi pi-trash',
+            command: () => {
+              deleteCustomer()
+              window.location.href = '/customers';
+            }
+        }
+]);
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
   
 
 const dt = ref();

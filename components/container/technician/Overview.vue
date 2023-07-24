@@ -23,7 +23,7 @@
         <p class="paragraph__p">Cleaning Tech</p>
       </div>
       <div class="ml-auto flex flex-1 justify-end">
-        <Button label="View Reports" class="!bg-[#0291BF] hover:shadow-xl"/>
+        <Button label="View Reports" class="!bg-[#025E7C] text-white hover:shadow-xl"/>
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>

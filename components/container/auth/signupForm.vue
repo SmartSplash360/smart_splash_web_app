@@ -1,30 +1,33 @@
 <template>
-  <form class="flex flex-col items-center gap-6 px-5 py-5 sm:gap-4 lg:px-20">
-    <div class="h-[125px] w-[300px]">
+  <form class="flex flex-col items-center gap-6 py-5 sm:gap-4 xl:px-20">
+    <div class="w-[250px] h-[99px] lg:h-[125px] lg:w-[300px]">
       <img
           :src="SmartPlashLogo"
           alt="Smart-Splash-Logo"
           class="h-full w-full"
       />
     </div>
-    <InputText type="text" placeholder="First Name" v-model="firstName" name="firstName" class="w-full"/>
-    <InputText type="text" placeholder="Last Name" v-model="lastName" name="lastName" class="w-full"/>
-    <InputText typ="text" placeholder="Email Address" v-model="email" name="email" class="w-full"/>
-    <InputText type="password" placeholder="Password" v-model="password" name="password" class="w-full"/>
-    <InputText type="password" placeholder="Confirm Password" v-model="confirmPassword" name="confirmPassword" class="w-full"/>
-
-    <div class="flex w-full flex-col gap-3">
-      <Button  @click="registerUser()" label="Create Account" class="w-full"/>
-      <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>
-      <Button icon="pi pi-google" label="Continue with Google" severity="danger" class="w-full"/>
+    <div class="w-full lg:w-5/6 flex flex-col gap-6">
+        <InputText type="text" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Full name" v-model="firstName"></InputText>
+        <InputText type="email" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Email Address" v-model="email"></InputText>
+        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Paasword" v-model="password"></InputText>
+        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Confirmed Password" v-model="confirmPassword"></InputText>
+    </div>
+    <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
+      <Button  @click="registerUser()" label="Create Account" class="w-full bg-[#0291BF] text-white"/>
+      <div class="py-3 text-center">
+        <p class="paragraph__p">
+          Already have an account ?
+          <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
+        </p>
+      </div>
+      <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
+        <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full bg-[#3B5998] text-white"/>
+        <Button icon="pi pi-google" label="Continue with Google"  class="w-full"/>
+      </div>
     </div>
 
-    <div class="py-3">
-      <p>
-        Already have an account ?
-        <nuxt-link to="/signin" class="text-[#4D6977]">Sign In</nuxt-link>
-      </p>
-    </div>
+
   </form>
 </template>
 

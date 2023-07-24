@@ -120,24 +120,24 @@ onMounted(async () => {
 });
 
 const menu = ref();
-  const items = ref([
-          {
-              label: 'View Alert',
-              icon: 'pi pi-eye',
-              command: () => viewAlert()
-          },
-          {
-              label: 'Delete Template',
-              icon: 'pi pi-trash',
-              command: () => {
-                deleteAlert(props.template.id)
-                router.push('/alerts')
-              }
-          }
-  ]);
-  const toggle = (event) => {
-      menu.value.toggle(event);
-  };
+const items = ref([
+        {
+            label: 'View Alert',
+            icon: 'pi pi-eye',
+            command: () => viewAlert()
+        },
+        {
+            label: 'Delete Template',
+            icon: 'pi pi-trash',
+            command: () => {
+              deleteAlert(props.template.id)
+              router.push('/alerts')
+            }
+        }
+]);
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
 
   const viewAlert = () => {}
   const deleteAlert = () => {}

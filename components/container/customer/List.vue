@@ -3,8 +3,8 @@
     <SkeletonCustomer></SkeletonCustomer>
   </section>
   <section v-else class="-mx-5 lg:mx-0 flex flex-col lg:gap-10">
-    <div class="hidden flex-wrap lg:flex-between xl:gap-10">
-      <ul class="hidden lg:flex-between w-full gap-4 xl:w-3/4">
+    <div class="hidden flex-wrap gap-5 lg:flex-between xl:gap-10">
+      <ul class="hidden lg:flex-between w-full gap-4 xl:w-3/5">
         <RegularCustomerActivityCard
           :loading="loading"
           :routes="routes"
@@ -45,6 +45,7 @@
       :editItem="editItem"
       :deleteItem="deleteItem"
       :customerMobiles="customerMobiles"
+      :handleSort="handleSort"
     ></RegularCustomerTable>
   </section>
 </template>
@@ -78,9 +79,11 @@ customerMobiles.value = customerStore.getCustomers;
 const handleSearch = (value) => {
     customerStore.searchQuery = value
     customerMobiles.value = customerStore.filterCustomers(value);
-    console.log(value)
 }
 
+const handleSort = () => {
+    customerMobiles.value = customerStore.sortCustomers();
+}
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value
 };

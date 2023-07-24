@@ -1,19 +1,23 @@
 <template>
-  <main class="flex h-[100vh] w-full items-center py-20 sm:p-0">
-    <div
-      class="mx-auto flex-between h-full w-full gap-0 rounded-md lg:pl-5 sm:h-[730px] sm:w-3/4  lg:w-2/3 sm:border sm:hover:shadow-xl lg:shadow-lg"
-    >
-      <container-auth-signin-form
-          class="h-full w-full lg:w-3/5"
-      ></container-auth-signin-form>
-      <container-auth-hero-logger
-          class="hidden h-full lg:block lg:w-2/5"
-          :login="true"
-      ></container-auth-hero-logger>
+  <main class="flex md:h-[100vh] w-full md:items-center py-10 md:py-0">
+    <div 
+      class="w-full  sm:mx-auto  
+        px-5 sm:px-0 flex-between gap-0 
+        rounded-md bg-white lg:h-[600px] 
+        lg:border lg:shadow-lg 
+        lg:hover:shadow-xl  md:w-4/5 xl:w-[55%]">
+      <ContainerAuthSigninForm
+        class="h-full w-full lg:w-3/5"
+      ></ContainerAuthSigninForm>
+      <ContainerAuthHeroLogger
+        class="hidden h-full lg:block lg:w-2/5"
+        :login="true"
+      ></ContainerAuthHeroLogger>
     </div>
   </main>
 </template>
 <script>
+
 definePageMeta({
   layout : ""
 })

@@ -22,11 +22,15 @@ export const useCustomerStore = defineStore("customer", {
         },
         filterCustomers : (state) => () => {
             const search = state.searchQuery.toLocaleLowerCase();
-            return state.customers.filter((template:any) => template.name.toLocaleLowerCase().includes(search));
+            return state.customers.filter((customer:Customer) => customer.name.toLocaleLowerCase().includes(search));
         },
-        // sortCustomers : (state) => () => {
-        //     return state.customers.sort((customerA : Customer , customerB:Customer) => customerA.id - customerB.id) 
-        // },
+        sortCustomers : (state) => () => {
+            return state.customers.sort(function(a:Customer,b:Customer){
+              if (a.name < b.name) return -1;
+              if (a.name  > b.name) return 1;
+              return 0;
+            })
+        },
     },
     actions: {
         async fetchCustomers() {

@@ -1,32 +1,36 @@
 <template>
-  <form class="flex flex-col items-center gap-6 px-5 py-5 sm:gap-4 lg:px-20">
-    <div class="mb-10 h-[125px] w-[300px] sm:mb-0">
+  <form class="flex flex-col gap-6 py-5 sm:gap-4 lg:px-20">
+    <div class="mb-10 h-[53px] w-[138px] sm:mb-0">
       <img
           :src="SmartPlashLogo"
           alt="Smart-Splash-Logo"
           class="h-full w-full"
       />
     </div>
-    <div class="hidden w-full flex-col gap-3 text-start sm:flex">
-      <h2 class="heading__h2">Login</h2>
-      <p>Please enter your details</p>
+    <div class="w-full flex-col gap-3 flex mb-8">
+      <h2 class="heading__h2 text-[30px]">Login</h2>
+      <p class="paragraph__p">Please enter your details</p>
     </div>
-    <InputText type="text" placeholder="Email" v-model="email" name="email" class="w-full"/>
-    <InputText type="password" placeholder="Password" v-model="password" name="password" class="w-full"/>
+    <div class="w-full flex flex-col gap-6">
+        <InputText type="text" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Full name" v-model="email"></InputText>
+        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Email Address" v-model="password"></InputText>
+      <p class="paragraph__p w-full text-end text-[#4D6977]">Forgot password?</p>
+    </div>
 
-    <p class="paragraph__p w-full text-end text-[#4D6977]">Forgot password?</p>
-    <Button @click="login()" label="Login" class="w-full"/>
-    <div class="py-3">
-      <p>
-        Don't have an account ?
-        <nuxt-link to="/signup" class="text-[#4D6977]">Sign up</nuxt-link>
-      </p>
-    </div>
-    <div class="flex w-full flex-col gap-3">
-      <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>
-      <Button icon="pi pi-google" label="Continue with Google" severity="danger" class="w-full"/>
-    </div>
-    <Toast/>
+    <div class="w-full  flex flex-col gap-3 mt-5">
+      <Button @click="login()" label="Login" class="w-full bg-[#0291BF] text-white"/>
+      <div class="py-3 text-center">
+          <p class="paragraph__p">
+          Don't have an account ?
+          <nuxt-link to="/signup" class="text-[#4D6977]">Sign up</nuxt-link>
+        </p>
+      </div>
+        <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
+        <!-- <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/> -->        
+        <Button icon="pi pi-google" label="Continue with Google"  class="w-full"/>
+      </div>
+      <Toast/>
+      </div>
   </form>
 </template>
 

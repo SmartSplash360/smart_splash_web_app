@@ -4,7 +4,7 @@
       class="flex flex-col items-end gap-3 lg:w-2/5 sm:flex-row sm:justify-between sm:gap-5"
     >
       <h3
-        class="order-1 min-w-max rounded-md px-5 py-2 heading__h3 sm:-order-1 dark:bg-[#1B2028]"
+        class="order-1 min-w-max rounded-md lg:px-5 py-2 heading__h3 sm:-order-1 dark:bg-[#1B2028]"
       >
         {{ techniciansCount }} Technicians
       </h3>
@@ -21,8 +21,13 @@
     </div>
     <BaseAddButton
       :btnText="'Technician'"
+      @click="addTechnician"
+      class="hover:shadow-xl lg:hidden"
+    ></BaseAddButton>
+    <BaseAddButton
+      :btnText="'Technician'"
       @click="$emit('open-modal')"
-      class="hover:shadow-xl"
+      class="hidden lg:flex hover:shadow-xl"
     ></BaseAddButton>
   </div>
 </template>
@@ -34,10 +39,11 @@ const statuses = ref([
   { state : 'Active'},
   {state : 'Inactive'}
 ])
-
+const router = useRouter()
 const technicianStore = useTechnicianStore();
-
 const techniciansCount = computed(() => technicianStore.technicians.length);
+
+const addTechnician = () => router.push('/technicians/create-technician')
 
 const status = ref();
 </script>

@@ -8,7 +8,7 @@
           :options="numberOfDays"
           optionLabel="name"
           placeholder="Days"
-          class="w-40"
+          class="w-40 bg-[#0291BF] !text-white"
         />
       </div>
     </div>
@@ -18,28 +18,28 @@
       <div
         class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5 dark:border-r-gray-600"
       >
-        <h4 class="heading__h4">
+        <h4 class="heading__h4 text-gray-500">
           Average Start time
         </h4>
-        <h2 class="heading__h2 text-[#015D7B] ">
+        <h2 class="heading__h2 text-[#015D7B] font-bold ">
           12:50 pm
         </h2>
       </div>
       <div
         class="flex flex-col justify-center gap-3 border-b border-r p-3 sm:border-b-0 sm:p-5 dark:border-r-gray-600"
       >
-        <h4 class="heading__h4">
+        <h4 class="heading__h4 text-gray-500">
           Average Finish time
         </h4>
-        <h2 class="heading__h2 text-[#015D7B] ">
+        <h2 class="heading__h2 text-[#015D7B] font-bold ">
           6:01 pm
         </h2>
       </div>
       <div class="flex flex-col justify-center gap-3 border-r px-3 sm:p-5 dark:border-r-gray-600 ">
-        <h4 class="heading__h4">
+        <h4 class="heading__h4 text-gray-500">
           Average time on site
         </h4>
-        <h2 class="heading__h2 text-[#015D7B] ">
+        <h2 class="heading__h2 text-[#015D7B] font-bold">
           40m 8s
         </h2>
       </div>
@@ -47,7 +47,7 @@
         <h4 class="sm:text-md text-[16px] font-medium ">
           Average chem cost per pool
         </h4>
-        <h2 class="heading__h2 text-[#015D7B] ">
+        <h2 class="heading__h2 text-[#015D7B] font-bold">
           $2.96
         </h2>
       </div>

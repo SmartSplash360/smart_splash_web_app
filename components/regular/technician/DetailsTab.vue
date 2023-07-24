@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between gap-5 rounded-xl xl:w-1/2">
+  <div class="flex justify-between gap-5 rounded-xl xl:w-1/3">
     <div
       @click="$emit('select-tab', 'JOBS')"
       class="cursor-pointer rounded-xl bg-[#0291BF] px-3 py-2 text-white sm:px-10"

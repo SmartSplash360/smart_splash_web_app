@@ -68,32 +68,26 @@
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="span__element-large">Active Customer</p>
-          <span class="span__element-bold text-[#015D7B]"
-            >156</span
-          >
+          <h4 class="lg:heading__h4 text-gray-500">Active Customer</h4>
+          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">156</h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="span__element-large">
+          <h4 class="lg:heading__h4 text-gray-500">
             Prpoerties Serviced
-          </p>
-          <span class="span__element-bold text-[#015D7B]"
-            >178</span
-          >
+          </h4>
+          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">178</h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
         <div
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
-          <p class="span__element-large">Jobs Completed</p>
-          <span class="span__element-bold text-[#015D7B]"
-            >754</span
-          >
+          <h4 class="lg:heading__h4 text-gray-500">Jobs Completed</h4>
+          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">754</h2>
         </div>
       </div>
       <div class="hidden lg:flex-center lg:flex-1">

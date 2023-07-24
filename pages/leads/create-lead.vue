@@ -1,11 +1,11 @@
 <template>
     <form class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white  dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
-            <nuxt-link to="/customers">
+            <nuxt-link to="/leads">
                 <font-awesome-icon icon="chevron-left" />
             </nuxt-link>
             <h2 class="heading__h2 font-bold ">
-                {{ customer ? 'Edit' : 'New' }} Customer {{ customer ? `#${customer?.id}` : '' }}
+                {{ lead ? 'Edit' : 'New' }} lead {{ lead ? `#${lead?.id}` : '' }}
             </h2>
         </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -28,7 +28,7 @@
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
     </div>
-    <div v-if="!customer" class="flex flex-col justify-between gap-5 sm:flex-row">
+    <div v-if="!lead" class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Password* </label>
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
@@ -48,25 +48,26 @@
         <Button
             label="Submit"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="customer ? updateCustomer() : createCustomer()"
+            @click="lead ? updatelead() : createlead()"
         />
     </div>
     </form>
   </template>
   
   <script setup lang="ts">
-  import {useCustomerStore} from "~/stores/customer";
+  import { useLeadStore } from "~/stores/leads";
+  import {useToast} from "primevue/usetoast";
 
   definePageMeta({
-    layout: "dashboard",
-    middleware: ['auth','auto-theme'],
-  });
+  layout: "dashboard",
+  middleware: ['auth','auto-theme'],
+});
   
   
-  const store = useCustomerStore();
+  const store = useLeadStore();
   
   const props = defineProps({
-    customer: {
+    lead: {
       type: Object,
       default: () => null,
       required: false
@@ -81,19 +82,19 @@
   const passwordConfirmation = ref('')
   
   onMounted(() => {
-    if (props.customer) {
-      name.value = props.customer.name
-      surname.value = props.customer.surname
-      email.value = props.customer.email
-      phoneNumber.value = props.customer.phone_number
+    if (props.lead) {
+      name.value = props.lead.name
+      surname.value = props.lead.surname
+      email.value = props.lead.email
+      phoneNumber.value = props.lead.phone_number
     }
   })
   
-  const createCustomer = async () => {
+  const createlead = async () => {
     // TODO: add validation
   
     try {
-      await store.createCustomer({
+      await store.createLead({
         name: name.value,
         surname: surname.value,
         email: email.value,
@@ -105,7 +106,7 @@
     }
   }
   
-  const updateCustomer = async () => {
+  const updatelead = async () => {
     try {
       const data = {
         name: name.value,
@@ -114,8 +115,8 @@
         phone_number: phoneNumber.value,
       }
   
-      await store.updateCustomer(props.customer?.id, data)
-      await store.fetchCustomers()
+      await store.updateLead(props.lead?.id, data)
+      await store.fetchLeads()
   
     } catch (e) {
     }
