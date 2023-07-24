@@ -5,7 +5,7 @@
                 <font-awesome-icon icon="chevron-left" />
             </nuxt-link>
             <h2 class="heading__h2 font-bold ">
-                {{ customer ? 'Edit' : 'New' }} Customer {{ customer ? `#${customer?.id}` : '' }}
+                New Customer
             </h2>
         </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -28,7 +28,7 @@
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
     </div>
-    <div v-if="!customer" class="flex flex-col justify-between gap-5 sm:flex-row">
+    <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Password* </label>
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
@@ -48,7 +48,7 @@
         <Button
             label="Submit"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="customer ? updateCustomer() : createCustomer()"
+            @click="createCustomer()"
         />
     </div>
     </form>
@@ -65,29 +65,12 @@
   
   const store = useCustomerStore();
   
-  const props = defineProps({
-    customer: {
-      type: Object,
-      default: () => null,
-      required: false
-    }
-  });
-  
   const name = ref('')
   const surname = ref('')
   const email = ref('')
   const phoneNumber = ref('')
   const password = ref('')
   const passwordConfirmation = ref('')
-  
-  onMounted(() => {
-    if (props.customer) {
-      name.value = props.customer.name
-      surname.value = props.customer.surname
-      email.value = props.customer.email
-      phoneNumber.value = props.customer.phone_number
-    }
-  })
   
   const createCustomer = async () => {
     // TODO: add validation
@@ -101,22 +84,6 @@
         password: password.value,
         password_confirmation: passwordConfirmation.value,
       });
-    } catch (e) {
-    }
-  }
-  
-  const updateCustomer = async () => {
-    try {
-      const data = {
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
-      }
-  
-      await store.updateCustomer(props.customer?.id, data)
-      await store.fetchCustomers()
-  
     } catch (e) {
     }
   }

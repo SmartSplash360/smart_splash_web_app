@@ -5,7 +5,7 @@
                     <font-awesome-icon icon="chevron-left" />
                 </nuxt-link>
                 <h2 class="heading__h2 font-bold ">
-                    New  Alert 
+                    Edit Alert {{ alert ? `#${alert?.id}` : '' }}
                 </h2>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -81,6 +81,7 @@
                 />
             </div>
             </div>
+
             <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="status"> Status </label>
             <div class="card justify-content-center flex">
@@ -98,16 +99,16 @@
         <div class="mt-5 flex justify-end gap-5">
             <nuxt-link to="/alerts">
                 <Button
-                    label="Cancel"
-                    severity="secondary"
-                    outlined
-                    class="hover:shadow-xl"
-                />
+                label="Cancel"
+                severity="secondary"
+                outlined
+                class="hover:shadow-xl"
+            />
             </nuxt-link>
             <Button
-                label="Submit"
+                :label="alert ? 'Update' : 'Submit'"
                 class="!bg-[#0291BF] hover:shadow-xl text-white"
-                @click="createAlert()"
+                @click="alert ? updateAlert() : createAlert()"
             />
         </div>
     </form>
@@ -129,7 +130,15 @@ definePageMeta({
   const technicianStore = useTechnicianStore();
   const bodyOfWaterStore = useBodyOfWaterStore();
   const alertStore = useAlertStore();
-
+  
+  const props = defineProps({
+    alert: {
+      type: Object,
+      default: () => null,
+      required: false
+    }
+  });
+  
   const status = ref('open');
   const priority = ref('medium');
   const dateTime = ref(null);
@@ -171,10 +180,22 @@ definePageMeta({
     await bodyOfWaterStore.fetchBodiesOfWaters();
     await technicianStore.fetchTechnicians();
     await alertTypeStore.fetchAlertTypes();
+  
+    if (props.alert) {
+      const {alert} = props
+      status.value = alert.status;
+      priority.value = alert.priority;
+      dateTime.value = new Date(alert?.date_time);
+      notes.value = alert.notes;
+      alertTypeId.value = alert.alert_type_id;
+      bodyOfWaterId.value = alert.body_of_water_id;
+      technicianId.value = alert.technician_id;
+    }
   });
   
   const createAlert = async () => {
     // TODO: validation
+  
     try {
       const data = {
         status: status.value,
@@ -192,5 +213,25 @@ definePageMeta({
     } catch (e) {
     }
   };
+  
+  const updateAlert = async () => {
+    // TODO: validation
+    try {
+      const data = {
+        status: status.value,
+        priority: priority.value,
+        date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
+        notes: notes.value,
+        alert_type_id: alertTypeId.value,
+        body_of_water_id: bodyOfWaterId.value,
+        technician_id: technicianId.value
+      };
+  
+      await alertStore.updateAlert(props.alert?.id, data);
+      await alertStore.fetchAlerts();
+  
+    } catch (e) {
+    }
+  }
   
   </script>

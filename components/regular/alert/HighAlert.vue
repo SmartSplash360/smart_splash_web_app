@@ -104,16 +104,6 @@
             <div class="flex-between w-full dark:text-white">
               <span class="flex-1 paragraph__p">{{ alert.alert_type?.name }}</span>
               <span class="flex-1 paragraph__p">{{ alert.body_of_water?.customer?.name  }}</span>
-              <span>
-                <svg class="svg-inline--fa fa-ellipsis-vertical" 
-                  aria-hidden="true" focusable="false" 
-                  data-prefix="fas" data-icon="ellipsis-vertical" role="img" 
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
-                    <path class="" fill="currentColor" 
-                    d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z">
-                  </path>
-                </svg>
-              </span>
             </div>
           </template>
           <div class="flex flex-col mt-1 bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">

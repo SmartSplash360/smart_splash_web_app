@@ -5,7 +5,7 @@
                 <font-awesome-icon icon="chevron-left" />
             </nuxt-link>
             <h2 class="heading__h2 font-bold ">
-                {{ lead ? 'Edit' : 'New' }} lead {{ lead ? `#${lead?.id}` : '' }}
+              New lead 
             </h2>
         </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -28,7 +28,7 @@
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="phoneNumber"></InputText>
         </div>
     </div>
-    <div v-if="!lead" class="flex flex-col justify-between gap-5 sm:flex-row">
+    <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Password* </label>
         <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="password"></InputText>
@@ -48,7 +48,7 @@
         <Button
             label="Submit"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="lead ? updatelead() : createlead()"
+            @click="createlead()"
         />
     </div>
     </form>
@@ -66,13 +66,6 @@
   
   const store = useLeadStore();
   
-  const props = defineProps({
-    lead: {
-      type: Object,
-      default: () => null,
-      required: false
-    }
-  });
   
   const name = ref('')
   const surname = ref('')
@@ -80,15 +73,6 @@
   const phoneNumber = ref('')
   const password = ref('')
   const passwordConfirmation = ref('')
-  
-  onMounted(() => {
-    if (props.lead) {
-      name.value = props.lead.name
-      surname.value = props.lead.surname
-      email.value = props.lead.email
-      phoneNumber.value = props.lead.phone_number
-    }
-  })
   
   const createlead = async () => {
     // TODO: add validation
@@ -102,22 +86,6 @@
         password: password.value,
         password_confirmation: passwordConfirmation.value,
       });
-    } catch (e) {
-    }
-  }
-  
-  const updatelead = async () => {
-    try {
-      const data = {
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
-      }
-  
-      await store.updateLead(props.lead?.id, data)
-      await store.fetchLeads()
-  
     } catch (e) {
     }
   }

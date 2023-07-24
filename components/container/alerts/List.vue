@@ -100,7 +100,6 @@ const closeModal = ({ success, error }) => {
 };
 
 const editItem = ({ id, item }) => {
-  console.log(id, item)
   alert.value = item
   toggleAddAlertModal()
 }
