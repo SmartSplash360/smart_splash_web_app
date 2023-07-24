@@ -110,8 +110,8 @@ const selectedFile = ref(null);
 const imageSrc = ref("");
 const templateType = ref();
 const types = ref([
-  { state: "Email Campaign", option: 1 },
-  { state: "SMS Campaign", option: 2 },
+  { state: "Email Campaign", option: 2 },
+  { state: "SMS Campaign", option: 3 },
 ]);
 
 const store = useTemplateStore();
@@ -196,7 +196,7 @@ const sendCampaign = () => {
     name: name.value,
     description: description.value,
     templateId,
-    templateType: templateType.value,
+    templateType: Number(campaignType),
     lead: lead.value,
     customer: customer.value,
   });

@@ -43,20 +43,18 @@ onMounted(async () => {
 
 const createCampaign = async (data) => {
   try {
-    console.log(data)
-
-
-    return 
     // check campaign type
-    if (data.templateType === 1) {
+    if (data.templateType === 2) {
       // check if lead
       if (data.lead) {
+
         await campaignStore.createCampaignEmail({
           title: data.name,
-          role_id: 3,
+          role_id: 5,
           message: data.description,
           campaign_template_id: data.templateId,
         });
+
         toast.add({
           severity: "info",
           summary: "Success",
@@ -78,12 +76,13 @@ const createCampaign = async (data) => {
           life: 3000,
         });
       }
-    } else if (data.templateType === 2) {
+
+    } else if (data.templateType === 3) {
       // check if lead
       if (data.lead) {
         await campaignStore.createCampaignSMS({
           title: data.name,
-          role_id: 3,
+          role_id: 5,
           message: data.description,
           campaign_template_id: data.templateId,
         });
