@@ -5,7 +5,7 @@
                     <font-awesome-icon icon="chevron-left" />
                 </nuxt-link>
                 <h2 class="heading__h2 font-bold ">
-                    Edit Alert {{ alert ? `#${alert?.id}` : '' }}
+                    Edit Alert {{ alertId }}
                 </h2>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">

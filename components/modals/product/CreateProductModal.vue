@@ -54,7 +54,7 @@
           <Button
             label="Submit"
             icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
+            class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="product ? updateProduct() : createProduct() "
           />
         </div>

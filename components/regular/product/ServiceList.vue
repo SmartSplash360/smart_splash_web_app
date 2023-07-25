@@ -137,13 +137,7 @@
               <span class=" paragraph__p flex-center w-[80px] h-[32px] rounded-md border"
               :class="[service?.is_available === 0 ? 'border-[#009F10] text-[#009F10] bg-[#CCF2E2]' : 'border-[#D42F24] text-[#D42F24] bg-[#F8B4B4]']"
               >{{ service?.is_available === 0 ? 'Available' : 'Unvailable'}}</span>
-              <span>
-                <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                  <font-awesome-icon icon="ellipsis-vertical" />
-                </Button>
-                <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-                <Toast />
-              </span>
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028]">
@@ -159,6 +153,20 @@
               <span class="text-gray-500 span__element flex-1">Price</span>
               <span class="text-xs flex-1 flex justify-start">${{service.price }}</span>
             </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem( service.id, { ...service }, true )"
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                  @click="deleteItem(service?.id)"
+              />
+              </div>
           </div>
           </AccordionTab>
       </Accordion>
@@ -220,8 +228,15 @@ const closeModal = ({success, error}) => {
   }
 };
 
-const editItem = (item) => {
-  service.value = item
+const editItem = (id, item, mobileEdit = false)=> {
+  service.value = item;
+  if(mobileEdit){
+    router.push({  
+      path: '/products/edit-service',
+      query: { serviceId: id }
+    });
+    return 
+  }
   toggleAddServiceModal()
 }
 

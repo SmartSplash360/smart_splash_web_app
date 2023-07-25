@@ -141,13 +141,7 @@
               <span class=" paragraph__p flex-center w-[80px] h-[32px] rounded-md border"
               :class="[product?.is_available === 0 ? 'border-[#009F10] text-[#009F10] bg-[#CCF2E2]' : 'border-[#D42F24] text-[#D42F24] bg-[#F8B4B4]']"
               >{{ product?.is_available === 0 ? 'Available' : 'Unvailable'}}</span>
-              <span>
-                <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                  <font-awesome-icon icon="ellipsis-vertical" />
-                </Button>
-                <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-                <Toast />
-              </span>
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028]">
@@ -162,6 +156,20 @@
             <div class="flex-between px-4 py-2 rounded-md">
               <span class="text-gray-500 span__element flex-1">Price</span>
               <span class="text-xs flex-1 flex justify-start">${{product.price }}</span>
+            </div>            
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem( product.id, { ...product }, true )"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteItem(product?.id)"
+            />
             </div>
           </div>
           </AccordionTab>
@@ -222,8 +230,15 @@ const closeModal = ({ success, error }) => {
   }
 };
 
-const editItem = (item) => {
+const editItem = (id, item, mobileEdit = false) => {
   product.value = item
+  if(mobileEdit){
+    router.push({  
+      path: '/products/edit-product',
+      query: { productId: id }
+    });
+    return 
+  }
   toggleAddProductModal()
 }
 
@@ -246,26 +261,6 @@ const deleteItem = async (id) => {
     }
   })
 }
-
-const menu = ref();
-const items = ref([
-        {
-            label: 'View Alert',
-            icon: 'pi pi-eye',
-            command: () => viewAlert()
-        },
-        {
-            label: 'Delete Template',
-            icon: 'pi pi-trash',
-            command: () => {
-              deleteAlert(props.template.id)
-              router.push('/alerts')
-            }
-        }
-]);
-const toggle = (event) => {
-    menu.value.toggle(event);
-};
 
 const addProduct = () => router.push('/products/create-product')
 </script>
