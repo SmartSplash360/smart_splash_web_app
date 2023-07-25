@@ -134,17 +134,17 @@
               </div>
               <span class="flex-1 paragraph__p">{{ customer.name }}</span>
               <span class="flex-1 paragraph__p">{{ customer.email }}</span>
-              <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                <font-awesome-icon icon="ellipsis-vertical" />
-              </Button>
-              <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-              <Toast />
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
             <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
               <span class="text-[#025E7C]  dark:text-white span__element flex-1">Physical Address</span>
               <span class="text-xs flex-1 flex justify-start">{{customer.address_line1 }}</span>
+            </div>
+            <div class="flex-between px-4 py-2">
+              <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
+              <span class="text-xs flex-1 flex justify-start">{{customer?.phone_number}}</span>
             </div>
             <div class="flex-between px-4 py-2">
               <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>

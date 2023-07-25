@@ -104,6 +104,7 @@
             <div class="flex-between w-full dark:text-white">
               <span class="flex-1 paragraph__p">{{ alert.alert_type?.name }}</span>
               <span class="flex-1 paragraph__p">{{ alert.body_of_water?.customer?.name  }}</span>
+              <span> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col mt-1 bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
@@ -118,6 +119,20 @@
             <div class="flex-between px-4 py-2 rounded-md">
               <span class="text-gray-400 span__element flex-1">Technician Responsible</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.technician?.name }}</span>
+            </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteAlert(alert?.id)"
+            />
             </div>
           </div>
           </AccordionTab>

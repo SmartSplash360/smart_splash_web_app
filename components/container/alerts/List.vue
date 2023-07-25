@@ -42,7 +42,7 @@
               >
             </div>
           </template>
-          <RegularAlertMediumAlert :alerts="mediumAlerts"></RegularAlertMediumAlert>
+          <RegularAlertMediumAlert :alerts="mediumAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertMediumAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -54,12 +54,10 @@
               >
             </div>
           </template>
-          <RegularAlertLowAlert :alerts="lowAlerts"></RegularAlertLowAlert>
+          <RegularAlertLowAlert :alerts="lowAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertLowAlert>
         </TabPanel>
       </TabView>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
@@ -99,8 +97,15 @@ const closeModal = ({ success, error }) => {
   }
 };
 
-const editItem = ({ id, item }) => {
+const editItem = ({ id, item, mobileEdit=false}) => {
   alert.value = item
+  if(mobileEdit){
+    router.push({  
+      path: '/alerts/edit-alert',
+      query: { alertId: id }
+    });
+    return 
+  }
   toggleAddAlertModal()
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-nowrap lg:gap-5 dark:bg-[#1B2028] dark:text-white">
+  <div class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-wrap lg:gap-5 dark:bg-[#1B2028] dark:text-white">
     <div class="flex gap-5">
       <div
         class="flex-between w-full flex-col gap-4 items-center lg:justify-start xl:flex-row"
@@ -44,12 +44,12 @@
         }}</span>
       </div>
     </div>
-    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] md:hidden xl:flex items-start gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
+    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
       <font-awesome-icon icon="location-dot" class="text-lg"/>
       <span class="span__element">{{ fullAddress }}</span>
     </div>
     <div
-      class="min-w-[250px] max-w-[450px] flex-between  md:flex-col md:justify-end md:gap-3 lg:flex-row xl:justify-between"
+      class="min-w-[250px] max-w-[350px] flex-1 flex-between  md:flex-col lg:flex-row xl:justify-between"
     >
       <div class="relative flex-center flex-col">
         <img

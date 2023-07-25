@@ -106,9 +106,9 @@
             />
             </nuxt-link>
             <Button
-                :label="alert ? 'Update' : 'Submit'"
+                label="Update"
                 class="!bg-[#0291BF] hover:shadow-xl text-white"
-                @click="alert ? updateAlert() : createAlert()"
+                @click="updateAlert()"
             />
         </div>
     </form>
@@ -130,6 +130,9 @@ definePageMeta({
   const technicianStore = useTechnicianStore();
   const bodyOfWaterStore = useBodyOfWaterStore();
   const alertStore = useAlertStore();
+
+  const router = useRoute();
+  const alertId = router.query.alertId
   
   const props = defineProps({
     alert: {
@@ -180,39 +183,17 @@ definePageMeta({
     await bodyOfWaterStore.fetchBodiesOfWaters();
     await technicianStore.fetchTechnicians();
     await alertTypeStore.fetchAlertTypes();
-  
-    if (props.alert) {
-      const {alert} = props
-      status.value = alert.status;
-      priority.value = alert.priority;
-      dateTime.value = new Date(alert?.date_time);
-      notes.value = alert.notes;
-      alertTypeId.value = alert.alert_type_id;
-      bodyOfWaterId.value = alert.body_of_water_id;
-      technicianId.value = alert.technician_id;
-    }
+    const alert = await alertStore.fetchAlert(alertId)
+
+    status.value = alert.status;
+    priority.value = alert.priority;
+    dateTime.value = new Date(alert?.date_time);
+    notes.value = alert.notes;
+    alertTypeId.value = alert.alert_type_id;
+    bodyOfWaterId.value = alert.body_of_water_id;
+    technicianId.value = alert.technician_id;
+    
   });
-  
-  const createAlert = async () => {
-    // TODO: validation
-  
-    try {
-      const data = {
-        status: status.value,
-        priority: priority.value,
-        date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
-        notes: notes.value,
-        alert_type_id: alertTypeId.value,
-        body_of_water_id: bodyOfWaterId.value,
-        technician_id: technicianId.value
-      };
-  
-      await alertStore.createAlert(data);
-      await alertStore.fetchAlerts();
-  
-    } catch (e) {
-    }
-  };
   
   const updateAlert = async () => {
     // TODO: validation
