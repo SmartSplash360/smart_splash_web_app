@@ -1,9 +1,9 @@
 <template>
      <form  class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
-            <nuxt-link to="/technicians">
+            <span @click="$router.go(-1)">
                 <font-awesome-icon icon="chevron-left" />
-            </nuxt-link>
+            </span>
           <h2 class="heading__h2 font-bold text-[#025E7C]">
             Edit Technician {{ technicianId }}
           </h2>
