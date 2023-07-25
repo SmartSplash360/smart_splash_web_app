@@ -7,6 +7,7 @@
           v-model="type"
           :options="types"
           optionLabel="state"
+          optionValue="option"
           placeholder="Campaign Type"
           class="w-full md:w-52 dark:bg-[#1B2028]"
         />
@@ -36,7 +37,7 @@ const types = ref([
   { state : 'Email Campaign', option : 2},
   {state : 'SMS Campaign', option : 3}
 ])
-const type = ref();
+const type = ref(2);
 const router = useRouter()
 
 const searchTemplate = (value) =>  emit('search-template', value)

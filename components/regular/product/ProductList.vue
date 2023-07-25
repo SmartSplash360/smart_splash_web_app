@@ -111,8 +111,8 @@
         </Column>
       </DataTable>
     </div>
-    <Toast />
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast /> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </div>
 
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">

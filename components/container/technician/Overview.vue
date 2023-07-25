@@ -46,8 +46,8 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
-    <Toast/>
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast/> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 

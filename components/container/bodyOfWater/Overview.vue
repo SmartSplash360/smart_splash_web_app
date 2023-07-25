@@ -91,7 +91,7 @@ const jobStore = useJobStore();
 
 const props = defineProps({
   customerId: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
