@@ -49,7 +49,7 @@
         <Button
             label="Submit"
             icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
+            class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="customer ? updateCustomer() : createCustomer()"
         />
       </div>
@@ -59,7 +59,6 @@
 
 <script setup lang="ts">
 import {useCustomerStore} from "~/stores/customer";
-import {useToast} from "primevue/usetoast";
 
 const store = useCustomerStore();
 

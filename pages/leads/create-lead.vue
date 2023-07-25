@@ -1,11 +1,11 @@
 <template>
     <form class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white  dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
-            <nuxt-link to="/customers">
+            <nuxt-link to="/leads">
                 <font-awesome-icon icon="chevron-left" />
             </nuxt-link>
             <h2 class="heading__h2 font-bold ">
-                New Customer
+              New lead 
             </h2>
         </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -44,29 +44,28 @@
             severity="secondary"
             outlined
             class="hover:shadow-xl"
-            @click="cancel"
         />
         <Button
             label="Submit"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="createCustomer()"
+            @click="createlead()"
         />
     </div>
     </form>
   </template>
   
   <script setup lang="ts">
-  import {useCustomerStore} from "~/stores/customer";
+  import { useLeadStore } from "~/stores/leads";
 
   definePageMeta({
-    layout: "dashboard",
-    middleware: ['auth','auto-theme'],
-  });
+  layout: "dashboard",
+  middleware: ['auth','auto-theme'],
+});
   
   
-  const store = useCustomerStore();
+  const store = useLeadStore();
   
-  const router = useRouter()
+  
   const name = ref('')
   const surname = ref('')
   const email = ref('')
@@ -74,11 +73,11 @@
   const password = ref('')
   const passwordConfirmation = ref('')
   
-  const createCustomer = async () => {
+  const createlead = async () => {
     // TODO: add validation
   
     try {
-      await store.createCustomer({
+      await store.createLead({
         name: name.value,
         surname: surname.value,
         email: email.value,
@@ -88,9 +87,5 @@
       });
     } catch (e) {
     }
-  }
-
-  const cancel = () => {
-    router.push('/customers')
   }
   </script>

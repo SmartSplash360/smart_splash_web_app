@@ -6,7 +6,7 @@
         <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="card pb-14 user-setting-table border-b dark:border-b-gray-600 ">
+    <div class="hidden lg:flex card pb-14 user-setting-table border-b dark:border-b-gray-600 ">
       <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -108,6 +108,53 @@
         </Column>
       </DataTable>
     </div>
+    <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028]  rounded-t-xl border">
+      <div class="flex-center py-5">
+        <BaseSearchBar />
+      </div>
+      <div class="flex-between  py-5 px-5 bg-[#025E7C] text-white">
+        <h5 class="heading__h5 flex-1 flex justify-start">Name</h5>
+        <h5 class="heading__h5 flex-1 flex justify-start">Date Added</h5>
+      </div>
+      <Accordion :activeIndex="0">
+          <AccordionTab v-for="customer in customers" :key="customer.id" >
+          <template #header>
+            <div class="flex-between w-full dark:text-white">
+              <div class="mr-5">              <img
+                :alt="customer.representative.name"
+                :src="`https://primefaces.org/cdn/primevue/images/avatar/${customer.representative.image}`"
+                style="width: 32px"
+              />
+              </div>
+              <span class="flex-1 paragraph__p">{{ customer.name }}</span>
+              <span class="flex-1 paragraph__p">{{ customer.email }}</span>
+            </div>
+          </template>
+          <div class="flex flex-col gap-2  py-2 pr-2 dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
+            <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
+              <span class="text-[#025E7C]  dark:text-white span__element flex-1">Last Active</span>
+              <span class="span__elementflex-1 flex justify-start">
+                {{
+                customer.date.toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })
+              }} </span>
+            </div>
+            <div class="card justify-end flex !text-white">
+              <Dropdown
+                v-model="selectedRole"
+                :options="roles"
+                optionLabel="name"
+                placeholder="Role"
+                class="w-[12rem] bg-black !text-white dark:bg-[#1B2028]"
+              />
+            </div>
+          </div>
+          </AccordionTab>
+      </Accordion>
+  </div>
     <BaseUserSetting
       :role="'Manager'"
       :settings="managerSetting"

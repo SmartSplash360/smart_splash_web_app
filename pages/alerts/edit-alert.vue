@@ -5,7 +5,7 @@
                     <font-awesome-icon icon="chevron-left" />
                 </nuxt-link>
                 <h2 class="heading__h2 font-bold ">
-                    New  Alert 
+                    Edit Alert {{ alertId }}
                 </h2>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -81,6 +81,7 @@
                 />
             </div>
             </div>
+
             <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="status"> Status </label>
             <div class="card justify-content-center flex">
@@ -98,17 +99,17 @@
         <div class="mt-5 flex justify-end gap-5">
             <nuxt-link to="/alerts">
                 <Button
-                    label="Cancel"
-                    severity="secondary"
-                    outlined
-                    class="hover:shadow-xl"
-                    @click="cancel"
-                />
+                label="Cancel"
+                severity="secondary"
+                outlined
+                class="hover:shadow-xl"
+                @click="cancel"
+            />
             </nuxt-link>
             <Button
-                label="Submit"
+                label="Update"
                 class="!bg-[#0291BF] hover:shadow-xl text-white"
-                @click="createAlert()"
+                @click="updateAlert()"
             />
         </div>
     </form>
@@ -130,8 +131,11 @@ definePageMeta({
   const technicianStore = useTechnicianStore();
   const bodyOfWaterStore = useBodyOfWaterStore();
   const alertStore = useAlertStore();
-  const router = useRouter()
 
+  const router = useRouter()
+  const route = useRoute();
+  const alertId = route.query.alertId
+  
   const status = ref('open');
   const priority = ref('medium');
   const dateTime = ref(null);
@@ -173,9 +177,19 @@ definePageMeta({
     await bodyOfWaterStore.fetchBodiesOfWaters();
     await technicianStore.fetchTechnicians();
     await alertTypeStore.fetchAlertTypes();
+    const alert = await alertStore.fetchAlert(alertId)
+
+    status.value = alert.status;
+    priority.value = alert.priority;
+    dateTime.value = new Date(alert?.date_time);
+    notes.value = alert.notes;
+    alertTypeId.value = alert.alert_type_id;
+    bodyOfWaterId.value = alert.body_of_water_id;
+    technicianId.value = alert.technician_id;
+    
   });
   
-  const createAlert = async () => {
+  const updateAlert = async () => {
     // TODO: validation
     try {
       const data = {
@@ -188,14 +202,14 @@ definePageMeta({
         technician_id: technicianId.value
       };
   
-      await alertStore.createAlert(data);
+      await alertStore.updateAlert(props.alert?.id, data);
       await alertStore.fetchAlerts();
   
     } catch (e) {
     }
-  };
-
-const cancel = () => {
+  }
+  const cancel = () => {
     router.push('/alerts')
-}
+  }
+  
   </script>

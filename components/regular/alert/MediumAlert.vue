@@ -57,6 +57,23 @@
                  :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
           </template>
         </Column>
+        <Column>
+          <template #body="slotProps">
+            <div class="flex flex-row gap-2">
+              <Button
+                  icon="pi pi-pencil"
+                  text raised rounded
+                  @click="editAlert(slotProps.data)"
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger"
+                  @click="deleteAlert(slotProps?.data?.id)"
+              />
+            </div>
+          </template>
+        </Column>
       </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
@@ -75,27 +92,35 @@
             <div class="flex-between w-full dark:text-white">
               <span class="flex-1 paragraph__p">{{ alert.alert_type?.name }}</span>
               <span class="flex-1 paragraph__p">{{ alert.body_of_water?.customer?.name  }}</span>
-              <span>
-                <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                  <font-awesome-icon icon="ellipsis-vertical" />
-                </Button>
-                <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-                <!-- <Toast /> -->
-              </span>
+              <span> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028]">
-            <div class="flex-between px-4 py-2 rounded-md">
+            <div class="flex-between px-4 py-2">
               <span class="text-gray-500 span__element flex-1">Address</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.body_of_water?.customer?.address[0]?.address_line1 }}</span>
             </div>
-            <div class="flex-between px-4 py-2 rounded-md">
+            <div class="flex-between px-4 py-2">
               <span class="text-gray-500 span__element flex-1">Pool name</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.alert_type?.name}}</span>
             </div>
-            <div class="flex-between px-4 py-2 rounded-md">
+            <div class="flex-between px-4 py-2">
               <span class="text-gray-500 span__element flex-1">Technician Responsible</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.technician?.name }}</span>
+            </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteAlert(alert?.id)"
+            />
             </div>
           </div>
           </AccordionTab>
@@ -111,35 +136,23 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  editItem : Function,
+  deleteItem : Function
 });
 
+const loading = ref(true);
 const alertCount = computed(() => props.alerts.length);
 
 onMounted(async () => {
   loading.value = false;
 });
 
-const menu = ref();
-  const items = ref([
-          {
-              label: 'View Alert',
-              icon: 'pi pi-eye',
-              command: () => viewAlert()
-          },
-          {
-              label: 'Delete Template',
-              icon: 'pi pi-trash',
-              command: () => {
-                deleteAlert(props.template.id)
-                router.push('/alerts')
-              }
-          }
-  ]);
-  const toggle = (event) => {
-      menu.value.toggle(event);
-  };
 
-  const viewAlert = () => {}
-  const deleteAlert = () => {}
-const loading = ref(true);
+const editAlert = (alert) => {
+  props.editItem({ id: alert.id, item: { ...alert }})
+};
+
+const deleteAlert = async (id) => {
+  props.deleteItem({ id })
+};
 </script>

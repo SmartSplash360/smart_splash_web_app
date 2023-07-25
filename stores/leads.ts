@@ -11,6 +11,7 @@ export const useLeadStore = defineStore("lead", {
     },
     state: () => ({
         leads: [],
+        searchQuery : '',
     }),
     getters: {
         getLeads(state) {
@@ -18,7 +19,18 @@ export const useLeadStore = defineStore("lead", {
         },
         getLeadById: (state) => (id: number | string) => {
             return state.leads.find((lead: Customer) => lead.id === id);
-        }
+        },
+        filterLeads : (state) => () => {
+            const search = state.searchQuery.toLocaleLowerCase();
+            return state.leads.filter((lead:Customer) => lead.name.toLocaleLowerCase().includes(search));
+        },
+        sortLeads : (state) => () =>  {
+            return state.leads.sort(function(a:Customer,b:Customer){
+              if (a.name < b.name) return -1;
+              if (a.name  > b.name) return 1;
+              return 0;
+            })
+        },
     },
     actions: {
         async fetchLeads() {

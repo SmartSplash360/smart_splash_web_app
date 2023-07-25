@@ -4,10 +4,13 @@
       class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]">
     <form
         @click.stop
-        class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
-      <h3 class="heading__h3 text-[#025E7C]">
+        class="overflow-auto flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]">
+      <div class="flex-between items-center">
+        <h3 class="heading__h3 text-[#025E7C]">
         {{ readOnly === true ? 'View' : job && !readOnly ? 'Edit' : 'New' }} Job {{ job ? `#${job?.id}` : '' }}
       </h3>
+      <span @click="toggleAddJobModal({ show: false })"><font-awesome-icon icon="circle-xmark" class="text-xl"/></span>
+      </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="type"> Customer* </label>
@@ -96,7 +99,7 @@
         <Button
             label="Submit"
             icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
+            class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="job ? updateJob() : createJob()"
         />
       </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col gap-10">
-    <div class="hidden w-full justify-end gap-5 sm:flex">
+  <div class="hidden lg:flex  flex-col gap-10">
+    <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
           :btnText="' Product'"
           @click="toggleAddProductModal"
@@ -114,6 +114,67 @@
     <!-- <Toast /> -->
     <!-- <ConfirmDialog></ConfirmDialog> -->
   </div>
+
+  <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
+      <div class="flex flex-col">
+          <BaseAddButton
+            :btnText="'Product'"
+            @click="addProduct"
+            class="-translate-y-[7rem] w-[110px] justify-end self-end hover:shadow-xl"
+          ></BaseAddButton>
+          <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
+            <h5 class="heading__h5 flex-1">Name</h5>
+            <h5 class="heading__h5 flex-1 flex justify-start">Status</h5>
+        </div>
+      </div>
+      <div v-if="productCount == 0" class="flex-center">
+        <h5 class="heading__h5">
+          There is no product
+        </h5>
+      </div>
+      <Accordion v-else :activeIndex="0">
+          <AccordionTab v-for="product in products" :key="product.id" >
+          <template #header>
+            <div class="flex-between w-full dark:text-white">
+              <img :src="BoxIcon" alt="box-icon" class="w-[25px] h-[25px] mr-3"/>
+              <span class="flex-1 paragraph__p">{{ product?.name }}</span>
+              <span class=" paragraph__p flex-center w-[80px] h-[32px] rounded-md border"
+              :class="[product?.is_available === 0 ? 'border-[#009F10] text-[#009F10] bg-[#CCF2E2]' : 'border-[#D42F24] text-[#D42F24] bg-[#F8B4B4]']"
+              >{{ product?.is_available === 0 ? 'Available' : 'Unvailable'}}</span>
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
+            </div>
+          </template>
+          <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028]">
+            <div class="flex-between px-4 py-2 rounded-md">
+              <span class="text-gray-500 span__element flex-1">Created Date</span>
+              <span class="text-xs flex-1 flex justify-start">{{product.created_at }}</span>
+            </div>
+            <div class="flex-between px-4 py-2 rounded-md">
+              <span class="text-gray-500 span__element flex-1">Description</span>
+              <span class="text-xs flex-1 flex justify-start">{{product.description}}</span>
+            </div>
+            <div class="flex-between px-4 py-2 rounded-md">
+              <span class="text-gray-500 span__element flex-1">Price</span>
+              <span class="text-xs flex-1 flex justify-start">${{product.price }}</span>
+            </div>            
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem( product.id, { ...product }, true )"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteItem(product?.id)"
+            />
+            </div>
+          </div>
+          </AccordionTab>
+      </Accordion>
+  </div>
 </template>
 
 <script setup>
@@ -128,6 +189,7 @@ import {useConfirm} from "primevue/useconfirm";
 const productStore = useProductStore()
 const toast = useToast();
 const confirm = useConfirm();
+const router = useRouter()
 
 onMounted(() => {
   loading.value = false;
@@ -150,6 +212,9 @@ const addProductModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
 
+const productCount = computed(() => products.length);
+
+
 const toggleAddProductModal = () => (addProductModal.value = true);
 
 const closeModal = ({ success, error }) => {
@@ -165,8 +230,15 @@ const closeModal = ({ success, error }) => {
   }
 };
 
-const editItem = (item) => {
+const editItem = (id, item, mobileEdit = false) => {
   product.value = item
+  if(mobileEdit){
+    router.push({  
+      path: '/products/edit-product',
+      query: { productId: id }
+    });
+    return 
+  }
   toggleAddProductModal()
 }
 
@@ -189,4 +261,6 @@ const deleteItem = async (id) => {
     }
   })
 }
+
+const addProduct = () => router.push('/products/create-product')
 </script>

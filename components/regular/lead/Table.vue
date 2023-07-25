@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-table laptop+ card hidden sm:block">
+  <div class="customer-table laptop+ card hidden lg:block">
     <DataTable
         v-model:filters="filters"
         :value="leads"
@@ -113,72 +113,91 @@
         </Column>
     </DataTable>
   </div>
-  <div class="mobile- flex flex-col gap-2 sm:hidden">
-    <div class="card border border-b-0 border-t-0">
-      <DataTable
-          v-model:filters="filters"
-          :value="leads"
-          paginator
-          :rows="10"
-          tableStyle="width : 100%; overflow : hidden"
-          :loading="loading"
-          :globalFilterFields="['customer', 'representative.name']"
-      >
-        <template #header>
-          <div class="flex items-center justify-between dark:border-0 mb-5 px-2">
-            <div class="flex w-56 justify-start">
-              <span class="p-input-icon-right w-full">
-                <i class="pi pi-search"/>
-                <InputText
-                    v-model="filters['global'].value"
-                    placeholder=" Search"
-                    class="w-full dark:bg-[#1B2028] !rounded-xl"
-                />
-              </span>
-            </div>
-            <div>
-              <Button
-                  icon="pi pi-external-link"
-                  label="Export"
-                  @click="exportCSV($event)"
-                  severity="success"
-              />
-            </div>
-          </div>
-        </template>
-        <Column field="id" header="No" sortable></Column>
-        <Column field="name" header="Customer" sortable></Column>
-        <Column field="email" header="Email"></Column>
-        <Column>
-          <template #body="slotProps">
-            <div class="card flex justify-content-center">
+  <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] mx-5 -mt-20 rounded-t-xl border">
+      <div class="flex-between py-1 px-2">
+         <div class="flex-center gap-2 px-2 cursor-pointer" @click="handleSort">
+          <img :src="SortIcon" alt="sort-icon">
+          <span class="span__element">Sort By</span>
+        </div>
+        <BaseAddButton
+          @click="createLead"
+        ></BaseAddButton>
+      </div>
+      <div class="flex-between  py-5 px-5 border-t border-b">
+        <h5 class="heading__h5 flex-1">No</h5>
+        <h5 class="heading__h5 flex-1 flex justify-start">Name</h5>
+        <h5 class="heading__h5 flex-1 flex justify-start">Email address</h5>
+      </div>
+      <div v-if="leadCount == 0" class="flex-center">
+        <h5 class="heading__h5">
+          There is no customer
+        </h5>
+      </div>
+      <Accordion v-else :activeIndex="0">
+          <AccordionTab v-for="lead in leadsMobiles" :key="lead.id" >
+          <template #header>
+            <div class="flex-between w-full dark:text-white">
+              <div class="mr-5">
+                <span class=" flex-center text-white rounded-md span__element text-xs w-6 h-6 bg-[#025E7C]">{{ lead.id }}</span>
+              </div>
+              <span class="flex-1 paragraph__p">{{ lead.name }}</span>
+              <span class="flex-1 paragraph__p">{{ lead.email }}</span>
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
-        </Column>
-      </DataTable>
-    </div>
-    <!-- <Toast /> -->
+          <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
+            <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
+              <span class="text-[#025E7C]  dark:text-white span__element flex-1">Physical Address</span>
+              <span class="text-xs flex-1 flex justify-start">{{lead.address_line1 }}</span>
+            </div>
+            <div class="flex-between px-4 py-2">
+              <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
+              <span class="text-xs flex-1 flex justify-start">{{lead?.phone_number}}</span>
+            </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <!-- <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="viewLead(lead?.id)"
+              /> -->
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem({ id: lead.id, item: { ...lead },mobileEdit : true })"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteItem(lead?.id)"
+            />
+            </div>
+          </div>
+          </AccordionTab>
+      </Accordion>
   </div>
 </template>
 
 <script setup>
 import {FilterMatchMode} from "primevue/api";
-import { useToast } from "primevue/usetoast";
+import SortIcon from '~/assets/icons/arrow-sort.svg'
 import Dropdown from 'v-dropdown'
 import {useLeadStore} from "~/stores/leads";
 import { format } from 'date-fns'
-
-const router = useRouter()
-const leadStore = useLeadStore()
 
 const props = defineProps({
   convertToCustomer: Function,
   callLead: Function,
   editItem: Function,
-  deleteItem: Function
+  deleteItem: Function,
+  leadsMobiles : Array,
+  handleSort : Function,
 });
+const router = useRouter()
+const leadStore = useLeadStore();
 
-const toast = useToast();
 
 const leads= computed(() => leadStore.getLeads)
 
@@ -191,6 +210,11 @@ const loading = ref(false);
 
 const dt = ref();
 
+
+const createLead = () => router.push('/leads/create-lead');
+// const viewLead = (id) => router.push(`/leads/${id}`);
+
+const leadCount = computed(() => leads.lenght)
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };

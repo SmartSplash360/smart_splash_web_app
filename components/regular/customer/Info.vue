@@ -1,39 +1,35 @@
 <template>
-  <div
-    class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-nowrap lg:gap-5 dark:bg-[#1B2028] dark:text-white"
-  >
-    <div class="flex gap-5 lg:w-1/5">
+  <div class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-wrap lg:gap-5 dark:bg-[#1B2028] dark:text-white">
+    <div class="flex gap-5">
       <div
-        class="flex-between w-full flex-col gap-5 lg:justify-start xl:flex-row"
+        class="flex-between w-full flex-col gap-4 items-center lg:justify-start xl:flex-row"
       >
         <img
           :src="customerInfo.photo ?? ''"
           alt="user-profile"
-          class="h-48 w-48 items-center rounded-full lg:h-[60px] lg:w-[60px] xl:h-28 xl:w-28"
+          class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
         />
-        <div class="flex flex-col gap-1">
-          <h3 class="hidden heading__h4F  xl:flex">
+        <div class="flex flex-col gap-3">
+          <h3 class="hidden min-w-max text-[13px] text-gray-500 lg:flex">
             CUSTOMER INFO:
           </h3>
           <div class="flex items-center gap-2">
-            <span class="span__element">{{
-              customerInfo.name
-            }} {{ customerInfo?.surname }}</span>
+            <span class="span__element ">{{ customerInfo.name }}</span>
             <img
               :src="ChatIcon"
               alt="chat-icon"
-              class="h-4 w-4 cursor-pointer lg:h-[25px] lg:w-[25px]"
+              class="h-4 w-4 cursor-pointer lg:h-[20px] lg:w-[20px]"
             />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-5 md:gap-3 lg:w-1/5">
-      <div class="flex items-center gap-3">
+    <div class="flex flex-col gap-5 md:gap-3">
+      <div class="flex items-center gap-3 border-b border-gray-300 py-2">
         <span class="flex h-[25px] w-[25px] place-items-center"
           ><Avatar
             v-badge.danger="3"
-            class="p-overlay-badge h-4 w-4 lg:h-[25px] lg:w-[25px]"
+            class="p-overlay-badge h-4 w-4 lg:h-[20px] lg:w-[20px]"
             :image="EmailIcon"
             size="medium"
         /></span>
@@ -48,16 +44,12 @@
         }}</span>
       </div>
     </div>
-    <div
-      class="flex items-start gap-1 overflow-hidden text-ellipsis md:hidden lg:w-1/5 xl:flex xl:h-[75px] xl:gap-3"
-    >
+    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
       <font-awesome-icon icon="location-dot" class="text-lg"/>
-      <span class="span__element">
-        {{ fullAddress }}</span
-      >
+      <span class="span__element">{{ fullAddress }}</span>
     </div>
     <div
-      class="lg:1/5 ml-auto flex-between w-full flex-row  md:flex-col md:justify-end md:gap-6 lg:flex-row xl:flex-1 xl:justify-between 2xl:pl-48"
+      class="min-w-[250px] max-w-[350px] flex-1 flex-between  md:flex-col lg:flex-row xl:justify-between"
     >
       <div class="relative flex-center flex-col">
         <img

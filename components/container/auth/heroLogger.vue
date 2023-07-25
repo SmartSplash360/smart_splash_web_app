@@ -14,12 +14,12 @@
     </div>
     <div class="hero-signin-container" v-else="login">
       <h2
-        class="text-center text-3xl text-[#0291BF]"
+        class="min-w-max text-center text-[40px] font-medium text-[#0291BF]"
       >
         Welcome Back!
       </h2>
       <div
-        class="flex max-h-[30rem] max-w-[30rem] min-w-[18rem] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
+        class="flex lg:w-[320px] 2xl:w-[400px]  flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
       >
         <img
           :src="img_browser_stat"
@@ -42,7 +42,7 @@ const props = defineProps({
 
 <style scoped>
 .hero-signup-container {
-  background-image: url("../../assets/images/swimming-pool.jpg");
+  background-image: url("../../../assets/images/swimming-pool.jpg");
   height: 100%;
   padding: 20px;
   display: flex;
