@@ -142,11 +142,7 @@
               </div>
               <span class="flex-1 paragraph__p">{{ lead.name }}</span>
               <span class="flex-1 paragraph__p">{{ lead.email }}</span>
-              <Button type="button"  @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" class="border-none">
-                <font-awesome-icon icon="ellipsis-vertical" />
-              </Button>
-              <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" class="bg-white dark:bg-[#1B2028] text-black dark:text-white"/>
-              <Toast />
+              <span class="ml-2"> <font-awesome-icon icon="ellipsis-vertical" /></span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
@@ -158,6 +154,26 @@
               <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
               <span class="text-xs flex-1 flex justify-start">{{lead?.phone_number}}</span>
             </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <!-- <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="viewLead(lead?.id)"
+              /> -->
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem({ id: lead.id, item: { ...lead },mobileEdit : true })"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteItem(lead?.id)"
+            />
+            </div>
           </div>
           </AccordionTab>
       </Accordion>
@@ -166,14 +182,10 @@
 
 <script setup>
 import {FilterMatchMode} from "primevue/api";
-import { useToast } from "primevue/usetoast";
 import SortIcon from '~/assets/icons/arrow-sort.svg'
 import Dropdown from 'v-dropdown'
 import {useLeadStore} from "~/stores/leads";
 import { format } from 'date-fns'
-
-const router = useRouter()
-const leadStore = useLeadStore()
 
 const props = defineProps({
   convertToCustomer: Function,
@@ -183,8 +195,9 @@ const props = defineProps({
   leadsMobiles : Array,
   handleSort : Function,
 });
+const router = useRouter()
+const leadStore = useLeadStore();
 
-const toast = useToast();
 
 const leads= computed(() => leadStore.getLeads)
 
@@ -195,35 +208,11 @@ const filters = ref({
 });
 const loading = ref(false);
 
-const menu = ref();
-const items = ref([
-    {
-        label: 'View Template',
-        icon: 'pi pi-eye',
-        command: () => viewTemplate()
-    },
-    {
-        label: 'Edit Template',
-        icon: 'pi pi-pencil',
-        command: () => editTemplate()
-    },
-    {
-        label: 'Delete Template',
-        icon: 'pi pi-trash',
-        command: () => {
-          deleteTemplate(props.template.id)
-          router.push('/campaigns')
-        }
-    }
-]);
-const toggle = (event) => {
-    menu.value.toggle(event);
-};
-
 const dt = ref();
 
 
 const createLead = () => router.push('/leads/create-lead');
+// const viewLead = (id) => router.push(`/leads/${id}`);
 
 const leadCount = computed(() => leads.lenght)
 const exportCSV = (event) => {

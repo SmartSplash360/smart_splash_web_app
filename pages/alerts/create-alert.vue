@@ -102,6 +102,7 @@
                     severity="secondary"
                     outlined
                     class="hover:shadow-xl"
+                    @click="cancel"
                 />
             </nuxt-link>
             <Button
@@ -129,6 +130,7 @@ definePageMeta({
   const technicianStore = useTechnicianStore();
   const bodyOfWaterStore = useBodyOfWaterStore();
   const alertStore = useAlertStore();
+  const router = useRouter()
 
   const status = ref('open');
   const priority = ref('medium');
@@ -192,5 +194,8 @@ definePageMeta({
     } catch (e) {
     }
   };
-  
+
+const cancel = () => {
+    router.push('/alerts')
+}
   </script>

@@ -158,7 +158,6 @@ onMounted(async () => {
 
 const loading = ref(true);
 
-
 const alertCount = computed(() => props.alerts.length)
 
 const editAlert = (alert) => {

@@ -56,7 +56,6 @@
   
   <script setup lang="ts">
   import { useLeadStore } from "~/stores/leads";
-  import {useToast} from "primevue/usetoast";
 
   definePageMeta({
   layout: "dashboard",

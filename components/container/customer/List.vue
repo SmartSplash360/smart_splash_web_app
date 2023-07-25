@@ -61,6 +61,7 @@ defineProps({
 const toast = useToast();
 const confirm = useConfirm();
 const customerStore = useCustomerStore();
+const router = useRouter()
 
 const addCustomerModal = ref(false);
 const customer = ref()
@@ -103,8 +104,15 @@ const closeModal = ({ success, error }) => {
   }
 };
 
-const editItem = ({ id, item }) => {
-  customer.value = item
+const editItem = ({ id, item, mobileEdit = false }) => {
+  customer.value = item;
+  if(mobileEdit){
+    router.push({  
+      path: '/customers/edit-customer',
+      query: { customerId: id }
+    });
+    return 
+  }
   toggleAddCustomerModal()
 }
 

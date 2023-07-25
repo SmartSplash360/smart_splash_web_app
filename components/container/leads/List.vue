@@ -53,7 +53,7 @@ defineProps({
 const toast = useToast();
 const confirm = useConfirm();
 const leadStore = useLeadStore();
-
+const router = useRouter()
 const editLeadModal = ref(false);
 const voiceCallModal = ref(false);
 const lead = ref();
@@ -149,9 +149,15 @@ const callLead = (item) => {
   toggleVoiceCallModal();
 };
 
-const editItem = ({ id, item }) => {
-  console.log(id, item);
+const editItem = ({ id, item, mobileEdit=false }) => {
   lead.value = item;
+  if(mobileEdit){
+    router.push({  
+      path: '/leads/edit-lead',
+      query: { leadId: id }
+    });
+    return 
+  }
   toggleEditLeadModal();
 };
 

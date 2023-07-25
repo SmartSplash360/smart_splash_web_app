@@ -44,6 +44,7 @@
             severity="secondary"
             outlined
             class="hover:shadow-xl"
+            @click="cancel"
         />
         <Button
             label="Submit"
@@ -65,6 +66,7 @@
   
   const store = useCustomerStore();
   
+  const router = useRouter()
   const name = ref('')
   const surname = ref('')
   const email = ref('')
@@ -86,5 +88,9 @@
       });
     } catch (e) {
     }
+  }
+
+  const cancel = () => {
+    router.push('/customers')
   }
   </script>

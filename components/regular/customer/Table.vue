@@ -150,6 +150,26 @@
               <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
               <span class="text-xs flex-1 flex justify-start">{{customer?.phone_number}}</span>
             </div>
+            <div class="flex justify-end px-4 py-2 gap-2">
+              <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="viewCustomer(customer?.id)"
+              />
+              <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="editItem({ id: customer.id, item: { ...customer },mobileEdit : true })"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="deleteItem(customer?.id)"
+            />
+            </div>
           </div>
           </AccordionTab>
       </Accordion>
@@ -191,34 +211,6 @@ onMounted(() => {
 
 const createCustomer = () => router.push('/customers/create-customer');
 const viewCustomer = (id) => router.push(`/customers/${id}`);
-const editCustomer = (customer) => props.editItem(customer);
-const deleteCustomer = (id) =>  props.deleteItem(id);
-
-  
-const menu = ref();
-const items = ref([
-        {
-            label: 'View Customer',
-            icon: 'pi pi-eye',
-            command: () => viewCustomer()
-        },
-        {
-            label: 'Edit Customer',
-            icon: 'pi pi-pencil',
-            command: () => editCustomer()
-        },
-        {
-            label: 'Delete Customer',
-            icon: 'pi pi-trash',
-            command: () => {
-              deleteCustomer()
-              window.location.href = '/customers';
-            }
-        }
-]);
-const toggle = (event) => {
-    menu.value.toggle(event);
-};
   
 
 const dt = ref();
