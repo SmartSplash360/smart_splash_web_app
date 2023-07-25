@@ -237,6 +237,7 @@ onMounted(async () => {
   map.value = new maps.Map(mapDiv.value, {
     center: bodyOfWaterPin.value,
     zoom: 15,
+    mapTypeId: maps.MapTypeId.HYBRID,
   });
 
   // set location marker
