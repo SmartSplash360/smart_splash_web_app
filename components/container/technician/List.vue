@@ -41,7 +41,7 @@ defineProps({
 
 const toast = useToast();
 const confirm = useConfirm();
-
+const router = useRouter()
 const addTechnicianModal = ref(false);
 const technician = ref();
 
@@ -74,9 +74,15 @@ const closeModal = ({success, error}) => {
 
 const technicians = computed(() => store.getTechnicians)
 
-const editItem = ({id, item}) => {
-  console.log(id, item)
+const editItem = ({id, item, mobileEdit=false}) => {
   technician.value = item
+  if(mobileEdit){
+    router.push({  
+      path: '/technicians/edit-technician',
+      query: { technicianId: id }
+    });
+    return 
+  }
   toggleAddTechnicianModal()
 }
 

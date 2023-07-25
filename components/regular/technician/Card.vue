@@ -18,10 +18,10 @@
             </span>
             <div
                 v-if="showMenu"
-                class="absolute -right-16 top-8 z-10 flex-center min-h-[81px] min-w-[171px] flex-col rounded-md bg-white shadow-md"
+                class="absolute -right-2 sm:-right-16 top-8 z-10 flex-center min-h-[81px] min-w-[171px] flex-col rounded-md bg-white shadow-md"
             >
               <nuxt-link
-                  :to="`technicians/${props.technician.id}`"
+                  :to="`technicians/${technician.id}`"
                   class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-b-none px-3 py-2 hover:bg-gray-200"
               >
                 <i class="pi pi-eye"></i>
@@ -32,7 +32,17 @@
               </nuxt-link>
               <div
                   @click="editTechnician"
-                  class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
+                  class="hidden lg:flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
+              >
+                <i class="pi pi-pencil"></i>
+
+                <span class="min-w-max span__element">
+                  Edit Technician</span
+                >
+              </div>
+              <div
+                  @click="editItem({id : technician.id, item: technician, mobileEdit: true })"
+                  class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200 lg:hidden"
               >
                 <i class="pi pi-pencil"></i>
 
@@ -133,12 +143,10 @@ const toggleMenu = () => {
 };
 
 const deleteTechnician = () => {
-  console.log("delete technician");
   props.deleteItem({ id: props.technician?.id });
 };
 
 const editTechnician = () => {
-  console.log("edit technician");
   props.editItem({ item: props.technician });
 }
 </script>

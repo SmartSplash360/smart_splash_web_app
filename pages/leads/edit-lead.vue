@@ -52,20 +52,20 @@
               label="Save"
               icon="pi pi-check"
               class="!bg-[#0291BF] hover:shadow-xl text-white"
-              @click="lead ? updateLead() : createLead()"
+              @click="updateLead()"
           />
         </div>
       </form>
   </template>
   
   <script setup>  
+  import {onMounted, ref} from 'vue'
+  import {useLeadStore} from "~/stores/leads";
+  
   definePageMeta({
     layout: "dashboard",
     middleware: ['auth','auto-theme'],
   });
-  
-  import {onMounted, ref} from 'vue'
-  import {useLeadStore} from "~/stores/leads";
   
   const store = useLeadStore();  
   const route = useRoute();

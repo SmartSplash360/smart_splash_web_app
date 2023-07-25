@@ -49,7 +49,7 @@
           <Button
               label="Submit"
               icon="pi pi-check"
-              class="!bg-[#0291BF] hover:shadow-xl"
+              class="!bg-[#0291BF] hover:shadow-xl text-white"
               @click="technician ? updateTechnician() : createTechnician()"
           />
         </div>
