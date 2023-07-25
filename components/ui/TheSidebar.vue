@@ -8,6 +8,7 @@
     dark:from-inherit
     h-full flex-col gap-[8rem] px-6 lg:flex  2xl:pb-20 "
   >
+  <div class="flex-center flex-col gap-5">
     <div class="max-h-[150px] lg:max-w-[298px]">
       <img
         :src="SmartPlashLogo"
@@ -15,7 +16,13 @@
         class="h-full w-full"
       />
     </div>
-    <div class="flex-1 xl:-mt-10 ">
+    <button @click="handleToggleSide" class="self-center w-8 h-8 bg-[#707070] rounded-md text-white flex-center">
+      <font-awesome-icon v-if="!toggleSide" icon="arrow-right" />
+      <font-awesome-icon v-else icon="arrow-left" />
+    </button>
+  </div>
+
+    <div class="flex-1 xl:-mt-14 ">
       <ul class="flex flex-col gap-5 text-white">
         <li v-for="link in sideBarLinks">
           <nuxt-link
@@ -33,7 +40,7 @@
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span class="nav-link-item">{{ link.name }}</span>
+            <span v-if="toggleSide" class="nav-link-item">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>
@@ -47,6 +54,10 @@
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { sideBarLinks } from "~/utils/sidebarLinks";
 
+defineProps({
+  toggleSide : Boolean,
+  handleToggleSide : Function
+})
 </script>
 
 <style scoped>
