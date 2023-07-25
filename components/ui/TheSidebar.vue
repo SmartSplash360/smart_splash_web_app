@@ -17,7 +17,7 @@
       />
     </div>
     <button @click="handleToggleSide" class="self-center w-8 h-8 bg-[#707070] rounded-md text-white flex-center">
-      <font-awesome-icon v-if="!toggleSide" icon="arrow-right" />
+      <font-awesome-icon v-if="toggleSide" icon="arrow-right" />
       <font-awesome-icon v-else icon="arrow-left" />
     </button>
   </div>
@@ -40,7 +40,7 @@
             >
               <font-awesome-icon :icon="link.icon"
             /></span>
-            <span v-if="toggleSide" class="nav-link-item">{{ link.name }}</span>
+            <span v-if="!toggleSide" class="nav-link-item">{{ link.name }}</span>
           </nuxt-link>
         </li>
       </ul>

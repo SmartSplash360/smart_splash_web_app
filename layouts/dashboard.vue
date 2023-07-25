@@ -2,7 +2,7 @@
   <main
     class="flex max-h-[110vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
   >
-    <div class="hidden lg:block" :class="[!toggleSide && 'w-[100px]']">
+    <div class="hidden lg:block" :class="[toggleSide && 'w-[100px]']">
       <UiTheSidebar 
         :toggleSide="toggleSide"
         :handleToggleSide="handleToggleSide"
