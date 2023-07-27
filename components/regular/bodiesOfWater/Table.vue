@@ -46,11 +46,6 @@
           field="name"
           header="Body Of Water"
           sortable>
-        <template #body="slotProps">
-          <nuxt-link :to="`/bodiesOfWater/${slotProps.data.id}`">
-            {{ slotProps.data.name }}
-          </nuxt-link>
-        </template>
       </Column>
       <Column
           field="address"

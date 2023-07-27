@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     baseURL: baseUrl,
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [
         {

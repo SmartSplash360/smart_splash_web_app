@@ -26,7 +26,7 @@
                 <input type="file" ref="imageInput" @change="handleUpload" accept="image/*" id="image">
             </div>
         </div>
-        <BaseQuillEditor  @handleEditorChange="editorChange" :description="description"/>        
+        <BaseQuillEditor :description="description"/>        
         <div class="mt-5 flex justify-end gap-5">
           <Button
               label="Cancel"
@@ -76,7 +76,7 @@
     const handleClear = () => {
       selectedFile.value = null;
     };
-    const editorChange = (value) => description.value = value;
+    // const editorChange = (value) => description.value = value;
     const editTemplate = async() => {
         try {
             const formData = new FormData();

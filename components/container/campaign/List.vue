@@ -12,6 +12,7 @@
           <RegularCampaignTemplateCard v-for="template in templates"
           :key="template.id"
           :template="template"
+          :campaignType="type"
         ></RegularCampaignTemplateCard>
         </div>
       </div>
@@ -31,20 +32,24 @@ const store = useTemplateStore();
 const templates = ref()
 const count = store.getTemplateCount
 
- templates.value = store.getTemplates;
+const type = ref(2);
 
+onMounted(() => {
+  templates.value = store.getTemplates;
+})
 
 const handleSelectType = (value) => {
-  if(value.option === 2){
+  type.value = value
+
+  if(value === 2){
     templates.value = store.getTemplateTypeEmail
-  } else if(value.option === 3){
+  } else if(value === 3){
     templates.value = store.getTemplateTypeSMS
   } else {
     templates.value = store.getTemplates
   }
-  
-
 }
+
 const handleSearch = (value) => {
   store.searchQuery = value
   templates.value = store.filteredTemplates(value);

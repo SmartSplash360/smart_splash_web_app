@@ -25,8 +25,8 @@
     <div class="flex-center " v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
-    <Toast/>
-    <ConfirmDialog></ConfirmDialog>
+    <!-- <Toast/> -->
+    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 

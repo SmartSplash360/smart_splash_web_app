@@ -1,16 +1,17 @@
 <template>
   <div ref="editorContainer">
-    <div v-html="description"></div>
   </div>
 </template>
 
 <script setup>
 import Quill from 'quill';
-defineProps({
+const props = defineProps({
   description : String
 })
+
 const emit = defineEmits(['handleEditorChange'])
 const editorContainer = ref(null);
+
 let editor;
 let content = ref();
 
@@ -32,7 +33,8 @@ onMounted(() => {
 
   editor = new Quill(editorContainer.value, options);
 
-  
+  editor.root.innerHTML =  props.description ?? ''
+
   content.value = editor.root.innerHTML;
 
   
