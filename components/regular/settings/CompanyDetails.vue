@@ -13,7 +13,7 @@
         class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
       >
         <Button label="Cancel" severity="secondary" outlined />
-        <Button label="Save changes" class="!bg-[#0291BF]" />
+        <Button label="Save changes" class="!bg-[#0291BF] text-white" />
       </div>
     </div>
     <div
@@ -315,6 +315,7 @@ const cities = ref([
   { name: "United States", code: "US" },
 ]);
 
+
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
   removeFileCallback(index);
   totalSize.value -= parseInt(formatSize(file.size));
@@ -355,6 +356,10 @@ const formatSize = (bytes) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
+
+const updatecompanyDetails = () => {
+  
+}
 </script>
 
 <style lang="scss" scoped></style>
