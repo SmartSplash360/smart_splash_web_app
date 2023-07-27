@@ -18,7 +18,7 @@
             </span>
             <div
                 v-if="showMenu"
-                class="absolute -right-2 sm:-right-16 top-8 z-10 flex-center min-h-[81px] min-w-[171px] flex-col rounded-md bg-white shadow-md"
+                class="absolute -right-2 sm:-right-16 top-8 z-10 flex-center min-h-[81px] min-w-[171px] flex-col rounded-md bg-white shadow-md dark:bg-[#1B2028] dark:text-gray-400 dark:border dark:border-gray-700"
             >
               <nuxt-link
                   :to="`technicians/${technician.id}`"

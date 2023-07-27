@@ -121,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div v-if="sideBarVisible">
+    <div name="sidebar" v-if="sideBarVisible">
       <ul class="flex flex-col gap-2 text-white">
         <li v-for="link in sideBarLinks" @click="toggleSideBar">
           <nuxt-link
@@ -211,6 +211,3 @@ const signout = () =>  {
   });
 }
 </script>
-<style scoped>
-
-</style>

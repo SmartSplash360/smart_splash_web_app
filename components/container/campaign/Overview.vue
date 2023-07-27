@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonCardListing></SkeletonCardListing>
+    <SkeletonEditTemplate></SkeletonEditTemplate>
   </section>
   <section v-else class="-mx-5 -my-6 lg:-mx-10 lg:-my-12 sm:gap-13 flex flex-col gap-8 bg-[#f5fbfc] dark:bg-inherit min-h-screen">
     <RegularCampaignEditTemplateControl :edit="edit"></RegularCampaignEditTemplateControl>
@@ -21,13 +21,14 @@ const props = defineProps({
   
 const templateStore = useTemplateStore()
 const campaignStore = useCampaignStore()
-const loading = ref(false);
+const loading = ref(true);
 const template = ref()
 
 onMounted(async () => {
   if(props.campaignId){
     template.value = await templateStore.fetchTemplate(props.campaignId);
   }
+  loading.value = false
 })
 
 const createCampaign = async (data) => {

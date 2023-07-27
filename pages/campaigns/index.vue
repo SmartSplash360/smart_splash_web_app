@@ -1,5 +1,5 @@
 <template>
-    <ContainerCampaignList></ContainerCampaignList>
+    <ContainerCampaignList :loading="loading"></ContainerCampaignList>
 </template>
 
 <script setup>

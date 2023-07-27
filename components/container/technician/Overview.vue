@@ -69,6 +69,8 @@ const props = defineProps({
   },
 });
 
+const router = useRouter()
+const loading = ref(true);
 const technician = ref()
 const jobs = ref([])
 const job = ref()
@@ -77,14 +79,13 @@ const readOnly = ref(false)
 onMounted(async () => {
   technician.value = await technicianStore.fetchTechnician(props.technicianId);
   jobs.value = await jobStore.fetchTechnicianJobs(props.technicianId);
+  loading.value = false
 });
 
 
 const profileImage = computed(() => {
   return technician.value?.photo ?? '';
 });
-const router = useRouter()
-const loading = ref(false);
 
 const addJobModal = ref(false);
 
