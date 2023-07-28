@@ -1,7 +1,6 @@
 <template>
   <div
       class="desktop+ hidden min-h-[80px] w-full px-10 shadow-md lg:flex-between"
-      class="desktop+ hidden min-h-[80px] w-full px-10 shadow-md lg:flex-between"
   >
     <div class="min-w-2/5 flex-between gap-3">
       <font-awesome-icon :icon="pageIcon"/>
@@ -66,7 +65,6 @@
     </div>
   </div>
   <div class="mobile- sticky min-h-[70px] w-full items-center justify-between px-5 sm:shadow-md lg:hidden">
-  <div class="mobile- sticky min-h-[70px] w-full items-center justify-between px-5 sm:shadow-md lg:hidden">
     <div class="flex-between">
       <div class="h-[60px] max-h-[60px] bg-red-400">
         <img
@@ -129,20 +127,14 @@
           <nuxt-link
               :to="link?.to"
               class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
-              class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
           >
-            <span class="flex-center h-[16px] w-[16px] span__element">
-              <font-awesome-icon :icon="link?.icon"/>
-            </span>
-            <span class="span__element ">{{ link.name }}</span>
             <span class="flex-center h-[16px] w-[16px] span__element">
               <font-awesome-icon :icon="link?.icon"/>
             </span>
             <span class="span__element ">{{ link.name }}</span>
           </nuxt-link>
         </li> 
-        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">          
-        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">          
+        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">           
           <span >
             <i class="pi pi-sign-out text-lg font-light" @click="signout"/>
           </span>
@@ -195,8 +187,6 @@ const toggleSideBar = () => {
 
 const pageName = computed(() => {
   let name = route.name;
-  let routeName= name.split('-')[0]
-  return routeName[0].toUpperCase() + routeName.slice(1);
   let routeName= name.split('-')[0]
   return routeName[0].toUpperCase() + routeName.slice(1);
 })

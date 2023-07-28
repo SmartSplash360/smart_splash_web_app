@@ -26,22 +26,6 @@
         </div>
       <div class="ml-0 sm:ml-auto flex justify-end">
         <Button label="View Reports" class="w-full !bg-[#025E7C] min-w-max text-sm lg:text-sm text-white hover:shadow-xl"/>
-    <div class="flex flex-col lg:flex-row lg:items-center gap-2 gap-6">
-        <div class="flex items-center gap-2 sm:gap-5">
-          <div class="h-[70px] w-[70px] rounded-full sm:h-[120px] sm:w-[120px]">
-            <Avatar
-                :image="profileImage"
-                class="mr-2 !h-full !w-full"
-                shape="circle"
-            />
-          </div>
-          <div class="flex flex-1 flex-col gap-2">
-            <h2 class="text-sm font-bold lg:heading__h2">{{ technician?.name }}</h2>
-            <p class="text-xs lg:paragraph__p">Cleaning Tech</p>
-          </div>
-        </div>
-      <div class="ml-0 sm:ml-auto flex justify-end">
-        <Button label="View Reports" class="w-full !bg-[#025E7C] min-w-max text-sm lg:text-sm text-white hover:shadow-xl"/>
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>
@@ -102,8 +86,6 @@ onMounted(async () => {
 const profileImage = computed(() => {
   return technician.value?.photo ?? '';
 });
-const router = useRouter()
-const loading = ref(false);
 
 const addJobModal = ref(false);
 
@@ -145,16 +127,6 @@ const viewItem = (item) => {
   toggleAddJobModal()
 }
 
-const editItem = ({id, item,mobileEdit =false}) => {
-  job.value = { ...item };
-  if(mobileEdit){
-    console.log("first")
-    router.push({  
-      path: '/technicians/edit-technician',
-      query: { technicianId: id }
-    });
-    return 
-  }
 const editItem = ({id, item,mobileEdit =false}) => {
   job.value = { ...item };
   if(mobileEdit){

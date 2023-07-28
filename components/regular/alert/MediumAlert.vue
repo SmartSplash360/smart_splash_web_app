@@ -3,8 +3,6 @@
       <DataTable
           :value="alerts"
           dataKey="id"
-          :rows="10"
-          :loading="loading"
       >
         <template #empty> No alerts found. </template>
         <Column
@@ -170,11 +168,8 @@ const props = defineProps({
   },
   editItem : Function,
   deleteItem : Function
-  editItem : Function,
-  deleteItem : Function
 });
 
-const loading = ref(true);
 const loading = ref(true);
 const alertCount = computed(() => props.alerts.length);
 
@@ -187,13 +182,6 @@ const editAlert = (alert) => {
   props.editItem({ id: alert.id, item: { ...alert }})
 };
 
-const editAlert = (alert) => {
-  props.editItem({ id: alert.id, item: { ...alert }})
-};
-
-const deleteAlert = async (id) => {
-  props.deleteItem({ id })
-};
 const deleteAlert = async (id) => {
   props.deleteItem({ id })
 };
