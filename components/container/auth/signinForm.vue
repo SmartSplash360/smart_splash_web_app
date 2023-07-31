@@ -11,9 +11,15 @@
       <h2 class="heading__h2 text-[30px]">Login</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="w-full flex flex-col gap-6">
-        <InputText type="text" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Full name" v-model="email"></InputText>
-        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Email Address" v-model="password"></InputText>
+    <div class="w-full flex flex-col gap-10">
+      <span class="p-float-label">
+          <InputText type="text" id="username" v-model="email" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="email">Email</label>
+      </span>
+      <span class="p-float-label">
+          <InputText type="password" id="password" v-model="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="password">Password</label>
+      </span>
       <p class="paragraph__p w-full text-end text-[#4D6977]">Forgot password?</p>
     </div>
 

@@ -30,9 +30,9 @@ export const useTenantStore = defineStore("tenant", {
         },
     },
     actions: {
-        async register(userPayload: {}) {
+        async register(tenantPayload: {}) {
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/tenant", userPayload);
+                const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
                 this.currentTenant = res.data;
             } catch (error) {
                 alert(error)
