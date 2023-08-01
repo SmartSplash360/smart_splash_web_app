@@ -227,11 +227,12 @@
         class="flex flex-wrap justify-center gap-2"
       >
         <!-- storage/appc -->
-        <img
-          v-for="image in bodyOfWater.gallery.images"
-          class="m-2 h-20 w-20 rounded-md object-cover"
-          src="https://via.placeholder.com/150"
-        />
+        <div v-for="image in bodyOfWater.gallery.images">
+          <img
+            class="m-2 h-20 w-20 rounded-md object-cover"
+            :src="config.public.imageUrl + image.image_path"
+          />
+        </div>
       </div>
 
       <div class="flex flex-col justify-center gap-5 sm:flex-row">
