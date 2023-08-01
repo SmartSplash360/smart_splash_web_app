@@ -170,7 +170,7 @@
 
       <!-- image upload -->
       <FileUpload
-      v-if="!readOnly"
+        v-if="!readOnly"
         name="gallery[]"
         customUpload
         @select="onSelectedFiles"
@@ -222,15 +222,16 @@
       </FileUpload>
 
       <!-- image view -->
-      <div v-if="readOnly && bodyOfWater.gallery_id" class="flex flex-wrap justify-center gap-2">
-        <div v-for="image in bodyOfWater.gallery.images">
-
-          <!-- storage/app/public/images/uYTHJMvgYvVwTyl8ysAxaEpopfx5Gw0xHibxiDVA.jpg -->
-          <img
-          src="image.image_path"
-           />
-          {{  image }}
-        </div>
+      <div
+        v-if="readOnly && bodyOfWater.gallery_id"
+        class="flex flex-wrap justify-center gap-2"
+      >
+        <!-- storage/appc -->
+        <img
+          v-for="image in bodyOfWater.gallery.images"
+          class="m-2 h-20 w-20 rounded-md object-cover"
+          src="https://via.placeholder.com/150"
+        />
       </div>
 
       <div class="flex flex-col justify-center gap-5 sm:flex-row">
