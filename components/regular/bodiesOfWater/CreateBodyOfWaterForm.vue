@@ -17,6 +17,8 @@
         }}
         Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : "" }}
       </h3>
+
+      <!-- top input rows -->
       <div class="flex flex-col justify-between gap-2 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
@@ -27,18 +29,20 @@
             v-model="name"
           ></InputText>
         </div>
+
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="type"> Type* </label>
           <Dropdown
             :disabled="readOnly"
             v-model="type"
             :options="types"
-            placeholder="Select a Type"
+            placeholder="Select type"
             class="md:w-14rem w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
           />
         </div>
+
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="size"> Size* </label>
+          <label class="text-sm" for="size"> Gallons* </label>
           <InputText
             :disabled="readOnly"
             class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
@@ -47,43 +51,108 @@
         </div>
       </div>
 
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+      <!-- middle input rows -->
+      <div class="flex flex-col justify-between gap-2 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="address"> Address* </label>
-          <InputText
+          <label class="text-sm" for="poolSanitation"> Sanitation Type</label>
+          <Dropdown
             :disabled="readOnly"
-            id="autocomplete"
-            type="text"
+            v-model="poolSanitation"
+            :options="poolSanitations"
+            placeholder="Select pool sanitation"
+            class="md:w-14rem w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+          />
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="length"> Length (Ft)</label>
+          <InputNumber
+            :disabled="readOnly"
             class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
-            v-model="address"
-          ></InputText>
+            v-model="length"
+            :min="0"
+            :minFractionDigits="2"
+            inputId="locale-us"
+            locale="en-US"
+          />
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="width"> Width (Ft)</label>
+          <InputNumber
+            :disabled="readOnly"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="width"
+            :min="0"
+            :minFractionDigits="2"
+            inputId="locale-us"
+            locale="en-US"
+          />
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="depth"> Depth (Ft)</label>
+          <InputNumber
+            :disabled="readOnly"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="depth"
+            :min="0"
+            :minFractionDigits="2"
+            inputId="locale-us"
+            locale="en-US"
+          />
         </div>
       </div>
 
-      <div class="flex w-full">
-        <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
-      </div>
-
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="lng"> Longitude* </label>
-          <InputText
-            type="text"
-            :disabled="readOnly"
-            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
-            v-model="lng"
-          ></InputText>
+          <label class="text-sm" for="address">
+            Address* (Click the icon to show coordinates)</label
+          >
+          <div class="flex gap-4">
+            <InputText
+              :disabled="readOnly"
+              id="autocomplete"
+              type="text"
+              class="w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+              v-model="address"
+            ></InputText>
+            <div
+              class="flex flex-col items-center justify-center gap-2"
+              @click="toggleShowCoordinates"
+            >
+              <Button
+                :icon="showCoordinates ? 'pi pi-eye-slash' : 'pi pi-eye'"
+              />
+              <!-- <span>show coordinates</span> -->
+            </div>
+          </div>
         </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="lat"> Latitude* </label>
-          <InputText
-            type="text"
-            :disabled="readOnly"
-            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
-            v-model="lat"
-          ></InputText>
-        </div>
-        <div class="flex w-full flex-col gap-2">
+
+        <!-- co-ordinates -->
+        <div
+          v-if="showCoordinates"
+          class="flex flex-col justify-between gap-5 sm:flex-row"
+        >
+          <div class="flex w-full flex-col gap-2">
+            <label class="text-sm" for="lng"> Longitude* </label>
+            <InputText
+              type="text"
+              :disabled="readOnly"
+              class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+              v-model="lng"
+            ></InputText>
+          </div>
+          <div class="flex w-full flex-col gap-2">
+            <label class="text-sm" for="lat"> Latitude* </label>
+            <InputText
+              type="text"
+              :disabled="readOnly"
+              class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+              v-model="lat"
+            ></InputText>
+          </div>
+          <!-- <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="googlePlaceId"> Google Place ID* </label>
           <InputText
             type="text"
@@ -91,14 +160,82 @@
             class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
             v-model="googlePlaceId"
           ></InputText>
+        </div> -->
         </div>
       </div>
 
-      <div
-        class="flex flex-col justify-center gap-5 sm:flex-row"
+      <div class="flex w-full">
+        <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
+      </div>
+
+      <!-- image upload -->
+      <FileUpload
+      v-if="!readOnly"
+        name="gallery[]"
+        customUpload
+        @select="onSelectedFiles"
+        @upload="onAdvancedUpload($event)"
+        :multiple="true"
+        accept="image/*"
+        :maxFileSize="1000000"
       >
-      <Button
-      v-if="readOnly"
+        <template
+          #header="{ chooseCallback, uploadCallback, clearCallback, files }"
+        >
+          <div
+            class="justify-content-between align-items-center flex flex-1 flex-wrap gap-2"
+          >
+            <div class="flex gap-2">
+              <Button
+                @click="chooseCallback()"
+                icon="pi pi-images"
+                rounded
+                outlined
+              ></Button>
+              <!-- <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload" rounded outlined severity="success" :disabled="!files || files.length === 0"></Button> -->
+              <Button
+                @click="clearCallback()"
+                icon="pi pi-times"
+                rounded
+                outlined
+                severity="danger"
+                :disabled="!files || files.length === 0"
+              ></Button>
+            </div>
+            <ProgressBar
+              :value="totalSizePercent"
+              :showValue="false"
+              :class="[
+                'md:w-20rem h-1rem w-full md:ml-auto',
+                { 'exceeded-progress-bar': totalSizePercent > 100 },
+              ]"
+              ><span class="white-space-nowrap"
+                >{{ totalSize }}B / 1Mb</span
+              ></ProgressBar
+            >
+          </div>
+        </template>
+
+        <template #empty>
+          <p>Drag and drop files to here to upload.</p>
+        </template>
+      </FileUpload>
+
+      <!-- image view -->
+      <div v-if="readOnly && bodyOfWater.gallery_id" class="flex flex-wrap justify-center gap-2">
+        <div v-for="image in bodyOfWater.gallery.images">
+
+          <!-- storage/app/public/images/uYTHJMvgYvVwTyl8ysAxaEpopfx5Gw0xHibxiDVA.jpg -->
+          <img
+          src="image.image_path"
+           />
+          {{  image }}
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-center gap-5 sm:flex-row">
+        <Button
+          v-if="readOnly"
           label="Close"
           severity="secondary"
           outlined
@@ -106,7 +243,7 @@
           class="hover:shadow-xl"
         />
         <Button
-        v-if="!readOnly"
+          v-if="!readOnly"
           label="Cancel"
           severity="secondary"
           outlined
@@ -114,7 +251,7 @@
           class="hover:shadow-xl"
         />
         <Button
-        v-if="!readOnly"
+          v-if="!readOnly"
           label="Submit"
           icon="pi pi-check"
           class="!bg-[#0291BF] hover:shadow-xl"
@@ -123,7 +260,6 @@
       </div>
     </form>
   </div>
-
 </template>
 
 <script setup>
@@ -167,6 +303,19 @@ const address = ref("");
 const lng = ref("");
 const lat = ref("");
 
+const poolSanitation = ref("chlorine");
+
+const poolSanitations = ref(["chlorine", "salt", "Bromine", "mineral"]);
+
+const length = ref(0);
+const width = ref(0);
+const depth = ref(0);
+
+const showCoordinates = ref(false);
+
+const toggleShowCoordinates = () =>
+  (showCoordinates.value = !showCoordinates.value);
+
 // my current location
 const { coords } = useGeolocation();
 const bodyOfWaterPin = ref();
@@ -206,6 +355,13 @@ onMounted(async () => {
     lng.value = props.bodyOfWater.lng;
     lat.value = props.bodyOfWater.lat;
 
+    poolSanitation.value = props.bodyOfWater?.pool_specs?.pool_sanitation;
+    length.value = props.bodyOfWater?.pool_specs?.pool_length;
+    width.value = props.bodyOfWater?.pool_specs?.pool_width;
+    depth.value = props.bodyOfWater?.pool_specs?.pool_depth;
+
+    console.log(props.bodyOfWater);
+
     if (lng.value && lat.value) {
       // set map center
       bodyOfWaterPin.value = {
@@ -238,6 +394,7 @@ onMounted(async () => {
   map.value = new maps.Map(mapDiv.value, {
     center: bodyOfWaterPin.value,
     zoom: 15,
+    mapTypeId: maps.MapTypeId.SATELLITE,
   });
 
   // set location marker
@@ -376,7 +533,17 @@ const createBodyOfWater = async () => {
       customer_id: props.customerId,
     };
 
-    await store.createBodyOfWater(payload);
+    // Pool Specs variables
+    let poolSpecs = {
+      pool_sanitation: poolSanitation.value,
+      pool_length: length.value,
+      pool_width: width.value,
+      pool_depth: depth.value,
+    };
+
+    let galleryPayload = gallery.value;
+
+    await store.createBodyOfWater(payload, poolSpecs, galleryPayload);
 
     await store.fetchBodiesOfWaters();
 
@@ -402,7 +569,15 @@ const updateBodyOfWater = async () => {
       customer_id: props.customerId,
     };
 
-    await store.updateBodyOfWater(props.bodyOfWater?.id, data);
+    // Pool Specs variables
+    let poolSpecs = {
+      pool_sanitation: poolSanitation.value,
+      pool_length: length.value,
+      pool_width: width.value,
+      pool_depth: depth.value,
+    };
+
+    await store.updateBodyOfWater(props.bodyOfWater?.id, data, poolSpecs);
     await store.fetchBodiesOfWaters();
 
     props.toggleAddBodyOfWaterModal({
@@ -413,8 +588,26 @@ const updateBodyOfWater = async () => {
   }
 };
 
-// TODO: add map selected function to get lat/lng, address and google place id
-const pinDropped = (locationData) => {
-  console.log(locationData);
+const totalSize = ref(0);
+const totalSizePercent = ref(0);
+const gallery = ref([]);
+
+const onAdvancedUpload = ($event) => {
+  console.log($event);
+};
+
+const onSelectedFiles = (event) => {
+  gallery.value = event.files;
+  gallery.value.forEach((file) => {
+    totalSize.value += parseInt(formatSize(file.size));
+  });
+};
+
+const formatSize = (bytes) => {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 </script>
