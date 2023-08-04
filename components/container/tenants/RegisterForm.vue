@@ -1,5 +1,5 @@
 <template>
-    <form class="flex flex-col items-center gap-6 py-5 sm:gap-4 xl:px-20">
+    <form class="flex flex-col items-center gap-6 py-5 lg:py-8 sm:gap-4 xl:px-20">
         
       <div class="w-[250px] h-[99px] lg:h-[125px] lg:w-[300px]">
         <img
@@ -12,8 +12,8 @@
       <div class="w-full lg:w-5/6 flex flex-col gap-6">
         <h3 class="heading__h3">Create a Tenant</h3>
         <span class="p-float-label">
-            <InputText id="domaine" v-model="domaine" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
-            <label for="domaine">Domaine</label>
+            <InputText id="domain" v-model="domain" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+            <label for="domain">Domain</label>
         </span>
         <span class="p-float-label">
             <InputText id="owner" v-model="owner" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
@@ -41,13 +41,7 @@
         </span>
      </div>
       <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
-        <Button  @click="registerUser()" label="Create a Tenant Account" class="w-full bg-[#0291BF] text-white"/>
-        <div class="py-3 text-center">
-          <p class="paragraph__p">
-            Already have an account ?
-            <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
-          </p>
-        </div>
+        <Button @click="registerTenant()" label="Create a Tenant Account" class="w-full bg-[#0291BF] text-white"/>
       </div>
     </form>
   </template>
@@ -61,7 +55,7 @@
   const store = useTenantStore();
   const router = useRouter();
   
-  const domaine = ref('');
+  const domain = ref('');
   const owner = ref('');
   const email = ref('');
   const phone = ref('');
@@ -69,13 +63,16 @@
   const website = ref('');
   const tenancy_db_name = ref('');
 
-  try {
+
       
   async function registerTenant() {
+
+    try {
     // TODO: add validation
   
     const tenantPayload = {
-      domaine: domaine.value,
+      id : 'Plash',
+      domain: domain.value,
       owner: owner.value,
       email: email.value,
       phone: phone.value,
@@ -85,9 +82,10 @@
     }
     await store.register(tenantPayload);
     await router.push('/settings');
-  }
   } catch(error){
     throw new Error (error.message)
   }
+  }
   </script>
   
+

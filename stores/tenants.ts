@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import axios from "axios";
+import { useUserStore } from "~/stores/users";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -31,6 +32,8 @@ export const useTenantStore = defineStore("tenant", {
     },
     actions: {
         async register(tenantPayload: {}) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
                 this.currentTenant = res.data;
@@ -38,17 +41,6 @@ export const useTenantStore = defineStore("tenant", {
                 alert(error)
                 console.log(error)
             }
-        },
-        async fetchUsers() {
-            try {
-                const data = await axios.get(
-                    "https://jsonplaceholder.typicode.com/tenant"
-                );
-                this.tenants = data.data;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        },
+        }
     },
 });
