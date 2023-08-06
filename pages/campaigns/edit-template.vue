@@ -1,5 +1,6 @@
 <template>
-    <form    class="flex min-w-full flex-col rounded-md bg-white p-6 lg:min-w-[950px] dark:bg-[#31353F]">
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form   v-else class="flex min-w-full flex-col rounded-md bg-white p-6 lg:min-w-[950px] dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
             <nuxt-link to="/products">
                 <font-awesome-icon icon="chevron-left" />
@@ -55,6 +56,7 @@
     const description = ref();
     const selectedFile = ref(null);
     const imageSrc = ref('');
+    const loading = ref(true)
 
     const store = useTemplateStore();
     const router = useRouter()
@@ -64,6 +66,7 @@
     onMounted(async () => {
         const template = await useTemplateStore.fetchTemplate(templateId)
         name.value = template.name
+        loading.value = false
     })
 
     const handleUpload = (event) => {

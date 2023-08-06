@@ -1,5 +1,6 @@
 <template>
-    <form class="flex min-w-full flex-col gap-8 p-2  bg-white  dark:bg-[#31353F]">
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form v-else class="flex min-w-full flex-col gap-8 p-2  bg-white  dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
                 <nuxt-link to="/alerts">
                     <font-awesome-icon icon="chevron-left" />
@@ -145,6 +146,7 @@ definePageMeta({
   const technicianId = ref();
   const minDate = ref(new Date());
   const maxDate = ref(new Date());
+  const loading = ref(true)
   
   const bodiesOfWater = computed(() => bodyOfWaterStore.getBodiesOfWater);
   const technicians = computed(() => technicianStore.getTechnicians);
@@ -186,6 +188,8 @@ definePageMeta({
     alertTypeId.value = alert.alert_type_id;
     bodyOfWaterId.value = alert.body_of_water_id;
     technicianId.value = alert.technician_id;
+
+    loading.value = false
     
   });
   

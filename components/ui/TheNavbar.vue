@@ -121,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div v-if="sideBarVisible">
+      <div v-if="sideBarVisible">
       <ul class="flex flex-col gap-2 text-white">
         <li v-for="link in sideBarLinks" @click="toggleSideBar">
           <nuxt-link
@@ -134,7 +134,7 @@
             <span class="span__element ">{{ link.name }}</span>
           </nuxt-link>
         </li> 
-        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">          
+        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">           
           <span >
             <i class="pi pi-sign-out text-lg font-light" @click="signout"/>
           </span>
@@ -190,6 +190,7 @@ const pageName = computed(() => {
   let routeName= name.split('-')[0]
   return routeName[0].toUpperCase() + routeName.slice(1);
 })
+
 
 
 const pageIcon = computed(() => {

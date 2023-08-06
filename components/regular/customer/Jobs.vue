@@ -8,25 +8,33 @@
       paginator
       :rows="10"
     >
-      <template #empty> No jobs found. </template>
-      <Column field="date" header="Date" style="width: 20%">
+      <template #empty>            
+          <div class="flex-center">
+            <h3 class="heading__h4">No job found. </h3>
+          </div> 
+        </template>
+      <Column field="date" header="Date">
         <template #body="slotProps">
+          <div class="p-2 text-sm leading-8">
           {{ slotProps.data?.start_date }}
+          </div>
         </template>
       </Column>
-      <Column field="type" header="Type" style="width: 20%">
+      <Column field="type" header="Type">
         <template #body="slotProps">
+          <div class="p-2 text-sm leading-8">
           Route
+          </div>
         </template>
       </Column>
-      <Column field="address" header="Address" style="width: 20%">
+      <Column field="address" header="Address">
         <template #body="slotProps">
           <div class="p-2 text-sm leading-8">
             {{ slotProps.data?.customer?.address[0]?.address_line1 }}
           </div>
         </template></Column
       >
-      <Column field="bodyOfWater" header="Body of water" style="width: 10%">
+      <Column field="bodyOfWater" header="Body of water">
         <template #body="slotProps">
           <div
             class="rounded-lg bg-[#d4ecf4] p-2 text-center text-xs text-[#0291BF]"
@@ -35,14 +43,14 @@
           </div>
         </template></Column
       >
-      <Column field="serviceLevel" header="Service level" style="width: 14%">
+      <Column field="serviceLevel" header="Service level">
         <template #body="slotProps">
           <div class="p-2 text-center text-sm ">
             {{ slotProps.data.serviceLevel }}
           </div>
         </template></Column
       >
-      <Column field="status" header="Status" style="width: 12.5%">
+      <Column field="status" header="Status">
         <template #body="slotProps">
           <div
             class="rounded-lg border p-2 text-center text-xs"
@@ -59,13 +67,14 @@
       <Column
         field="technicians"
         header="Technicians"
-        style="width: 12.5%"
       >
         <template #body="slotProps">
+          <div class="p-2 text-sm leading-8">
           {{ slotProps.data?.technician?.name }} {{ slotProps.data?.technician?.surname ?? '' }}
+          </div>
         </template>
       </Column>
-      <Column field="price" header="Price" style="width: 12.5%"></Column>
+      <Column field="price" header="Price"></Column>
     </DataTable>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
-      <form  class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white dark:bg-[#31353F]">        
+      <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+      <form v-else class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white dark:bg-[#31353F]">        
         <div class="flex items-center gap-4 text-[#025E7C]">
             <nuxt-link to="/customers">
                 <font-awesome-icon icon="chevron-left" />
@@ -64,6 +65,7 @@
   const surname = ref('')
   const email = ref('')
   const phoneNumber = ref('')
+  const loading = ref(true)
   
   onMounted(async () => {
     const customer = await store.fetchCustomer(customerId)
@@ -71,6 +73,7 @@
       surname.value = customer.surname
       email.value = customer.email
       phoneNumber.value = customer.phone_number
+      loading.value = false
     
   })
 

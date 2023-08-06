@@ -18,6 +18,7 @@
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Price* </label>
             <InputNumber 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
               v-model="price" 
               inputId="currency-us" 
               mode="currency" 
@@ -29,12 +30,12 @@
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="description"> Description </label>
-          <Textarea v-model="description" autoResize rows="3" cols="70"/>
+          <Textarea v-model="description" autoResize rows="3" cols="70" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="notes"> Notes </label>
-          <Textarea v-model="notes" autoResize rows="3" cols="70"/>
+          <Textarea v-model="notes" autoResize rows="3" cols="70" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">

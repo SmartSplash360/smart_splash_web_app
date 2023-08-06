@@ -20,7 +20,6 @@
               :loading="loading"
               :routes="routes">
           </RegularCustomerActivityCard>
-
         </div>
     </div>
     <div class="flex flex-col gap-5">

@@ -69,7 +69,7 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">Active Customer</h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">156</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">156</h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
@@ -77,9 +77,9 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">
-            Prpoerties Serviced
+            Properties Serviced
           </h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">178</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">178</h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
@@ -87,7 +87,7 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">Jobs Completed</h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] font-bold">754</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">754</h2>
         </div>
       </div>
       <div class="hidden lg:flex-center lg:flex-1">
