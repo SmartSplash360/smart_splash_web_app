@@ -13,6 +13,7 @@
         }}
         Body Of Water {{ bodyOfWater ? `#${bodyOfWater?.id}` : "" }}
       </h3>
+      <!-- top input rows -->
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="name"> Name* </label>
@@ -34,11 +35,25 @@
           />
         </div>
         <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="size"> Size* </label>
+          <label class="text-sm" for="size"> Gallons* </label>
           <InputText
             :disabled="readOnly"
             class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
             v-model="size"
+            placeholder="Gallons"
+          ></InputText>
+        </div>
+      </div>
+
+      <!-- middle input rows -->
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="name"> Name* </label>
+          <InputText
+            :disabled="readOnly"
+            type="text"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            v-model="name"
           ></InputText>
         </div>
       </div>
@@ -164,6 +179,18 @@ const googlePlaceId = ref("");
 const address = ref("");
 const lng = ref("");
 const lat = ref("");
+const poolSanitation = ref("");
+
+const poolSanitations = ref([
+  { label: "Chlorine", value: "chlorine" },
+  { label: "Bromine", value: "bromine" },
+  { label: "Salt", value: "salt" },
+  { label: "Mineral", value: "mineral" },
+]);
+
+const length = ref(0);
+const width = ref(0);
+const depth = ref(0);
 
 // my current location
 const { coords } = useGeolocation();
@@ -176,15 +203,15 @@ let autocompleteListener = null;
 const autocomplete = ref();
 const locationMarker = ref({});
 
-watch (name, (newName, oldName ) => {
-  console.log(newName)
+watch(name, (newName, oldName) => {
+  console.log(newName);
   locationMarker.value.setLabel({
-      text: newName,
-      fontFamily: "Roboto",
-      className: "map-label",
-      fontSize: "12px",
-    });
-})
+    text: newName,
+    fontFamily: "Roboto",
+    className: "map-label",
+    fontSize: "12px",
+  });
+});
 
 onMounted(async () => {
   // load google maps api
@@ -225,18 +252,18 @@ onMounted(async () => {
       };
     }
   } else {
-    console.log(coords.value)
+    console.log(coords.value);
     bodyOfWaterPin.value = {
-        lng: parseFloat(coords.value.longitude),
-        lat: parseFloat(coords.value.latitude),
-      };
+      lng: parseFloat(coords.value.longitude),
+      lat: parseFloat(coords.value.latitude),
+    };
   }
-
 
   // init map
   map.value = new maps.Map(mapDiv.value, {
     center: bodyOfWaterPin.value,
     zoom: 15,
+    mapTypeId: maps.MapTypeId.HYBRID,
   });
 
   // set location marker
@@ -306,12 +333,10 @@ onMounted(async () => {
       lng: place.geometry.location.lng(),
     });
 
-
     map.value.setCenter({
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     });
-
   });
 
   // set drag listener
@@ -368,15 +393,14 @@ const createBodyOfWater = async () => {
     const payload = {
       name: name.value,
       type: type.value,
-      size: size.value ?? "Large",
+      size: size.value ?? "10000",
       condition: condition.value ?? "Good",
       google_place_id: googlePlaceId.value,
       address: address.value,
       lng: lng.value,
       lat: lat.value,
       customer_id: props.customerId,
-    }
-
+    };
 
     await store.createBodyOfWater(payload);
 
