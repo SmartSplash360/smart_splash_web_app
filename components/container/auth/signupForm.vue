@@ -7,11 +7,27 @@
           class="h-full w-full"
       />
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-6">
-        <InputText type="text" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Full name" v-model="firstName"></InputText>
-        <InputText type="email" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Email Address" v-model="email"></InputText>
-        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Paasword" v-model="password"></InputText>
-        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Confirmed Password" v-model="confirmPassword"></InputText>
+    <div class="w-full lg:w-5/6 flex flex-col gap-10">
+      <span class="p-float-label">
+          <InputText id="firstName" v-model="firstName" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="firstName">First name</label>
+      </span>
+      <span class="p-float-label">
+          <InputText id="lastName" v-model="lastName" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="lastName">Last name</label>
+      </span>
+      <span class="p-float-label">
+          <InputText id="email" v-model="email" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="email">Email</label>
+      </span>
+      <span class="p-float-label">
+          <InputText id="password" v-model="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="password">Password</label>
+      </span>
+      <span class="p-float-label">
+          <InputText id="confirmedPassword" v-model="confirmPassword" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <label for="confirmedPassword">Confirm Password</label>
+      </span>
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
       <Button  @click="registerUser()" label="Create Account" class="w-full bg-[#0291BF] text-white"/>

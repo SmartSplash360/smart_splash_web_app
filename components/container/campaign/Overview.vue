@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonCardListing></SkeletonCardListing>
+    <SkeletonEditTemplate></SkeletonEditTemplate>
   </section>
   <section
     v-else
@@ -31,15 +31,18 @@ const props = defineProps({
 
 const templateStore = useTemplateStore();
 const campaignStore = useCampaignStore();
-const loading = ref(false);
+const loading = ref(true);
 const template = ref();
 
 const router = useRoute();
 const { templateId } = router.query;
 
 onMounted(async () => {
-  template.value = await templateStore.fetchTemplate(templateId);
-});
+  if(props.campaignId){
+    template.value = await templateStore.fetchTemplate(props.campaignId);
+  }
+  loading.value = false
+})
 
 const createCampaign = async (data) => {
   try {

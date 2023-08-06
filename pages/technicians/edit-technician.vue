@@ -1,5 +1,6 @@
 <template>
-     <form  class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white dark:bg-[#31353F]">
+  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+  <form v-else class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white dark:bg-[#31353F]">
         <div class="flex items-center gap-4 text-[#025E7C]">
             <span @click="$router.go(-1)">
                 <font-awesome-icon icon="chevron-left" />
@@ -42,7 +43,7 @@
                 @click="updateTechnician()"
             />
           </div>
-        </form>
+  </form>
   </template>
   
   <script setup>
@@ -64,6 +65,7 @@
   const email = ref('')
   const phoneNumber = ref('')
   const company = ref('1')
+  const loading = ref(true)
   
   onMounted(async () => {
     const technician = await store.fetchTechnician(technicianId)
@@ -71,6 +73,7 @@
       surname.value = technician.surname
       email.value = technician.email
       phoneNumber.value = technician.phone_number
+      loading.value = false
   })
 
   

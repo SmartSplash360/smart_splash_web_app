@@ -109,15 +109,15 @@
           </template>
           <div class="flex flex-col mt-1 bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
             <div class="flex-between px-4 py-2 rounded-md">
-              <span class="text-gray-500 span__element flex-1">Address</span>
+              <span class="text-gray-500 dark:text-red-900 span__element flex-1">Address</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.body_of_water?.customer?.address[0]?.address_line1 }}</span>
             </div>
             <div class="flex-between px-4 py-2 rounded-md">
-              <span class="text-gray-500 span__element flex-1">Pool name</span>
+              <span class="text-gray-500 dark:text-gray-900 span__element flex-1">Pool name</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.alert_type?.name}}</span>
             </div>
             <div class="flex-between  px-4 py-2 rounded-md">
-              <span class="text-gray-500 span__element flex-1">Technician Responsible</span>
+              <span class="text-gray-500 dark:text-gray-900 span__element flex-1">Technician Responsible</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.technician?.name }}</span>
             </div>
             <div class="flex justify-end px-4 py-2 gap-2">

@@ -1,7 +1,7 @@
 <template>
-  <div class="sn:gap-20 flex flex-col gap-10">
+  <div class="sm:gap-20 flex flex-col gap-10">
   <section v-if="loading">
-    <SkeletonDetailPage></SkeletonDetailPage>
+    <SkeletonCustomerDetail></SkeletonCustomerDetail>
   </section>
  <section v-else class="sn:gap-20 flex flex-col gap-10">
     <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
@@ -97,7 +97,7 @@ const props = defineProps({
   customerId: String,
 });
 
-const loading = ref(false)
+const loading = ref(true)
 const currentTab = ref("JOBS");
 
 const report = ref();

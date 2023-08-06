@@ -1,5 +1,6 @@
 <template>
-    <form class="flex min-w-full flex-col gap-8 rounded-md bg-white dark:bg-[#31353F] dark:text-white">
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form v-else class="flex min-w-full flex-col gap-8 rounded-md bg-white dark:bg-[#31353F] dark:text-white">
         <div class="flex items-center gap-4 text-[#025E7C]">
             <nuxt-link to="/products">
                 <font-awesome-icon icon="chevron-left" />
@@ -76,6 +77,7 @@
   const name = ref("");
   const description = ref("");
   const price = ref(1.00);
+  const loading = ref(true)
   
   onMounted(async () => {
     const product = await productStore.fetchProduct(productId)
@@ -84,6 +86,7 @@
     name.value = product.name;
     description.value = product.description;
     price.value = product.price;
+    loading.value = false
   })
 
   
