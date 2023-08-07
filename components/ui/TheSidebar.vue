@@ -9,7 +9,7 @@
     h-full flex-col gap-[8rem] px-6 lg:flex  2xl:pb-20 "
   >
   <div class="flex-center flex-col gap-5">
-    <div class="max-h-[150px] lg:max-w-[298px]">
+    <div class="max-h-[150px] max-w-[298px]">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
@@ -37,6 +37,7 @@
           >
             <span
               class="flex-center h-[16px] w-[16px] nav-link-item"
+              :class="toggleSide && 'text-xl'"
             >
               <font-awesome-icon :icon="link.icon"
             /></span>

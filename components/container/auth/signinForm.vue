@@ -42,9 +42,22 @@ import {useToast} from "primevue/usetoast";
 
 import {useUserStore} from "~/stores/users";
 import {useCustomerStore} from "~/stores/customer";
+import {useLeadStore} from "~/stores/leads";
+import {useAlertStore} from "~/stores/alert";
+import {useTechnicianStore} from "~/stores/technician";
+import {useProductStore} from "~/stores/products";
+import {useServiceStore} from "~/stores/services";
+import {useTemplateStore} from "~/stores/templates";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
+const alertStore = useAlertStore();
+const leadStore = useLeadStore();
+const technicianStore = useTechnicianStore();
+const productStore = useProductStore();
+const serviceStore = useServiceStore();
+const templateStore = useTemplateStore();
+
 const router = useRouter();
 
 const email = ref('test@test.com');
@@ -56,6 +69,12 @@ async function login() {
   try {
     await store.login(email.value, password.value);
     await customerStore.fetchCustomers();
+    await alertStore.fetchAlerts();
+    await leadStore.fetchLeads();
+    await technicianStore.fetchTechnicians();
+    await productStore.fetchProducts();
+    await serviceStore.fetchServices();
+    await templateStore.fetchTemplates();
     await router.push('/customers');
     toast.add({
       severity: 'success',
