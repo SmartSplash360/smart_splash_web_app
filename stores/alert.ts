@@ -1,9 +1,14 @@
+
+
+
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
+
 
 export const useAlertStore = defineStore("alert", {
     persist: {
@@ -20,9 +25,10 @@ export const useAlertStore = defineStore("alert", {
     actions: {
         async fetchAlerts() {
             const jwt = useUserStore().getJwt;
+            console.log("jwt",jwt)
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/alerts");
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`);
                 console.log(res.data.data.data);
                 this.alerts = res.data.data.data;
             } catch (error) {
@@ -34,7 +40,7 @@ export const useAlertStore = defineStore("alert", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/alerts/${id}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${id}`);
                 console.log(res.data.data);
                 return res.data.data
             } catch (error) {
@@ -46,7 +52,7 @@ export const useAlertStore = defineStore("alert", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/alerts`, alertPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`, alertPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -60,7 +66,7 @@ export const useAlertStore = defineStore("alert", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/alerts/${alertId}`, alertPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}`, alertPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -74,7 +80,7 @@ export const useAlertStore = defineStore("alert", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/alerts/${alertId}`);
+                const res = await axios.delete(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}`);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

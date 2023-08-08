@@ -1,6 +1,7 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -22,7 +23,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/jobs");
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs`);
                 this.jobs = res.data.data.data
             } catch (error) {
                 console.log(error);
@@ -32,7 +33,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/technician/${id}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/technician/${id}`);
                 console.log(res.data.data);
                 return res.data.data
             } catch (error) {
@@ -44,7 +45,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/customer/${id}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/customer/${id}`);
                 console.log(res.data.data);
                 return res.data.data
             } catch (error) {
@@ -56,7 +57,7 @@ export const useJobStore = defineStore("job", {
           const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/getScheduledJobsByDate/${date}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/getScheduledJobsByDate/${date}`);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -67,7 +68,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/jobs`, payload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs`, payload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -81,7 +82,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/jobs/${id}`, payload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/${id}`, payload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -94,7 +95,7 @@ export const useJobStore = defineStore("job", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/jobs/${id}`);
+                const res = await axios.delete(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/${id}`);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

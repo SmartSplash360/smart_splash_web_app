@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -37,8 +38,7 @@ export const useCustomerStore = defineStore("customer", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/customers");
-                console.log(res.data.data.data);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers`);
                 this.customers = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -49,8 +49,7 @@ export const useCustomerStore = defineStore("customer", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/customers/${id}`);
-                console.log(res.data.data);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}`);
                 return res.data.data;
             } catch (error) {
                 console.log(error);
@@ -61,7 +60,7 @@ export const useCustomerStore = defineStore("customer", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/customers`, customerPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers`, customerPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -75,7 +74,7 @@ export const useCustomerStore = defineStore("customer", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/customers/${id}`, customerPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}`, customerPayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -88,7 +87,7 @@ export const useCustomerStore = defineStore("customer", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/customers/${customerId}`);
+                const res = await axios.delete(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${customerId}`);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

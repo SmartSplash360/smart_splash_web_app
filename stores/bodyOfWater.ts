@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useUserStore } from "~/stores/users";
 import { usePoolSpecsStore } from "./poolSpecs";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -23,7 +24,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/bodyOfWater");
+        const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater`);
         console.log(res.data.data.data);
         this.bodiesOfWater = res.data.data.data;
       } catch (error) {
@@ -35,7 +36,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/bodyOfWater/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}`
         );
         console.log(res.data.data);
         this.bodiesOfWater = res.data.data;
@@ -70,7 +71,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
 
 
           const res = await axios.post(
-            "http://localhost:8000/api/v1/galleries",
+            `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries`,
             formData,
             {
               headers
@@ -90,7 +91,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
 
         // create pool
         const res = await axios.post(
-          `http://localhost:8000/api/v1/bodyOfWater`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater`,
           payload
         );
 
@@ -118,7 +119,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.post(
-          `http://localhost:8000/api/v1/bodyOfWater/${id}`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}`,
           payload
         );
         if (!res.data.success) {
@@ -140,7 +141,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.delete(
-          `http://localhost:8000/api/v1/bodyOfWater/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}`
         );
 
         if (!res.data.success) {

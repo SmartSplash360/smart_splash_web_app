@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -13,7 +14,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.get("http://localhost:8000/api/v1/poolSpecs");
+        const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs`);
         return res.data.data.data;
       } catch (error) {
         console.log(error);
@@ -25,7 +26,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.get(
-          `http://localhost:8000/api/v1/poolSpecs/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`
         );
         return res.data.data;
       } catch (error) {
@@ -38,7 +39,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.post(
-          "http://localhost:8000/api/v1/poolSpecs",
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs`,
           poolSpecsPayload
         );
 
@@ -54,7 +55,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.post(
-          `http://localhost:8000/api/v1/poolSpecs/${id}`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`,
           poolSpecsPayload
         );
         if (!res.data.success) {
@@ -70,7 +71,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.delete(
-          `http://localhost:8000/api/v1/poolSpecs/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`
         );
 
         if (!res.data.success) {

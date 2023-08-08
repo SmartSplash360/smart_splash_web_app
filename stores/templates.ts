@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -45,7 +46,7 @@ export const useTemplateStore = defineStore("template", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/templates");
+        const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates`);
         this.templates = res.data.data.data;
       } catch (error) {
         console.log(error);
@@ -57,7 +58,7 @@ export const useTemplateStore = defineStore("template", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/templates/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates/${id}`
         );
         return res.data.data;
       } catch (error) {
@@ -70,7 +71,7 @@ export const useTemplateStore = defineStore("template", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.post(
-          `http://localhost:8000/api/v1/templates`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates`,
           templatePayload
         );
         console.log(res);
@@ -88,7 +89,7 @@ export const useTemplateStore = defineStore("template", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.post(
-          `http://localhost:8000/api/v1/templates/${id}`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates/${id}`,
           templatePayload
         );
         if (!res.data.success) {
@@ -104,7 +105,7 @@ export const useTemplateStore = defineStore("template", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.delete(
-          `http://localhost:8000/api/v1/templates/${templateId}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates/${templateId}`
         );
 
         if (!res.data.success) {

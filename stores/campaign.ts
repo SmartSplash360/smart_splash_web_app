@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -28,7 +29,7 @@ export const useCampaignStore = defineStore("camapign", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/campaigns`, campaignPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns`, campaignPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -41,7 +42,7 @@ export const useCampaignStore = defineStore("camapign", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/campaigns/sms`, campaignPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns/sms`, campaignPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonDetailPage></SkeletonDetailPage>
   </section>
-  <section v-else class="flex flex-col gap-12">
+  <section v-else class="flex flex-col gap-10">
     <ModalsJobsCreateJobModal
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"
@@ -46,8 +46,6 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
-    <!-- <Toast/> -->
-    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 

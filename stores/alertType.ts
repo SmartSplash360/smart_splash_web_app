@@ -1,6 +1,7 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -22,7 +23,7 @@ export const useAlertTypeStore = defineStore("alertType", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/alertTypes");
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes`);
                 console.log(res.data.data.data);
                 this.alertTypes = res.data.data.data
             } catch (error) {
@@ -34,7 +35,7 @@ export const useAlertTypeStore = defineStore("alertType", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/alertTypes/${id}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}`);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -45,7 +46,7 @@ export const useAlertTypeStore = defineStore("alertType", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                await axios.post("http://localhost:8000/api/v1/alertTypes", payload);
+                await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes`, payload);
             } catch (error) {
                 console.log(error);
             }

@@ -21,11 +21,11 @@
           <label for="email">Email</label>
       </span>
       <span class="p-float-label">
-          <InputText id="password" v-model="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <InputText type="password" id="password" v-model="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
           <label for="password">Password</label>
       </span>
       <span class="p-float-label">
-          <InputText id="confirmedPassword" v-model="confirmPassword" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+          <InputText type="password" id="confirmedPassword" v-model="confirmPassword" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
           <label for="confirmedPassword">Confirm Password</label>
       </span>
     </div>
@@ -75,10 +75,11 @@ async function registerUser() {
     surname: lastName.value,
     email: email.value,
     password: password.value,
-    confirmPassword: confirmPassword.value,
+    password_confirmation: confirmPassword.value,
     role: 'Admin'
   }
   await store.register(userPayload);
-  await router.push('/customers');
+  console.log(userPayload)
+  await router.push('/tenants/register');
 }
 </script>

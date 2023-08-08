@@ -9,6 +9,7 @@
           lg:border lg:shadow-lg 
           lg:hover:shadow-xl">
         <ContainerTenantsRegisterForm 
+          :user="user"
           class="h-full w-full">
         </ContainerTenantsRegisterForm>
       </div>
@@ -16,8 +17,16 @@
   </template>
   
   <script setup>
+  import {useUserStore} from "~/stores/users";
   definePageMeta({
     layout: "",
+    middleware: ['auth','auto-theme'],
   });
+  
+  const store = useUserStore();
+  const user = ref()
+  onMounted(async () => {
+     user.value = await store.getCurrentUser;
+  })
   </script>
   

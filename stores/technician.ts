@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -25,7 +26,7 @@ export const useTechnicianStore = defineStore("technician", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/technicians");
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians`);
                 console.log(res.data.data.data);
                 this.technicians = res.data.data.data;
             } catch (error) {
@@ -37,7 +38,7 @@ export const useTechnicianStore = defineStore("technician", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/technicians/${id}`);
+                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}`);
                 console.log(res.data.data);
                 return res.data.data as Technician;
             } catch (error) {
@@ -49,7 +50,7 @@ export const useTechnicianStore = defineStore("technician", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/technicians`, technicianPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians`, technicianPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -63,7 +64,7 @@ export const useTechnicianStore = defineStore("technician", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/technicians/${id}`, technicianPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}`, technicianPayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -76,7 +77,7 @@ export const useTechnicianStore = defineStore("technician", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/technicians/${id}`);
+                const res = await axios.delete(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}`);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

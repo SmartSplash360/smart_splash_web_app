@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -13,7 +14,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.get("http://localhost:8000/api/v1/galleries");
+        const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries`);
         return res.data.data.data;
       } catch (error) {
         console.log(error);
@@ -25,7 +26,7 @@ export const useGalleryStore = defineStore("gallery", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.get(
-          `http://localhost:8000/api/v1/galleries/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}`
         );
         return res.data.data;
       } catch (error) {
@@ -43,7 +44,7 @@ export const useGalleryStore = defineStore("gallery", {
         formData.append("images", galleryPayload.description);
 
         const res = await axios.post(
-          "http://localhost:8000/api/v1/galleries",
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries`,
           galleryPayload
         );
 
@@ -59,7 +60,7 @@ export const useGalleryStore = defineStore("gallery", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.post(
-          `http://localhost:8000/api/v1/galleries/${id}`,
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}`,
           galleryPayload
         );
         if (!res.data.success) {
@@ -75,7 +76,7 @@ export const useGalleryStore = defineStore("gallery", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         const res = await axios.delete(
-          `http://localhost:8000/api/v1/galleries/${id}`
+          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}`
         );
 
         if (!res.data.success) {
