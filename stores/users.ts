@@ -16,7 +16,14 @@ export const useUserStore = defineStore("user", {
         jwt: "",
         users: [],
         userDefinedTheme: true,
-        getFirstUserTenant : null
+        getFirstUserTenant : {
+            email: '',
+            password: '',
+            password_confirmation: '',
+            name: '',
+            surname: '',
+            company : ''
+        }
     }),
     getters: {
         getUsers(state) {

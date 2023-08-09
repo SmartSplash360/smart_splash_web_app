@@ -54,18 +54,10 @@ export const useTenantStore = defineStore("tenant", {
             }
         },
         async registerFirstUser(){
+            const { email,password,password_confirmation,name,surname,company } = useUserStore().getFirstUserTenant
+
             try {
-
-                const { 
-                    email, 
-                    password, 
-                    password_confirmation, 
-                    name, 
-                    surname, 
-                    company
-                } = useUserStore().getFirstUserTenant
-
-                const firstUser = {
+                const user = {
                     email,
                     password,
                     password_confirmation,
@@ -74,7 +66,7 @@ export const useTenantStore = defineStore("tenant", {
                     company,
                     role_id : 1
                 }
-                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/register`, firstUser);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/register`, user);
                 useUserStore().currentUser = res.data;
                 
                 if (res.data.success) {
