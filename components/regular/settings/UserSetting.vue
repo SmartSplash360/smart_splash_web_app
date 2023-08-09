@@ -6,7 +6,7 @@
         <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="hidden lg:flex card pb-14 user-setting-table border-b dark:border-b-gray-600 ">
+    <div class="hidden lg:block pb-14 user-setting-table border-b dark:border-b-gray-600 ">
       <DataTable
         v-model:filters="filters"
         :value="customers"

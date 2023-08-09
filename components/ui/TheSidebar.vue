@@ -1,12 +1,10 @@
 <template>
   <div
     class="hidden 
-    bg-gradient-to-b 
-    from-[#83b2c1] 
-    to-[#015d7b] 
     dark:bg-[#1B2028]
     dark:from-inherit
-    h-full flex-col gap-[8rem] px-6 lg:flex  2xl:pb-20 "
+    h-full flex-col gap-[8rem] px-6 lg:flex  2xl:pb-20"
+    :class="[$colorMode.value !== 'dark' && 'background-light']"
   >
   <div class="flex-center flex-col gap-5">
     <div class="max-h-[150px] max-w-[298px]">
@@ -69,5 +67,8 @@ defineProps({
 }
 .dark-router-link-active .router-link-active {
   background-color: #FFF
+}
+.background-light {
+  background: linear-gradient(360deg, #015D7B 76.44%, rgba(1, 93, 123, 0.00) 100%);
 }
 </style>

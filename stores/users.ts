@@ -16,13 +16,12 @@ export const useUserStore = defineStore("user", {
         jwt: "",
         users: [],
         userDefinedTheme: true,
-        getFirstUserTenant : {
+        firstUserTenant : {
             email: '',
             password: '',
             password_confirmation: '',
             name: '',
             surname: '',
-            company : ''
         }
     }),
     getters: {
@@ -32,8 +31,8 @@ export const useUserStore = defineStore("user", {
         getCurrentUser(state) {
             return state.currentUser;
         },
-        getgetFirstUserTenant(state) {
-            return state.getFirstUserTenant;
+        getFirstUserTenant(state) {
+            return state.firstUserTenant;
         },
         getJwt(state) {
             return state.jwt;
@@ -73,13 +72,14 @@ export const useUserStore = defineStore("user", {
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
                 this.currentUser = res.data;
-                this.getFirstUserTenant = userPayload;
+                this.firstUserTenant = userPayload;
                 
                 if (res.data.success) {
                     // TODO: store in local storage
                     this.currentUser = res.data.data.user;
                     this.jwt = res.data.data.token;
                     this.loggedIn = true;
+                    window.location.href = 'http://localhost:3000/tenants/register'
 
                     // set authorization header
                     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
@@ -87,8 +87,7 @@ export const useUserStore = defineStore("user", {
                     throw new Error(res.data.message)
                 }
             } catch (error) {
-                alert(error)
-                console.log(error)
+                return {errorMessage : error}
             }
         },
         setJwt(newJwt : any) {
@@ -96,7 +95,7 @@ export const useUserStore = defineStore("user", {
          },
         async logout() {
             const router = useRouter();
-            const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout`);
+            await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout`);
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;

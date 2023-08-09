@@ -39,11 +39,26 @@
   import Button from 'primevue/button';
   
   import { useTenantStore } from "~/stores/tenants";
+  import {useCustomerStore} from "~/stores/customer";
+  import {useLeadStore} from "~/stores/leads";
+  import {useAlertStore} from "~/stores/alert";
+  import {useTechnicianStore} from "~/stores/technician";
+  import {useProductStore} from "~/stores/products";
+  import {useServiceStore} from "~/stores/services";
+  import {useTemplateStore} from "~/stores/templates";
 
   const props = defineProps({
     user : Object
   })
   const store = useTenantStore();
+  const customerStore = useCustomerStore();
+  const alertStore = useAlertStore();
+  const leadStore = useLeadStore();
+  const technicianStore = useTechnicianStore();
+  const productStore = useProductStore();
+  const serviceStore = useServiceStore();
+  const templateStore = useTemplateStore();
+
   const email = ref('');
   const phone = ref('');
   const name = ref('');
@@ -57,7 +72,7 @@
   
     const tenantPayload = {
       id : 'Splash' + Math.floor(Math.random() * (10000 + 1)) ,
-      domain: name.value.replace(/\s/g, '')+'.localhost',
+      domain: name.value.replace(/\s/g, '') +'smartsplash360'+ Math.floor(Math.random() * (10000 + 1))+'.localhost',
       owner: props.user.id,
       email: email.value,
       phone: phone.value,
@@ -66,6 +81,15 @@
       tenancy_db_name: name.value.replace(/\s/g, ''),
     }
     await store.register(tenantPayload);
+
+    await customerStore.fetchCustomers();
+    await alertStore.fetchAlerts();
+    await leadStore.fetchLeads();
+    await technicianStore.fetchTechnicians();
+    await productStore.fetchProducts();
+    await serviceStore.fetchServices();
+    await templateStore.fetchTemplates();
+
   } catch(error){
     throw new Error (error.message)
   }
