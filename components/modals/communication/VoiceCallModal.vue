@@ -51,13 +51,11 @@ onMounted(async () => {
 })
 
 const startCall = async () => {
-  console.log('start call')
   // props.lead?.phone_number
  const sid = await communicationStore.startVoiceCall('+27842172527')
 }
 
 const endCall = () => {
-  console.log('end call')
   props.toggleCallModal({show: false})
 }
 </script>

@@ -38,7 +38,6 @@ export const useTenantStore = defineStore("tenant", {
         async register(tenantPayload: {}) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-            console.log(useUserStore().getFirstUserTenant)
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
                 this.currentTenant = res.data;
@@ -75,12 +74,8 @@ export const useTenantStore = defineStore("tenant", {
                     company,
                     role_id : 1
                 }
-                console.log(firstUser)
                 const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/register`, firstUser);
-                console.log(res)
                 useUserStore().currentUser = res.data;
-
-                console.log(useUserStore().currentUser)
                 
                 if (res.data.success) {
                     // TODO: store in local storage

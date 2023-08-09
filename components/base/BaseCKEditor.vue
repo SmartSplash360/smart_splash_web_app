@@ -25,7 +25,6 @@
   
       const save = () => {
         // Implement your save logic here
-        console.log(content.value);
       };
   
       return {

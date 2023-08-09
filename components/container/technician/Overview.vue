@@ -128,7 +128,6 @@ const viewItem = (item) => {
 const editItem = ({id, item,mobileEdit =false}) => {
   job.value = { ...item };
   if(mobileEdit){
-    console.log("first")
     router.push({  
       path: '/technicians/edit-technician',
       query: { technicianId: id }

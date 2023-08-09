@@ -144,7 +144,6 @@ const convertToCustomer = ({ id }) => {
 };
 
 const callLead = (item) => {
-  console.log(item);
   lead.value = item;
   toggleVoiceCallModal();
 };

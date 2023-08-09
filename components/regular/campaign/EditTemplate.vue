@@ -128,7 +128,6 @@ onMounted(async () => {
 const editorChange = (value) => (description.value = value);
 
 const selectType = (value) => {
-    console.log(value)
   templateType.value = value.option;
 };
 

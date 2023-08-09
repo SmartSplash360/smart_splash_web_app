@@ -67,8 +67,6 @@ export const useUserStore = defineStore("user", {
                 const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
                 this.currentUser = res.data;
                 this.getFirstUserTenant = userPayload;
-
-                console.log(this.currentUser)
                 
                 if (res.data.success) {
                     // TODO: store in local storage

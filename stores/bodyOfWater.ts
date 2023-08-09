@@ -25,7 +25,6 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
         const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater`);
-        console.log(res.data.data.data);
         this.bodiesOfWater = res.data.data.data;
       } catch (error) {
         console.log(error);
@@ -38,7 +37,6 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         const res = await axios.get(
           `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}`
         );
-        console.log(res.data.data);
         this.bodiesOfWater = res.data.data;
       } catch (error) {
         console.log(error);
@@ -56,7 +54,6 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       try {
         // create gallery
         if (galleryPayload.length > 0) {
-          console.log(galleryPayload);
 
           const formData = new FormData();
           formData.append("name", payload?.name);

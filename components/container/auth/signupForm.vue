@@ -79,7 +79,6 @@ async function registerUser() {
     role: 'Admin'
   }
   await store.register(userPayload);
-  console.log(userPayload)
   await router.push('/tenants/register');
 }
 </script>

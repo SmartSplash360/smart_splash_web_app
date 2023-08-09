@@ -1,6 +1,6 @@
 <template>
 
-  <div class="w-4/5 flex justify-between rounded-xl bg-[#d4ecf4] px-5 py-2 flex-wrap  items-center dark:bg-[#1B2028] dark:text-white">
+  <div class="w-4/5 flex justify-between rounded-xl bg-[#d4ecf4] px-5 py-3 flex-wrap  items-center dark:bg-[#1B2028] dark:text-white">
   <BaseActivityInfoItem
       :icon="ActiveRouteIcon"
       :alt="'active-route-icon'"

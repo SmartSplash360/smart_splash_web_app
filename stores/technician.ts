@@ -27,7 +27,6 @@ export const useTechnicianStore = defineStore("technician", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians`);
-                console.log(res.data.data.data);
                 this.technicians = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -39,7 +38,6 @@ export const useTechnicianStore = defineStore("technician", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}`);
-                console.log(res.data.data);
                 return res.data.data as Technician;
             } catch (error) {
                 alert(error);

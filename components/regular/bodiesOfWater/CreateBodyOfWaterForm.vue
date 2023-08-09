@@ -330,7 +330,6 @@ const autocomplete = ref();
 const locationMarker = ref({});
 
 watch(name, (newName, oldName) => {
-  console.log(newName);
   locationMarker.value.setLabel({
     text: newName,
     fontFamily: "Roboto",
@@ -362,8 +361,6 @@ onMounted(async () => {
     width.value = props.bodyOfWater?.pool_specs?.pool_width;
     depth.value = props.bodyOfWater?.pool_specs?.pool_depth;
 
-    console.log(props.bodyOfWater);
-
     if (lng.value && lat.value) {
       // set map center
       bodyOfWaterPin.value = {
@@ -385,7 +382,6 @@ onMounted(async () => {
       };
     }
   } else {
-    console.log(coords.value);
     bodyOfWaterPin.value = {
       lng: parseFloat(coords.value.longitude),
       lat: parseFloat(coords.value.latitude),
@@ -441,7 +437,6 @@ onMounted(async () => {
   autocompleteListener = autocomplete.value.addListener("place_changed", () => {
     let place = autocomplete.value.getPlace();
     // update form field
-    console.log(place);
 
     address.value = document.getElementById("autocomplete").value;
     name.value = name.value == "" ? place.name : name.value;
@@ -476,8 +471,6 @@ onMounted(async () => {
   dragEndListener = locationMarker.value.addListener(
     "dragend",
     async ({ latLng }) => {
-      console.log("drag end");
-      console.log(latLng.lat(), latLng.lng());
       locationMarker.value.position = { lat: latLng.lat(), lng: latLng.lng() };
       lat.value = latLng.lat();
       lng.value = latLng.lng();
@@ -486,7 +479,6 @@ onMounted(async () => {
         { location: latLng, componentRestrictions: {} },
         (results, status) => {
           if (status == geocoding.GeocoderStatus.OK) {
-            console.log(results[0]);
             address.value = results[0].formatted_address;
             googlePlaceId.value = results[0].place_id;
 
@@ -595,7 +587,6 @@ const totalSizePercent = ref(0);
 const gallery = ref([]);
 
 const onAdvancedUpload = ($event) => {
-  console.log($event);
 };
 
 const onSelectedFiles = (event) => {

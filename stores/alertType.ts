@@ -24,7 +24,6 @@ export const useAlertTypeStore = defineStore("alertType", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes`);
-                console.log(res.data.data.data);
                 this.alertTypes = res.data.data.data
             } catch (error) {
                 console.log(error);
