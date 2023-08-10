@@ -43,7 +43,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                const res = await axios.post("http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/products", productPayload);
+                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/products`, productPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
