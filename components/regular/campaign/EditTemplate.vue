@@ -1,40 +1,54 @@
 <template>
   <form class="flex flex-col px-5 lg:px-10">
-    <div v-if="edit" class="flex items-start gap-5 lg:self-end">
-      <h4 class="heading__h4 w-full font-bold">Select</h4>
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center">
-          <Checkbox v-model="lead" :binary="true" />
-          <label for="lead" class="ml-2"> Lead </label>
-        </div>
-        <div class="flex items-center">
-          <Checkbox v-model="customer" :binary="true" />
-          <label for="customer" class="ml-2"> Customer </label>
-        </div>
+    <div v-if="edit" class="flex flex-col gap-3 lg:self-end">
+      <div class="flex items-start gap-5">
+        <h4 class="heading__h4 w-full font-bold">Select</h4>
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center">
+                <Checkbox v-model="lead" :binary="true" />
+                <label for="lead" class="ml-2"> Lead </label>
+              </div>
+              <div class="flex items-center">
+                <Checkbox v-model="customer" :binary="true" />
+                <label for="customer" class="ml-2"> Customer </label>
+              </div>
+            </div>
       </div>
+      <p class="min-h-[20px]">
+        <span v-show="errorCampaignType" class="text-[#D42F24] text-xs">{{ errorCampaignType }}</span>
+      </p>
     </div>
-    <div v-if="!edit" class="flex items-start gap-5 lg:self-end">
+    <div v-if="!edit" class="flex flex-col  items-start gap-2 lg:self-end">
       <div class="card b flex w-full justify-center sm:w-fit">
         <Dropdown
-          @change="selectType(templateType)"
-          v-model="templateType"
+          @change="selectType(templateTypeName)"
+          v-model="templateTypeName"
           :options="types"
           optionLabel="state"
           placeholder="Campaign Type"
           class="w-full dark:bg-[#1B2028] md:w-52"
+          :class="errorTemplateType && 'border-red-300'"
           required
         />
       </div>
+      <p class="min-h-[20px]">
+        <span v-show="errorTemplateType" class="text-[#D42F24] text-xs">{{ errorTemplateType }}</span>
+      </p>
     </div>
-    <div class="my-5 flex flex-col gap-5">
-      <div class="flex w-full flex-col gap-3">
+    <div class="my-2 flex flex-col gap-3">
+      <div class="flex w-full flex-col gap-2">
         <h4 class="heading__h4">Campaign Title*</h4>
         <InputText
           v-model="name"
           :placeholder="name ? name : 'Enter Title'"
           class="w-full min-w-full !outline-none dark:bg-[#1B2028]"
+          :class="errorName && 'border-red-300'"
           required
+          @blur="handleChangeName"
         />
+        <p class="min-h-[20px]">
+          <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
+        </p>
       </div>
       <div v-if="!edit" class="my-10 flex flex-col gap-4">
         <h4 class="heading__h4">Upload cover</h4>
@@ -58,12 +72,18 @@
             </template>
           </FileUpload>
         </div>
+        <p class="min-h-[20px]">
+          <span v-show="errorCover" class="text-[#D42F24] text-xs">{{ errorCover }}</span>
+        </p>
       </div>
       <div>
         <BaseQuillEditor
           @handle-editor-change="editorChange"
           :description="template?.description ?? ''"
         />
+        <p class="min-h-[20px] mt-3">
+          <span v-show="errorDescrption" class="text-[#D42F24] text-sm">{{ errorDescrption }}</span>
+        </p>
       </div>
     </div>
     <div class="flex justify-end gap-5">
@@ -95,25 +115,39 @@ const props = defineProps({
   createCampaign: Function,
 });
 
-const router = useRoute();
+const route = useRoute();
+const router = useRouter()
 
-const { campaignType, templateId } = router.query;
+const { campaignType, templateId } = route.query;
 
 const confirm = useConfirm();
 const toast = useToast();
 
 const lead = ref(null);
 const customer = ref(null);
+const errorCampaignType = ref("")
+
 const description = ref("");
-const name = ref();
+const errorDescrption = ref("")
+
+const name = ref("");
+const errorName = ref("");
+
 const selectedFile = ref(null);
 const imageSrc = ref("");
+const errorCover = ref("");
+
+const templateTypeName = ref("");
+
 const templateType = ref();
+const errorTemplateType = ref("");
+
 const types = ref([
   { state: "Email Campaign", option: 2 },
   { state: "SMS Campaign", option: 3 },
 ]);
 
+const disableSubmit = ref(false)
 const store = useTemplateStore();
 
 const template = computed(() => store.getTemplateById(templateId));
@@ -128,19 +162,40 @@ onMounted(async () => {
 const editorChange = (value) => (description.value = value);
 
 const selectType = (value) => {
-    console.log(value)
-  templateType.value = value.option;
+  if(!templateTypeName.value){
+    errorTemplateType.value = 'Please choose a campaign type';
+    return 
+  } else {
+    errorTemplateType.value = '';
+    templateType.value = value.option;
+  }
 };
-
+const handleChangeName = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorName.value = 'The Title field is required';
+    disableSubmit.value = true;
+    return
+  } else {
+    errorName.value = '';
+    disableSubmit.value = false;
+  }
+}
 const handleUpload = (event) => {
-  selectedFile.value = event.files[0];
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    imageSrc.value = e.target.result;
-  };
-  reader.readAsDataURL(selectedFile.value);
-};
+  if(selectedFile.value){
+    errorCover.value = "Please Select a file and upload";
+    return;
+  } else {
 
+    errorCover.value = "";
+    selectedFile.value = event.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imageSrc.value = e.target.result;
+    };
+    reader.readAsDataURL(selectedFile.value);
+    }
+};
 const cancel = () => {
   try {
     confirm.require({
@@ -163,6 +218,22 @@ const cancel = () => {
   }
 };
 const createTemplate = async () => {
+  if(!templateType.value){
+    errorTemplateType.value = 'Please choose a campaign type';
+    return 
+  }
+  if(!name.value){
+    errorName.value = 'The title field is required';
+    return
+  }
+  if(!selectedFile.value){
+    errorCover.value = 'Please select a file and press upload';
+    return
+  }
+  if(!description.value){
+    errorDescrption.value = 'Please add a description to your template';
+    return
+  }
   try {
     const formData = new FormData();
     formData.append("name", name.value);
@@ -189,8 +260,11 @@ const createTemplate = async () => {
     });
   }
 };
-
 const sendCampaign = () => {
+  if(!lead.value && !customer.value){
+    errorCampaignType.value = 'Please select a recipient';
+    return 
+  }
 
   props.createCampaign({
     name: name.value,

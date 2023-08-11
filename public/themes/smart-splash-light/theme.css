@@ -4378,7 +4378,6 @@
 .p-fileupload .p-fileupload-buttonbar {
     width: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     background: inherit;
     padding: 1.25rem;
