@@ -13,31 +13,63 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Name* </label>
-            <InputText type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="name"></InputText>
+            <InputText 
+              type="text" 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorName && 'border-red-300'" 
+              v-model="name"
+              @blur="handleChangeName">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Price* </label>
             <InputNumber 
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md " 
+              :class="errorPrice && 'border-red-300'" 
               v-model="price" 
               inputId="currency-us" 
               mode="currency" 
               currency="USD"
-              locale="en-US">
+              locale="en-US"
+              @blur="handleChangePrice">
             </InputNumber>
+            <p class="min-h-[20px]">
+              <span v-show="errorPrice" class="text-[#D42F24] text-xs">{{ errorPrice }}</span>
+            </p>
           </div>
         </div>
-
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="description"> Description </label>
-          <Textarea class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="description" autoResize rows="3" cols="70"/>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="description" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorDescription && 'border-red-300'"
+            @change="handleChangeDescription"/>
+            <p class="min-h-[20px]">
+              <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{ errorDescription }}</span>
+            </p>
         </div>
-
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="notes"> Notes </label>
-          <Textarea class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" v-model="notes" autoResize rows="3" cols="70"/>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="notes" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorNotes && 'border-red-300'"
+            @change="handleChangeNote"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
+          </p>
         </div>
-
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="notes"> Is Available? </label>
           <InputSwitch  v-model="isAvailable"/>
@@ -77,10 +109,57 @@ const props = defineProps({
 const productStore = useProductStore();
 
 const isAvailable = ref(true);
+
 const notes = ref("");
+const errorNotes = ref("");
+
 const name = ref("");
+const errorName = ref("");
+
 const description = ref("");
+const errorDescription = ref("");
+
 const price = ref(1.00);
+const errorPrice = ref("");
+
+
+const disableSubmit = ref(false)
+
+const handleChangeName = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorName.value = 'The name field is required';
+    disableSubmit.value = true;
+  } else {
+    errorName.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeDescription = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorDescription.value = 'The description field is required'
+    disableSubmit.value = true;
+  } else {
+    errorDescription.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangePrice = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorPrice.value = 'The price field is required';
+    disableSubmit.value = true;
+  } else {
+    errorPrice.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeNote = () => {
+  if(!notes.value){
+    errorNotes.value = 'Please add a note'
+  }
+}
 
 onMounted(() => {
   if (props.product) {
@@ -93,8 +172,20 @@ onMounted(() => {
 })
 
 const createProduct = async () => {
+  if(!name.value){
+    errorName.value = 'The name field is required';
+    return
+  } else if(!description.value){
+    errorDescription.value = 'The description field is required';
+    return
+  } else if(!price.value ){
+    errorPrice.value = 'The price field is required';
+    return
+  } else if(!notes.value){
+    errorNotes.value = 'Please add a note'
+    return 
+  }
   try {
-    // TODO: validation
     const data = {
       name: name.value,
       description: description.value,
@@ -113,7 +204,6 @@ const createProduct = async () => {
 }
 
 const updateProduct = async () => {
-  // TODO: validation
   try {
     const data = {
       name: name.value,

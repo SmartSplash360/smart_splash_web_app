@@ -10,27 +10,67 @@
         <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
         </h2>
-
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Name* </label>
-            <InputText type="text" v-model="name" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"></InputText>
+            <InputText 
+              type="text" 
+              v-model="name" 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              :class="errorName && 'border-red-300'"
+              @blur="handleChangeName">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Price* </label>
-            <InputNumber v-model="price" inputId="currency-us" mode="currency" currency="USD"
-                         locale="en-US"></InputNumber>
+            <InputNumber 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPrice && 'border-red-300'" 
+              v-model="price" 
+              inputId="currency-us" 
+              mode="currency" 
+              currency="USD"
+              locale="en-US"
+              @blur="handleChangePrice">
+            </InputNumber>
+            <p class="min-h-[20px]">
+              <span v-show="errorPrice" class="text-[#D42F24] text-xs">{{ errorPrice }}</span>
+            </p>
           </div>
         </div>
-
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="description"> Description </label>
-          <Textarea v-model="description" autoResize rows="3" cols="70"/>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="description" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorDescription && 'border-red-300'"
+            @change="handleChangeDescription"
+            />
+            <p class="min-h-[20px]">
+              <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{ errorDescription }}</span>
+            </p>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
           <label class="span__element" for="notes"> Notes </label>
-          <Textarea v-model="notes" autoResize rows="3" cols="70"/>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="notes" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorNotes && 'border-red-300'"
+            @change="handleChangeNote"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
+          </p>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
@@ -49,7 +89,7 @@
           <Button
             label="Submit"
             icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
+            class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="service ? updateService() : createService()"/>
         </div>
       </form>
@@ -71,10 +111,55 @@ const props = defineProps({
 const serviceStore = useServiceStore();
 
 const isAvailable = ref(true);
+
 const notes = ref("");
+const errorNotes = ref("");
+
 const name = ref("");
+const errorName = ref("");
+
 const description = ref("");
+const errorDescription = ref("");
+
 const price = ref(1.00);
+const errorPrice = ref("");
+
+const disableSubmit = ref(false);
+
+const handleChangeName = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorName.value = 'The name field is required';
+    disableSubmit.value = true;
+  } else {
+    errorName.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeDescription = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorDescription.value = 'The description field is required'
+    disableSubmit.value = true;
+  } else {
+    errorDescription.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangePrice = () => {
+  if(!price?.value){
+    errorPrice.value = 'The price field is required';
+    disableSubmit.value = true;
+  } else {
+    errorPrice.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeNote = () => {
+  if(!notes.value){
+    errorNotes.value = 'Please add a note'
+  }
+}
 
 onMounted(() => {
   if (props.service) {
@@ -87,9 +172,20 @@ onMounted(() => {
 })
 
 const createService = async () => {
+  if(!name.value){
+    errorName.value = 'The name field is required';
+    return
+  } else if(!description.value){
+    errorDescription.value = 'The description field is required';
+    return
+  } else if(!price.value ){
+    errorPrice.value = 'The price field is required';
+    return
+  } else if(!notes.value){
+    errorNotes.value = 'Please add a note'
+    return 
+  }
   try {
-    // TODO: validation
-
     await serviceStore.createService({
       name: name.value,
       description: description.value,

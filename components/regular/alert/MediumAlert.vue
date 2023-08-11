@@ -72,23 +72,6 @@
             </div>
           </template>
         </Column>
-        <Column>
-          <template #body="slotProps">
-            <div class="flex flex-row gap-2">
-              <Button
-                  icon="pi pi-pencil"
-                  text raised rounded
-                  @click="editAlert(slotProps.data)"
-              />
-              <Button
-                  icon="pi pi-trash"
-                  text raised rounded
-                  class="p-button-danger"
-                  @click="deleteAlert(slotProps?.data?.id)"
-              />
-            </div>
-          </template>
-        </Column>
       </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
