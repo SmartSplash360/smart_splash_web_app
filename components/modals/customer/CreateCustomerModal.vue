@@ -32,7 +32,7 @@
             @blur="handleChangeSurname">
           </InputText>
           <p class="min-h-[20px]">
-          <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{ errorSurname }}</span>
+            <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{ errorSurname }}</span>
           </p>
         </div>
       </div>
@@ -46,9 +46,8 @@
             v-model="email"
             @blur="handleChangeEmail">
           </InputText>
-
           <p class="min-h-[20px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
+            <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
           </p>
         </div>
         <div class="flex w-full flex-col gap-2">
@@ -60,9 +59,8 @@
             v-model="phoneNumber"
             @blur="handleChangePhoneNumber"
             ></InputText>
-
           <p class="min-h-[20px]">
-          <span v-show="errorphoneNumber" class="text-[#D42F24] text-xs">{{ errorphoneNumber }}</span>
+            <span v-show="errorphoneNumber" class="text-[#D42F24] text-xs">{{ errorphoneNumber }}</span>
           </p>
         </div>
       </div>
@@ -70,28 +68,27 @@
         <div class="flex w-full flex-col gap-2">
           <label class="span__element text-sm" for="name"> Password* </label>
           <InputText 
-            type="text" 
+            type="password" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
             :class="errorPassword && 'border-red-300'"  
             v-model="password"
             @blur="handleChangePassword">
           </InputText>
-
           <p class="min-h-[20px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+            <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
           </p>
         </div>
         <div class="flex w-full flex-col gap-2">
           <label class="span__element text-sm" for="name"> Password Confirmation* </label>
           <InputText 
-            type="text" 
+            type="password" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             :class="errorPassword && 'border-red-300'" 
             v-model="passwordConfirmation"
             @blur="handleChangePasswordMatching">
           </InputText>
           <p class="min-h-[20px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+            <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
           </p>
         </div>
       </div>
@@ -237,6 +234,9 @@ const createCustomer = async () => {
   } else if(!email.value ){
     errorEmail.value = 'The email field is required';
     return
+  } else if(errorphoneNumber.value){
+    errorphoneNumber.value = 'Please provide a valid phone number';
+    return
   } else if(!password.value){
     errorPassword.value = 'Please provide a password';
     return
@@ -244,19 +244,19 @@ const createCustomer = async () => {
     errorPassword.value = 'Please provide a password';
     return 
   } 
-    try {
-      await store.createCustomer({
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
-        password: password.value,
-        password_confirmation: passwordConfirmation.value,
-      });
-      props.toggleAddCustomerModal({success: "Customer created successfully"});
-    } catch (e) {
-      props.toggleAddCustomerModal({error: "Opps, something went wrong!"});
-    }
+  try {
+    await store.createCustomer({
+      name: name.value,
+      surname: surname.value,
+      email: email.value,
+      phone_number: phoneNumber.value,
+      password: password.value,
+      password_confirmation: passwordConfirmation.value,
+    });
+    props.toggleAddCustomerModal({success: "Customer created successfully"});
+  } catch (e) {
+    props.toggleAddCustomerModal({error: "Opps, something went wrong!"});
+  }
   }
 const updateCustomer = async () => {
   try {

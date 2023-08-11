@@ -11,31 +11,85 @@
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Name* </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="name"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorName && 'border-red-300'" 
+              type="text" 
+              v-model="name"
+              @blur="handleChangeName">
+            </InputText>          
+            <p class="min-h-[20px]">
+              <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Surname* </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="surname"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorSurname && 'border-red-300'" 
+              type="text" 
+              v-model="surname"
+              @blur="handleChangeSurname">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{ errorSurname }}</span>
+            </p>
           </div>
         </div>
-        <div class="flex flex-col justify-between gap-5">
+        <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="email address"> Email address* </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="email" v-model="email"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorEmail && 'border-red-300'" 
+              type="email" 
+              v-model="email"
+              @blur="handleChangeEmail">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="cell number"> Cell number </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="phoneNumber"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorphoneNumber && 'border-red-300'" 
+              type="text" 
+              v-model="phoneNumber"
+              @blur="handleChangePhoneNumber">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorphoneNumber" class="text-[#D42F24] text-xs">{{ errorphoneNumber }}</span>
+            </p>
           </div>
         </div>
         <div v-if="!technician" class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Password* </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="password"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPassword && 'border-red-300'" 
+              type="password" 
+              v-model="password"
+              @blur="handleChangePassword">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Password Confirmation* </label>
-             <InputText class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" type="text" v-model="passwordConfirmation"></InputText>
+             <InputText 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPassword && 'border-red-300'" 
+              type="password" 
+              v-model="passwordConfirmation"
+              @blur="handleChangePasswordMatching">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+            </p>
           </div>
         </div>
         <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
@@ -75,13 +129,91 @@ const props = defineProps({
   }
 });
 
-const name = ref('')
-const surname = ref('')
-const email = ref('')
-const phoneNumber = ref('')
+const name = ref('');
+const errorName = ref('');
+
+const surname = ref('');
+const errorSurname = ref('');
+
+const email = ref('');
+const errorEmail = ref('');
+
+const phoneNumber = ref('');
+const errorphoneNumber = ref('');
+
 const password = ref('')
 const passwordConfirmation = ref('')
+
+const errorPassword = ref('');
+
 const company = ref('1')
+const disableSubmit = ref(false)
+
+
+
+const handleChangeName = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorName.value = 'The name field is required';
+    disableSubmit.value = true;
+  } else {
+    errorName.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeSurname = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorSurname.value = 'The surname field is required'
+    disableSubmit.value = true;
+  } else {
+    errorSurname.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangeEmail = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorEmail.value = 'The email field is required';
+    disableSubmit.value = true;
+  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    errorEmail.value = 'The email field must valid'
+    disableSubmit.value = true;
+  } else {
+    errorEmail.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangePhoneNumber = (event:any) => {
+  const value = event.target.value
+ if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+    errorphoneNumber.value = 'The phone number field must valid';
+    disableSubmit.value = true;
+  } else {
+    errorphoneNumber.value = '';
+    disableSubmit.value = false;
+  }
+}
+const handleChangePassword = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorPassword.value = 'Please provide a password';
+    disableSubmit.value = true;
+  }
+}
+const handleChangePasswordMatching = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorPassword.value = 'Please provide a password';
+    disableSubmit.value = true;
+  } else if(password.value !== passwordConfirmation.value){
+    errorPassword.value = 'Password not matching';
+    disableSubmit.value = true;
+  } else {
+    errorPassword.value = '';
+    disableSubmit.value = false;
+  }
+}
 
 onMounted(() => {
   if (props.technician) {
@@ -92,10 +224,26 @@ onMounted(() => {
   }
 })
 
-
 const createTechnician = async () => {
-  // TODO: add validation
-
+  if(!name.value){
+    errorName.value = 'The name field is required';
+    return
+  } else if(!surname.value){
+    errorSurname.value = 'The surname field is required';
+    return
+  } else if(!email.value ){
+    errorEmail.value = 'The email field is required';
+    return
+  }  else if(errorphoneNumber.value){
+    errorphoneNumber.value = 'Please provide a valid phone number';
+    return
+  } else if(!password.value){
+    errorPassword.value = 'Please provide a password';
+    return
+  } else if(!passwordConfirmation.value){
+    errorPassword.value = 'Please provide a password';
+    return 
+  } 
   try {
     await store.createTechnician({
       name: name.value,
@@ -108,13 +256,11 @@ const createTechnician = async () => {
     });
     props.toggleAddTechnicianModal({success: "Technician created successfully"});
   } catch (e) {
-    props.toggleAddTechnicianModal({error: e});
+    props.toggleAddTechnicianModal({error: "Opps, something went wrong!"});
   }
 }
 
 const updateTechnician = async () => {
-  // TODO: add validation
-
   try {
     const data = {
       id: props.technician.id,
@@ -132,5 +278,3 @@ const updateTechnician = async () => {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>
