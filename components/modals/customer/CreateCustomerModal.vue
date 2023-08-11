@@ -228,9 +228,8 @@ onMounted(() => {
 })
 
 const createCustomer = async () => {
-
   if(!name.value){
-    name.value === '' ? errorName.value = 'The name field is required' : name.value = '';
+    errorName.value = 'The name field is required';
     return
   } else if(!surname.value){
     errorSurname.value = 'The surname field is required';

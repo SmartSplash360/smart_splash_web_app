@@ -55,20 +55,30 @@
                   optionLabel="name"
                   optionValue="id"
                   placeholder="Select a technician"
-                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
-                :class="errorTechnicianId && 'border-red-300'"
-                @change="handleChangeTechnician"
+                  class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
+                  :class="errorTechnicianId && 'border-red-300'"
+                  @change="handleChangeTechnician"
               />            
             </div>
             <p class="min-h-[20px]">
-                <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{ errorTechnicianId }}</span>
-              </p>
+              <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{ errorTechnicianId }}</span>
+            </p>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label class="span__element" for="notes"> Notes</label>
-            <Textarea v-model="notes" rows="5" cols="30" class="dark:bg-[#1B2028]"/>
+            <label class="span__element" for="notes"> Notes*</label>
+            <Textarea 
+              v-model="notes" 
+              rows="5" 
+              cols="30" 
+              class="dark:bg-[#1B2028]"
+              :class="errorNotes && 'border-red-300'"
+              @change="handleChangeNote"
+              />
+              <p class="min-h-[20px]">
+                <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
+              </p>
           </div>
         </div>
 
@@ -86,7 +96,6 @@
               hourFormat="24"
             />
           </div>
-
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="priority"> Priority </label>
             <div class="card justify-content-center flex">
@@ -164,7 +173,9 @@ const props = defineProps({
 const status = ref('open');
 const priority = ref('medium');
 const dateTime = ref(null);
+
 const notes = ref('');
+const errorNotes = ref()
 
 const alertTypeId = ref();
 const errorAlertTypeId = ref();
@@ -223,7 +234,6 @@ onMounted(async () => {
     technicianId.value = alert.technician_id;
   }
 });
-
 const handleChangeAlertType = () => {
   if(alertTypeId.value){
     errorAlertTypeId.value = '';
@@ -248,13 +258,28 @@ const handleChangeTechnician = () => {
     errorTechnicianId.value = 'Please select technician';
   }
 }
+const handleChangeNote = () => {
+  if(!notes.value){
+    errorNotes.value = 'Please add a note'
+  }
+}
 const createAlert = async () => {
-  if(!alertTypeId.value || !bodyOfWaterId.value || !technicianId.value ){
+  if(!alertTypeId.value ){
     errorAlertTypeId.value = 'Please select alert type';
+    return 
+  }
+  if(!bodyOfWaterId.value){
     errorBodyOfWaterId.value = 'Please select body of water';
+    return 
+  }
+  if(!technicianId.value ){
     errorTechnicianId.value = 'Please select technician';
-    disableSubmit.value = true;
-  } else {
+    return
+  }
+  if(!notes.value){
+    errorNotes.value = 'Please add a note'
+    return 
+  }
     try {
       const data = {
         status: status.value,
@@ -273,9 +298,7 @@ const createAlert = async () => {
     } catch (e) {
       props.toggleAddAlertModal({error: e})
     }
-  }
-};
-
+}
 const updateAlert = async () => {
   // TODO: validation
   try {
@@ -297,7 +320,4 @@ const updateAlert = async () => {
     props.toggleAddAlertModal({error: e})
   }
 }
-
 </script>
-
-<style lang="scss" scoped></style>
