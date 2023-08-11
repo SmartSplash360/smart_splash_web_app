@@ -73,7 +73,8 @@
             type="text" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
             :class="errorPassword && 'border-red-300'"  
-            v-model="password">
+            v-model="password"
+            @blur="handleChangePassword">
           </InputText>
 
           <p class="min-h-[20px]">
@@ -196,6 +197,13 @@ const handleChangePhoneNumber = (event:any) => {
     disableSubmit.value = false;
   }
 }
+const handleChangePassword = (event:any) => {
+  const value = event.target.value
+  if(!value){
+    errorPassword.value = 'Please provide a password';
+    disableSubmit.value = true;
+  }
+}
 const handleChangePasswordMatching = (event:any) => {
   const value = event.target.value
   if(!value){
@@ -220,13 +228,23 @@ onMounted(() => {
 })
 
 const createCustomer = async () => {
-  if(!name.value || !surname.value || !email.value || !phoneNumber || !passwordConfirmation){
-    errorName.value = 'The name field is required';
+
+  if(!name.value){
+    name.value === '' ? errorName.value = 'The name field is required' : name.value = '';
+    return
+  } else if(!surname.value){
     errorSurname.value = 'The surname field is required';
+    return
+  } else if(!email.value ){
     errorEmail.value = 'The email field is required';
+    return
+  } else if(!password.value){
     errorPassword.value = 'Please provide a password';
-    disableSubmit.value = true;
-  } else {
+    return
+  } else if(!passwordConfirmation.value){
+    errorPassword.value = 'Please provide a password';
+    return 
+  } 
     try {
       await store.createCustomer({
         name: name.value,
@@ -238,10 +256,9 @@ const createCustomer = async () => {
       });
       props.toggleAddCustomerModal({success: "Customer created successfully"});
     } catch (e) {
-      props.toggleAddCustomerModal({error: e});
+      props.toggleAddCustomerModal({error: "Opps, something went wrong!"});
     }
   }
-}
 const updateCustomer = async () => {
   try {
     const data = {

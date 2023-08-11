@@ -21,7 +21,12 @@
                 optionValue="id"
                 placeholder="Select an alert type"
                 class="md:w-14rem w-full dark:bg-[#1B2028]"
-            />
+                :class="errorAlertTypeId && 'border-red-300'"
+                @change="handleChangeAlertType"
+            />          
+            <p class="min-h-[20px]">
+              <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{ errorAlertTypeId }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="bodyOfWater"> Body of Water* </label>
@@ -32,7 +37,12 @@
                 optionLabel="name"
                 placeholder="Select a body of water"
                 class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
-            />
+                :class="errorBodyOfWaterId && 'border-red-300'"
+                @change="handleChangeBodyOfWater"
+            />       
+            <p class="min-h-[20px]">
+              <span v-show="errorBodyOfWaterId" class="text-[#D42F24] text-xs">{{ errorBodyOfWaterId }}</span>
+            </p>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -46,8 +56,13 @@
                   optionValue="id"
                   placeholder="Select a technician"
                 class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
-              />
+                :class="errorTechnicianId && 'border-red-300'"
+                @change="handleChangeTechnician"
+              />            
             </div>
+            <p class="min-h-[20px]">
+                <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{ errorTechnicianId }}</span>
+              </p>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -62,7 +77,7 @@
             <label class="span__element" for="date"> Date</label>
             <Calendar 
               id="date" 
-                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
+              class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               v-model="dateTime" 
               :minDate="minDate" 
               :maxDate="maxDate" 
@@ -112,6 +127,7 @@
           <Button
               :label="alert ? 'Update' : 'Submit'"
               icon="pi pi-check"
+              :disabled="disableSubmit"
               class="!bg-[#0291BF] hover:shadow-xl text-white"
               @click="alert ? updateAlert() : createAlert()"
           />
@@ -149,9 +165,16 @@ const status = ref('open');
 const priority = ref('medium');
 const dateTime = ref(null);
 const notes = ref('');
+
 const alertTypeId = ref();
+const errorAlertTypeId = ref();
+
 const bodyOfWaterId = ref();
+const errorBodyOfWaterId = ref();
+
 const technicianId = ref();
+const errorTechnicianId = ref();
+
 const minDate = ref(new Date());
 const maxDate = ref(new Date());
 
@@ -167,6 +190,8 @@ const statusOptions = ref([
   {label: 'Open', value: 'open'},
   {label: 'Closed', value: 'closed'},
 ]);
+
+const disableSubmit = ref(false)
 
 /** Date limits */
 let today = new Date();
@@ -199,26 +224,55 @@ onMounted(async () => {
   }
 });
 
+const handleChangeAlertType = () => {
+  if(alertTypeId.value){
+    errorAlertTypeId.value = '';
+    disableSubmit.value = false;
+  } else {    
+    errorAlertTypeId.value = 'Please select alert type';
+  }
+}
+const handleChangeBodyOfWater = () => {
+  if(bodyOfWaterId.value){
+    errorBodyOfWaterId.value = '';
+    disableSubmit.value = false;
+  } else {
+    errorBodyOfWaterId.value = 'Please select body of water';
+  }
+}
+const handleChangeTechnician = () => {
+  if(technicianId.value){
+    errorTechnicianId.value = '';
+    disableSubmit.value = false;
+  } else {
+    errorTechnicianId.value = 'Please select technician';
+  }
+}
 const createAlert = async () => {
-  // TODO: validation
+  if(!alertTypeId.value || !bodyOfWaterId.value || !technicianId.value ){
+    errorAlertTypeId.value = 'Please select alert type';
+    errorBodyOfWaterId.value = 'Please select body of water';
+    errorTechnicianId.value = 'Please select technician';
+    disableSubmit.value = true;
+  } else {
+    try {
+      const data = {
+        status: status.value,
+        priority: priority.value,
+        date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
+        notes: notes.value,
+        alert_type_id: alertTypeId.value,
+        body_of_water_id: bodyOfWaterId.value,
+        technician_id: technicianId.value
+      };
 
-  try {
-    const data = {
-      status: status.value,
-      priority: priority.value,
-      date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
-      notes: notes.value,
-      alert_type_id: alertTypeId.value,
-      body_of_water_id: bodyOfWaterId.value,
-      technician_id: technicianId.value
-    };
+      await alertStore.createAlert(data);
+      await alertStore.fetchAlerts();
 
-    await alertStore.createAlert(data);
-    await alertStore.fetchAlerts();
-
-    props.toggleAddAlertModal({success: "Alert created successfully"});
-  } catch (e) {
-    props.toggleAddAlertModal({error: e})
+      props.toggleAddAlertModal({success: "Alert created successfully"});
+    } catch (e) {
+      props.toggleAddAlertModal({error: e})
+    }
   }
 };
 
