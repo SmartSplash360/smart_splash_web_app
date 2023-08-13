@@ -1,12 +1,6 @@
 <template>
-  <div
-      @click="toggleAddProductModal( { show: false })"
-      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
-  >
-      <form
-      @click.stop
-          class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F] dark:text-white"
-      >
+  <div  @click="toggleAddProductModal( { show: false })"  class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]">
+      <form @click.stop  class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F] dark:text-white">
         <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ product ? 'Edit' : 'New' }} Product {{ product ? `#${product?.id}` : '' }}
         </h2>
@@ -74,7 +68,6 @@
           <label class="span__element" for="notes"> Is Available? </label>
           <InputSwitch  v-model="isAvailable"/>
         </div>
-
         <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
           <Button
               label="Cancel"
@@ -123,36 +116,28 @@ const price = ref(1.00);
 const errorPrice = ref("");
 
 
-const disableSubmit = ref(false)
-
 const handleChangeName = (event) => {
   const value = event.target.value
   if(!value){
     errorName.value = 'The name field is required';
-    disableSubmit.value = true;
   } else {
     errorName.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangeDescription = (event) => {
   const value = event.target.value
   if(!value){
     errorDescription.value = 'The description field is required'
-    disableSubmit.value = true;
   } else {
     errorDescription.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangePrice = (event) => {
   const value = event.target.value
   if(!value){
     errorPrice.value = 'The price field is required';
-    disableSubmit.value = true;
   } else {
     errorPrice.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangeNote = () => {
@@ -170,7 +155,6 @@ onMounted(() => {
     price.value = props.product.price;
   }
 })
-
 const createProduct = async () => {
   if(!name.value){
     errorName.value = 'The name field is required';
@@ -202,7 +186,6 @@ const createProduct = async () => {
     props.toggleAddProductModal({error: e});
   }
 }
-
 const updateProduct = async () => {
   try {
     const data = {
