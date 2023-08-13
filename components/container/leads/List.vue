@@ -100,7 +100,7 @@ const closeModal = ({ success, error }) => {
       severity: "success",
       summary: "Leads",
       detail: success,
-      life: 3000,
+      life: 5000,
     });
   }
 
@@ -109,7 +109,7 @@ const closeModal = ({ success, error }) => {
       severity: "error",
       summary: "Leads",
       detail: `An error has occurred: ${error}`,
-      life: 3000,
+      life: 5000,
     });
   }
 };
@@ -128,14 +128,14 @@ const convertToCustomer = ({ id }) => {
           severity: "success",
           summary: "Convert Lead to Customer",
           detail: res?.message,
-          life: 3000,
+          life: 5000,
         });
       } catch (e) {
         toast.add({
           severity: "error",
           summary: "Convert Lead to Customer",
           detail: `an error has occurred: ${e}`,
-          life: 3000,
+          life: 5000,
         });
       }
     },
@@ -174,14 +174,14 @@ const deleteItem = async ({ id }) => {
           severity: "info",
           summary: "Delete Lead",
           detail: res?.message,
-          life: 3000,
+          life: 5000,
         });
       } catch (e) {
         toast.add({
           severity: "error",
           summary: "Delete Lead",
           detail: `an error has occurred: ${e}`,
-          life: 3000,
+          life: 5000,
         });
       }
     },

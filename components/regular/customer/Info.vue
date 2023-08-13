@@ -44,12 +44,12 @@
         }}</span>
       </div>
     </div>
-    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
+    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start sm:justify-center gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
       <font-awesome-icon icon="location-dot" class="text-lg"/>
       <span class="span__element">{{ fullAddress }}</span>
     </div>
     <div
-      class="min-w-[250px] max-w-[350px] flex-1 flex-between  md:flex-col lg:flex-row xl:justify-between"
+      class="min-w-[250px] max-w-[350px] flex-1 flex-between   lg:flex-row xl:justify-between"
     >
       <div class="relative flex-center flex-col">
         <img

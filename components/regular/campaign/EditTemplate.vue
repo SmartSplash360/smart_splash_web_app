@@ -213,7 +213,7 @@ const cancel = () => {
       severity: "error",
       summary: "Error",
       detail: "Error Occured",
-      life: 3000,
+      life: 5000,
     });
   }
 };
@@ -246,7 +246,7 @@ const createTemplate = async () => {
       severity: "success",
       summary: "Success",
       detail: "Template Created",
-      life: 3000,
+      life: 5000,
     });
     setTimeout(() => {
       router.replace("/campaigns");
@@ -256,7 +256,7 @@ const createTemplate = async () => {
       severity: "error",
       summary: "Error",
       detail: "Error Occured",
-      life: 3000,
+      life: 5000,
     });
   }
 };

@@ -51,7 +51,7 @@
             </p>
           </div>
           <div class="flex w-full flex-col gap-2">
-            <label class="span__element" for="cell number"> Cell number </label>
+            <label class="span__element" for="cell number"> Cell number* </label>
              <InputText 
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
               :class="errorphoneNumber && 'border-red-300'" 
@@ -152,7 +152,7 @@ const disableSubmit = ref(false)
 
 
 const handleChangeName = (event:any) => {
-  const value = event.target.value
+  const value = event.target.value;
   if(!value){
     errorName.value = 'The name field is required';
     disableSubmit.value = true;
@@ -162,7 +162,7 @@ const handleChangeName = (event:any) => {
   }
 }
 const handleChangeSurname = (event:any) => {
-  const value = event.target.value
+  const value = event.target.value;
   if(!value){
     errorSurname.value = 'The surname field is required'
     disableSubmit.value = true;
@@ -172,7 +172,7 @@ const handleChangeSurname = (event:any) => {
   }
 }
 const handleChangeEmail = (event:any) => {
-  const value = event.target.value
+  const value = event.target.value;
   if(!value){
     errorEmail.value = 'The email field is required';
     disableSubmit.value = true;
@@ -185,8 +185,10 @@ const handleChangeEmail = (event:any) => {
   }
 }
 const handleChangePhoneNumber = (event:any) => {
-  const value = event.target.value
- if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+  const value = event.target.value;
+  if(!value){
+    errorphoneNumber.value = 'The phone number field is required';
+  } else if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
     errorphoneNumber.value = 'The phone number field must valid';
     disableSubmit.value = true;
   } else {
@@ -195,14 +197,14 @@ const handleChangePhoneNumber = (event:any) => {
   }
 }
 const handleChangePassword = (event:any) => {
-  const value = event.target.value
+  const value = event.target.value;
   if(!value){
     errorPassword.value = 'Please provide a password';
     disableSubmit.value = true;
   }
 }
 const handleChangePasswordMatching = (event:any) => {
-  const value = event.target.value
+  const value = event.target.value;
   if(!value){
     errorPassword.value = 'Please provide a password';
     disableSubmit.value = true;
@@ -234,8 +236,8 @@ const createTechnician = async () => {
   } else if(!email.value ){
     errorEmail.value = 'The email field is required';
     return
-  }  else if(errorphoneNumber.value){
-    errorphoneNumber.value = 'Please provide a valid phone number';
+  }  else if(!phoneNumber.value){
+    errorphoneNumber.value = 'Please provide a phone number';
     return
   } else if(!password.value){
     errorPassword.value = 'Please provide a password';

@@ -74,7 +74,7 @@
               cols="30" 
               class="dark:bg-[#1B2028]"
               :class="errorNotes && 'border-red-300'"
-              @change="handleChangeNote"
+              @blur="handleChangeNote"
               />
               <p class="min-h-[20px]">
                 <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
@@ -136,7 +136,6 @@
           <Button
               :label="alert ? 'Update' : 'Submit'"
               icon="pi pi-check"
-              :disabled="disableSubmit"
               class="!bg-[#0291BF] hover:shadow-xl text-white"
               @click="alert ? updateAlert() : createAlert()"
           />
@@ -202,8 +201,6 @@ const statusOptions = ref([
   {label: 'Closed', value: 'closed'},
 ]);
 
-const disableSubmit = ref(false)
-
 /** Date limits */
 let today = new Date();
 let month = today.getMonth();
@@ -237,7 +234,6 @@ onMounted(async () => {
 const handleChangeAlertType = () => {
   if(alertTypeId.value){
     errorAlertTypeId.value = '';
-    disableSubmit.value = false;
   } else {    
     errorAlertTypeId.value = 'Please select alert type';
   }
@@ -245,7 +241,6 @@ const handleChangeAlertType = () => {
 const handleChangeBodyOfWater = () => {
   if(bodyOfWaterId.value){
     errorBodyOfWaterId.value = '';
-    disableSubmit.value = false;
   } else {
     errorBodyOfWaterId.value = 'Please select body of water';
   }
@@ -253,14 +248,15 @@ const handleChangeBodyOfWater = () => {
 const handleChangeTechnician = () => {
   if(technicianId.value){
     errorTechnicianId.value = '';
-    disableSubmit.value = false;
   } else {
     errorTechnicianId.value = 'Please select technician';
   }
 }
 const handleChangeNote = () => {
   if(!notes.value){
-    errorNotes.value = 'Please add a note'
+    errorNotes.value = 'Please add a note';
+  } else {
+    errorNotes.value = '';
   }
 }
 const createAlert = async () => {

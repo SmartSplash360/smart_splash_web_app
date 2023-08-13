@@ -61,7 +61,7 @@ async function login() {
       severity: 'success',
       summary: 'Login Success',
       detail: 'You have been logged in successfully',
-      life: 3000
+      life: 5000
     });
   } catch (e) {
     console.log(e)
@@ -69,7 +69,7 @@ async function login() {
       severity: 'error',
       summary: 'Login Error',
       detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-      life: 3000
+      life: 5000
     });
   }
 

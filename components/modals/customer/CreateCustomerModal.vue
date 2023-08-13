@@ -51,7 +51,7 @@
           </p>
         </div>
         <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="cell number"> Cell number </label>
+          <label class="span__element text-sm" for="cell number"> Cell number* </label>
           <InputText 
             type="text" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
@@ -102,7 +102,6 @@
         />
         <Button
             label="Submit"
-            :disabled="disableSubmit"
             icon="pi pi-check"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="customer ? updateCustomer() : createCustomer()"
@@ -148,70 +147,57 @@ const passwordConfirmation = ref('');
 
 const errorPassword = ref('');
 
-const disableSubmit = ref(false)
-
 
 const handleChangeName = (event:any) => {
   const value = event.target.value
   if(!value){
     errorName.value = 'The name field is required';
-    disableSubmit.value = true;
   } else {
     errorName.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangeSurname = (event:any) => {
   const value = event.target.value
   if(!value){
     errorSurname.value = 'The surname field is required'
-    disableSubmit.value = true;
   } else {
     errorSurname.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangeEmail = (event:any) => {
   const value = event.target.value
   if(!value){
     errorEmail.value = 'The email field is required';
-    disableSubmit.value = true;
   } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
     errorEmail.value = 'The email field must valid'
-    disableSubmit.value = true;
   } else {
     errorEmail.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangePhoneNumber = (event:any) => {
   const value = event.target.value
- if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+  if(!value){
+    errorphoneNumber.value = 'The phone number field is required';
+  } else if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
     errorphoneNumber.value = 'The phone number field must valid';
-    disableSubmit.value = true;
   } else {
     errorphoneNumber.value = '';
-    disableSubmit.value = false;
   }
 }
 const handleChangePassword = (event:any) => {
   const value = event.target.value
   if(!value){
     errorPassword.value = 'Please provide a password';
-    disableSubmit.value = true;
   }
 }
 const handleChangePasswordMatching = (event:any) => {
   const value = event.target.value
   if(!value){
     errorPassword.value = 'Please provide a password';
-    disableSubmit.value = true;
   } else if(password.value !== passwordConfirmation.value){
     errorPassword.value = 'Password not matching';
-    disableSubmit.value = true;
   } else {
     errorPassword.value = '';
-    disableSubmit.value = false;
   }
 }
 
@@ -234,8 +220,8 @@ const createCustomer = async () => {
   } else if(!email.value ){
     errorEmail.value = 'The email field is required';
     return
-  } else if(errorphoneNumber.value){
-    errorphoneNumber.value = 'Please provide a valid phone number';
+  } else if(!phoneNumber.value){
+    errorphoneNumber.value = 'The phone number fied is required';
     return
   } else if(!password.value){
     errorPassword.value = 'Please provide a password';
