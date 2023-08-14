@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="card justify-content-center flex flex-col gap-3">
-          <label class="span__element" for="description"> Description </label>
+          <label class="span__element" for="description"> Description (10 to 300 characters) </label>
           <Textarea 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             v-model="description" 
@@ -44,13 +44,13 @@
             rows="3" 
             cols="70"
             :class="errorDescription && 'border-red-300'"
-            @change="handleChangeDescription"/>
+            @blur="handleChangeDescription"/>
             <p class="min-h-[20px]">
               <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{ errorDescription }}</span>
             </p>
         </div>
         <div class="card justify-content-center flex flex-col gap-3">
-          <label class="span__element" for="notes"> Notes </label>
+          <label class="span__element" for="notes"> Notes (10 to 300 characters)</label>
           <Textarea 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             v-model="notes" 
@@ -58,7 +58,7 @@
             rows="3" 
             cols="70"
             :class="errorNotes && 'border-red-300'"
-            @change="handleChangeNote"
+            @blur="handleChangeNote"
           />
           <p class="min-h-[20px]">
             <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
@@ -128,6 +128,8 @@ const handleChangeDescription = (event) => {
   const value = event.target.value
   if(!value){
     errorDescription.value = 'The description field is required'
+  } else if(description.value.length > 300){
+    errorDescription.value = 'Please enter between 10 and 100 maximum characters'
   } else {
     errorDescription.value = '';
   }
@@ -142,7 +144,11 @@ const handleChangePrice = (event) => {
 }
 const handleChangeNote = () => {
   if(!notes.value){
-    errorNotes.value = 'Please add a note'
+    errorNotes.value = 'The note field is required'
+  } else if(notes.value.length > 100){
+    errorNotes.value = 'Please enter between 10 and 100 maximum characters';
+  } else {
+    errorNotes.value = '';
   }
 }
 
@@ -167,6 +173,9 @@ const createProduct = async () => {
     return
   } else if(!notes.value){
     errorNotes.value = 'Please add a note'
+    return 
+  } else if( notes.value.length > 300){
+    errorNotes.value = 'Please provide between 10 and 300 characters for notes'
     return 
   }
   try {

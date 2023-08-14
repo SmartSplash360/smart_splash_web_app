@@ -67,7 +67,7 @@
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label class="span__element" for="notes"> Notes*</label>
+            <label class="span__element" for="notes"> Notes* (10 to 300 characters)</label>
             <Textarea 
               v-model="notes" 
               rows="5" 
@@ -255,6 +255,8 @@ const handleChangeTechnician = () => {
 const handleChangeNote = () => {
   if(!notes.value){
     errorNotes.value = 'Please add a note';
+  } else if(notes.value.length > 300){
+    errorNotes.value = 'Please enter between 10 and 100 maximum characters';
   } else {
     errorNotes.value = '';
   }
@@ -274,6 +276,10 @@ const createAlert = async () => {
   }
   if(!notes.value){
     errorNotes.value = 'Please add a note'
+    return 
+  } 
+  if( notes.value.length > 300){
+    errorNotes.value = 'Please provide between 10 and 300 characters for notes'
     return 
   }
     try {
