@@ -107,94 +107,63 @@
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-
 import {useUserStore} from "~/stores/users";
+
 const store = useUserStore();
 const router = useRouter();
 
 const firstName = ref('');
-const errorFirstame = ref('');
-
 const lastName = ref('');
-const errorLastname = ref('');
-
 const email = ref('');
-const errorEmail = ref('');
-
 const password = ref('');
 const confirmPassword = ref('');
 
+
+const errorFirstame = ref('');
+const errorLastname = ref('');
+const errorEmail = ref('');
 const errorPassword = ref('');
 
-const handleChangeFirstname = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorFirstame.value = 'The first name field is required';
-  } else {
-    errorFirstame.value = '';
-  }
+const handleChangeFirstname = () => {
+  errorFirstame.value = firstName.value ? '' :'The first name field is required'; 
 }
-const handleChangeLastname = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorLastname.value = 'The last name field is required';
-  } else {
-    errorLastname.value = '';
-  }
+const handleChangeLastname = () => {
+  errorLastname.value = lastName.value ? '' :'The last name field is required'; 
 }
-const handleChangeEmail = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorEmail.value = 'The email field is required';
-  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-    errorEmail.value = 'The email field must valid'
-  } else {
-    errorEmail.value = '';
-  }
+const handleChangeEmail = () => {
+  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
 }
-const handleChangePassword = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-  }
+const handleChangePassword = () => {
+  errorPassword.value = !password.value ? 'Please provide a password' : '';
+};
+const handleChangePasswordMatching = () => {
+  errorPassword.value = passwordConfirmation.value ? (password.value !== passwordConfirmation.value ? 'Please provide matching password' : ''): 'The password fields are required'
 }
-const handleChangePasswordMatching = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-  } else if(password.value !== confirmPassword.value){
-    errorPassword.value = 'Password not matching';
-  } else {
-    errorPassword.value = '';
-  }
-}
-async function registerUser() {
-  if(!firstName.value){
-    errorFirstame.value = 'The first name field is required';
-    return
-  } else if(!lastName.value){
-    errorLastname.value = 'The last name field is required';
-    return
-  } else if(!email.value ){
-    errorEmail.value = 'The email field is required';
-    return
-  } else if(!password.value){
-    errorPassword.value = 'Please provide a password';
-    return
-  } else if(!passwordConfirmation.value){
-    errorPassword.value = 'Please provide a password';
-    return 
-  } 
+const validateForm = () => {
+  handleChangeFirstname();
+  handleChangeLastname();
+  handleChangeEmail();
+  handleChangePassword();
+  handleChangePasswordMatching();
+  return !errorFirstame.value && !errorLastname.value && !errorEmail.value && errorPassword.value;
+};
 
-  const userPayload = {
-    name: firstName.value,
-    surname: lastName.value,
-    email: email.value,
-    password: password.value,
-    confirmPassword: confirmPassword.value,
-    role: 'Admin'
-  }
-  // await store.register(userPayload);
-  await router.push('/customers');
+async function registerUser() {
+  if(validateForm()){
+    try {
+        const userPayload = {
+          name: firstName.value,
+          surname: lastName.value,
+          email: email.value,
+          password: password.value,
+          confirmPassword: confirmPassword.value,
+          role: 'Admin'
+        }
+        await store.register(userPayload);
+        await router.push('/customers');
+    } catch(error){
+      console.log(error)
+    }
+  } 
 }
 </script>

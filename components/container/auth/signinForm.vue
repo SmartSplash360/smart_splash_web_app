@@ -62,7 +62,6 @@ import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import {useToast} from "primevue/usetoast";
-
 import {useUserStore} from "~/stores/users";
 import {useCustomerStore} from "~/stores/customer";
 
@@ -70,23 +69,18 @@ const store = useUserStore();
 const customerStore = useCustomerStore();
 const router = useRouter();
 
-const email = ref('test@test.com');
-const errorEmail = ref('');
+const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const email = ref('test@test.com');
 const password = ref('password');
+
+const errorEmail = ref('');
 const errorPassword = ref('');
 
 const toast = useToast();
 
-const handleChangeEmail = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorEmail.value = 'The email field is required';
-  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-    errorEmail.value = 'Please provide a valid email'
-  } else {
-    errorEmail.value = '';
-  }
+const handleChangeEmail = () => {
+  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
 }
 
 async function login() {

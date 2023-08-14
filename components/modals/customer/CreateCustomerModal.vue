@@ -176,7 +176,7 @@ const validateForm = () => {
   handleChangePhoneNumber();
   handleChangePassword();
   handleChangePasswordMatching();
-  return !errorName.value && !errorSurname.value && !errorEmail.value && !errorPhoneNumber.value && errorPassword;
+  return !errorName.value && !errorSurname.value && !errorEmail.value && !errorPhoneNumber.value && errorPassword.value;
 };
 
 const createCustomer = async () => {
