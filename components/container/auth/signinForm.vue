@@ -12,8 +12,31 @@
       <p class="paragraph__p">Please enter your details</p>
     </div>
     <div class="w-full flex flex-col gap-6">
-        <InputText type="text" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Full name" v-model="email"></InputText>
-        <InputText type="password" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" placeholder="Email Address" v-model="password"></InputText>
+      <div class="flex flex-col gap-2">
+        <InputText 
+          type="text" 
+          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+          :class="errorEmail && 'border-red-300'" 
+          placeholder="Full name" 
+          v-model="email"
+            @blur="handleChangeEmail">
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
+        </p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <InputText 
+          type="password" 
+          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+          :class="errorPassword && 'border-red-300'"
+          placeholder="Email Address" 
+          v-model="password">
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+        </p>
+      </div>
       <p class="paragraph__p w-full text-end text-[#4D6977]">Forgot password?</p>
     </div>
 
@@ -26,7 +49,7 @@
         </p>
       </div>
         <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
-        <!-- <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/> -->        
+        <!-- <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>         -->
         <Button icon="pi pi-google" label="Continue with Google"  class="w-full"/>
       </div>
       <Toast/>
@@ -48,11 +71,33 @@ const customerStore = useCustomerStore();
 const router = useRouter();
 
 const email = ref('test@test.com');
+const errorEmail = ref('');
+
 const password = ref('password');
+const errorPassword = ref('');
 
 const toast = useToast();
 
+const handleChangeEmail = (event) => {
+  const value = event.target.value
+  if(!value){
+    errorEmail.value = 'The email field is required';
+  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    errorEmail.value = 'Please provide a valid email'
+  } else {
+    errorEmail.value = '';
+  }
+}
+
 async function login() {
+  if(errorEmail.value ){
+    errorEmail.value = 'Please provide a valid email';
+    return
+  } else if(!password.value){
+    errorPassword.value = 'Please provide a password';
+    return 
+  } 
+
   try {
     await store.login(email.value, password.value);
     await customerStore.fetchCustomers();

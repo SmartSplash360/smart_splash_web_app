@@ -3,7 +3,7 @@
     <div 
       class="w-full  sm:mx-auto  
         px-5 sm:px-0 flex-between gap-0 
-        rounded-md bg-white lg:h-[850px] 
+        rounded-md bg-white lg:h-[870px] 
         lg:border lg:shadow-lg 
         lg:hover:shadow-xl  md:w-4/5 xl:[55%]">
       <ContainerAuthSignupForm 

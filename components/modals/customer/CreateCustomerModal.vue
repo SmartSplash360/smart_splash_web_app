@@ -243,7 +243,7 @@ const createCustomer = async () => {
   } catch (e) {
     props.toggleAddCustomerModal({error: "Opps, something went wrong!"});
   }
-  }
+}
 const updateCustomer = async () => {
   try {
     const data = {
