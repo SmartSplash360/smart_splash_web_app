@@ -109,11 +109,7 @@ import { useTemplateStore } from "@/stores/templates";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
-const props = defineProps({
-  edit: Boolean,
-  campaignId: String,
-  createCampaign: Function,
-});
+const { edit, campaignId, createCampaign } = defineProps(['edit, campaignId,createCampaign']);
 
 const route = useRoute();
 const router = useRouter()
@@ -122,30 +118,28 @@ const { campaignType, templateId } = route.query;
 
 const confirm = useConfirm();
 const toast = useToast();
-
-const lead = ref(null);
-const customer = ref(null);
-const errorCampaignType = ref("")
-
-const description = ref("");
-const errorDescrption = ref("")
-
-const name = ref("");
-const errorName = ref("");
-
-const selectedFile = ref(null);
-const imageSrc = ref("");
-const errorCover = ref("");
-
-const templateTypeName = ref("");
-
-const templateType = ref();
-const errorTemplateType = ref("");
-
 const types = ref([
   { state: "Email Campaign", option: 2 },
   { state: "SMS Campaign", option: 3 },
 ]);
+
+const lead = ref(null);
+const customer = ref(null);
+const description = ref("");
+const name = ref("");
+const selectedFile = ref(null);
+const imageSrc = ref("");
+const templateTypeName = ref("");
+const templateType = ref();
+
+
+const errorCampaignType = ref("");
+const errorDescrption = ref("");
+const errorName = ref("");
+const errorCover = ref("");
+const errorTemplateType = ref("");
+
+
 
 const disableSubmit = ref(false)
 const store = useTemplateStore();
@@ -153,7 +147,7 @@ const store = useTemplateStore();
 const template = computed(() => store.getTemplateById(templateId));
 
 onMounted(async () => {
-  if (props.campaignId) {
+  if (campaignId) {
     name.value = template.value?.name;
     templateType.value = template.value?.template_type_id;
   }
@@ -170,23 +164,14 @@ const selectType = (value) => {
     templateType.value = value.option;
   }
 };
-const handleChangeName = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorName.value = 'The Title field is required';
-    disableSubmit.value = true;
-    return
-  } else {
-    errorName.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangeName = () => {
+  errorName.value = name.value ? '' :'The title field is required'; 
 }
 const handleUpload = (event) => {
-  if(selectedFile.value){
+  if(!selectedFile.value){
     errorCover.value = "Please Select a file and upload";
     return;
   } else {
-
     errorCover.value = "";
     selectedFile.value = event.files[0];
     const reader = new FileReader();
@@ -266,7 +251,7 @@ const sendCampaign = () => {
     return 
   }
 
-  props.createCampaign({
+  createCampaign({
     name: name.value,
     description: description.value,
     templateId,
