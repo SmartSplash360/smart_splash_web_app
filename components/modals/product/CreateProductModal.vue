@@ -90,14 +90,10 @@
 <script setup>
 import {useProductStore} from "~/stores/products";
 
-const props = defineProps({
-  toggleAddProductModal: Function,
-  product: {
-    type: Object,
-    default: () => null,
-    required: false,
-  },
-});
+const { toggleAddProductModal, product } = defineProps([
+  'toggleAddProductModal',
+  'product'
+]);
 
 const productStore = useProductStore();
 
@@ -116,85 +112,55 @@ const price = ref(1.00);
 const errorPrice = ref("");
 
 
-const handleChangeName = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorName.value = 'The name field is required';
-  } else {
-    errorName.value = '';
-  }
-}
-const handleChangeDescription = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorDescription.value = 'The description field is required'
-  } else if(description.value.length > 300){
-    errorDescription.value = 'Please enter between 10 and 100 maximum characters'
-  } else {
-    errorDescription.value = '';
-  }
-}
-const handleChangePrice = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorPrice.value = 'The price field is required';
-  } else {
-    errorPrice.value = '';
-  }
-}
+const handleChangeName = () => {
+  errorName.value = name.value ? '' : 'The name field is required';
+};
+const handleChangeDescription = () => {
+  errorDescription.value = description.value ? (description.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'The description field is required';
+};
+const handleChangePrice = () => {
+  errorPrice.value = price.value ? '' : 'The price field is required';
+};
 const handleChangeNote = () => {
-  if(!notes.value){
-    errorNotes.value = 'The note field is required'
-  } else if(notes.value.length > 100){
-    errorNotes.value = 'Please enter between 10 and 100 maximum characters';
-  } else {
-    errorNotes.value = '';
-  }
-}
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
+};
 
 onMounted(() => {
-  if (props.product) {
-    isAvailable.value = props.product.is_available === 1;
-    notes.value = props.product.notes;
-    name.value = props.product.name;
-    description.value = props.product.description;
-    price.value = props.product.price;
+  if (product) {
+    isAvailable.value = product.is_available === 1;
+    notes.value = product.notes;
+    name.value = product.name;
+    description.value = product.description;
+    price.value = product.price;
   }
 })
+
+const validateForm = () => {
+  handleChangeName();
+  handleChangeDescription();
+  handleChangePrice();
+  handleChangeNote();
+  return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
+};
+
 const createProduct = async () => {
-  if(!name.value){
-    errorName.value = 'The name field is required';
-    return
-  } else if(!description.value){
-    errorDescription.value = 'The description field is required';
-    return
-  } else if(!price.value ){
-    errorPrice.value = 'The price field is required';
-    return
-  } else if(!notes.value){
-    errorNotes.value = 'Please add a note'
-    return 
-  } else if( notes.value.length > 300){
-    errorNotes.value = 'Please provide between 10 and 300 characters for notes'
-    return 
-  }
-  try {
-    const data = {
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      notes: notes.value,
-      is_available: isAvailable.value,
+  if (validateForm()) {
+    try {
+      await productStore.createProduct({
+        name: name.value,
+        description: description.value,
+        price: price.value,
+        notes: notes.value,
+        is_available: isAvailable.value,
+      });
+      await productStore.fetchProducts();
+      toggleAddProductModal({ success: "Product created successfully" });
+    } catch (e) {
+      toggleAddProductModal({ error: e });
     }
-
-    await productStore.createProduct(data);
-    await productStore.fetchProducts();
-
-    props.toggleAddProductModal({success: "Product created successfully"});
-  } catch (e) {
-    props.toggleAddProductModal({error: e});
   }
-}
+};
+
 const updateProduct = async () => {
   try {
     const data = {
@@ -205,14 +171,12 @@ const updateProduct = async () => {
       is_available: isAvailable.value,
     };
 
-    await productStore.updateProduct(props.product?.id, data);
+    await productStore.updateProduct(product?.id, data);
     await productStore.fetchProducts();
 
-    props.toggleAddProductModal({success: `Product ${props.product?.id} updated successfully`});
+    toggleAddProductModal({success: `Product ${product?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddProductModal({error: e})
+    toggleAddProductModal({error: e})
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

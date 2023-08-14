@@ -55,12 +55,12 @@
           <InputText 
             type="text" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="errorphoneNumber && 'border-red-300'" 
+            :class="errorPhoneNumber && 'border-red-300'" 
             v-model="phoneNumber"
             @blur="handleChangePhoneNumber"
             ></InputText>
           <p class="min-h-[20px]">
-            <span v-show="errorphoneNumber" class="text-[#D42F24] text-xs">{{ errorphoneNumber }}</span>
+            <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{ errorPhoneNumber }}</span>
           </p>
         </div>
       </div>
@@ -116,133 +116,85 @@ import {useCustomerStore} from "~/stores/customer";
 
 const store = useCustomerStore();
 
-const props = defineProps({
-  toggleAddCustomerModal: {
-    type: Function,
-    default: () => {
-    },
-    required: true
-  },
-  customer: {
-    type: Object,
-    default: () => null,
-    required: false
-  }
-});
+const { toggleAddCustomerModal, customer } = defineProps([
+  'toggleAddCustomerModal',
+  'customer'
+]);
+
+const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
 const name = ref('');
-const errorName = ref('');
-
 const surname = ref('');
-const errorSurname = ref('');
-
 const email = ref('');
-const errorEmail = ref('');
-
 const phoneNumber = ref('');
-const errorphoneNumber = ref('');
-
 const password = ref('');
 const passwordConfirmation = ref('');
 
+const errorName = ref('');
+const errorSurname = ref('');
+const errorEmail = ref('');
+const errorPhoneNumber = ref('');
 const errorPassword = ref('');
 
 
-const handleChangeName = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorName.value = 'The name field is required';
-  } else {
-    errorName.value = '';
-  }
+
+const handleChangeName = () => {
+  errorName.value = name.value ? '' :'The name field is required'; 
 }
-const handleChangeSurname = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorSurname.value = 'The surname field is required'
-  } else {
-    errorSurname.value = '';
-  }
+const handleChangeSurname = () => {
+  errorSurname.value = surname.value ? '' :'The surname field is required'; 
 }
-const handleChangeEmail = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorEmail.value = 'The email field is required';
-  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-    errorEmail.value = 'The email field must valid'
-  } else {
-    errorEmail.value = '';
-  }
+const handleChangeEmail = () => {
+  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
 }
-const handleChangePhoneNumber = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorphoneNumber.value = 'The phone number field is required';
-  } else if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
-    errorphoneNumber.value = 'The phone number field must valid';
-  } else {
-    errorphoneNumber.value = '';
-  }
+const handleChangePhoneNumber = () => {
+  errorPhoneNumber.value = phoneNumber.value ? (!phoneNumber.value.match(phoneNumberRegex) ? 'Please provide a valid phone number' : '') : 'The phone number field is required'
 }
-const handleChangePassword = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-  }
-}
-const handleChangePasswordMatching = (event:any) => {
-  const value = event.target.value
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-  } else if(password.value !== passwordConfirmation.value){
-    errorPassword.value = 'Password not matching';
-  } else {
-    errorPassword.value = '';
-  }
+const handleChangePassword = () => {
+  errorPassword.value = !password.value ? 'Please provide a password' : '';
+};
+
+const handleChangePasswordMatching = () => {
+  errorPassword.value = passwordConfirmation.value ? (password.value !== passwordConfirmation.value ? 'Please provide matching password' : ''): 'The password fields are required'
 }
 
+
 onMounted(() => {
-  if (props.customer) {
-    name.value = props.customer.name
-    surname.value = props.customer.surname
-    email.value = props.customer.email
-    phoneNumber.value = props.customer.phone_number
+  if (customer) {
+    name.value = customer.name
+    surname.value = customer.surname
+    email.value = customer.email
+    phoneNumber.value = customer.phone_number
   }
 })
 
+const validateForm = () => {
+  handleChangeName();
+  handleChangeSurname();
+  handleChangeEmail();
+  handleChangePhoneNumber();
+  handleChangePassword();
+  handleChangePasswordMatching();
+  return !errorName.value && !errorSurname.value && !errorEmail.value && !errorPhoneNumber.value && errorPassword;
+};
+
 const createCustomer = async () => {
-  if(!name.value){
-    errorName.value = 'The name field is required';
-    return
-  } else if(!surname.value){
-    errorSurname.value = 'The surname field is required';
-    return
-  } else if(!email.value ){
-    errorEmail.value = 'The email field is required';
-    return
-  } else if(!phoneNumber.value){
-    errorphoneNumber.value = 'The phone number fied is required';
-    return
-  } else if(!password.value){
-    errorPassword.value = 'Please provide a password';
-    return
-  } else if(!passwordConfirmation.value){
-    errorPassword.value = 'Please provide a password';
-    return 
+  if(validateForm()){
+    try {
+      await store.createCustomer({
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        phone_number: phoneNumber.value,
+        password: password.value,
+        password_confirmation: passwordConfirmation.value,
+      });
+      toggleAddCustomerModal({success: "Customer created successfully"});
+    } catch (e) {
+      toggleAddCustomerModal({error: "Opps, something went wrong!"});
+    }
   } 
-  try {
-    await store.createCustomer({
-      name: name.value,
-      surname: surname.value,
-      email: email.value,
-      phone_number: phoneNumber.value,
-      password: password.value,
-      password_confirmation: passwordConfirmation.value,
-    });
-    props.toggleAddCustomerModal({success: "Customer created successfully"});
-  } catch (e) {
-    props.toggleAddCustomerModal({error: "Opps, something went wrong!"});
-  }
 }
 const updateCustomer = async () => {
   try {
@@ -253,12 +205,12 @@ const updateCustomer = async () => {
       phone_number: phoneNumber.value,
     }
 
-    await store.updateCustomer(props.customer?.id, data)
+    await store.updateCustomer(customer?.id, data)
     await store.fetchCustomers()
 
-    props.toggleAddCustomerModal({success: `Customer ${props.customer?.id} updated successfully`});
+    toggleAddCustomerModal({success: `Customer ${customer?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddCustomerModal({error: e});
+    toggleAddCustomerModal({error: e});
   }
 }
 </script>

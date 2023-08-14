@@ -99,14 +99,10 @@
 <script setup>
 import {useServiceStore} from "~/stores/services";
 
-const props = defineProps({
-  toggleAddServiceModal: Function,
-  service: {
-    type: Object,
-    default: () => null,
-    required: false,
-  }
-});
+const { toggleAddServiceModal, service } = defineProps([
+  'toggleAddServiceModal',
+  'service'
+]);
 
 const serviceStore = useServiceStore();
 
@@ -125,82 +121,55 @@ const price = ref(1.00);
 const errorPrice = ref("");
 
 
-const handleChangeName = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorName.value = 'The name field is required';
-  } else {
-    errorName.value = '';
-  }
-}
-const handleChangeDescription = (event) => {
-  const value = event.target.value
-  if(!value){
-    errorDescription.value = 'The description field is required'
-  }else if(description.value.length > 300){
-    errorDescription.value = 'Please enter between 10 and 100 maximum characters'
-  } else {
-    errorDescription.value = '';
-  }
-}
+const handleChangeName = () => {
+  errorName.value = name.value ? '' : 'The name field is required';
+};
+const handleChangeDescription = () => {
+  errorDescription.value = description.value ? (description.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'The description field is required';
+};
 const handleChangePrice = () => {
-  if(!price?.value){
-    errorPrice.value = 'The price field is required';
-  } else {
-    errorPrice.value = '';
-  }
-}
+  errorPrice.value = price.value ? '' : 'The price field is required';
+};
 const handleChangeNote = () => {
-  if(!notes.value){
-    errorNotes.value = 'Please add a note'
-  } else if(notes.value.length > 100){
-    errorNotes.value = 'Please enter between 10 and 100 maximum characters';
-  } else {
-    errorNotes.value = '';
-  }
-}
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
+};
 
 onMounted(() => {
-  if (props.service) {
-    isAvailable.value = props.service.is_available === 1;
-    notes.value = props.service.notes;
-    name.value = props.service.name;
-    description.value = props.service.description;
-    price.value = props.service.price;
+  if (service) {
+    isAvailable.value = service.is_available === 1;
+    notes.value = service.notes;
+    name.value = service.name;
+    description.value = service.description;
+    price.value = service.price;
   }
 })
 
-const createService = async () => {
-  if(!name.value){
-    errorName.value = 'The name field is required';
-    return
-  } else if(!description.value){
-    errorDescription.value = 'The description field is required';
-    return
-  } else if(!price.value ){
-    errorPrice.value = 'The price field is required';
-    return
-  } else if(!notes.value){
-    errorNotes.value = 'Please add a note'
-    return 
-  }
-  try {
-    await serviceStore.createService({
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      notes: notes.value,
-      is_available: isAvailable.value,
-    });
+const validateForm = () => {
+  handleChangeName();
+  handleChangeDescription();
+  handleChangePrice();
+  handleChangeNote();
+  return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
+};
 
-    props.toggleAddServiceModal({success: "Service created successfully"});
-  } catch (e) {
-    props.toggleAddServiceModal({error: e});
+const createService = async () => {
+  if (validateForm()) {
+    try {
+      await serviceStore.createService({
+        name: name.value,
+        description: description.value,
+        price: price.value,
+        notes: notes.value,
+        is_available: isAvailable.value,
+      });
+      toggleAddServiceModal({success: "Service created successfully"});
+    } catch (e) {
+      toggleAddServiceModal({error: e});
+    }
   }
 }
 
 const updateService = async () => {
-  // TODO: validation
   try {
     const data = {
       name: name.value,
@@ -210,14 +179,12 @@ const updateService = async () => {
       is_available: isAvailable.value,
     };
 
-    await serviceStore.updateService(props.service?.id, data);
+    await serviceStore.updateService(service?.id, data);
     await serviceStore.fetchServices();
 
-    props.toggleAddServiceModal({success: `Service ${props.service?.id} updated successfully`});
+    toggleAddServiceModal({success: `Service ${service?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddServiceModal({error: e})
+    toggleAddServiceModal({error: e})
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

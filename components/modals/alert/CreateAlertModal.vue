@@ -155,19 +155,20 @@ const technicianStore = useTechnicianStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
 const alertStore = useAlertStore();
 
-const props = defineProps({
-  toggleAddAlertModal: {
-    type: Function,
-    default: () => {
-    },
-    required: true
-  },
-  alert: {
-    type: Object,
-    default: () => null,
-    required: false
-  }
-});
+const { toggleAddAlertModal, alert } = defineProps([
+  'toggleAddAlertModal',
+  'alert'
+]);
+
+const priorityOptions = ref([
+  {label: 'Low', value: 'low'},
+  {label: 'Medium', value: 'medium'},
+  {label: 'High', value: 'high'},
+]);
+const statusOptions = ref([
+  {label: 'Open', value: 'open'},
+  {label: 'Closed', value: 'closed'},
+]);
 
 const status = ref('open');
 const priority = ref('medium');
@@ -191,15 +192,7 @@ const maxDate = ref(new Date());
 const bodiesOfWater = computed(() => bodyOfWaterStore.getBodiesOfWater);
 const technicians = computed(() => technicianStore.getTechnicians);
 const alertTypes = computed(() => alertTypeStore.getAlertTypes);
-const priorityOptions = ref([
-  {label: 'Low', value: 'low'},
-  {label: 'Medium', value: 'medium'},
-  {label: 'High', value: 'high'},
-]);
-const statusOptions = ref([
-  {label: 'Open', value: 'open'},
-  {label: 'Closed', value: 'closed'},
-]);
+
 
 /** Date limits */
 let today = new Date();
@@ -220,7 +213,7 @@ onMounted(async () => {
   await technicianStore.fetchTechnicians();
   await alertTypeStore.fetchAlertTypes();
 
-  if (props.alert) {
+  if (alert) {
     const {alert} = props
     status.value = alert.status;
     priority.value = alert.priority;
@@ -231,57 +224,30 @@ onMounted(async () => {
     technicianId.value = alert.technician_id;
   }
 });
+
 const handleChangeAlertType = () => {
-  if(alertTypeId.value){
-    errorAlertTypeId.value = '';
-  } else {    
-    errorAlertTypeId.value = 'Please select alert type';
-  }
-}
+  errorAlertTypeId.value = alertTypeId.value ? '' : 'Please select alert type';
+};
 const handleChangeBodyOfWater = () => {
-  if(bodyOfWaterId.value){
-    errorBodyOfWaterId.value = '';
-  } else {
-    errorBodyOfWaterId.value = 'Please select body of water';
-  }
-}
+  errorBodyOfWaterId.value = bodyOfWaterId.value ? '' : 'Please select body of water';
+};
 const handleChangeTechnician = () => {
-  if(technicianId.value){
-    errorTechnicianId.value = '';
-  } else {
-    errorTechnicianId.value = 'Please select technician';
-  }
-}
+  errorTechnicianId.value = technicianId.value ? '' : 'Please select technician';
+};
 const handleChangeNote = () => {
-  if(!notes.value){
-    errorNotes.value = 'Please add a note';
-  } else if(notes.value.length > 300){
-    errorNotes.value = 'Please enter between 10 and 100 maximum characters';
-  } else {
-    errorNotes.value = '';
-  }
-}
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'Please add a note';
+};
+
+const validateForm = () => {
+  handleChangeAlertType();
+  handleChangeBodyOfWater();
+  handleChangeTechnician();
+  handleChangeNote();
+  return !errorAlertTypeId.value && !errorBodyOfWaterId.value && !errorTechnicianId.value && !errorNotes.value;
+};
+
 const createAlert = async () => {
-  if(!alertTypeId.value ){
-    errorAlertTypeId.value = 'Please select alert type';
-    return 
-  }
-  if(!bodyOfWaterId.value){
-    errorBodyOfWaterId.value = 'Please select body of water';
-    return 
-  }
-  if(!technicianId.value ){
-    errorTechnicianId.value = 'Please select technician';
-    return
-  }
-  if(!notes.value){
-    errorNotes.value = 'Please add a note'
-    return 
-  } 
-  if( notes.value.length > 300){
-    errorNotes.value = 'Please provide between 10 and 300 characters for notes'
-    return 
-  }
+  if (validateForm()) {
     try {
       const data = {
         status: status.value,
@@ -296,13 +262,13 @@ const createAlert = async () => {
       await alertStore.createAlert(data);
       await alertStore.fetchAlerts();
 
-      props.toggleAddAlertModal({success: "Alert created successfully"});
+      toggleAddAlertModal({success: "Alert created successfully"});
     } catch (e) {
-      props.toggleAddAlertModal({error: e})
+      toggleAddAlertModal({error: e})
     }
+  }
 }
 const updateAlert = async () => {
-  // TODO: validation
   try {
     const data = {
       status: status.value,
@@ -314,12 +280,12 @@ const updateAlert = async () => {
       technician_id: technicianId.value
     };
 
-    await alertStore.updateAlert(props.alert?.id, data);
+    await alertStore.updateAlert(alert?.id, data);
     await alertStore.fetchAlerts();
 
-    props.toggleAddAlertModal({success: `Alert ${props.alert?.id} updated successfully`});
+    toggleAddAlertModal({success: `Alert ${alert?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddAlertModal({error: e})
+    toggleAddAlertModal({error: e})
   }
 }
 </script>

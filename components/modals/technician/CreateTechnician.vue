@@ -54,13 +54,13 @@
             <label class="span__element" for="cell number"> Cell number* </label>
              <InputText 
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorphoneNumber && 'border-red-300'" 
+              :class="errorPhoneNumber && 'border-red-300'" 
               type="text" 
               v-model="phoneNumber"
               @blur="handleChangePhoneNumber">
             </InputText>
             <p class="min-h-[20px]">
-              <span v-show="errorphoneNumber" class="text-[#D42F24] text-xs">{{ errorphoneNumber }}</span>
+              <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{ errorPhoneNumber }}</span>
             </p>
           </div>
         </div>
@@ -116,167 +116,97 @@ import { useTechnicianStore } from "~/stores/technician";
 
 const store = useTechnicianStore();
 
-const props = defineProps({
-  toggleAddTechnicianModal: {
-    type: Function,
-    default: () => {},
-    required: true
-  },
-  technician: {
-    type: Object,
-    default: () => null,
-    required: false
-  }
-});
+const {toggleAddTechnicianModal, technician} = defineProps(['toggleAddTechnicianModal','technician']);
+
+const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
 
 const name = ref('');
-const errorName = ref('');
-
 const surname = ref('');
-const errorSurname = ref('');
-
 const email = ref('');
-const errorEmail = ref('');
-
 const phoneNumber = ref('');
-const errorphoneNumber = ref('');
-
 const password = ref('')
 const passwordConfirmation = ref('')
+const company = ref('1')
 
+const errorName = ref('');
+const errorSurname = ref('');
+const errorEmail = ref('');
+const errorPhoneNumber = ref('');
 const errorPassword = ref('');
 
-const company = ref('1')
-const disableSubmit = ref(false)
 
-
-
-const handleChangeName = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorName.value = 'The name field is required';
-    disableSubmit.value = true;
-  } else {
-    errorName.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangeName = () => {
+  errorName.value = name.value ? '' :'The name field is required'; 
 }
-const handleChangeSurname = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorSurname.value = 'The surname field is required'
-    disableSubmit.value = true;
-  } else {
-    errorSurname.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangeSurname = () => {
+  errorSurname.value = surname.value ? '' :'The surname field is required'; 
 }
-const handleChangeEmail = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorEmail.value = 'The email field is required';
-    disableSubmit.value = true;
-  } else if(!value.match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-    errorEmail.value = 'The email field must valid'
-    disableSubmit.value = true;
-  } else {
-    errorEmail.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangeEmail = () => {
+  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
 }
-const handleChangePhoneNumber = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorphoneNumber.value = 'The phone number field is required';
-  } else if(!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
-    errorphoneNumber.value = 'The phone number field must valid';
-    disableSubmit.value = true;
-  } else {
-    errorphoneNumber.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangePhoneNumber = () => {
+  errorPhoneNumber.value = phoneNumber.value ? (!phoneNumber.value.match(phoneNumberRegex) ? 'Please provide a valid phone number' : '') : 'The phone number field is required'
 }
-const handleChangePassword = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-    disableSubmit.value = true;
-  }
-}
-const handleChangePasswordMatching = (event:any) => {
-  const value = event.target.value;
-  if(!value){
-    errorPassword.value = 'Please provide a password';
-    disableSubmit.value = true;
-  } else if(password.value !== passwordConfirmation.value){
-    errorPassword.value = 'Password not matching';
-    disableSubmit.value = true;
-  } else {
-    errorPassword.value = '';
-    disableSubmit.value = false;
-  }
+const handleChangePassword = () => {
+  errorPassword.value = !password.value ? 'Please provide a password' : '';
+};
+const handleChangePasswordMatching = () => {
+  errorPassword.value = passwordConfirmation.value ? (password.value !== passwordConfirmation.value ? 'Please provide matching password' : ''): 'The password fields are required'
 }
 
 onMounted(() => {
-  if (props.technician) {
-    name.value = props.technician.name
-    surname.value = props.technician.surname
-    email.value = props.technician.email
-    phoneNumber.value = props.technician.phone_number
+  if (technician) {
+    name.value = technician.name
+    surname.value = technician.surname
+    email.value = technician.email
+    phoneNumber.value = technician.phone_number
   }
 })
 
+const validateForm = () => {
+  handleChangeName();
+  handleChangeSurname();
+  handleChangeEmail();
+  handleChangePhoneNumber();
+  handleChangePassword();
+  handleChangePasswordMatching();
+  return !errorName.value && !errorSurname.value && !errorEmail.value && !errorPhoneNumber.value && errorPassword;
+};
 const createTechnician = async () => {
-  if(!name.value){
-    errorName.value = 'The name field is required';
-    return
-  } else if(!surname.value){
-    errorSurname.value = 'The surname field is required';
-    return
-  } else if(!email.value ){
-    errorEmail.value = 'The email field is required';
-    return
-  }  else if(!phoneNumber.value){
-    errorphoneNumber.value = 'Please provide a phone number';
-    return
-  } else if(!password.value){
-    errorPassword.value = 'Please provide a password';
-    return
-  } else if(!passwordConfirmation.value){
-    errorPassword.value = 'Please provide a password';
-    return 
+  if(validateForm()){
+    try {
+      await store.createTechnician({
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        phone_number: phoneNumber.value,
+        password: password.value,
+        password_confirmation: passwordConfirmation.value,
+        company: company.value
+      });
+      toggleAddTechnicianModal({success: "Technician created successfully"});
+    } catch (e) {
+      toggleAddTechnicianModal({error: "Opps, something went wrong!"});
+    }
   } 
-  try {
-    await store.createTechnician({
-      name: name.value,
-      surname: surname.value,
-      email: email.value,
-      phone_number: phoneNumber.value,
-      password: password.value,
-      password_confirmation: passwordConfirmation.value,
-      company: company.value
-    });
-    props.toggleAddTechnicianModal({success: "Technician created successfully"});
-  } catch (e) {
-    props.toggleAddTechnicianModal({error: "Opps, something went wrong!"});
-  }
 }
-
 const updateTechnician = async () => {
   try {
     const data = {
-      id: props.technician.id,
+      id: technician.id,
       name: name.value,
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
     }
-    await store.updateTechnician(props.technician?.id, data);
+    await store.updateTechnician(technician?.id, data);
     await store.fetchTechnicians()
 
-    props.toggleAddTechnicianModal({success: `Technician ${props.technician?.id} updated successfully`});
+    toggleAddTechnicianModal({success: `Technician ${technician?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddTechnicianModal({error: e});
+    toggleAddTechnicianModal({error: e});
   }
 }
 </script>
