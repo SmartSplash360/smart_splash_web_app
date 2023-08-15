@@ -18,8 +18,9 @@ export const useCommunicationStore = defineStore("communication", {
         async startVoiceCall(number: string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/twilo/call` : `http://localhost:8000/api/v1/twilo/call`
             try {
-                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/twilo/call`, {
+                const res = await axios.post(url, {
                     receiver_number: number
                 });
                 this.voiceCall = res.data.data;

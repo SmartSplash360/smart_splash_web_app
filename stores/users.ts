@@ -47,11 +47,8 @@ export const useUserStore = defineStore("user", {
     actions: {
         async login(email: String, password: String) {
             try {
-                const res = await axios.post(
-                    `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login`,
-                    {email, password}
-                );
-
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login` : `http://localhost:8000/api/v1/auth/login`
+                const res = await axios.post( url , {email, password});
                 if (res.data.success) {
                     // TODO: store in local storage
                     this.currentUser = res.data.data.user;
@@ -63,6 +60,7 @@ export const useUserStore = defineStore("user", {
                 } else {
                     throw new Error(res.data.message)
                 }
+
 
             } catch (error) {
                 throw error
@@ -95,7 +93,8 @@ export const useUserStore = defineStore("user", {
          },
         async logout() {
             const router = useRouter();
-            await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout`);
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout` : `http://localhost:8000/api/v1/auth/logout`
+            await axios.post(url); 
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;

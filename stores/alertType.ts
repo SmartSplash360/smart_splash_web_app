@@ -22,8 +22,9 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertTypes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `http://localhost:8000/api/v1/alertTypes`
             try {
-                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes`);
+                const res = await axios.get(url);
                 this.alertTypes = res.data.data.data
             } catch (error) {
                 console.log(error);
@@ -33,8 +34,9 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertType(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}` : `http://localhost:8000/api/v1/alertTypes/${id}`
             try {
-                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}`);
+                const res = await axios.get(url);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -44,8 +46,9 @@ export const useAlertTypeStore = defineStore("alertType", {
         async createAlertType(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `http://localhost:8000/api/v1/alertTypes`
             try {
-                await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes`, payload);
+                await axios.post(url, payload);
             } catch (error) {
                 console.log(error);
             }

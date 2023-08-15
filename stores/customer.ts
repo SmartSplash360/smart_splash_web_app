@@ -37,8 +37,9 @@ export const useCustomerStore = defineStore("customer", {
         async fetchCustomers() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers` : `http://localhost:8000/api/v1/customers`
             try {
-                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers`);
+                const res = await axios.get(url);
                 this.customers = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -48,8 +49,9 @@ export const useCustomerStore = defineStore("customer", {
         async fetchCustomer(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `http://localhost:8000/api/v1/customers/${id}`
             try {
-                const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}`);
+                const res = await axios.get(url);
                 return res.data.data;
             } catch (error) {
                 console.log(error);
@@ -59,8 +61,9 @@ export const useCustomerStore = defineStore("customer", {
         async createCustomer(customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers` : `http://localhost:8000/api/v1/customers`
             try {
-                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers`, customerPayload);
+                const res = await axios.post(url, customerPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -73,8 +76,9 @@ export const useCustomerStore = defineStore("customer", {
         async updateCustomer(id: number | string, customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `http://localhost:8000/api/v1/customers/${id}`
             try {
-                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}`, customerPayload);
+                const res = await axios.post(url, customerPayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -86,8 +90,9 @@ export const useCustomerStore = defineStore("customer", {
         async deleteCustomer(customerId: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${customerId}` : `http://localhost:8000/api/v1/customers/${customerId}`
             try {
-                const res = await axios.delete(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${customerId}`);
+                const res = await axios.delete(url);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

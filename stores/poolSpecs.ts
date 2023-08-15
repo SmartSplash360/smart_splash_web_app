@@ -14,7 +14,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.get(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs`);
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs` : `http://localhost:8000/api/v1/poolSpecs`
+        const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
         console.log(error);
@@ -25,9 +26,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.get(
-          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`
-        );
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
+        const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
         console.log(error);
@@ -38,10 +38,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.post(
-          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs`,
-          poolSpecsPayload
-        );
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs` : `http://localhost:8000/api/v1/poolSpecs`
+        const res = await axios.post(url, poolSpecsPayload);
 
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -54,10 +52,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.post(
-          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`,
-          poolSpecsPayload
-        );
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
+        const res = await axios.post(url ,  poolSpecsPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -70,9 +66,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        const res = await axios.delete(
-          `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}`
-        );
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
+        const res = await axios.delete(url);
 
         if (!res.data.success) {
           throw new Error(res.data.message);
