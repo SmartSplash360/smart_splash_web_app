@@ -76,7 +76,7 @@ const closeModal = async ({ success, error }) => {
       severity: "success",
       summary: "Bodies of Water",
       detail: success,
-      life: 3000,
+      life: 5000,
     });
 
     updateBodiesOfWater();
@@ -87,7 +87,7 @@ const closeModal = async ({ success, error }) => {
       severity: "error",
       summary: "Bodies of Water",
       detail: `An error has occurred: ${error}`,
-      life: 3000,
+      life: 5000,
     });
 
     updateBodiesOfWater();
@@ -121,14 +121,14 @@ const deleteItem = async ({ id }) => {
           severity: "info",
           summary: "Delete Body of Water",
           detail: res?.message,
-          life: 3000,
+          life: 5000,
         });
       } catch (e) {
         toast.add({
           severity: "error",
           summary: "Delete Body of Water",
           detail: `an error has occurred: ${e}`,
-          life: 3000,
+          life: 5000,
         });
       }
     },

@@ -76,7 +76,7 @@
             imageSrc.value = e.target.result;
         };
         reader.readAsDataURL(selectedFile.value);
-        toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+        toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 5000 });
     };
  
     const editorChange = (value) => description.value = value;
@@ -88,7 +88,7 @@
             formData.append('cover', selectedFile.value);
             
             await store.editTemplate(formData);
-            toast.add({ severity: 'info', summary: 'Success', detail: 'Template Created', life: 3000 });
+            toast.add({ severity: 'info', summary: 'Success', detail: 'Template Created', life: 5000 });
             router.push('/campaigns')
 
         } catch (error) {

@@ -10,27 +10,67 @@
         <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
         </h2>
-
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Name* </label>
-            <InputText type="text" v-model="name" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"></InputText>
+            <InputText 
+              type="text" 
+              v-model="name" 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              :class="errorName && 'border-red-300'"
+              @blur="handleChangeName">
+            </InputText>
+            <p class="min-h-[20px]">
+              <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="name"> Price* </label>
-            <InputNumber v-model="price" inputId="currency-us" mode="currency" currency="USD"
-                         locale="en-US"></InputNumber>
+            <InputNumber 
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPrice && 'border-red-300'" 
+              v-model="price" 
+              inputId="currency-us" 
+              mode="currency" 
+              currency="USD"
+              locale="en-US"
+              @blur="handleChangePrice">
+            </InputNumber>
+            <p class="min-h-[20px]">
+              <span v-show="errorPrice" class="text-[#D42F24] text-xs">{{ errorPrice }}</span>
+            </p>
           </div>
         </div>
-
         <div class="card justify-content-center flex flex-col gap-3">
-          <label class="span__element" for="description"> Description </label>
-          <Textarea v-model="description" autoResize rows="3" cols="70"/>
+          <label class="span__element" for="description"> Description (10 to 300 characters)  </label>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="description" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorDescription && 'border-red-300'"
+            @blur="handleChangeDescription"
+            />
+            <p class="min-h-[20px]">
+              <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{ errorDescription }}</span>
+            </p>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
-          <label class="span__element" for="notes"> Notes </label>
-          <Textarea v-model="notes" autoResize rows="3" cols="70"/>
+          <label class="span__element" for="notes"> Notes (10 to 300 characters)  </label>
+          <Textarea 
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+            v-model="notes" 
+            autoResize 
+            rows="3" 
+            cols="70"
+            :class="errorNotes && 'border-red-300'"
+            @blur="handleChangeNote"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
+          </p>
         </div>
 
         <div class="card justify-content-center flex flex-col gap-3">
@@ -49,7 +89,7 @@
           <Button
             label="Submit"
             icon="pi pi-check"
-            class="!bg-[#0291BF] hover:shadow-xl"
+            class="!bg-[#0291BF] hover:shadow-xl text-white"
             @click="service ? updateService() : createService()"/>
         </div>
       </form>
@@ -59,53 +99,77 @@
 <script setup>
 import {useServiceStore} from "~/stores/services";
 
-const props = defineProps({
-  toggleAddServiceModal: Function,
-  service: {
-    type: Object,
-    default: () => null,
-    required: false,
-  }
-});
+const { toggleAddServiceModal, service } = defineProps([
+  'toggleAddServiceModal',
+  'service'
+]);
 
 const serviceStore = useServiceStore();
 
 const isAvailable = ref(true);
+
 const notes = ref("");
+const errorNotes = ref("");
+
 const name = ref("");
+const errorName = ref("");
+
 const description = ref("");
+const errorDescription = ref("");
+
 const price = ref(1.00);
+const errorPrice = ref("");
+
+
+const handleChangeName = () => {
+  errorName.value = name.value ? '' : 'The name field is required';
+};
+const handleChangeDescription = () => {
+  errorDescription.value = description.value ? (description.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'The description field is required';
+};
+const handleChangePrice = () => {
+  errorPrice.value = price.value ? '' : 'The price field is required';
+};
+const handleChangeNote = () => {
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
+};
 
 onMounted(() => {
-  if (props.service) {
-    isAvailable.value = props.service.is_available === 1;
-    notes.value = props.service.notes;
-    name.value = props.service.name;
-    description.value = props.service.description;
-    price.value = props.service.price;
+  if (service) {
+    isAvailable.value = service.is_available === 1;
+    notes.value = service.notes;
+    name.value = service.name;
+    description.value = service.description;
+    price.value = service.price;
   }
 })
 
+const validateForm = () => {
+  handleChangeName();
+  handleChangeDescription();
+  handleChangePrice();
+  handleChangeNote();
+  return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
+};
+
 const createService = async () => {
-  try {
-    // TODO: validation
-
-    await serviceStore.createService({
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      notes: notes.value,
-      is_available: isAvailable.value,
-    });
-
-    props.toggleAddServiceModal({success: "Service created successfully"});
-  } catch (e) {
-    props.toggleAddServiceModal({error: e});
+  if (validateForm()) {
+    try {
+      await serviceStore.createService({
+        name: name.value,
+        description: description.value,
+        price: price.value,
+        notes: notes.value,
+        is_available: isAvailable.value,
+      });
+      toggleAddServiceModal({success: "Service created successfully"});
+    } catch (e) {
+      toggleAddServiceModal({error: e});
+    }
   }
 }
 
 const updateService = async () => {
-  // TODO: validation
   try {
     const data = {
       name: name.value,
@@ -115,14 +179,12 @@ const updateService = async () => {
       is_available: isAvailable.value,
     };
 
-    await serviceStore.updateService(props.service?.id, data);
+    await serviceStore.updateService(service?.id, data);
     await serviceStore.fetchServices();
 
-    props.toggleAddServiceModal({success: `Service ${props.service?.id} updated successfully`});
+    toggleAddServiceModal({success: `Service ${service?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddServiceModal({error: e})
+    toggleAddServiceModal({error: e})
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

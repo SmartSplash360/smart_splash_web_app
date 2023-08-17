@@ -216,7 +216,7 @@ const closeModal = ({success, error}) => {
   service.value = null;
 
   if (success) {
-    toast.add({severity: 'success', summary: 'Services', detail: success, life: 3000});
+    toast.add({severity: 'success', summary: 'Services', detail: success, life: 5000});
   }
 
   if (error) {
@@ -224,7 +224,7 @@ const closeModal = ({success, error}) => {
       severity: 'error',
       summary: 'Services',
       detail: `An error has occurred: ${error}`,
-      life: 3000
+      life: 5000
     });
   }
 };
@@ -251,9 +251,9 @@ const deleteItem = async (id) => {
       try {
         const res = await serviceStore.deleteService(id)
         await serviceStore.fetchServices();
-        toast.add({severity: 'info', summary: 'Delete Service', detail: res?.message, life: 3000});
+        toast.add({severity: 'info', summary: 'Delete Service', detail: res?.message, life: 5000});
       } catch (e) {
-        toast.add({severity: 'error', summary: 'Delete Service', detail: `an error has occurred: ${e}`, life: 3000});
+        toast.add({severity: 'error', summary: 'Delete Service', detail: `an error has occurred: ${e}`, life: 5000});
       }
     },
     reject: () => {}

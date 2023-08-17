@@ -38,6 +38,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@googlemaps/js-api-loader": "^1.16.2",
     "@pinia/nuxt": "^0.4.11",
+    "@vee-validate/rules": "^4.11.1",
     "@vuepic/vue-datepicker": "^5.4.0",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.4.0",
@@ -52,6 +53,8 @@
     "randomcolor": "^0.6.2",
     "v-dropdown": "^3.0.0-beta.1",
     "v-dropdown-menu": "^2.0.2",
-    "vue3-google-map": "^0.15.0"
+    "vee-validate": "^4.11.1",
+    "vue3-google-map": "^0.15.0",
+    "yup": "^1.2.0"
   }
 }

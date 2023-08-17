@@ -92,7 +92,7 @@ const deleteTemplate = async (id) => {
           severity: "info",
           summary: "Delete Template",
           detail: res?.message,
-          life: 3000,
+          life: 5000,
         });
         router.replace("/campaigns");
       },
@@ -103,7 +103,7 @@ const deleteTemplate = async (id) => {
       severity: "error",
       summary: "Error",
       detail: "Error Occured",
-      life: 3000,
+      life: 5000,
     });
   }
 };

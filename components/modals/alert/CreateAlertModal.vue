@@ -21,7 +21,12 @@
                 optionValue="id"
                 placeholder="Select an alert type"
                 class="md:w-14rem w-full dark:bg-[#1B2028]"
-            />
+                :class="errorAlertTypeId && 'border-red-300'"
+                @change="handleChangeAlertType"
+            />          
+            <p class="min-h-[20px]">
+              <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{ errorAlertTypeId }}</span>
+            </p>
           </div>
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="bodyOfWater"> Body of Water* </label>
@@ -32,7 +37,12 @@
                 optionLabel="name"
                 placeholder="Select a body of water"
                 class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
-            />
+                :class="errorBodyOfWaterId && 'border-red-300'"
+                @change="handleChangeBodyOfWater"
+            />       
+            <p class="min-h-[20px]">
+              <span v-show="errorBodyOfWaterId" class="text-[#D42F24] text-xs">{{ errorBodyOfWaterId }}</span>
+            </p>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -45,15 +55,30 @@
                   optionLabel="name"
                   optionValue="id"
                   placeholder="Select a technician"
-                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
-              />
+                  class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
+                  :class="errorTechnicianId && 'border-red-300'"
+                  @change="handleChangeTechnician"
+              />            
             </div>
+            <p class="min-h-[20px]">
+              <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{ errorTechnicianId }}</span>
+            </p>
           </div>
         </div>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
           <div class="flex w-full flex-col gap-3">
-            <label class="span__element" for="notes"> Notes</label>
-            <Textarea v-model="notes" rows="5" cols="30" class="dark:bg-[#1B2028]"/>
+            <label class="span__element" for="notes"> Notes* (10 to 300 characters)</label>
+            <Textarea 
+              v-model="notes" 
+              rows="5" 
+              cols="30" 
+              class="dark:bg-[#1B2028]"
+              :class="errorNotes && 'border-red-300'"
+              @blur="handleChangeNote"
+              />
+              <p class="min-h-[20px]">
+                <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
+              </p>
           </div>
         </div>
 
@@ -62,7 +87,7 @@
             <label class="span__element" for="date"> Date</label>
             <Calendar 
               id="date" 
-                class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
+              class="md:w-14rem w-full dark:bg-[#1B2028]  border-gray-300 rounded-md dark:text-white"
               v-model="dateTime" 
               :minDate="minDate" 
               :maxDate="maxDate" 
@@ -71,7 +96,6 @@
               hourFormat="24"
             />
           </div>
-
           <div class="flex w-full flex-col gap-3">
             <label class="span__element" for="priority"> Priority </label>
             <div class="card justify-content-center flex">
@@ -131,33 +155,11 @@ const technicianStore = useTechnicianStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
 const alertStore = useAlertStore();
 
-const props = defineProps({
-  toggleAddAlertModal: {
-    type: Function,
-    default: () => {
-    },
-    required: true
-  },
-  alert: {
-    type: Object,
-    default: () => null,
-    required: false
-  }
-});
+const { toggleAddAlertModal, alert } = defineProps([
+  'toggleAddAlertModal',
+  'alert'
+]);
 
-const status = ref('open');
-const priority = ref('medium');
-const dateTime = ref(null);
-const notes = ref('');
-const alertTypeId = ref();
-const bodyOfWaterId = ref();
-const technicianId = ref();
-const minDate = ref(new Date());
-const maxDate = ref(new Date());
-
-const bodiesOfWater = computed(() => bodyOfWaterStore.getBodiesOfWater);
-const technicians = computed(() => technicianStore.getTechnicians);
-const alertTypes = computed(() => alertTypeStore.getAlertTypes);
 const priorityOptions = ref([
   {label: 'Low', value: 'low'},
   {label: 'Medium', value: 'medium'},
@@ -167,6 +169,30 @@ const statusOptions = ref([
   {label: 'Open', value: 'open'},
   {label: 'Closed', value: 'closed'},
 ]);
+
+const status = ref('open');
+const priority = ref('medium');
+const dateTime = ref(null);
+
+const notes = ref('');
+const errorNotes = ref()
+
+const alertTypeId = ref();
+const errorAlertTypeId = ref();
+
+const bodyOfWaterId = ref();
+const errorBodyOfWaterId = ref();
+
+const technicianId = ref();
+const errorTechnicianId = ref();
+
+const minDate = ref(new Date());
+const maxDate = ref(new Date());
+
+const bodiesOfWater = computed(() => bodyOfWaterStore.getBodiesOfWater);
+const technicians = computed(() => technicianStore.getTechnicians);
+const alertTypes = computed(() => alertTypeStore.getAlertTypes);
+
 
 /** Date limits */
 let today = new Date();
@@ -187,7 +213,7 @@ onMounted(async () => {
   await technicianStore.fetchTechnicians();
   await alertTypeStore.fetchAlertTypes();
 
-  if (props.alert) {
+  if (alert) {
     const {alert} = props
     status.value = alert.status;
     priority.value = alert.priority;
@@ -199,31 +225,50 @@ onMounted(async () => {
   }
 });
 
-const createAlert = async () => {
-  // TODO: validation
-
-  try {
-    const data = {
-      status: status.value,
-      priority: priority.value,
-      date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
-      notes: notes.value,
-      alert_type_id: alertTypeId.value,
-      body_of_water_id: bodyOfWaterId.value,
-      technician_id: technicianId.value
-    };
-
-    await alertStore.createAlert(data);
-    await alertStore.fetchAlerts();
-
-    props.toggleAddAlertModal({success: "Alert created successfully"});
-  } catch (e) {
-    props.toggleAddAlertModal({error: e})
-  }
+const handleChangeAlertType = () => {
+  errorAlertTypeId.value = alertTypeId.value ? '' : 'Please select alert type';
+};
+const handleChangeBodyOfWater = () => {
+  errorBodyOfWaterId.value = bodyOfWaterId.value ? '' : 'Please select body of water';
+};
+const handleChangeTechnician = () => {
+  errorTechnicianId.value = technicianId.value ? '' : 'Please select technician';
+};
+const handleChangeNote = () => {
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'Please add a note';
 };
 
+const validateForm = () => {
+  handleChangeAlertType();
+  handleChangeBodyOfWater();
+  handleChangeTechnician();
+  handleChangeNote();
+  return !errorAlertTypeId.value && !errorBodyOfWaterId.value && !errorTechnicianId.value && !errorNotes.value;
+};
+
+const createAlert = async () => {
+  if (validateForm()) {
+    try {
+      const data = {
+        status: status.value,
+        priority: priority.value,
+        date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
+        notes: notes.value,
+        alert_type_id: alertTypeId.value,
+        body_of_water_id: bodyOfWaterId.value,
+        technician_id: technicianId.value
+      };
+
+      await alertStore.createAlert(data);
+      await alertStore.fetchAlerts();
+
+      toggleAddAlertModal({success: "Alert created successfully"});
+    } catch (e) {
+      toggleAddAlertModal({error: e})
+    }
+  }
+}
 const updateAlert = async () => {
-  // TODO: validation
   try {
     const data = {
       status: status.value,
@@ -235,15 +280,12 @@ const updateAlert = async () => {
       technician_id: technicianId.value
     };
 
-    await alertStore.updateAlert(props.alert?.id, data);
+    await alertStore.updateAlert(alert?.id, data);
     await alertStore.fetchAlerts();
 
-    props.toggleAddAlertModal({success: `Alert ${props.alert?.id} updated successfully`});
+    toggleAddAlertModal({success: `Alert ${alert?.id} updated successfully`});
   } catch (e) {
-    props.toggleAddAlertModal({error: e})
+    toggleAddAlertModal({error: e})
   }
 }
-
 </script>
-
-<style lang="scss" scoped></style>

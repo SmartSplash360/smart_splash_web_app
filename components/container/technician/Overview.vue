@@ -105,7 +105,7 @@ const closeModal = ({success, error}) => {
       severity: 'success',
       summary: 'Jobs',
       detail: success,
-      life: 3000
+      life: 5000
     });
   }
 
@@ -114,7 +114,7 @@ const closeModal = ({success, error}) => {
       severity: 'error',
       summary: 'Jobs',
       detail: `An error has occurred: ${error}`,
-      life: 3000
+      life: 5000
     });
   }
 };
@@ -146,9 +146,9 @@ const deleteItem = async ({id}) => {
       // delete item
       try {
         const res = await jobStore.deleteJob(id)
-        toast.add({severity: 'info', summary: 'Delete Job', detail: res?.message, life: 3000});
+        toast.add({severity: 'info', summary: 'Delete Job', detail: res?.message, life: 5000});
       } catch (e) {
-        toast.add({severity: 'error', summary: 'Delete Job', detail: `an error has occurred: ${e}`, life: 3000});
+        toast.add({severity: 'error', summary: 'Delete Job', detail: `an error has occurred: ${e}`, life: 5000});
       }
     },
     reject: () => {

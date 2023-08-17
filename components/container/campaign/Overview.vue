@@ -62,7 +62,7 @@ const createCampaign = async (data) => {
           severity: "info",
           summary: "Success",
           detail: "Email Campaign sent successfully to all Leads",
-          life: 3000,
+          life: 5000,
         });
       }
       if (data.customer) {
@@ -76,7 +76,7 @@ const createCampaign = async (data) => {
           severity: "info",
           summary: "Success",
           detail: "Email Campaign sent successfully to all Customers",
-          life: 3000,
+          life: 5000,
         });
       }
 
@@ -93,7 +93,7 @@ const createCampaign = async (data) => {
           severity: "info",
           summary: "Success",
           detail: "SMS Campaign sent successfully to all Leads",
-          life: 3000,
+          life: 5000,
         });
       }
       if (data.customer) {
@@ -107,7 +107,7 @@ const createCampaign = async (data) => {
           severity: "info",
           summary: "Success",
           detail: "SMS Campaign sent successfully to all Customers",
-          life: 3000,
+          life: 5000,
         });
       }
     }
@@ -116,7 +116,7 @@ const createCampaign = async (data) => {
       severity: "error",
       summary: "Error Message",
       detail: "An Error occured",
-      life: 3000,
+      life: 5000,
     });
   }
 };

@@ -7,55 +7,80 @@
           class="h-full w-full"
       />
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-10">
-      <span class="p-float-label">
+    <div class="w-full lg:w-5/6 flex flex-col gap-9">
+      <div class="flex flex-col gap-1">
+        <span class="p-float-label">
           <InputText 
             id="firstName" 
             v-model="firstName" 
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="[firstNameError && 'p-invalid']"
-            required
-            />
+            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorFirstame && 'border-red-300'" 
+            @blur="handleChangeFirstname">
+          </InputText>
           <label for="firstName">First name</label>
       </span>
-      <span class="p-float-label">
+      <p class="h-[4px]">
+        <span v-show="errorFirstame" class="text-[#D42F24] text-xs">{{ errorFirstame }}</span>
+      </p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="p-float-label">
           <InputText 
             id="lastName" 
             v-model="lastName" 
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="[lastNameError && 'p-invalid']"
-            required/>
+            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorLastname && 'border-red-300'" 
+            @blur="handleChangeLastname">
+          </InputText>
           <label for="lastName">Last name</label>
       </span>
-      <span class="p-float-label">
+      <p class="h-[4px]">
+        <span v-show="errorLastname" class="text-[#D42F24] text-xs">{{ errorLastname }}</span>
+      </p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="p-float-label">
           <InputText 
             id="email" 
             v-model="email" 
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="[emailError && 'p-invalid']"
-            required/>
+            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorEmail && 'border-red-300'" 
+            @blur="handleChangeEmail">
+          </InputText>
           <label for="email">Email</label>
       </span>
+      <p class="h-[4px]">
+        <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
+      </p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="p-float-label">
+        <InputText id="password" 
+          v-model="password" 
+          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorPassword && 'border-red-300'"  
+          @blur="handleChangePassword">
+        </InputText>
+        <label for="password">Password</label>
+      </span>          
+      <p class="h-[4px]">
+        <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+      </p>
+      </div>
+    <div class="flex flex-col gap-1">
       <span class="p-float-label">
-          <InputText 
-            type="password" 
-            id="password" 
-            v-model="password" 
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="[passwordError && 'p-invalid']"
-            required/>
-          <label for="password">Password</label>
-      </span>
-      <span class="p-float-label">
-          <InputText 
-            type="password" 
-            id="confirmedPassword" 
-            v-model="confirmPassword" 
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="[confirmPasswordError && 'p-invalid']"
-            required/>
-          <label for="confirmedPassword">Confirm Password</label>
-      </span>
+            <InputText id="confirmedPassword" 
+              v-model="confirmPassword" 
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              :class="errorPassword && 'border-red-300'" 
+              @blur="handleChangePasswordMatching">
+            </InputText>
+            <label for="confirmedPassword">Confirm Password</label>
+          </span>
+          <p class="h-[4px]">
+            <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
+          </p>
+    </div>
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
       <Button  
@@ -139,33 +164,58 @@ watch(confirmPassword, (newValue, oldValue) => {
   }
 });
 
+
+const errorFirstame = ref('');
+const errorLastname = ref('');
+const errorEmail = ref('');
+const errorPassword = ref('');
+
+const handleChangeFirstname = () => {
+  errorFirstame.value = firstName.value ? '' :'The first name field is required'; 
+}
+const handleChangeLastname = () => {
+  errorLastname.value = lastName.value ? '' :'The last name field is required'; 
+}
+const handleChangeEmail = () => {
+  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
+}
+const handleChangePassword = () => {
+  errorPassword.value = !password.value ? 'Please provide a password' : '';
+};
+const handleChangePasswordMatching = () => {
+  errorPassword.value = passwordConfirmation.value ? (password.value !== passwordConfirmation.value ? 'Please provide matching password' : ''): 'The password fields are required'
+}
+const validateForm = () => {
+  handleChangeFirstname();
+  handleChangeLastname();
+  handleChangeEmail();
+  handleChangePassword();
+  handleChangePasswordMatching();
+  return !errorFirstame.value && !errorLastname.value && !errorEmail.value && errorPassword.value;
+};
+
 async function registerUser() {
-
-  if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match')
-    return;
-  }
-  // TODO: add validation
-try {
-
-  const userPayload = {
-    name: firstName.value,
-    surname: lastName.value,
-    email: email.value,
-    password: password.value,
-    password_confirmation: confirmPassword.value,
-    role: 'Admin'
-  }
-  const res = await store.register(userPayload);
-
-  if(res.errorMessage){
-    toast.add({ severity: 'error', summary: 'Register user error', detail: 'User registration failed', life: 3000 })
-  } else {
-    toast.add({ severity: 'success', summary: 'Register user success', detail: 'User registration succeeded', life: 3000 })
-  }
-}
-catch(error){
-  console.log(error)
-}
+  if(validateForm()){
+    try {
+        const userPayload = {
+          name: firstName.value,
+          surname: lastName.value,
+          email: email.value,
+          password: password.value,
+          confirmPassword: confirmPassword.value,
+          role: 'Admin'
+        }
+          const res = await store.register(userPayload);
+          
+        if(res.errorMessage){
+          toast.add({ severity: 'error', summary: 'Register user error', detail: 'User registration failed', life: 3000 });
+          await router.push('/customers');
+        } else {
+          toast.add({ severity: 'success', summary: 'Register user success', detail: 'User registration succeeded', life: 3000 })
+        }
+    } catch(error){
+      console.log(error)
+    }
+  } 
 }
 </script>

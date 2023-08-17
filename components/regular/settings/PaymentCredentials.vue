@@ -122,11 +122,11 @@ const editCardMethod = (item) => {
 const closeModal = ({ success, error }) => {
   showEditPaymentModal.value = false
   if (success) {
-    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 5000 });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });
   }
 };
 
