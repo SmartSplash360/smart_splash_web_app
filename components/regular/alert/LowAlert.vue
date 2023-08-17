@@ -1,6 +1,5 @@
 <template>
-  <div class="hidden lg:flex flex-col gap-10 alert-table dark:text-white">
-    <div class="card alert-table">
+  <div class="hidden lg:flex flex-col card alert-table gap-10 alert-table dark:text-white" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
           :value="alerts"
           dataKey="id"
@@ -86,7 +85,6 @@
           </template>
         </Column>
       </DataTable>
-    </div>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
       <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
@@ -152,6 +150,7 @@ const props = defineProps({
   deleteItem : Function
 });
 const alertCount = computed(() => props.alerts.length)
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 onMounted(async () => {
   loading.value = false;

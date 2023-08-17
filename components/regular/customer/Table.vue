@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-table laptop+ card hidden lg:block" :class="[currentMode == 'dark' && 'dark-mode']">
+  <div class="customer-table laptop+ card hidden lg:block" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
     <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -184,6 +184,7 @@ import SortIcon from '~/assets/icons/arrow-sort.svg'
 import Tag from 'primevue/tag';
 
 const store = useCustomerStore();
+const router = useRouter();
 
 const props = defineProps({
   editItem: Function,
@@ -192,18 +193,18 @@ const props = defineProps({
   handleSort : Function,
 });
 
-
+const reloadKey = ref(0);
 const customers = ref([]);
+const loading = ref(false);
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
   name: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
   representative: {value: null, matchMode: FilterMatchMode.IN},
 });
-const loading = ref(false);
-const router = useRouter()
 
-const currentMode = computed(() => localStorage.getItem('theme'))
-const customercount = computed(() => props.customerMobiles.lenght)
+
+const customercount = computed(() => props.customerMobiles.lenght);
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 onMounted(() => {
   customers.value = store.getCustomers;
@@ -219,3 +220,5 @@ const exportCSV = (event) => {
 };
 
 </script>
+
+

@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden lg:flex  flex-col gap-10">
+  <div class="hidden lg:flex  flex-col gap-10" >
     <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
           :btnText="' Product'"
@@ -12,7 +12,7 @@
           :product="product"
       ></ModalsProductCreateProductModal>
     </div>
-    <div class="card products-table">
+    <div class="card products-table" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
           v-model:selection="selectedProduct"
           v-model:filters="filters"
@@ -260,6 +260,7 @@ const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
 });
 
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 const products = computed(() =>  productStore.getProducts.map((product) => {
   return {
     ...product,

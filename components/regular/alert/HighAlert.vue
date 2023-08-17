@@ -1,92 +1,90 @@
 <template>
-  <div class="hidden lg:flex flex-col gap-10 alert-table dark:text-white">
-    <div class="card ">
-      <DataTable
-          :value="alerts"
-          dataKey="id"
-          :rows="10"
-          :loading="loading"
+  <div class="hidden lg:block card alert-table dark:text-white" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
+    <DataTable
+        :value="alerts"
+        dataKey="id"
+        :rows="10"
+        :loading="loading"
+    >
+      <template #empty>
+          <div class="flex-center">
+          <h3 class="heading__h3">No alerts found. </h3>
+          </div>
+      </template>
+      <Column
+          field="id"
+          header="Alert"
+          sortable
+          class="w-[1%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
+      ></Column>
+      <Column
+          field="name"
+          header="Customer name"
+          class="w-[5%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
+          sortable
       >
-        <template #empty>
-           <div class="flex-center">
-            <h3 class="heading__h3">No alerts found. </h3>
-           </div>
+        <template #body="slotProps">
+          {{ slotProps.data?.body_of_water?.customer?.name }}
+          {{ slotProps.data?.body_of_water?.customer?.surname ?? '' }}
         </template>
-        <Column
-            field="id"
-            header="Alert"
-            sortable
-            class="w-[1%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
-        ></Column>
-        <Column
-            field="name"
-            header="Customer name"
-            class="w-[5%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
-            sortable
-        >
-          <template #body="slotProps">
-            {{ slotProps.data?.body_of_water?.customer?.name }}
-            {{ slotProps.data?.body_of_water?.customer?.surname ?? '' }}
-          </template>
-        </Column>
-        <Column
-            field="description"
-            header="Address"
-            class="w-[5%] lg:w-[20%]"
-        >
-          <template #body="slotProps">
-            {{ slotProps.data?.body_of_water?.customer?.address[0]?.address_line1 }}
-          </template>
-        </Column>
-        <Column
-            field="alert_type_id"
-            header="Alert type"
-            class="w-[5%] lg:w-[15%]"
-            sortable
-        >
-          <template #body="slotProps">
-            {{ slotProps.data?.alert_type?.name }}
-          </template>
-        </Column>
-        <Column
-            field="price"
-            header="Technician"
-            class="w-[5%] lg:w-[15%]"
-        >
-          <template #body="slotProps">
-            {{ slotProps.data?.technician?.name ?? `Technician ${slotProps.data.technician}` }}
-          </template>
-        </Column>
-        <Column
-            field="status"
-            header="Status"
-            class="w-[5%] lg:w-[15%]"
-            sortable
-        >
-          <template #body="slotProps">
-            <Tag :value="slotProps.data?.status"
-                 :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
-          </template>
-        </Column>
-        <Column>
-          <template #body="slotProps">
-            <div class="flex flex-row gap-2">
-              <Button
-                  icon="pi pi-pencil"
-                  text raised rounded
-                  @click="editAlert(slotProps.data)"
-              />
-              <Button
-                  icon="pi pi-trash"
-                  text raised rounded
-                  class="p-button-danger"
-                  @click="deleteAlert(slotProps?.data?.id)"
-              />
-            </div>
-          </template>
-        </Column>
-      </DataTable>
-    </div>
+      </Column>
+      <Column
+          field="description"
+          header="Address"
+          class="w-[5%] lg:w-[20%]"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data?.body_of_water?.customer?.address[0]?.address_line1 }}
+        </template>
+      </Column>
+      <Column
+          field="alert_type_id"
+          header="Alert type"
+          class="w-[5%] lg:w-[15%]"
+          sortable
+      >
+        <template #body="slotProps">
+          {{ slotProps.data?.alert_type?.name }}
+        </template>
+      </Column>
+      <Column
+          field="price"
+          header="Technician"
+          class="w-[5%] lg:w-[15%]"
+      >
+        <template #body="slotProps">
+          {{ slotProps.data?.technician?.name ?? `Technician ${slotProps.data.technician}` }}
+        </template>
+      </Column>
+      <Column
+          field="status"
+          header="Status"
+          class="w-[5%] lg:w-[15%]"
+          sortable
+      >
+        <template #body="slotProps">
+          <Tag :value="slotProps.data?.status"
+                :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
+        </template>
+      </Column>
+      <Column>
+        <template #body="slotProps">
+          <div class="flex flex-row gap-2">
+            <Button
+                icon="pi pi-pencil"
+                text raised rounded
+                @click="editAlert(slotProps.data)"
+            />
+            <Button
+                icon="pi pi-trash"
+                text raised rounded
+                class="p-button-danger"
+                @click="deleteAlert(slotProps?.data?.id)"
+            />
+          </div>
+        </template>
+      </Column>
+    </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
       <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
@@ -158,7 +156,9 @@ onMounted(async () => {
 
 const loading = ref(true);
 
-const alertCount = computed(() => props.alerts.length)
+const alertCount = computed(() => props.alerts.length);
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
+
 
 const editAlert = (alert) => {
   props.editItem({ id: alert.id, item: { ...alert } })

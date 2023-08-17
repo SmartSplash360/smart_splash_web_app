@@ -1,6 +1,6 @@
 <template>
   <div class="hidden flex-col gap-10 sm:flex">
-    <div class="card rounded-t-lg report-table">
+    <div class="card rounded-t-lg report-table" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
         v-model:selection="selectedProduct"
         v-model:filters="filters"
@@ -54,11 +54,6 @@ import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { ReportServices } from "@/services/ReportServices";
 
-onMounted(() => {
-  ReportServices.getReportsMedium().then((data) => (reports.value = data));
-  loading.value = false;
-});
-
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -66,6 +61,12 @@ const reports = ref();
 const loading = ref(true);
 const selectedProduct = ref();
 
+onMounted(() => {
+  ReportServices.getReportsMedium().then((data) => (reports.value = data));
+  loading.value = false;
+});
+
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 </script>
 

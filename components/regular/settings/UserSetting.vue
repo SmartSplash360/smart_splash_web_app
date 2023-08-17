@@ -6,7 +6,7 @@
         <span class="min-w-max span__element span__element-light">Update users Role</span>
       </div>
     </div>
-    <div class="hidden lg:block pb-14 user-setting-table border-b dark:border-b-gray-600 ">
+    <div class="hidden lg:block pb-14 user-setting-table border-b dark:border-b-gray-600" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
         v-model:filters="filters"
         :value="customers"
@@ -178,11 +178,12 @@ import { FilterMatchMode } from "primevue/api";
 import { CustomerService } from "@/services/Customers";
 
 const customers = ref();
+const selectedRole = ref("");
+const loading = ref(true);
+const setting = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
-const selectedRole = ref("");
 const roles = ref([
   {
     name: "Manager",
@@ -191,7 +192,6 @@ const roles = ref([
   { name: "Admin", code: "ADM" },
   { name: "Staff", code: "Stf" },
 ]);
-
 const managerSetting = ref([
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
@@ -219,9 +219,8 @@ const managerSetting = ref([
       "Lorem ipsum dolor sit amet consectetur. Hendrerit aenean convallis morbi commodo et.",
   },
 ]);
-const loading = ref(true);
 
-const setting = ref();
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 onMounted(() => {
   CustomerService.getCustomersMedium().then((data) => {

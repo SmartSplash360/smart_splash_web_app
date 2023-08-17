@@ -37,8 +37,8 @@
               class="flex-center h-[16px] w-[16px] nav-link-item"
               :class="toggleSide && 'text-xl'"
             >
-              <font-awesome-icon :icon="link.icon"
-            /></span>
+              <font-awesome-icon :icon="link.icon" :class="!toggleSide && 'text-lg'"/>
+            </span>
             <span v-if="!toggleSide" class="nav-link-item">{{ link.name }}</span>
           </nuxt-link>
         </li>

@@ -50,4 +50,47 @@ const setColorTheme = (newTheme: Theme) => {
   opacity: 0;
   filter: blur(1rem);
 }
+.customer-table .p-datatable-wrapper {
+    border: 1px solid #dee2e6;
+    border-bottom: 0;
+    background-color: inherit ;
+}
+
+.dark-mode .p-datatable-wrapper {
+    border: 1px solid #4B5563;
+    border-bottom: 0;
+    background-color: inherit ;
+}
+
+.customer-table  .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+}
+
+.dark-mode .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #4B5563;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+}
+
+.customer-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.customer-job-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.alert-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.products-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.services-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.report-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.user-setting-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
+.technician-job-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover{
+  background: #d4ecf4;
+  color: #6B7280;
+  cursor: pointer;
+}
+.dark-mode > .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
+  background: #1B2028;
+  color: #FFF;
+  cursor: pointer;
+}
 </style>

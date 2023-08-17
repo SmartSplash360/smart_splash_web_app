@@ -12,7 +12,7 @@
           :service="service"
       ></ModalsProductCreateServiceModal>
     </div>
-    <div class="card services-table">
+    <div class="card services-table" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
           v-model:filters="filters"
           :value="services"
@@ -194,6 +194,7 @@ const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},
 });
 
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 const services = computed(() => serviceStore.getServices.map((service) => {
   return {
     ...service,
