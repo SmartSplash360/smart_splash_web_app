@@ -58,7 +58,7 @@ const closeModal = ({success, error}) => {
       severity: 'success',
       summary: 'Technicians',
       detail: success,
-      life: 3000
+      life: 5000
     });
   }
 
@@ -67,7 +67,7 @@ const closeModal = ({success, error}) => {
       severity: 'error',
       summary: 'Technicians',
       detail: `An error has occurred: ${error}`,
-      life: 3000
+      life: 5000
     });
   }
 };
@@ -96,9 +96,9 @@ const deleteItem = async ({id}) => {
       try {
         const res = await store.deleteTechnician(id)
         await store.fetchTechnicians()
-        toast.add({severity: 'info', summary: 'Delete Technician', detail: res?.message, life: 3000});
+        toast.add({severity: 'info', summary: 'Delete Technician', detail: res?.message, life: 5000});
       } catch (e) {
-        toast.add({severity: 'error', summary: 'Delete Technician', detail: `an error has occurred: ${e}`, life: 3000});
+        toast.add({severity: 'error', summary: 'Delete Technician', detail: `an error has occurred: ${e}`, life: 5000});
       }
     },
     reject: () => {

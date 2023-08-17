@@ -89,11 +89,11 @@ const closeModal = ({ success, error }) => {
   alert.value = null
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 5000 });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });
   }
 };
 
@@ -117,7 +117,7 @@ const deleteItem = async ({ id }) => {
     accept: async () => {
       // delete item
       const res = await alertStore.deleteAlert(id)
-      toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 3000 });
+      toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 5000 });
     },
     reject: () => {}
   })

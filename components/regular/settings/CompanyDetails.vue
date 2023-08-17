@@ -242,7 +242,7 @@ const onTemplatedUpload = () => {
     severity: "info",
     summary: "Success",
     detail: "File Uploaded",
-    life: 3000,
+    life: 5000,
   });
 };
 

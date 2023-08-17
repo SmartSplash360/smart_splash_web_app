@@ -50,7 +50,6 @@ export const useCustomerStore = defineStore("customer", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             try {
                 const res = await axios.get(`http://localhost:8000/api/v1/customers/${id}`);
-                console.log(res.data.data);
                 return res.data.data;
             } catch (error) {
                 console.log(error);
