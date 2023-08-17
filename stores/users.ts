@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
+import {useTenantStore} from "~/stores/tenants";
 import axios from "axios";
-import router from "#app/plugins/router";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -15,7 +15,14 @@ export const useUserStore = defineStore("user", {
         currentUser: null,
         jwt: "",
         users: [],
-        userDefinedTheme: true
+        userDefinedTheme: true,
+        firstUserTenant : {
+            email: '',
+            password: '',
+            password_confirmation: '',
+            name: '',
+            surname: '',
+        }
     }),
     getters: {
         getUsers(state) {
@@ -23,6 +30,9 @@ export const useUserStore = defineStore("user", {
         },
         getCurrentUser(state) {
             return state.currentUser;
+        },
+        getFirstUserTenant(state) {
+            return state.firstUserTenant;
         },
         getJwt(state) {
             return state.jwt;
@@ -37,13 +47,8 @@ export const useUserStore = defineStore("user", {
     actions: {
         async login(email: String, password: String) {
             try {
-                const res = await axios.post(
-                    "http://localhost:8000/api/v1/auth/login",
-                    {email, password}
-                );
-
-                console.log(res.data)
-
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login` : `http://localhost:8000/api/v1/auth/login`
+                const res = await axios.post( url , {email, password});
                 if (res.data.success) {
                     // TODO: store in local storage
                     this.currentUser = res.data.data.user;
@@ -56,6 +61,7 @@ export const useUserStore = defineStore("user", {
                     throw new Error(res.data.message)
                 }
 
+
             } catch (error) {
                 throw error
             }
@@ -64,14 +70,31 @@ export const useUserStore = defineStore("user", {
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
                 this.currentUser = res.data;
+                this.firstUserTenant = userPayload;
+                
+                if (res.data.success) {
+                    // TODO: store in local storage
+                    this.currentUser = res.data.data.user;
+                    this.jwt = res.data.data.token;
+                    this.loggedIn = true;
+                    window.location.href = 'http://localhost:3000/tenants/register'
+
+                    // set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
+                } else {
+                    throw new Error(res.data.message)
+                }
             } catch (error) {
-                alert(error)
-                console.log(error)
+                return {errorMessage : error}
             }
         },
+        setJwt(newJwt : any) {
+            this.jwt = newJwt;
+         },
         async logout() {
             const router = useRouter();
-            const res = await axios.post("http://localhost:8000/api/v1/auth/logout");
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout` : `http://localhost:8000/api/v1/auth/logout`
+            await axios.post(url); 
             this.currentUser = null
             this.jwt = "";
             this.loggedIn = false;

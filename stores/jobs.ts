@@ -1,6 +1,7 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -21,8 +22,9 @@ export const useJobStore = defineStore("job", {
         async fetchJobs() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs` : `http://localhost:8000/api/v1/jobs`
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/jobs");
+                const res = await axios.get(url);
                 this.jobs = res.data.data.data
             } catch (error) {
                 console.log(error);
@@ -31,9 +33,9 @@ export const useJobStore = defineStore("job", {
         async fetchTechnicianJobs(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/technician/${id}` : `http://localhost:8000/api/v1/jobs/technician/${id}`
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/technician/${id}`);
-                console.log(res.data.data);
+                const res = await axios.get(url)
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -43,9 +45,9 @@ export const useJobStore = defineStore("job", {
         async fetchCustomerJobs(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/customer/${id}` : `http://localhost:8000/api/v1/jobs/customer/${id}`
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/customer/${id}`);
-                console.log(res.data.data);
+                const res = await axios.get(url);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -55,8 +57,9 @@ export const useJobStore = defineStore("job", {
         async fetScheduledJobsByDate(date: string) {
           const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/getScheduledJobsByDate/${date}` : `http://localhost:8000/api/v1/jobs/getScheduledJobsByDate/${date}`
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/jobs/getScheduledJobsByDate/${date}`);
+                const res = await axios.get(url);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -66,8 +69,9 @@ export const useJobStore = defineStore("job", {
         async createJob(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs` : `http://localhost:8000/api/v1/jobs`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/jobs`, payload);
+                const res = await axios.post(url, payload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -80,8 +84,9 @@ export const useJobStore = defineStore("job", {
         async updateJob(id: number | string, payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/${id}` : `http://localhost:8000/api/v1/jobs/${id}`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/jobs/${id}`, payload);
+                const res = await axios.post(url, payload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -93,8 +98,9 @@ export const useJobStore = defineStore("job", {
         async deleteJob(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/${id}` : `http://localhost:8000/api/v1/jobs/${id}`
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/jobs/${id}`);
+                const res = await axios.delete(url);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

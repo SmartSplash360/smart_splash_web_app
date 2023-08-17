@@ -8,8 +8,6 @@ export function useGeolocation() {
     let watcher = null
 
     onMounted(() => {
-        // console.log('useGeolocation')
-        // console.log(isSupported)
         if (isSupported) {
 
             navigator.geolocation.getCurrentPosition(
@@ -25,7 +23,6 @@ export function useGeolocation() {
     })
 
     onUnmounted(() => {
-        console.log('remove useGeolocation')
         if (watcher) navigator.geolocation.clearWatch(watcher)
     })
 

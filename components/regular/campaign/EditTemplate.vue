@@ -156,6 +156,7 @@ onMounted(async () => {
 const editorChange = (value) => (description.value = value);
 
 const selectType = (value) => {
+
   if(!templateTypeName.value){
     errorTemplateType.value = 'Please choose a campaign type';
     return 

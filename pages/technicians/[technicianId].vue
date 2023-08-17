@@ -12,6 +12,4 @@ definePageMeta({
 
 const router = useRoute();
 const { technicianId } = router.params;
-
-console.log(technicianId)
 </script>

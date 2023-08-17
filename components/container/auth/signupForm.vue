@@ -61,7 +61,7 @@
           :class="errorPassword && 'border-red-300'"  
           @blur="handleChangePassword">
         </InputText>
-          <label for="password">Password</label>
+        <label for="password">Password</label>
       </span>          
       <p class="h-[4px]">
         <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{ errorPassword }}</span>
@@ -94,29 +94,75 @@
         </p>
       </div>
       <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
-        <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full bg-[#3B5998] text-white"/>
-        <Button icon="pi pi-google" label="Continue with Google"  class="w-full"/>
+        <Button 
+          icon="pi pi-facebook" 
+          label="Continue with Facebook" 
+          class="w-full bg-[#3B5998] text-white"/>
+        <Button 
+          icon="pi pi-google" 
+          label="Continue with Google"  
+          class="w-full"/>
       </div>
     </div>
-
-
+    <Toast />
   </form>
 </template>
+
 
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import {useUserStore} from "~/stores/users";
+import { useToast } from "primevue/usetoast";
 
+
+const toast = useToast();
 const store = useUserStore();
-const router = useRouter();
 
 const firstName = ref('');
+const firstNameError = ref(false);
+
 const lastName = ref('');
+const lastNameError = ref('');
+
 const email = ref('');
+const emailError = ref('');
+
 const password = ref('');
+const passwordError = ref('');
+
 const confirmPassword = ref('');
+const confirmPasswordError = ref('');
+
+
+watch(firstName, (newValue, oldValue) => {
+  console.log('old',oldValue)
+  console.log(newValue,'new')
+  if(newValue === ''){
+    firstNameError.value = true
+  }
+});
+watch(lastName, (newValue, oldValue) => {
+  if(lastName.value === ''){
+    lastNameError.value = true
+  }
+});
+watch(email, (newValue, oldValue) => {
+  if(email.value === ''){
+    emailError.value = true
+  }
+});
+watch(password, (newValue, oldValue) => {
+  if(password.value === ''){
+    passwordError.value = true
+  }
+});
+watch(confirmPassword, (newValue, oldValue) => {
+  if(confirmPassword.value === ''){
+    confirmPasswordError.value = true
+  }
+});
 
 
 const errorFirstame = ref('');
@@ -159,8 +205,14 @@ async function registerUser() {
           confirmPassword: confirmPassword.value,
           role: 'Admin'
         }
-        await store.register(userPayload);
-        await router.push('/customers');
+          const res = await store.register(userPayload);
+          
+        if(res.errorMessage){
+          toast.add({ severity: 'error', summary: 'Register user error', detail: 'User registration failed', life: 3000 });
+          await router.push('/customers');
+        } else {
+          toast.add({ severity: 'success', summary: 'Register user success', detail: 'User registration succeeded', life: 3000 })
+        }
     } catch(error){
       console.log(error)
     }

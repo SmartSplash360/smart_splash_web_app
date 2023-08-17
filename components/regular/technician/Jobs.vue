@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden lg:block card mt-3 technician-job-table">
+  <div class="hidden lg:block card mt-3 technician-job-table" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
     <DataTable
         :value="jobs"
         selectionMode="single"
@@ -150,6 +150,8 @@ const props = defineProps({
   viewItem: Function,
   jobs: Array
 });
+
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 const viewItem = (job) => {
   props.viewItem({...job})

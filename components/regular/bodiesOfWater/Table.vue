@@ -136,12 +136,10 @@ const viewItem = (bodyOfWater) => {
   props.viewItem({...bodyOfWater})
 }
 const editItem = (bodyOfWater) => {
-  // console.log(bodyOfWater)
   props.editItem({id: bodyOfWater.id, item: {...bodyOfWater}})
 };
 
 const deleteItem = async (id) => {
-  // console.log(id)
   props.deleteItem({id})
 };
 </script>

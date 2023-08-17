@@ -147,8 +147,6 @@ const customers = computed(() => customerStore.getCustomers)
 const bodiesOfWater = ref([])
 
 // watch(customerId, (newValue, oldValue) => {
-//   console.log('New value:', newValue);
-//   console.log('Old value:', oldValue);
 //
 //   // fetch customer's bodies of water
 //   bodiesOfWater.value = customerStore.getCustomerById(newValue)?.bodies_of_water

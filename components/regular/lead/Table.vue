@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-table laptop+ card hidden lg:block">
+  <div class="customer-table laptop+ card hidden lg:block" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
     <DataTable
         v-model:filters="filters"
         :value="leads"
@@ -13,7 +13,7 @@
         :rows="10"
         :globalFilterFields="['name', 'id']">
       <template #header>
-        <div class="flex items-center justify-between dark:border-0 mb-5 px-5">
+        <div class="flex items-center justify-between dark:border-0 mb-5">
           <div class="flex w-80 justify-start">
             <span class="p-input-icon-right w-full">
               <i class="pi pi-search"/>
@@ -199,7 +199,8 @@ const router = useRouter()
 const leadStore = useLeadStore();
 
 
-const leads= computed(() => leadStore.getLeads)
+const leads= computed(() => leadStore.getLeads);
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 const filters = ref({
   global: {value: null, matchMode: FilterMatchMode.CONTAINS},

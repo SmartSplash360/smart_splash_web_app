@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -22,9 +23,9 @@ export const useServiceStore = defineStore("service", {
         async fetchServices() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services` : `http://localhost:8000/api/v1/services`
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/services");
-                console.log(res.data.data.data)
+                const res = await axios.get(url);
                 this.services = res.data.data.data
             } catch (error) {
                 console.log(error);
@@ -34,7 +35,8 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                const res = await axios.get(`http://localhost:8000/api/v1/services/${id}`);
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services/${id}` : `http://localhost:8000/api/v1/services/${id}`
+                const res = await axios.get(url);
                 return res.data.data
             } catch (error) {
                 console.log(error);
@@ -44,7 +46,8 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                const res = await axios.post("http://localhost:8000/api/v1/services", servicePayload);
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services` : `http://localhost:8000/api/v1/services`
+                const res = await axios.post(url, servicePayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -57,7 +60,8 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                const res = await axios.post(`http://localhost:8000/api/v1/services/${id}`, servicePayload);
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services/${id}` : `http://localhost:8000/api/v1/services/${id}`
+                const res = await axios.post(url, servicePayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -71,7 +75,9 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                const res = await axios.delete(`http://localhost:8000/api/v1/services/${id}`);
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services/${id}` : `http://localhost:8000/api/v1/services/${id}`
+
+                const res = await axios.delete(url);
                 return res.data.data
             } catch (error) {
                 console.log(error)

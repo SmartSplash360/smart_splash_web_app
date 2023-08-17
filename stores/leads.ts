@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -36,9 +37,9 @@ export const useLeadStore = defineStore("lead", {
         async fetchLeads() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads` : `http://localhost:8000/api/v1/leads`
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/leads");
-                console.log(res.data.data.data)
+                const res = await axios.get(url);
                 this.leads = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -48,9 +49,9 @@ export const useLeadStore = defineStore("lead", {
         async fetchLead(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads/${id}` : `http://localhost:8000/api/v1/leads/${id}`
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/leads/${id}`);
-                console.log(res.data.data);
+                const res = await axios.get(url);
                 return res.data.data;
             } catch (error) {
                 console.log(error);
@@ -60,8 +61,9 @@ export const useLeadStore = defineStore("lead", {
         async createLead(leadPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads` : `http://localhost:8000/api/v1/leads`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/leads`, leadPayload);
+                const res = await axios.post(url, leadPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -74,8 +76,9 @@ export const useLeadStore = defineStore("lead", {
         async updateLead(id: number | string, leadPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads/${id}` : `http://localhost:8000/api/v1/leads/${id}`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/leads/${id}`, leadPayload);
+                const res = await axios.post(url, leadPayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -87,8 +90,9 @@ export const useLeadStore = defineStore("lead", {
         async deleteLead(leadId: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads/${leadId}` : `http://localhost:8000/api/v1/leads/${leadId}`
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/leads/${leadId}`);
+                const res = await axios.delete(url);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -104,11 +108,12 @@ export const useLeadStore = defineStore("lead", {
 
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads/imports` : `http://localhost:8000/api/v1/leads/imports`
             try {
                 const formData = new FormData();
                 formData.append("lead_file", payload.files[0], `leads-import-${Date.now()}.csv`);
 
-                const res = await axios.post(`http://localhost:8000/api/v1/leads/imports`, formData, {
+                const res = await axios.post(url, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

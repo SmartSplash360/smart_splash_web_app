@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonDetailPage></SkeletonDetailPage>
   </section>
-  <section v-else class="flex flex-col gap-12">
+  <section v-else class="flex flex-col gap-10">
     <ModalsJobsCreateJobModal
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"
@@ -46,8 +46,6 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
-    <!-- <Toast/> -->
-    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 
@@ -130,7 +128,6 @@ const viewItem = (item) => {
 const editItem = ({id, item,mobileEdit =false}) => {
   job.value = { ...item };
   if(mobileEdit){
-    console.log("first")
     router.push({  
       path: '/technicians/edit-technician',
       query: { technicianId: id }

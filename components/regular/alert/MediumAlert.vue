@@ -1,5 +1,5 @@
 <template>
-  <div class="alert-table hidden lg:flex flex-col gap-10 dark:text-white">
+  <div class="alert-table card  hidden lg:flex flex-col gap-10 dark:text-white" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
       <DataTable
           :value="alerts"
           dataKey="id"
@@ -155,6 +155,7 @@ const props = defineProps({
 
 const loading = ref(true);
 const alertCount = computed(() => props.alerts.length);
+const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 onMounted(async () => {
   loading.value = false;

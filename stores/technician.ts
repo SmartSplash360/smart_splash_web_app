@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -24,9 +25,9 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnicians() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `http://localhost:8000/api/v1/technicians`
             try {
-                const res = await axios.get("http://localhost:8000/api/v1/technicians");
-                console.log(res.data.data.data);
+                const res = await axios.get(url);
                 this.technicians = res.data.data.data;
             } catch (error) {
                 console.log(error);
@@ -36,9 +37,10 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
+
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/technicians/${id}`);
-                console.log(res.data.data);
+                const res = await axios.get(url);
                 return res.data.data as Technician;
             } catch (error) {
                 alert(error);
@@ -48,8 +50,9 @@ export const useTechnicianStore = defineStore("technician", {
         async createTechnician(technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `http://localhost:8000/api/v1/technicians`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/technicians`, technicianPayload);
+                const res = await axios.post(url, technicianPayload);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -62,8 +65,9 @@ export const useTechnicianStore = defineStore("technician", {
         async updateTechnician(id: number | string, technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
             try {
-                const res = await axios.post(`http://localhost:8000/api/v1/technicians/${id}`, technicianPayload);
+                const res = await axios.post(url, technicianPayload);
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -75,8 +79,10 @@ export const useTechnicianStore = defineStore("technician", {
         async deleteTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
+
             try {
-                const res = await axios.delete(`http://localhost:8000/api/v1/technicians/${id}`);
+                const res = await axios.delete(url);
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

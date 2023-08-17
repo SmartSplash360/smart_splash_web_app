@@ -95,14 +95,12 @@ const closeModal = async ({ success, error }) => {
 };
 
 const viewItem = (item) => {
-  console.log(item);
   readOnly.value = true;
   bodyOfWater.value = item;
   toggleAddBodyOfWaterModal();
 };
 
 const editItem = ({ id, item }) => {
-  console.log(id, item);
   bodyOfWater.value = item;
   toggleAddBodyOfWaterModal();
 };

@@ -127,7 +127,6 @@
         lastname : lastname.value
     }
     if(checked.value){
-        console.log(newCard)
     }
     try {
 

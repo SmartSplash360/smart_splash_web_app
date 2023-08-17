@@ -1,6 +1,7 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
+import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -15,14 +16,13 @@ export const useCommunicationStore = defineStore("communication", {
     getters: {},
     actions: {
         async startVoiceCall(number: string) {
-            console.log("init voice call");
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/twilo/call` : `http://localhost:8000/api/v1/twilo/call`
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/twilo/call", {
+                const res = await axios.post(url, {
                     receiver_number: number
                 });
-                console.log(res.data.data);
                 this.voiceCall = res.data.data;
             } catch (error) {
                 console.log(error);

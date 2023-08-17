@@ -110,7 +110,6 @@ const paymentMethods = ref([
 ])
 const card = ref()
 const handleSelectMethod = (value) => {
-  console.log(value)
 }
 const toggleEditCreditCardModal = () => { 
   card.value = null
@@ -132,7 +131,6 @@ const closeModal = ({ success, error }) => {
 };
 
 const handleSaveChange = () => {
-  console.log(method.value)
 }
 
 </script>
