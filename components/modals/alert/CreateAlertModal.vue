@@ -175,15 +175,13 @@ const priority = ref('medium');
 const dateTime = ref(null);
 
 const notes = ref('');
-const errorNotes = ref()
-
 const alertTypeId = ref();
-const errorAlertTypeId = ref();
-
 const bodyOfWaterId = ref();
-const errorBodyOfWaterId = ref();
-
 const technicianId = ref();
+
+const errorNotes = ref();
+const errorAlertTypeId = ref();
+const errorBodyOfWaterId = ref();
 const errorTechnicianId = ref();
 
 const minDate = ref(new Date());

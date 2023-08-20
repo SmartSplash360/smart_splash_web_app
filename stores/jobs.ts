@@ -12,10 +12,14 @@ export const useJobStore = defineStore("job", {
     },
     state: () => ({
         jobs: [],
+        completedJobs : 0
     }),
     getters: {
         getJobs(state) {
             return state.jobs
+        },
+        getAllCompletedJobs(state){
+            return state.completedJobs
         }
     },
     actions: {
@@ -66,10 +70,36 @@ export const useJobStore = defineStore("job", {
                 throw error
             }
         },
+        async fetchAllCompletedJob(){
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs/getAllCompleted` : `http://localhost:8000/api/v1/job/getAllCompleted`
+            try {
+                const res = await axios.get(url);
+                this.completedJobs = res.data.data.data.length
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async createJob(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs` : `http://localhost:8000/api/v1/jobs`
+            try {
+                const res = await axios.post(url, payload);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        },
+        async createJobActivity(payload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobActivities` : `http://localhost:8000/api/v1/jobActivities`
             try {
                 const res = await axios.post(url, payload);
 

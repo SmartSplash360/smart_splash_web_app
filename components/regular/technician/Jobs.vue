@@ -151,6 +151,8 @@ const props = defineProps({
   jobs: Array
 });
 
+
+
 const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
 
 const viewItem = (job) => {

@@ -6175,3 +6175,8 @@
     background: inherit;
     color: inherit;
 }
+
+.p-calendar .p-inputtext {
+    border-radius: 0.375rem;
+    border-color: #D1D5DB;
+}
