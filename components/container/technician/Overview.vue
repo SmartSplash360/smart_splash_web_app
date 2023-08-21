@@ -28,7 +28,7 @@
         <BaseAddButton
           :btnText="'Job'"
           @click="handleAddJob"
-          class="hidden lg:flex hover:shadow-xl w-32"
+          class="flex hover:shadow-xl w-32"
         ></BaseAddButton>
         <nuxt-link href="/reports">
           <Button label="View Reports" class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"/>
@@ -62,32 +62,6 @@ import {useTechnicianStore} from "~/stores/technician";
 import {useJobStore} from "~/stores/jobs";
 import {useConfirm} from "primevue/useconfirm";
 import {useToast} from "primevue/usetoast";
-
-
-import CreateJobModal from '~/components/modals/jobs/CreateJobModal.vue';
-import CreateJobActivities from '~/components/modals/jobs/CreateJobActivities.vue';
-
-const showModal = ref(true);
-
-const steps = [
-  { component: CreateJobModal },
-  { component: CreateJobActivities },
-  // Add more steps as needed
-];
-
-const currentStepIndex = ref(0);
-
-const nextStep = () => {
-  if (currentStepIndex.value < steps.length - 1) {
-    currentStepIndex.value++;
-  } else {
-    showModal.value = false;
-  }
-};
-
-const resetForm = () => {
-  currentStepIndex.value = 0;
-};
 
 const toast = useToast();
 const technicianStore = useTechnicianStore();
@@ -123,7 +97,6 @@ const profileImage = computed(() => {
 });
 
 const addJobModal = ref(false);
-const mulitpleStepForm = ref(true);
 
 const switchTabs = (tab) => {
   if (tab) {
@@ -156,13 +129,11 @@ const closeModal = ({success, error}) => {
     });
   }
 };
-
 const viewItem = (item) => {
   readOnly.value = true
   job.value ={  ...item }
   toggleAddJobModal()
 }
-
 const editItem = ({id, item,mobileEdit =false}) => {
   job.value = { ...item };
   if(mobileEdit){
@@ -174,7 +145,6 @@ const editItem = ({id, item,mobileEdit =false}) => {
   }
   toggleAddJobModal()
 }
-
 const deleteItem = async ({id}) => {
   confirm.require({
     message: 'Are you sure you want to proceed?',
@@ -193,9 +163,7 @@ const deleteItem = async ({id}) => {
     }
   })
 }
-
 const handleAddJob = () => {
-  console.log("first")
   router.push(`/technicians/${props.technicianId}/create-technician-job`)
 }
 </script>

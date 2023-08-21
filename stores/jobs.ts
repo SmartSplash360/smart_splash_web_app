@@ -12,7 +12,8 @@ export const useJobStore = defineStore("job", {
     },
     state: () => ({
         jobs: [],
-        completedJobs : 0
+        completedJobs : 0,
+        newJobId : null
     }),
     getters: {
         getJobs(state) {
@@ -87,10 +88,11 @@ export const useJobStore = defineStore("job", {
             let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs` : `http://localhost:8000/api/v1/jobs`
             try {
                 const res = await axios.post(url, payload);
+                this.newJobId = res.data.data.id;
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
-                }
+                } 
             } catch (error) {
                 console.log(error)
                 throw error
@@ -101,7 +103,7 @@ export const useJobStore = defineStore("job", {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobActivities` : `http://localhost:8000/api/v1/jobActivities`
             try {
-                const res = await axios.post(url, payload);
+                const res = await axios.post(url, {...payload, job_id : this.newJobId});
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

@@ -7,7 +7,7 @@
         class="overflow-auto flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-5 lg:min-w-[950px] dark:bg-[#31353F]">
       <div class="flex-between items-center">
         <h3 class="heading__h3 text-[#025E7C]">
-        {{ readOnly === true ? 'View' : job && !readOnly ? 'Edit' : 'New' }} Job {{ job ? `#${job?.id}` : '' }}
+        {{ readOnly === true ? 'View' : job && !readOnly && 'Edit'}} Job {{ job ? `#${job?.id}` : '' }}
       </h3>
       <span @click="toggleAddJobModal({ show: false })"><font-awesome-icon icon="circle-xmark" class="text-xl cursor-pointer"/></span>
       </div>
@@ -118,9 +118,9 @@
           <label class="text-sm" for="address"> Description* </label>
           <Textarea
               :disabled="readOnly"
-              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
               v-model="description"
-              rows="2"
+              rows="3"
               cols="30"
               :class="errorDescription && 'border-red-300'"
               @blur="handleChangeSDescription"
@@ -135,9 +135,9 @@
           <label class="text-sm" for="address"> Technical Notes* </label>
           <Textarea
               :disabled="readOnly"
-              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
               v-model="technical_notes"
-              rows="2"
+              rows="3"
               cols="30"
               :class="errorNotes && 'border-red-300'"
               @blur="handleChangeNote"
@@ -156,10 +156,10 @@
             class="hover:shadow-xl"
         />
         <Button
-            label="Submit"
+            label="Update"
             icon="pi pi-check"
             class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="job ? updateJob() : createJob()"
+            @click="updateJob()"
         />
       </div>
     </form>
@@ -186,7 +186,6 @@ const props = defineProps({
   technicianId: String | Number
 });
 
-const toggleAddJobActivitiesModal = ref(false);
 const poolId = ref()
 const customerId = ref()
 const startTime = ref()
@@ -214,8 +213,6 @@ minDate.value.setFullYear(prevYear);
 maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
 
-
-
 const errorCustomer = ref("");
 const errorPool = ref("");
 const errorStartDate = ref("");
@@ -226,7 +223,6 @@ const errorDescription = ref("");
 const errorNotes = ref();
 
 const disablePoolSelect = ref(true)
-
 
 const statuses = ref([
   {value: 'scheduled', label: 'Scheduled'},
@@ -249,7 +245,8 @@ onMounted(async () => {
     bodiesOfWater.value = customer?.bodies_of_water
     poolId.value = props.job.pool_id
     customerId.value = props.job.customer_id
-    startTime.value = props.job.start_date
+    dateTime.value = props.job.start_date
+    startTime.value = props.job.start_time
     endTime.value = props.job.end_date
     status.value = props.job.status
     description.value = props.job.description
@@ -281,15 +278,15 @@ const handleChangeStartTime = () => {
   errorStartTime.value = startTime.value ? '' : 'Please enter a starting time';
 };
 const handleChangeEndTime = () => {
-
-  errorEndTime.value = endTime.value ? '' : 'Please enter an ending time';
-
   if(endTime.value){
     const dateObject = new Date(endTime.value);
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
     endTime.value = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  } else {
+    errorEndTime.value = endTime.value ? '' : 'Please enter an ending time';
   }
+
 
   
   errorEndTime.value = compareTimes(startTime.value, endTime.value) ? '' : 'the end time must be greater than start time'; 
@@ -329,46 +326,25 @@ const validateForm = () => {
 };
 
 
-const handleJobActivityModal = () => toggleAddJobActivitiesModal.value = !toggleAddJobActivitiesModal.value;
-const closeModal = () => toggleAddJobActivitiesModal.value = false
-const createJob = async () => {
-  if(validateForm()){
-    try {
-    await jobStore.createJob({
-      technician_id: props.technicianId,
-      pool_id: poolId.value,
-      customer_id: customerId.value,
-      start_time: startTime.value,
-      end_time: endTime.value,
-      start_date : dateTime.value,
-      status: status.value,
-      description: description.value,
-      technical_notes: technical_notes.value,
-    });
-    await jobStore.fetchJobs()
-    props.toggleAddJobModal({success: "Job created successfully"});
-  } catch (e) {
-    props.toggleAddJobModal({error: e});
-  }
-  }
-}
 const updateJob = async () => {
   try {
-    const data = {
-      pool_id: poolId.value,
-      technician_id: props.technicianId,
-      customer_id: customerId.value,
-      start_date: startTime.value,
-      end_date: endTime.value,
-      status: status.value,
-      description: description.value,
-      technical_notes: technical_notes.value,
+    if(validateForm){
+      const data = {
+        pool_id: poolId.value,
+        technician_id: props.technicianId,
+        customer_id: customerId.value,
+        start_date: startTime.value,
+        end_date: endTime.value,
+        status: status.value,
+        description: description.value,
+        technical_notes: technical_notes.value,
+      }
+  
+      await jobStore.updateJob(props.job?.id, data)
+      await jobStore.fetchJobs()
+  
+      props.toggleAddJobModal({success: `Job ${props.job?.id} updated successfully`});
     }
-
-    await jobStore.updateJob(props.job?.id, data)
-    await jobStore.fetchJobs()
-
-    props.toggleAddJobModal({success: `Job ${props.job?.id} updated successfully`});
   } catch (e) {
     props.toggleAddJobModal({error: e});
   }
