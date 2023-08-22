@@ -5,12 +5,12 @@
                 <span class="hidden sm:flex span__element">Back</span>
             </div>
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
-                <div class="flex flex-col gap-2 lg:gap-3 lg:min-w-[350px]">
+                <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[300px] xl:min-w-[350px]">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Add Job</h2>
                     <span class="span__element text-gray-500">Add new job</span>
                 </div>
-                <div class="flex gap-5 lg:w-3/5">
-                    <div class="flex w-full flex-col gap-2">
+                <div class="flex gap-2 sm:gap-5 lg:w-3/5">
+                    <div class="flex w-1/2 lg:w-full flex-col gap-2">
                         <Dropdown
                             v-model="customerId"
                             :options="customers"
@@ -25,7 +25,7 @@
                             <span v-show="errorCustomer" class="text-[#D42F24] text-xs">{{ errorCustomer }}</span>
                         </p>
                     </div>
-                    <div class="flex w-full flex-col gap-2">
+                    <div class="flex w-1/2 lg:w-full flex-col gap-2">
                         <Dropdown
                             :disabled="disablePoolSelect"
                             v-model="poolId"
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
-                <div class="flex flex-col gap-2 lg:gap-3 lg:min-w-[350px]">
+                <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Working schedule</h2>
                     <span class="span__element text-gray-500">Pick a working schedule for the job</span>
                 </div>
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
-                <div class="flex flex-col gap-2 lg:gap-3 lg:min-w-[350px]">
+                <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Job status</h2>
                     <span class="span__element text-gray-500">add more information to your job</span>
                 </div>
@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
-                <div class="flex flex-col gap-2 lg:gap-3 lg:min-w-[350px]">
+                <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Job descriptions and info</h2>
                     <span class="span__element text-gray-500">add more information to your job</span>
                 </div>
@@ -162,7 +162,7 @@
                     <h2 class="text-3xl font-bold text-[#025E7C]">Services</h2>
                     <span class="span__element text-gray-500">List of available services</span>
                     <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
-                        <div class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-md flex gap-20 items-center lg:px-5" v-for="service in services" :key="service.id">
+                        <div class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-md flex gap-20 items-center px-3 lg:px-5" v-for="service in services" :key="service.id">
                             <Checkbox 
                             v-model="selectedServices" 
                             :name="service.name" 

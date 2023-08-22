@@ -16,21 +16,21 @@
                 <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Products</h2>
                     <span class="span__element text-gray-500">List of available products</span>
-                    <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
-                        <div class="bg-[#d4ecf4] py-5 rounded-md flex gap-20 items-center lg:px-5" v-for="product in products" :key="product.id">
+                    <div class="overflow-auto max-h-[40vh] flex flex-col gap-3">
+                        <div class="bg-[#d4ecf4] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5" v-for="product in products" :key="product.id">
                             <Checkbox 
                             v-model="selectedProducts" 
                             :name="product.name" 
                             :value="product" 
                             :disabled="product.is_available === 0 "
                             />
-                            <div class="flex justify-between flex-1 ml-auto">
+                            <div class="flex justify-between lg:flex-1 lg:ml-auto">
                                 <span class="span__element w-1/3">{{ product.name }}</span>
                                 <span class="span__element w-1/3 font-bold">${{ product.price }}</span>
                                 <span :class=" product.is_available === 1? 
                                     'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]' : 
                                     'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
-                                    class="w-[100px] rounded-md px-5  span__element shadow-md ">
+                                    class="w-[100px] h-8 rounded-md px-5  span__element shadow-md ">
                                     {{  product.is_available === 1? 'Available': 'Unavailable' }}
                                 </span>
                             </div>
@@ -42,7 +42,7 @@
                 <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-2xl font-bold text-[#025E7C]">Chemical Reading</h2>
                     <span class="span__element text-gray-500">List of available products</span>
-                    <div class="w-1/3 grid grid-cols-2 gap-3">
+                    <div class="lg:w-1/3 grid grid-cols-2 gap-3">
                         <div class="rounded-md flex gap-6 items-center lg:px-5" v-for="chem in availableChems" :key="chem.name">
                             <Checkbox 
                                 v-model="selectedProducts" 

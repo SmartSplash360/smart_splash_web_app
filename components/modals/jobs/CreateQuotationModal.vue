@@ -3,7 +3,7 @@
         class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-end bg-[#000000Aa]">
       <form
           @click.stop
-          class="overflow-auto flex min-h-[500px] flex-col gap-10 rounded-md bg-white p-8 lg:min-w-[550px] dark:bg-[#31353F] mr-14">
+          class="overflow-auto flex min-h-[500px] flex-col gap-10 rounded-md bg-white p-8 mx-auto lg:min-w-[550px] dark:bg-[#31353F] lg:mr-14">
         <div class="flex-between items-center">
           <h3 class="heading__h3 text-[#025E7C] font-bold">
           Create Quotation
