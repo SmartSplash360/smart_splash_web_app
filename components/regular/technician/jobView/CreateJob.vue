@@ -7,7 +7,7 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[300px] xl:min-w-[350px]">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Add Job</h2>
-                    <span class="span__element text-gray-500">Add new job</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">Add new job</span>
                 </div>
                 <div class="flex gap-2 sm:gap-5 lg:w-3/5">
                     <div class="flex w-1/2 lg:w-full flex-col gap-2">
@@ -46,7 +46,7 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Working schedule</h2>
-                    <span class="span__element text-gray-500">Pick a working schedule for the job</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">Pick a working schedule for the job</span>
                 </div>
                 <div class="flex flex-col lg:w-3/5 gap-2">
                     <div class="flex w-full flex-col gap-2">
@@ -102,7 +102,7 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Job status</h2>
-                    <span class="span__element text-gray-500">add more information to your job</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">add more information to your job</span>
                 </div>
                 <div class="flex flex-col lg:w-3/5 gap-8 pb-5 lg:pb-0">
                     <div class="flex w-full flex-col gap-2">
@@ -112,7 +112,7 @@
                             optionValue="value"
                             optionLabel="label"
                             placeholder="Select a status"
-                            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-500 dark:text-white w-full lg:flex-1"
+                            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-500 dark:text-gray-300 dark:text-white w-full lg:flex-1"
                             :class="errorStatus && 'border-red-300'"
                             @change="handleChangeStatus"/>
                         <p class="min-h-[20px]">
@@ -124,13 +124,13 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row border-b py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-3 sm:min-w-[290px] lg:min-w-[350px]">
                     <h2 class="text-xl font-bold text-[#025E7C]">Job descriptions and info</h2>
-                    <span class="span__element text-gray-500">add more information to your job</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">add more information to your job</span>
                 </div>
                 <div class="flex flex-col lg:w-3/5 gap-8 ">
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm" for="address"> Description* </label>
                         <Textarea
-                            type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500"
+                            type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500 dark:text-gray-300"
                             v-model="description"
                             rows="3"
                             cols="10"
@@ -144,7 +144,7 @@
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm" for="address"> Technical Notes* </label>
                         <Textarea
-                            type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500"
+                            type="text" class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500 dark:text-gray-300"
                             v-model="technical_notes"
                             rows="3"
                             cols="10"
@@ -160,9 +160,9 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
               <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Services</h2>
-                    <span class="span__element text-gray-500">List of available services</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">List of available services</span>
                     <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
-                        <div class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-md flex gap-20 items-center px-3 lg:px-5" v-for="service in services" :key="service.id">
+                        <div class="bg-[#d4ecf4] dark:bg-[#1B2028] hover:shadow-md py-5 rounded-md flex gap-20 items-center px-3 lg:px-5" v-for="service in services" :key="service.id">
                             <Checkbox 
                             v-model="selectedServices" 
                             :name="service.name" 

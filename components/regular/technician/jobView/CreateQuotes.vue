@@ -17,9 +17,9 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Products</h2>
-                    <span class="span__element text-gray-500">List of available products</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">List of available products</span>
                     <div class="overflow-auto max-h-[40vh] flex flex-col gap-3">
-                        <div class="bg-[#d4ecf4] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5" v-for="product in products" :key="product.id">
+                        <div class="bg-[#d4ecf4] dark:bg-[#1B2028] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5" v-for="product in products" :key="product.id">
                             <Checkbox 
                                 v-model="selectedProducts" 
                                 :name="product.name" 
@@ -43,7 +43,7 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
                 <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-2xl font-bold text-[#025E7C]">Chemical Reading</h2>
-                    <span class="span__element text-gray-500">List of available products</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">List of available products</span>
                     <div class="lg:w-1/3 grid grid-cols-2 gap-3">
                         <div class="rounded-md flex gap-6 items-center lg:px-5" v-for="chem in availableChems" :key="chem.name">
                             <Checkbox 
