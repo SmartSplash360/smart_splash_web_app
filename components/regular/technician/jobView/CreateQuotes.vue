@@ -6,10 +6,12 @@
             </div>
             <ModalsJobsCreateQuotationModal
                 v-if="showQuotationModal"
-                :customerEmail="customerEmail"
+                :customerDetails="customerDetails"
                 :totalPriceServices="totalPriceServices"
+                :totalPriceProducts="totalPriceProducts"
+                :totalPriceChems="totalPriceChems"
+                :newJobPayload="newJobPayload"
                 :toggleJobQuoteModal="toggleJobQuoteModal"
-                :toggleSentQuote="toggleSentQuote"
                 :createJob="createJob"
             ></ModalsJobsCreateQuotationModal>
             <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
@@ -19,10 +21,10 @@
                     <div class="overflow-auto max-h-[40vh] flex flex-col gap-3">
                         <div class="bg-[#d4ecf4] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5" v-for="product in products" :key="product.id">
                             <Checkbox 
-                            v-model="selectedProducts" 
-                            :name="product.name" 
-                            :value="product" 
-                            :disabled="product.is_available === 0 "
+                                v-model="selectedProducts" 
+                                :name="product.name" 
+                                :value="product" 
+                                :disabled="product.is_available === 0 "
                             />
                             <div class="flex justify-between lg:flex-1 lg:ml-auto">
                                 <span class="span__element w-1/3">{{ product.name }}</span>
@@ -45,9 +47,9 @@
                     <div class="lg:w-1/3 grid grid-cols-2 gap-3">
                         <div class="rounded-md flex gap-6 items-center lg:px-5" v-for="chem in availableChems" :key="chem.name">
                             <Checkbox 
-                                v-model="selectedProducts" 
+                                v-model="selectedChems" 
                                 :name="chem.name" 
-                                :value="chem.name" 
+                                :value="chem" 
                                 />
                             <label class="span__element text-[#025E7C]">{{ chem.name }}</label>
                         </div>
@@ -74,20 +76,13 @@
   </template>
 
 
-  <script setup>
+<script setup>
 import {useCustomerStore} from "~/stores/customer";
-import {useJobStore} from "~/stores/jobs";
 import {useProductStore} from "~/stores/products";
-import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
-import { useServiceStore } from '~/stores/services'
 
-const serviceStore = useServiceStore();
 const productStore = useProductStore();
-const jobStore = useJobStore();
 const customerStore = useCustomerStore();
-const bodyOfWaterStore = useBodyOfWaterStore();
 
-const router = useRouter()
 
 const props = defineProps({
   technicianId: String | Number,
@@ -98,16 +93,13 @@ const props = defineProps({
   createJob : Function 
 });
 
-const customerEmail = ref();
-const poolId = ref();
-const customerId = ref();
-const selectedChems = ref();
-const bodiesOfWater = ref([]);
-const services = ref([]);
-const selectedServices = ref([])
+const customerDetails = ref();
 const products = ref([]);
 const selectedProducts = ref([]);
-const showQuotationModal = ref(false)
+const showQuotationModal = ref(false);
+const totalPriceProducts = ref(0);
+const totalPriceChems = ref(0);
+const selectedChems = ref([]);
 const availableChems = ref([
     { name : 'Chlorine', price : 10},
     { name : 'CYA', price : 23},
@@ -115,37 +107,23 @@ const availableChems = ref([
     {name : 'Salt', price : 14}, 
     { name : 'Alkalinity', price : 11}
 ]);
-const sendQuote = ref(false);
 
-const customers = computed(() => customerStore.getCustomers);
 
 onMounted(async () => {
-  // get drop down data
-  const customer = await customerStore.getCustomerById(props.newJobPayload.customer_id);
-  customerEmail.value = customer.email;
-
-  await bodyOfWaterStore.fetchBodiesOfWaters();
-  services.value =  await serviceStore.getServices;
-  products.value = await productStore.getProducts;
-
-  if (props.job) {
-    let customer = customerStore.getCustomerById(props.job.customer_id);
-    bodiesOfWater.value = customer?.bodies_of_water
-    poolId.value = props.job.pool_id
-    customerId.value = props.job.customer_id
-  }
+    products.value = await productStore.getProducts;
+    customerDetails.value = await customerStore.getCustomerById(props.newJobPayload.customer_id);
 })
 
 const toggleJobQuoteModal = () => showQuotationModal.value = !showQuotationModal.value;
 
-const toggleSentQuote = () => {
-    sendQuote.value = true
-}
-
 const handleSubmit = () => {
-    showQuotationModal.value = !showQuotationModal.value;
-
-    
+    selectedProducts.value?.forEach(product => {
+        totalPriceProducts.value += product.price
+    })
+    selectedChems.value?.forEach(chem => {
+        totalPriceChems.value += chem.price;
+    })
+    showQuotationModal.value = !showQuotationModal.value;    
 }
 
 

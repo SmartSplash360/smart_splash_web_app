@@ -38,12 +38,14 @@ const jobStore = useJobStore();
 const currentStep = ref(0);
 const newJobPayload = ref();
 const selectedServices = ref();
-const totalPriceServices = ref()
+const totalPriceServices = ref(0)
 
 const handleNextStep = (jobPayload, servicesPayload) => {
   newJobPayload.value = jobPayload;
   selectedServices.value = servicesPayload
-  totalPriceServices.value = servicesPayload.reduce((accumulator, service) => accumulator + service.price)
+  servicesPayload.forEach(service => {
+    totalPriceServices.value += service.price;
+  })
   currentStep.value = currentStep.value + 1;
 }
 const handlePreviousStep = () => {
