@@ -90,36 +90,24 @@
             <div class="flex-between w-full dark:text-white">
               <span class="flex-1 paragraph__p">{{ alert.alert_type?.name }}</span>
               <span class="flex-1 paragraph__p">{{ alert.body_of_water?.customer?.name  }}</span>
-              <span> <font-awesome-icon icon="ellipsis-vertical" /></span>
-              <span> <font-awesome-icon icon="ellipsis-vertical" /></span>
+              <span class="flex"> 
+                <font-awesome-icon icon="ellipsis-vertical" /> 
+                <font-awesome-icon icon="ellipsis-vertical" />
+              </span>
             </div>
           </template>
           <div class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028]">
             <div class="flex-between px-4 py-2">
-              <span class="text-gray-500 dark:text-gray-400 span__element flex-1">Address</span>
+              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Address</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.body_of_water?.customer?.address[0]?.address_line1 }}</span>
             </div>
             <div class="flex-between px-4 py-2">
-              <span class="text-gray-500 dark:text-gray-400 span__element flex-1">Pool name</span>
+              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Pool name</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.alert_type?.name}}</span>
             </div>
             <div class="flex-between px-4 py-2">
-              <span class="text-gray-500 dark:text-gray-400 span__element flex-1">Technician Responsible</span>
+              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Technician Responsible</span>
               <span class="text-xs flex-1 flex justify-start">{{alert.technician?.name }}</span>
-            </div>
-            <div class="flex justify-end px-4 py-2 gap-2">
-              <Button
-                icon="pi pi-pencil"
-                text raised rounded
-                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="editItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
-            />
-            <Button
-                icon="pi pi-trash"
-                text raised rounded
-                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="deleteAlert(alert?.id)"
-            />
             </div>
             <div class="flex justify-end px-4 py-2 gap-2">
               <Button

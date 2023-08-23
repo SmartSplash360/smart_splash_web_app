@@ -231,18 +231,19 @@ const validateForm = () => {
 const createAlert = async () => {
     if (validateForm()) {
         try {
-        await alertStore.createAlert({
-            status: status.value,
-            priority: priority.value,
-            date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
-            notes: notes.value,
-            alert_type_id: alertTypeId.value,
-            body_of_water_id: bodyOfWaterId.value,
-            technician_id: technicianId.value
-        });
-        await alertStore.fetchAlerts();
-        toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 5000 });
-        router.push('/alerts');
+            await alertStore.createAlert({
+                status: status.value,
+                priority: priority.value,
+                date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
+                notes: notes.value,
+                alert_type_id: alertTypeId.value,
+                body_of_water_id: bodyOfWaterId.value,
+                technician_id: technicianId.value
+            });
+            
+            await alertStore.fetchAlerts();
+            toast.add({ severity: 'success', summary: 'Alerts', detail: 'Alert created successfully', life: 5000 });
+            router.push('/alerts');
 
         } catch (error) {
             toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });

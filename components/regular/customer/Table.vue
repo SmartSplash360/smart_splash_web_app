@@ -106,7 +106,7 @@
     </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] mx-5 -mt-8 rounded-t-xl border">
-      <div class="flex-between py-1 px-2">
+      <div class="flex-between py-4 px-2">
         <div class="flex-center gap-2 px-2 cursor-pointer" @click="handleSort">
           <img :src="SortIcon" alt="sort-icon">
           <span class="span__element">Sort By Name</span>

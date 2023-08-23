@@ -13,9 +13,9 @@
           <label class="span__element text-sm" for="name"> Name* </label>
           <InputText 
             type="text" 
+            v-model="name"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             :class="errorName && 'border-red-300'" 
-            v-model="name"
             @blur="handleChangeName">
           </InputText>
           <p class="min-h-[20px]">
@@ -26,9 +26,9 @@
           <label class="span__element text-sm" for="name"> Surname* </label>
           <InputText 
             type="text" 
+            v-model="surname"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             :class="errorSurname && 'border-red-300'" 
-            v-model="surname"
             @blur="handleChangeSurname">
           </InputText>
           <p class="min-h-[20px]">
@@ -41,9 +41,9 @@
           <label class="span__element text-sm" for="email address"> Email address* </label>
           <InputText 
             type="email" 
+            v-model="email"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             :class="errorEmail && 'border-red-300'" 
-            v-model="email"
             @blur="handleChangeEmail">
           </InputText>
           <p class="min-h-[20px]">
@@ -55,8 +55,8 @@
           <InputText 
             type="text" 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="errorPhoneNumber && 'border-red-300'" 
             v-model="phoneNumber"
+            :class="errorPhoneNumber && 'border-red-300'" 
             @blur="handleChangePhoneNumber"
             ></InputText>
           <p class="min-h-[20px]">
@@ -69,9 +69,9 @@
           <label class="span__element text-sm" for="name"> Password* </label>
           <InputText 
             type="password" 
+            v-model="password"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
             :class="errorPassword && 'border-red-300'"  
-            v-model="password"
             @blur="handleChangePassword">
           </InputText>
           <p class="min-h-[20px]">
@@ -82,9 +82,9 @@
           <label class="span__element text-sm" for="name"> Password Confirmation* </label>
           <InputText 
             type="password" 
+            v-model="passwordConfirmation"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
             :class="errorPassword && 'border-red-300'" 
-            v-model="passwordConfirmation"
             @blur="handleChangePasswordMatching">
           </InputText>
           <p class="min-h-[20px]">
@@ -114,12 +114,12 @@
 <script setup lang="ts">
 import {useCustomerStore} from "~/stores/customer";
 
-const store = useCustomerStore();
-
 const { toggleAddCustomerModal, customer } = defineProps([
   'toggleAddCustomerModal',
   'customer'
 ]);
+
+const store = useCustomerStore();
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
@@ -137,7 +137,14 @@ const errorEmail = ref('');
 const errorPhoneNumber = ref('');
 const errorPassword = ref('');
 
-
+onMounted(() => {
+  if (customer) {
+    name.value = customer.name
+    surname.value = customer.surname
+    email.value = customer.email
+    phoneNumber.value = customer.phone_number
+  }
+})
 
 const handleChangeName = () => {
   errorName.value = name.value ? '' :'The name field is required'; 
@@ -154,20 +161,9 @@ const handleChangePhoneNumber = () => {
 const handleChangePassword = () => {
   errorPassword.value = !password.value ? 'Please provide a password' : '';
 };
-
 const handleChangePasswordMatching = () => {
   errorPassword.value = passwordConfirmation.value ? (password.value !== passwordConfirmation.value ? 'Please provide matching password' : ''): 'The password fields are required'
 }
-
-
-onMounted(() => {
-  if (customer) {
-    name.value = customer.name
-    surname.value = customer.surname
-    email.value = customer.email
-    phoneNumber.value = customer.phone_number
-  }
-})
 
 const validateForm = () => {
   handleChangeName();
