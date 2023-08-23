@@ -1,7 +1,7 @@
-  <template>
-    <ContainerReportQuotes
+<template>
+    <ContainerReportEditQuote
     :loading="loading">  
-    </ContainerReportQuotes>
+    </ContainerReportEditQuote>
   </template>
   
   <script setup>

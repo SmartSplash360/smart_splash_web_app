@@ -6179,4 +6179,15 @@
 .p-calendar .p-inputtext {
     border-radius: 0.375rem;
     border-color: #D1D5DB;
+    background-color: inherit;
+}
+
+.p-inputnumber-input {
+    border-radius: 0.375rem;
+    border-color: #D1D5DB;
+    background-color: inherit;
+}
+
+.create-job-accordion .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    display: none;
 }

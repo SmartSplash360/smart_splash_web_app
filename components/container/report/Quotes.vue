@@ -25,7 +25,7 @@
                 <div class="w-full flex justify-between">
                     <div class="flex flex-col">
                         <span class="span__element">{{ invoice.client }}</span>
-                        <span class="span__element text-gray-400">{{  invoice.number }}</span>
+                        <span class="span__element text-gray-400">#{{  invoice.number }}</span>
                     </div>
                     <div class="flex items-center text-[#3B7DDF] w-32">
                         <span 
@@ -64,7 +64,7 @@
                 </div>
                 <div class="flex justify-end xl:justify-between gap-5 xl:w-1/6">
                     <span class="span__element text-[#5B7CFF] cursor-pointer" @click="toggleJobQuoteModal({invoice, readOnlyValue : true})">View Quote</span>
-                    <span class="span__element text-[#5B7CFF] cursor-pointer"  @click="toggleJobQuoteModal({invoice, readOnlyValue : false})">Edit Quote</span>
+                    <nuxt-link class="span__element text-[#5B7CFF] cursor-pointer" :to="`/reports/quotes/${invoice.number}`">Edit Quote</nuxt-link>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
   const totalPriceChems = ref(205);
   const invoices = ref([
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,
@@ -92,7 +92,7 @@
         technician : 'Evans King'
     },
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,
@@ -101,7 +101,7 @@
         technician : 'Evans King'
     },
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,
@@ -110,7 +110,7 @@
         technician : 'Evans King'
     },
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,
@@ -119,7 +119,7 @@
         technician : 'Evans King'
     },
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,
@@ -128,7 +128,7 @@
         technician : 'Evans King'
     },
     { 
-        number : '#B375e1728', 
+        number : 'B375e1728', 
         date : 'August 18, 2023',
         client : 'A.J.Beson', 
         amount : 125.00,

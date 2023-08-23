@@ -160,25 +160,47 @@
             <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
               <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b pb-5">
                     <h2 class="text-3xl font-bold text-[#025E7C]">Services</h2>
-                    <span class="span__element text-gray-500 dark:text-gray-300">List of available services</span>
+                    <span class="span__element text-gray-500 dark:text-gray-300">Pick services needed for the job</span>
                     <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
-                        <div class="bg-[#d4ecf4] dark:bg-[#1B2028] hover:shadow-md py-5 rounded-md flex gap-20 items-center px-3 lg:px-5" v-for="service in services" :key="service.id">
-                            <Checkbox 
-                            v-model="selectedServices" 
-                            :name="service.name" 
-                            :value="service" 
-                            :disabled="service.is_available === 0 "
-                            />
-                            <div class="flex justify-between flex-1 ml-auto">
-                                <span class="span__element w-1/3">{{ service.name }}</span>
-                                <span class="span__element w-1/3 font-bold">${{ service.price }}</span>
-                                <span :class="service.is_available === 1 ? 
-                                    'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]' : 
-                                    'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
-                                    class="w-[100px] rounded-md px-5  span__element shadow-md ">
-                                    {{ service.is_available === 1 ? 'Available': 'Unavailable' }}
-                                </span>
-                            </div>
+                        <div class="create-job-accordion">
+                            <Accordion v-model:activeIndex="active">
+                                <AccordionTab v-for="service in services" :key="service.id">
+                                    <template #header>
+                                        <div class="flex gap-5 text-gray-600 dark:text-gray-200">
+                                            <span class="flex">
+                                                <i class="pi pi-ellipsis-v ml-2"></i>
+                                                <i class="pi pi-ellipsis-v -ml-2"></i>
+                                            </span>
+                                            <div class="flex items-center gap-3">
+                                                <span>{{service.name}} </span>
+                                                <i class="pi pi-chevron-right text-xs"></i>
+                                                <!-- <i class="pi pi-chevron-down text-xs"></i> -->
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <div class="flex justify-between pl-5">
+                                        <div class="flex items-center gap-4">
+                                            <Checkbox 
+                                                v-model="selectedServices" 
+                                                :name="service.name" 
+                                                :value="service" 
+                                                :disabled="service.is_available === 0 "
+                                            />
+                                            <span class="span__element w-1/3">{{ service.name }}</span>
+                                        </div>
+                                        <span class="span__element w-1/3 font-bold">Price : ${{ service.price }}</span>
+                                        <span :class="service.is_available === 1 ? 
+                                            'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]' : 
+                                            'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'"
+                                            class="w-[100px] rounded-md px-5  span__element shadow-md ">
+                                            {{ service.is_available === 1 ? 'Available': 'Unavailable' }}
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-end pl-5 mt-10 border-t pt-5">
+                                        <span class="span__element text-gray-500">Subtotal : ${{ service.price }}</span>
+                                    </div>
+                                </AccordionTab>
+                            </Accordion>
                         </div>
                     </div>
                 </div>
@@ -221,6 +243,7 @@ const props = defineProps({
   loading : Boolean,
 });
 
+const active = ref(0)
 const poolId = ref();
 const customerId = ref();
 const startTime = ref();
