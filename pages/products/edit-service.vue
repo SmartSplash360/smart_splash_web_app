@@ -52,55 +52,84 @@
   </form>
   </template>
   
-  <script setup>
-  import {useServiceStore} from "~/stores/services";
-  definePageMeta({
-    layout: "dashboard",
-    middleware: ['auth','auto-theme'],
-    });
+<script setup>
+import { useToast } from "primevue/usetoast";
+import {useServiceStore} from "~/stores/services";
+
+definePageMeta({
+  layout: "dashboard",
+  middleware: ['auth','auto-theme'],
+});
   
-  const serviceStore = useServiceStore();  
-  const router = useRouter()
-  const route = useRoute();
-  const serviceId = route.query.serviceId;
+const serviceStore = useServiceStore();  
+const router = useRouter()
+const route = useRoute();
+const toast = useToast();
+const serviceId = route.query.serviceId;
+
+const isAvailable = ref(true);
+const notes = ref("");
+const name = ref("");
+const description = ref("");
+const price = ref(1.00);
+const loading = ref(true);
+
+const errorName = ref("");
+const errorNotes = ref("");
+const errorDescription = ref("");
+const errorPrice = ref("");
   
-  const isAvailable = ref(true);
-  const notes = ref("");
-  const name = ref("");
-  const description = ref("");
-  const price = ref(1.00);
-  const loading = ref(true)
-  
-  onMounted(async () => {
-    const service = await serviceStore.fetchService(serviceId)
-      isAvailable.value = service.is_available === 1;
-      notes.value = service.notes;
-      name.value = service.name;
-      description.value = service.description;
-      price.value = service.price;
-      loading.value= false
-  })
+onMounted(async () => {
+  const service = await serviceStore.fetchService(serviceId)
+    isAvailable.value = service.is_available === 1;
+    notes.value = service.notes;
+    name.value = service.name;
+    description.value = service.description;
+    price.value = service.price;
+    loading.value= false
+})
+
+const handleChangeName = () => {
+  errorName.value = name.value ? '' : 'The name field is required';
+};
+const handleChangeDescription = () => {
+  errorDescription.value = description.value ? (description.value.length > 300 ? 'Please enter between 10 and 300 characters' : '') : 'The description field is required';
+};
+const handleChangePrice = () => {
+  errorPrice.value = price.value ? '' : 'The price field is required';
+};
+const handleChangeNote = () => {
+  errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
+};
+const validateForm = () => {
+  handleChangeName();
+  handleChangeDescription();
+  handleChangePrice();
+  handleChangeNote();
+  return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
+};
   
   const updateService = async () => {
-    // TODO: validation
-    try {
-      const data = {
-        name: name.value,
-        description: description.value,
-        price: price.value,
-        notes: notes.value,
-        is_available: isAvailable.value,
-      };
-  
-      await serviceStore.updateService(serviceId, data);
-      await serviceStore.fetchServices();
-  
-      
-    } catch (e) {
+    if (validateForm()) {
+      try {
+        const data = {
+          name: name.value,
+          description: description.value,
+          price: price.value,
+          notes: notes.value,
+          is_available: isAvailable.value,
+        };
+        await serviceStore.updateService(serviceId, data);
+        await serviceStore.fetchServices();
+        toast.add({ severity: 'success', summary: 'Service', detail: 'Service edited successfully', life: 5000 });
+          router.push('/products');
+      } catch (error) {
+        toast.add({ severity: 'error', summary: 'Service', detail: `An error has occurred: ${error}`, life: 5000 });
+      }
     }
   }
   const cancel = () => {
-        router.push('/products')
-    }
+      router.push('/products')
+  }
   </script>
   

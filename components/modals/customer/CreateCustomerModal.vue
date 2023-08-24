@@ -193,7 +193,8 @@ const createCustomer = async () => {
   } 
 }
 const updateCustomer = async () => {
-  try {
+  if(validateForm()){
+    try {
     const data = {
       name: name.value,
       surname: surname.value,
@@ -207,6 +208,7 @@ const updateCustomer = async () => {
     toggleAddCustomerModal({success: `Customer ${customer?.id} updated successfully`});
   } catch (e) {
     toggleAddCustomerModal({error: e});
+  }
   }
 }
 </script>

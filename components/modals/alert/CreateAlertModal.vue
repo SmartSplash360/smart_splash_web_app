@@ -267,23 +267,25 @@ const createAlert = async () => {
   }
 }
 const updateAlert = async () => {
-  try {
-    const data = {
-      status: status.value,
-      priority: priority.value,
-      date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
-      notes: notes.value,
-      alert_type_id: alertTypeId.value,
-      body_of_water_id: bodyOfWaterId.value,
-      technician_id: technicianId.value
-    };
+  if(validateForm()){
+    try {
+      const data = {
+        status: status.value,
+        priority: priority.value,
+        date_time: new Date(dateTime.value).toISOString().slice(0, 19).replace('T', ' '),
+        notes: notes.value,
+        alert_type_id: alertTypeId.value,
+        body_of_water_id: bodyOfWaterId.value,
+        technician_id: technicianId.value
+      };
 
-    await alertStore.updateAlert(alert?.id, data);
-    await alertStore.fetchAlerts();
+      await alertStore.updateAlert(alert?.id, data);
+      await alertStore.fetchAlerts();
 
-    toggleAddAlertModal({success: `Alert ${alert?.id} updated successfully`});
-  } catch (e) {
-    toggleAddAlertModal({error: e})
+      toggleAddAlertModal({success: `Alert ${alert?.id} updated successfully`});
+    } catch (e) {
+      toggleAddAlertModal({error: e})
+    }
   }
 }
 </script>

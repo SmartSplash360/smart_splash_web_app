@@ -107,19 +107,25 @@ const { toggleAddServiceModal, service } = defineProps([
 const serviceStore = useServiceStore();
 
 const isAvailable = ref(true);
-
 const notes = ref("");
-const errorNotes = ref("");
-
 const name = ref("");
-const errorName = ref("");
-
 const description = ref("");
-const errorDescription = ref("");
-
 const price = ref(1.00);
+
+const errorNotes = ref("");
+const errorName = ref("");
+const errorDescription = ref("");
 const errorPrice = ref("");
 
+onMounted(() => {
+  if (service) {
+    isAvailable.value = service.is_available === 1;
+    notes.value = service.notes;
+    name.value = service.name;
+    description.value = service.description;
+    price.value = service.price;
+  }
+})
 
 const handleChangeName = () => {
   errorName.value = name.value ? '' : 'The name field is required';
@@ -133,16 +139,6 @@ const handleChangePrice = () => {
 const handleChangeNote = () => {
   errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
 };
-
-onMounted(() => {
-  if (service) {
-    isAvailable.value = service.is_available === 1;
-    notes.value = service.notes;
-    name.value = service.name;
-    description.value = service.description;
-    price.value = service.price;
-  }
-})
 
 const validateForm = () => {
   handleChangeName();
@@ -168,9 +164,9 @@ const createService = async () => {
     }
   }
 }
-
 const updateService = async () => {
-  try {
+  if(validateForm()){
+    try {
     const data = {
       name: name.value,
       description: description.value,
@@ -185,6 +181,7 @@ const updateService = async () => {
     toggleAddServiceModal({success: `Service ${service?.id} updated successfully`});
   } catch (e) {
     toggleAddServiceModal({error: e})
+  }
   }
 }
 </script>
