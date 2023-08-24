@@ -12,10 +12,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Name* </label>
              <InputText 
+             type="text" 
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorName && 'border-red-300'" 
-              type="text" 
               v-model="name"
+              :class="errorName && 'border-red-300'" 
               @blur="handleChangeName">
             </InputText>          
             <p class="min-h-[20px]">
@@ -25,10 +25,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Surname* </label>
              <InputText 
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorSurname && 'border-red-300'" 
               type="text" 
               v-model="surname"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorSurname && 'border-red-300'" 
               @blur="handleChangeSurname">
             </InputText>
             <p class="min-h-[20px]">
@@ -40,10 +40,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="email address"> Email address* </label>
              <InputText 
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorEmail && 'border-red-300'" 
               type="email" 
               v-model="email"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorEmail && 'border-red-300'" 
               @blur="handleChangeEmail">
             </InputText>
             <p class="min-h-[20px]">
@@ -53,10 +53,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="cell number"> Cell number* </label>
              <InputText 
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorPhoneNumber && 'border-red-300'" 
               type="text" 
               v-model="phoneNumber"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPhoneNumber && 'border-red-300'" 
               @blur="handleChangePhoneNumber">
             </InputText>
             <p class="min-h-[20px]">
@@ -68,10 +68,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Password* </label>
              <InputText 
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorPassword && 'border-red-300'" 
               type="password" 
               v-model="password"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
+              :class="errorPassword && 'border-red-300'" 
               @blur="handleChangePassword">
             </InputText>
             <p class="min-h-[20px]">
@@ -81,10 +81,10 @@
           <div class="flex w-full flex-col gap-2">
             <label class="span__element" for="name"> Password Confirmation* </label>
              <InputText 
+               type="password" 
+              v-model="passwordConfirmation"
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
               :class="errorPassword && 'border-red-300'" 
-              type="password" 
-              v-model="passwordConfirmation"
               @blur="handleChangePasswordMatching">
             </InputText>
             <p class="min-h-[20px]">
