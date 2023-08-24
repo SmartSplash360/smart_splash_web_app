@@ -226,8 +226,7 @@ const menuList = [
                 let tabEl = serviceTab.querySelector(':scope > #pv_id_12_1_header_action')
                 console.log(tabEl)
                 // serviceTab.click() 
-                document.getElementById('add-service-button').click();
-                
+                document.getElementById('add-service-button').click()
           },3000)
         }
     },
@@ -245,6 +244,7 @@ const pageIcon = computed(() => {
   let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
   return sideBarLink?.icon ?? 'user-lock'
 })
+
 
 const onImageRightClick = (event) => {
   menu.value.show(event);
@@ -264,8 +264,3 @@ const signout = () =>  {
   });
 }
 </script>
-<style scoped>
-.menu {
-  background-color: red;
-}
-</style>
