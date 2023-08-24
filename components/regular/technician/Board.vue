@@ -25,6 +25,7 @@
       class="hover:shadow-xl lg:hidden"
     ></BaseAddButton>
     <BaseAddButton
+      :buttonId="'add-technician-button'"
       :btnText="'Technician'"
       @click="$emit('open-modal')"
       class="hidden lg:flex hover:shadow-xl"

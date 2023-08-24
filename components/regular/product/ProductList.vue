@@ -2,6 +2,7 @@
   <div class="hidden lg:flex  flex-col gap-10" >
     <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
+          :buttonId="'add-product-button'"
           :btnText="' Product'"
           @click="toggleAddProductModal"
           class="hover:shadow-xl"

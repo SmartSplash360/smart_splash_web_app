@@ -7,8 +7,10 @@
       <h1 class="heading__h3" >{{ pageName }}</h1>
     </div>
     <div class="ml-auto flex-between">
-      <!-- <BaseSearchBar :size="'lg'"></BaseSearchBar> -->
-      <div class="min-w-[300px] flex-between ml-14">
+      <div class="min-w-[400px] flex-between ml-14">
+        <div class="bg-[#0291BF] text-white rounded-md dark:bg-[#1B2028] dark:border-[#1B2028]">
+            <SplitButton  icon="pi pi-plus" :model="menuList" />
+        </div>
         <button
           v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
           @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
@@ -153,20 +155,16 @@ import {useUserStore} from "~/stores/users";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import { useConfirm } from "primevue/useconfirm";
 
-
-const route = useRoute();
-const confirm = useConfirm();
-
 defineProps({
   setColorTheme: Function,
 });
 
-const sideBarVisible = ref(false);
-
+const route = useRoute();
+const confirm = useConfirm();
 const userStore = useUserStore();
+const router = useRouter()
 
-const user = computed(() => userStore.getCurrentUser);
-
+const sideBarVisible = ref(false);
 const menu = ref();
 const items = ref([
   {
@@ -177,32 +175,86 @@ const items = ref([
   }
 ]);
 
-const onImageRightClick = (event) => {
-  menu.value.show(event);
-};
+const menuList = [
+    {
+        label: 'Alert',
+        icon: 'pi pi-exclamation-triangle',
+        command: () => {
+            router.push('/alerts');
+            setTimeout(() => {
+                document.getElementById('add-alert-button').click()
+            },3000)
+        }
+    },
+    {
+        label: 'Customer',
+        icon: 'pi pi-user',
+        command: () => {
+          router.push('/customers');
+          setTimeout(() => {
+            document.getElementById('add-customer-button').click()
+          },3000)
+        }
+    },
+    {
+        label: 'Technician',
+        icon: 'pi pi-briefcase',
+        command: () => {
+          router.push('/technicians');
+          setTimeout(() => {
+            document.getElementById('add-technician-button').click()
+          },3000)
+        }
+    },
+    {
+        label: 'Product',
+        icon: 'pi pi-box',
+        command: () => {
+          router.push('/products');
+          setTimeout(() => {
+             document.getElementById('add-product-button').click()
+          },3000)
+        }
+    },
+    {
+        label: 'Service',
+        icon: 'pi pi-wrench',
+        command: () => {
+          router.push('/products');
+          setTimeout(() => {
+                let serviceTab = document.querySelectorAll('.p-tabview-header')[1];
+                let tabEl = serviceTab.querySelector(':scope > #pv_id_12_1_header_action')
+                console.log(tabEl)
+                // serviceTab.click() 
+                document.getElementById('add-service-button').click();
+                
+          },3000)
+        }
+    },
+];
 
-const toggleSideBar = () => {
-  sideBarVisible.value = !sideBarVisible.value;
-};
 
+const user = computed(() => userStore.getCurrentUser);
 const pageName = computed(() => {
   let name = route.name;
   let routeName= name.split('-')[0]
   return routeName[0].toUpperCase() + routeName.slice(1);
 })
-
-
-
 const pageIcon = computed(() => {
   let name = route.name;
   let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
   return sideBarLink?.icon ?? 'user-lock'
 })
 
+const onImageRightClick = (event) => {
+  menu.value.show(event);
+};
+const toggleSideBar = () => {
+  sideBarVisible.value = !sideBarVisible.value;
+};
 const toggle = (event) => {
     menu.value.toggle(event);
 };
-
 const signout = () =>  {
   confirm.require({
     message: "Are you sure you want to logout?",
@@ -213,5 +265,7 @@ const signout = () =>  {
 }
 </script>
 <style scoped>
-
+.menu {
+  background-color: red;
+}
 </style>

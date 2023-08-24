@@ -9,6 +9,7 @@
       </RegularCustomerActivityInfo>
       <div class="flex-1 flex justify-end">
         <BaseAddButton
+          :buttonId="'add-customer-button'"
           :btnText="'Add Customer'"
           @click="toggleAddCustomerModal"
         ></BaseAddButton>

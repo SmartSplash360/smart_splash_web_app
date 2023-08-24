@@ -17,6 +17,7 @@ import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Badge from "primevue/badge";
 // import Editor from "primevue/editor";
+import SplitButton from 'primevue/splitbutton';
 import Steps from 'primevue/steps';
 import Chart from "primevue/chart";
 import Accordion from "primevue/accordion";
@@ -63,6 +64,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
   // nuxtApp.vueApp.component("Editor", Editor);
+  nuxtApp.vueApp.component("SplitButton", SplitButton);
   nuxtApp.vueApp.component("Dialog", Dialog);
   nuxtApp.vueApp.component("Steps", Steps);
   nuxtApp.vueApp.component("Chart", Chart);

@@ -2,6 +2,7 @@
   <div class="hidden lg:flex  flex-col gap-10">
     <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
+          :buttonId="'add-service-button'"
           :btnText="' Service'"
           @click="toggleAddServiceModal"
           class="hover:shadow-xl"
