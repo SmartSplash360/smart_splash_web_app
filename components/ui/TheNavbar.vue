@@ -183,7 +183,7 @@ const menuList = [
             router.push('/alerts');
             setTimeout(() => {
                 document.getElementById('add-alert-button').click()
-            },3000)
+            },2000)
         }
     },
     {
@@ -193,7 +193,7 @@ const menuList = [
           router.push('/customers');
           setTimeout(() => {
             document.getElementById('add-customer-button').click()
-          },3000)
+          },2000)
         }
     },
     {
@@ -203,7 +203,7 @@ const menuList = [
           router.push('/technicians');
           setTimeout(() => {
             document.getElementById('add-technician-button').click()
-          },3000)
+          },2000)
         }
     },
     {
@@ -213,7 +213,7 @@ const menuList = [
           router.push('/products');
           setTimeout(() => {
              document.getElementById('add-product-button').click()
-          },3000)
+          },2000)
         }
     },
     {
@@ -227,7 +227,21 @@ const menuList = [
                 console.log(tabEl)
                 // serviceTab.click() 
                 document.getElementById('add-service-button').click()
-          },3000)
+          },2000)
+        }
+    },
+    {
+        label: 'Job',
+        icon: 'pi pi-setting',
+        command: () => {
+          router.push('/');
+          setTimeout(() => {
+                let serviceTab = document.querySelectorAll('.p-tabview-header')[1];
+                let tabEl = serviceTab.querySelector(':scope > #pv_id_12_1_header_action')
+                console.log(tabEl)
+                // serviceTab.click() 
+                document.getElementById('add-service-button').click()
+          },2000)
         }
     },
 ];
