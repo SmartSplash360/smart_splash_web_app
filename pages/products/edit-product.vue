@@ -138,7 +138,6 @@ const handleChangePrice = () => {
 const handleChangeNote = () => {
   errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
 };
-
 const validateForm = () => {
   handleChangeName();
   handleChangeDescription();
@@ -146,7 +145,6 @@ const validateForm = () => {
   handleChangeNote();
   return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
 };
-
 const updateProduct = async () => {
   if (validateForm()) {
     try {
