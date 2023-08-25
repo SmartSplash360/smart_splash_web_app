@@ -13,8 +13,7 @@
     ></ModalsTechnicianCreateTechnician>
     <div
         class="card-container grid items-center justify-between gap-x-5 gap-y-10"
-        v-if="technicians.length > 0"
-    >
+        v-if="technicians.length > 0">
       <RegularTechnicianCard v-for="technician in technicians"
         :key="technician.id"
         :technician="technician"
@@ -25,8 +24,6 @@
     <div class="flex-center " v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
-    <!-- <Toast/> -->
-    <!-- <ConfirmDialog></ConfirmDialog> -->
   </section>
 </template>
 

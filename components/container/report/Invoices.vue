@@ -42,7 +42,10 @@
                 />
             </div>
             <div class="flex flex-col gap-4">
-                <div class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-lg grid grid-cols-3 gap-2 lg:flex justify-between items-center px-3 lg:px-5" v-for="invoice in invoices">
+                <div 
+                    class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-lg grid grid-cols-3 gap-2 lg:flex justify-between items-center px-3 lg:px-5" 
+                    v-for="invoice in invoices"
+                    :key="invoice.number">
                     <span class="span__element">{{  invoice.number }}</span>
                     <span class="span__element">{{ invoice.date }}</span>
                     <span class="span__element">{{ invoice.client }}</span>

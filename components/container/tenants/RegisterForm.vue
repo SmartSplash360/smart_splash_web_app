@@ -11,24 +11,44 @@
       <div class="w-full lg:w-5/6 flex flex-col gap-6">
         <h3 class="heading__h3 font-bold py-4">Create a Compagnie</h3>
         <span class="p-float-label">
-            <InputText id="email" v-model="email" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+            <InputText 
+              id="email" 
+              v-model="email"
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            />
             <label for="email">Email</label>
         </span>
         <span class="p-float-label">
-            <InputText id="phone" v-model="phone" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+            <InputText 
+              id="phone" 
+              v-model="phone" 
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              />
             <label for="phone">Phone</label>
         </span>
         <span class="p-float-label">
-            <InputText id="name" v-model="name" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+            <InputText 
+              id="name" 
+              v-model="name" 
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            />
             <label for="name">Name</label>
         </span>
         <span class="p-float-label">
-            <InputText id="website" v-model="website" class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"/>
+            <InputText 
+              id="website" 
+              v-model="website" 
+              class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            />
             <label for="website">Website</label>
         </span>
      </div>
       <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
-        <Button @click="registerTenant()" label="Create a Tenant Account" class="w-full bg-[#0291BF] text-white"/>
+        <Button 
+          @click="registerTenant()" 
+          label="Create a Tenant Account" 
+          class="w-full bg-[#0291BF] text-white"
+        />
       </div>
     </form>
   </template>
@@ -37,7 +57,6 @@
   import SmartPlashLogo from "@/assets/images/SmartSplash.png";
   import InputText from 'primevue/inputtext';
   import Button from 'primevue/button';
-  
   import { useTenantStore } from "~/stores/tenants";
   import {useCustomerStore} from "~/stores/customer";
   import {useLeadStore} from "~/stores/leads";

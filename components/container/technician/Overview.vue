@@ -31,7 +31,10 @@
           class="flex hover:shadow-xl w-32 justify-center"
         ></BaseAddButton>
         <nuxt-link href="/reports">
-          <Button label="View Reports" class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"/>
+          <Button 
+            label="View Reports" 
+            class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"
+          />
         </nuxt-link>
       </div>
     </div>
