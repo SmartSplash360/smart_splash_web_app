@@ -22,7 +22,7 @@
 
     <div class="flex-1 xl:-mt-14 ">
       <ul class="flex flex-col gap-5 text-white">
-        <li v-for="link in sideBarLinks">
+        <li v-for="link in sideBarLinks" :key="link.name">
           <nuxt-link
             :to="link.to"
             :class="[$colorMode.value == 'dark' && 'dark-router-link-active']"

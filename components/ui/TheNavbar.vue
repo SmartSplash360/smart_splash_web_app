@@ -125,7 +125,7 @@
     </div>
       <div v-if="sideBarVisible">
       <ul class="flex flex-col gap-2 text-white">
-        <li v-for="link in sideBarLinks" @click="toggleSideBar">
+        <li v-for="link in sideBarLinks" @click="toggleSideBar" :key="link.name">
           <nuxt-link
               :to="link?.to"
               class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
@@ -235,6 +235,20 @@ const menuList = [
         icon: 'pi pi-user',
         command: () => {
           router.push('/jobs/create-technician-job');
+        }
+    },
+        {
+        label: 'Quotes',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          router.push('/reports/quotes');
+        }
+    },
+        {
+        label: 'Invoices',
+        icon: 'pi pi-file',
+        command: () => {
+          router.push('/reports/invoices');
         }
     },
 ];
