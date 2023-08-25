@@ -232,16 +232,9 @@ const menuList = [
     },
     {
         label: 'Job',
-        icon: 'pi pi-setting',
+        icon: 'pi pi-user',
         command: () => {
-          router.push('/');
-          setTimeout(() => {
-                let serviceTab = document.querySelectorAll('.p-tabview-header')[1];
-                let tabEl = serviceTab.querySelector(':scope > #pv_id_12_1_header_action')
-                console.log(tabEl)
-                // serviceTab.click() 
-                document.getElementById('add-service-button').click()
-          },2000)
+          router.push('/jobs/create-technician-job');
         }
     },
 ];

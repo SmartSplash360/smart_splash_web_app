@@ -12,6 +12,6 @@
   });
 
   const router = useRoute();
-  const technicianId = router.params.technicianId
+  const technicianId = router?.query.technicianId
 </script>
   

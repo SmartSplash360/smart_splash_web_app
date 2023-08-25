@@ -10,6 +10,21 @@
                     <span class="span__element text-gray-500 dark:text-gray-300">Add new job</span>
                 </div>
                 <div class="flex gap-2 sm:gap-5 lg:w-3/5">
+                    <div v-if="!technicianId" class="flex w-1/2 lg:w-full flex-col gap-2">
+                        <Dropdown
+                            v-model="selectedTechnician"
+                            :options="technicians"
+                            optionValue="id"
+                            optionLabel="name"
+                            placeholder="Choose technician"
+                            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full text-gray-600"
+                            :class="errorTechnician && 'border-red-300'"
+                            @change="handleChangeTechnician"
+                        />
+                        <p class="min-h-[20px]">
+                            <span v-show="errorTechnician" class="text-[#D42F24] text-xs">{{ errorTechnician }}</span>
+                        </p>
+                    </div>
                     <div class="flex w-1/2 lg:w-full flex-col gap-2">
                         <Dropdown
                             v-model="customerId"
@@ -226,14 +241,14 @@
 
 <script setup>
 import {useCustomerStore} from "~/stores/customer";
-import {useProductStore} from "~/stores/products";
 import {useBodyOfWaterStore} from "~/stores/bodyOfWater";
 import { useServiceStore } from '~/stores/services'
+import { useTechnicianStore } from '~/stores/technician'
 
 const serviceStore = useServiceStore();
-const productStore = useProductStore();
 const customerStore = useCustomerStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
+const technicianStore = useTechnicianStore();
 
 const router = useRouter()
 
@@ -256,6 +271,9 @@ const status = ref('');
 const description = ref('');
 const technical_notes = ref('');
 
+const technicians = ref(null);
+const selectedTechnician = ref()
+
 const dateTime = ref(null);
 const minDate = ref(new Date());
 const maxDate = ref(new Date());
@@ -275,6 +293,7 @@ minDate.value.setFullYear(prevYear);
 maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
 
+const errorTechnician = ref("");
 const errorCustomer = ref("");
 const errorPool = ref("");
 const errorStartDate = ref("");
@@ -293,22 +312,21 @@ const statuses = ref([
   {value: 'completed', label: 'Completed'},
   {value: 'cancelled', label: 'Cancelled'}
 ])
-
-const customers = computed(() => customerStore.getCustomers)
-const bodiesOfWater = ref([]);
-
 const services = ref([]);
 const selectedServices = ref([])
+const bodiesOfWater = ref([]);
 
-const products = ref([]);
-const selectedProducts = ref([]);
+
+const customers = computed(() => customerStore.getCustomers)
+
+
 
 onMounted(async () => {
   // get drop down data
   await customerStore.fetchCustomers()
   await bodyOfWaterStore.fetchBodiesOfWaters();
   services.value =  await serviceStore.getServices;
-  products.value = await productStore.getProducts;
+  technicians.value = await technicianStore.getTechnicians;
 
   if (props.job) {
     let customer = customerStore.getCustomerById(props.job.customer_id);
@@ -323,6 +341,10 @@ onMounted(async () => {
   }
 })
 
+const handleChangeTechnician = () => {
+    console.log(selectedTechnician.value)
+    errorTechnician.value = selectedTechnician.value ? '' : 'Please select a technician';
+};
 const handleChangeCustomer = () => {
   errorCustomer.value = customerId.value ? '' : 'Please select a customer';
   if(customerId.value){
@@ -407,21 +429,34 @@ function compareTimes(time1, time2) {
 }
 
 const validateForm = () => {
-  handleChangeCustomer();
-  handleChangePool();
-  handleChangeStartDate();
-  handleChangeStartTime();
-  handleChangeEndTime();
-  handleChangeStatus();
-  handleChangeSDescription();
-  handleChangeNote();
-  return !errorCustomer.value && !errorPool.value && !errorStartDate.value && !errorStartTime.value && !errorEndTime.value && !errorStatus.value &&  !errorDescription.value &&  !errorNotes.value;
+    if(!props.technicianId){
+        handleChangeTechnician()
+    }
+    handleChangeCustomer();
+    handleChangePool();
+    handleChangeStartDate();
+    handleChangeStartTime();
+    handleChangeEndTime();
+    handleChangeStatus();
+    handleChangeSDescription();
+    handleChangeNote();
+
+    let checkedValue = !errorCustomer.value 
+        && !errorPool.value 
+        && !errorStartDate.value 
+        && !errorStartTime.value 
+        && !errorEndTime.value
+        && !errorStatus.value 
+        &&  !errorDescription.value 
+        &&  !errorNotes.value
+
+    return props.technicianId ? checkedValue : checkedValue && !errorTechnician.value
 };
 
 const handleMoveToNextStep = () => {
   if(validateForm()){
         const newJob = {
-            technician_id: props.technicianId,
+            technician_id: props.technicianId ? props.technicianId : selectedTechnician.value,
             pool_id: poolId.value,
             customer_id: customerId.value,
             start_time: startingTimeComputed.value,

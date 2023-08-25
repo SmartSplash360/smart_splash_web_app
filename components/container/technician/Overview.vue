@@ -164,7 +164,10 @@ const deleteItem = async ({id}) => {
   })
 }
 const handleAddJob = () => {
-  router.push(`/technicians/${props.technicianId}/create-technician-job`)
+  router.push({ 
+    path : '/jobs/create-technician-job', 
+    query : { technicianId : props.technicianId}
+  })
 }
 </script>
 
