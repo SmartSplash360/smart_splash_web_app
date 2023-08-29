@@ -9,9 +9,9 @@
             <label class="span__element" for="name"> Name* </label>
             <InputText 
               type="text" 
+              v-model="name"
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
               :class="errorName && 'border-red-300'" 
-              v-model="name"
               @blur="handleChangeName">
             </InputText>
             <p class="min-h-[20px]">
@@ -100,15 +100,13 @@ const productStore = useProductStore();
 const isAvailable = ref(true);
 
 const notes = ref("");
-const errorNotes = ref("");
-
 const name = ref("");
-const errorName = ref("");
-
 const description = ref("");
-const errorDescription = ref("");
-
 const price = ref(1.00);
+
+const errorName = ref("");
+const errorNotes = ref("");
+const errorDescription = ref("");
 const errorPrice = ref("");
 
 
@@ -162,6 +160,7 @@ const createProduct = async () => {
 };
 
 const updateProduct = async () => {
+if(validateForm()){
   try {
     const data = {
       name: name.value,
@@ -178,5 +177,6 @@ const updateProduct = async () => {
   } catch (e) {
     toggleAddProductModal({error: e})
   }
+}
 }
 </script>

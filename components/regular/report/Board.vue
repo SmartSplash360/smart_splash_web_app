@@ -14,27 +14,27 @@
         :toggleJobModal="toggleJobModal"
       ></ModalsReportJobModal>
 
-      <div
-        @click="toggleQuoteModal"
+      <!-- @click="toggleQuoteModal" -->
+      <nuxt-link to="/reports/quotes"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="min-w-max text-center span__element-large">Quotes</span
         >
-      </div>
-      <ModalsReportQuotesModal
+      </nuxt-link>
+      <!-- <ModalsReportQuotesModal
         v-if="quoteModal"
         :toggleQuoteModal="toggleQuoteModal"
-      ></ModalsReportQuotesModal>
-      <div
-        @click="toggleInvoiceModal"
+      ></ModalsReportQuotesModal> -->
+      <!-- @click="toggleInvoiceModal" -->
+      <nuxt-link to="/reports/invoices"
         class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
       >
         <img :src="InvoiceIcon" alt="invoice-icon" />
         <span class="lg:text-md min-w-max text-center span__element-large"
           >Invoices</span
         >
-      </div>
+      </nuxt-link>
       <ModalsReportInvoicesModal
         v-if="invoiceModal"
         :toggleInvoiceModal="toggleInvoiceModal"
@@ -87,7 +87,7 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">Jobs Completed</h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">754</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">{{ completedJobs }}</h2>
         </div>
       </div>
       <div class="hidden lg:flex-center lg:flex-1">
@@ -109,9 +109,16 @@ import QuotesIconcon from "@/assets/icons/cost-estimate-icon.svg";
 import InvoiceIcon from "@/assets/icons/invoice-icon.svg";
 import ChemicalIcon from "@/assets/icons/chemical-tank-icon.svg";
 import CardIcon from "@/assets/icons/payment-icon.svg";
+import { useJobStore } from '~/stores/jobs';
+
+const jobStore = useJobStore();
+
 
 const days = ref();
-
+const jobModal = ref(false);
+const quoteModal = ref();
+const invoiceModal = ref();
+const chemCostModal = ref();
 const numberOfDays = ref([
   {
     name: "90 days",
@@ -127,15 +134,9 @@ const numberOfDays = ref([
   },
 ]);
 
-const jobModal = ref(false);
+const completedJobs = computed(() => jobStore.getAllCompletedJobs);
 const toggleJobModal = () => (jobModal.value = !jobModal.value);
-
-const quoteModal = ref();
 const toggleQuoteModal = () => (quoteModal.value = !quoteModal.value);
-
-const invoiceModal = ref();
 const toggleInvoiceModal = () => (invoiceModal.value = !invoiceModal.value);
-
-const chemCostModal = ref();
 const toggleChemCostModal = () => (chemCostModal.value = !chemCostModal.value);
 </script>

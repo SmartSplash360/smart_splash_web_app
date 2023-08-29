@@ -8,7 +8,6 @@
         <h2 class="heading__h2 font-bold text-[#025E7C]">
             Set up your credit or debit card
         </h2>
-  
           <div class="flex flex-col gap-2">
             <div class="flex flex-col justify-between gap-5 sm:flex-row">
               <div class="flex w-full flex-col gap-2">

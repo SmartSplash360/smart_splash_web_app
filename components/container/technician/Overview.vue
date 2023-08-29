@@ -24,8 +24,18 @@
             <p class="text-xs lg:paragraph__p">Cleaning Tech</p>
           </div>
         </div>
-      <div class="ml-0 sm:ml-auto flex justify-end">
-        <Button label="View Reports" class="w-full !bg-[#025E7C] min-w-max text-sm lg:text-sm text-white hover:shadow-xl"/>
+      <div class="ml-0 sm:ml-auto flex justify-end gap-5">        
+        <BaseAddButton
+          :btnText="'Job'"
+          @click="handleAddJob"
+          class="flex hover:shadow-xl w-32 justify-center"
+        ></BaseAddButton>
+        <nuxt-link href="/reports">
+          <Button 
+            label="View Reports" 
+            class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"
+          />
+        </nuxt-link>
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>
@@ -46,6 +56,7 @@
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
+  <Toast />
   </section>
 </template>
 
@@ -53,12 +64,13 @@
 import {useTechnicianStore} from "~/stores/technician";
 import {useJobStore} from "~/stores/jobs";
 import {useConfirm} from "primevue/useconfirm";
+import {useToast} from "primevue/usetoast";
 
+const toast = useToast();
 const technicianStore = useTechnicianStore();
 const jobStore = useJobStore();
 const confirm = useConfirm();
 
-const currentTab = ref("JOBS");
 
 const props = defineProps({
   technicianId: {
@@ -68,6 +80,8 @@ const props = defineProps({
 });
 
 const router = useRouter()
+
+const currentTab = ref("JOBS");
 const loading = ref(true);
 const technician = ref()
 const jobs = ref([])
@@ -118,13 +132,11 @@ const closeModal = ({success, error}) => {
     });
   }
 };
-
 const viewItem = (item) => {
   readOnly.value = true
   job.value ={  ...item }
   toggleAddJobModal()
 }
-
 const editItem = ({id, item,mobileEdit =false}) => {
   job.value = { ...item };
   if(mobileEdit){
@@ -136,7 +148,6 @@ const editItem = ({id, item,mobileEdit =false}) => {
   }
   toggleAddJobModal()
 }
-
 const deleteItem = async ({id}) => {
   confirm.require({
     message: 'Are you sure you want to proceed?',
@@ -153,6 +164,12 @@ const deleteItem = async ({id}) => {
     },
     reject: () => {
     }
+  })
+}
+const handleAddJob = () => {
+  router.push({ 
+    path : '/jobs/create-technician-job', 
+    query : { technicianId : props.technicianId}
   })
 }
 </script>

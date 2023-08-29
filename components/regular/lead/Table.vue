@@ -52,7 +52,6 @@
           {{ slotProps.data?.name }} {{ slotProps.data?.surname }}
         </template>
       </Column>
-
       <Column
           field="email"
           header="Email address"
@@ -81,46 +80,47 @@
         </template>
       </Column>
       <Column
-          field="id"
-          header="Date updated"
-          sortable
-        >
-          <template #body="slotProps">
-            <div class="flex items-center justify-center gap-5 text-center">
-              <span class="span__element">{{ format(new Date(slotProps.data.updated_at), 'dd/MM/yyyy') }}</span>
-            </div>
-          </template>
-        </Column>
-        <Column>
-          <template #body="slotProps">
-              <Dropdown>
-                <!-- dropdown trigger -->
-                <template #trigger>
-                  <Button type="button" class="border-none">
-                    <font-awesome-icon icon="ellipsis-vertical" />
-                  </Button>
-                </template>
+        field="id"
+        header="Date updated"
+        sortable
+      >
+        <template #body="slotProps">
+          <div class="flex items-center justify-center gap-5 text-center">
+            <span class="span__element">{{ format(new Date(slotProps.data.updated_at), 'dd/MM/yyyy') }}</span>
+          </div>
+        </template>
+      </Column>
+      <Column>
+        <template #body="slotProps">
+            <Dropdown>
+              <!-- dropdown trigger -->
+              <template #trigger>
+                <Button type="button" class="border-none">
+                  <font-awesome-icon icon="ellipsis-vertical" />
+                </Button>
+              </template>
 
-                <div class="flex flex-col p-2 w-[280px]">
-                  <Button icon="pi pi-sync" label="Convert to Customer" class="w-full border-none self-start" @click="convertToCustomer(slotProps.data.id)"/>
-                  <Button icon="pi pi-comments" label="Message" class="w-full border-none self-start" @click="sendMessage(slotProps.data.id)"/>
-                  <Button icon="pi pi-phone" label="Call" class="w-full border-none self-start" @click="callLead(slotProps.data)"/>
-                  <Button icon="pi pi-pencil" label="Edit" class="w-full border-none self-start" @click="editLead({ ...slotProps.data })"/>
-                  <Button icon="pi pi-trash" label="Delete" class="w-full border-none self-start font-thin" @click="deleteLead(slotProps.data.id)"/>
-                </div>
-              </Dropdown>
-          </template>
-        </Column>
+              <div class="flex flex-col p-2 w-[280px]">
+                <Button icon="pi pi-sync" label="Convert to Customer" class="w-full border-none self-start" @click="convertToCustomer(slotProps.data.id)"/>
+                <Button icon="pi pi-comments" label="Message" class="w-full border-none self-start" @click="sendMessage(slotProps.data.id)"/>
+                <Button icon="pi pi-phone" label="Call" class="w-full border-none self-start" @click="callLead(slotProps.data)"/>
+                <Button icon="pi pi-pencil" label="Edit" class="w-full border-none self-start" @click="editLead({ ...slotProps.data })"/>
+                <Button icon="pi pi-trash" label="Delete" class="w-full border-none self-start font-thin" @click="deleteLead(slotProps.data.id)"/>
+              </div>
+            </Dropdown>
+        </template>
+      </Column>
     </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] mx-5 -mt-20 rounded-t-xl border">
-      <div class="flex-between py-1 px-2">
+      <div class="flex-between py-4 px-2">
          <div class="flex-center gap-2 px-2 cursor-pointer" @click="handleSort">
           <img :src="SortIcon" alt="sort-icon">
           <span class="span__element">Sort By</span>
         </div>
         <BaseAddButton
           @click="createLead"
+          class="hidden"
         ></BaseAddButton>
       </div>
       <div class="flex-between  py-5 px-5 border-t border-b">
@@ -154,26 +154,13 @@
               <span class="text-[#025E7C] dark:text-white span__element flex-1">Cell Number</span>
               <span class="text-xs flex-1 flex justify-start">{{lead?.phone_number}}</span>
             </div>
-            <div class="flex justify-end px-4 py-2 gap-2">
-              <!-- <Button
-                icon="pi pi-eye"
-                text raised rounded
-                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="viewLead(lead?.id)"
-              /> -->
-              <Button
-                icon="pi pi-pencil"
-                text raised rounded
-                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="editItem({ id: lead.id, item: { ...lead },mobileEdit : true })"
-            />
-            <Button
-                icon="pi pi-trash"
-                text raised rounded
-                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="deleteItem(lead?.id)"
-            />
-            </div>
+            <div class="flex  justify-end">
+                <Button icon="pi pi-sync" class="w-full border-none self-start" @click="convertToCustomer(slotProps.data.id)"/>
+                <Button icon="pi pi-comments"  class="w-full border-none self-start" @click="sendMessage(slotProps.data.id)"/>
+                <Button icon="pi pi-phone" class="w-full border-none self-start" @click="callLead(slotProps.data)"/>
+                <Button icon="pi pi-pencil"  class="w-full border-none self-start" @click="editLead({ ...slotProps.data })"/>
+                <Button icon="pi pi-trash" class="w-full border-none self-start font-thin" @click="deleteLead(slotProps.data.id)"/>
+              </div>
           </div>
           </AccordionTab>
       </Accordion>

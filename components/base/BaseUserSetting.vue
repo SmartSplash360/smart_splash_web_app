@@ -7,7 +7,7 @@
       <p class="paragraph__p font-medium text-[#0291BF]">Reset to default</p>
     </div>
     <div class="card justify-content-center flex flex-col gap-8 sm:w-2/3">
-      <div v-for="setting in settings" class="flex items-start gap-4">
+      <div v-for="setting in settings" class="flex items-start gap-4" :key="setting.title">
         <Checkbox :v-model="value" :name="value" :value="value" />
         <div class="flex flex-col gap-2">
           <p class="paragraph__p font-normal">

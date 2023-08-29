@@ -6,6 +6,7 @@
         <BaseAddButton
         class="hidden lg:flex"
           :btnText="'Add Alert'"
+          :buttonId="'add-alert-button'"
           @click="toggleAddAlertModal"
         ></BaseAddButton>
         <BaseAddButton

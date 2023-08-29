@@ -1,7 +1,6 @@
 
 <template>
   <div class="card flex justify-content-center text-white w-full sm:w-fit">
-      <!-- <Toast /> -->
       <FileUpload
           chooseLabel="Upload"
           mode="basic"

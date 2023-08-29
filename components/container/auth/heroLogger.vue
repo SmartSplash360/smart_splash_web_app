@@ -12,7 +12,7 @@
         </p>
       </div>
     </div>
-    <div class="hero-signin-container" v-else="login">
+    <div class="hero-signin-container" v-else>
       <h2
         class="min-w-max text-center text-[40px] font-medium text-[#0291BF]"
       >
