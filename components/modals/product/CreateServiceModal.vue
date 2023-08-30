@@ -1,17 +1,11 @@
 <template>
-  <div
-      @click="toggleAddServiceModal({ show: false })"
-      class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
-  >
-      <form
-          @click.stop
-          class="flex min-w-full flex-col gap-8 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[950px]"
-      >
+  <div @click="toggleAddServiceModal({ show: false })" class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]">
+      <form @click.stop class="flex min-w-full flex-col gap-5 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[950px]">
         <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
         </h2>
         <div class="flex flex-col justify-between gap-5 sm:flex-row">
-          <div class="flex w-full flex-col gap-3">
+          <div class="flex w-full flex-col gap-1">
             <label class="span__element" for="name"> Name* </label>
             <InputText 
               type="text" 
@@ -20,11 +14,11 @@
               :class="errorName && 'border-red-300'"
               @blur="handleChangeName">
             </InputText>
-            <p class="min-h-[20px]">
+            <p class="min-h-[10px]">
               <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
             </p>
           </div>
-          <div class="flex w-full flex-col gap-3">
+          <div class="flex w-full flex-col gap-1">
             <label class="span__element" for="name"> Price* </label>
             <InputNumber 
               class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
@@ -36,12 +30,12 @@
               locale="en-US"
               @blur="handleChangePrice">
             </InputNumber>
-            <p class="min-h-[20px]">
+            <p class="min-h-[10px]">
               <span v-show="errorPrice" class="text-[#D42F24] text-xs">{{ errorPrice }}</span>
             </p>
           </div>
         </div>
-        <div class="card justify-content-center flex flex-col gap-3">
+        <div class="card justify-content-center flex flex-col gap-1">
           <label class="span__element" for="description"> Description (10 to 300 characters)  </label>
           <Textarea 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
@@ -52,12 +46,11 @@
             :class="errorDescription && 'border-red-300'"
             @blur="handleChangeDescription"
             />
-            <p class="min-h-[20px]">
+            <p class="min-h-[10px]">
               <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{ errorDescription }}</span>
             </p>
         </div>
-
-        <div class="card justify-content-center flex flex-col gap-3">
+        <div class="card justify-content-center flex flex-col gap-1">
           <label class="span__element" for="notes"> Notes (10 to 300 characters)  </label>
           <Textarea 
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
@@ -68,17 +61,44 @@
             :class="errorNotes && 'border-red-300'"
             @blur="handleChangeNote"
           />
-          <p class="min-h-[20px]">
+          <p class="min-h-[10px]">
             <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{ errorNotes }}</span>
           </p>
         </div>
-
-        <div class="card justify-content-center flex flex-col gap-3">
+        <div class="card justify-content-center flex flex-col gap-1">
           <label class="span__element" for="notes"> Is Available? </label>
           <InputSwitch v-model="isAvailable"/>
         </div>
-
-        <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+        <div class="flex flex-col gap-2 max-h-[150px] overflow-y-auto">
+          <h4 class="heading__h4">List of subservices</h4>
+          <ul class="flex  gap-2" v-for="suServ in subservices" :key="suServ">
+            <li class="max-w-fit flex gap-3 items-center">
+            <span>
+              <font-awesome-icon icon="toolbox" />
+            </span>
+              <span class="span__element">
+                {{ suServ }}
+              </span>
+              <span class="span__element cursor-pointer" @click="handleRemoveSubservice(suServ)">
+                <font-awesome-icon icon="circle-xmark" />
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="flex gap-3 items-center cursor-pointer" @click="showSubserviceInput = !showSubserviceInput">
+          <font-awesome-icon icon="circle-plus" class="text-2xl text-[#0291BF] hover:scale-110 duration-150" />
+          <span class="span__element text-lg">Add subservice</span>
+        </div>
+        <div v-if="showSubserviceInput" class="flex flex-col gap-1">
+            <InputText 
+              type="text" 
+              v-model="subservice" 
+              class=" w-full dark:bg-[#1B2028] border-0 border-b  border-gray-300 px-0  dark:text-white focus:outline-0"
+              @blur="handleChangeSubservice"
+              @keyup.enter="handleAddSubservice">
+            </InputText>
+        </div>
+        <div class="flex flex-col justify-end gap-5 sm:flex-row">
           <Button
               label="Cancel"
               severity="secondary"
@@ -111,11 +131,15 @@ const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.00);
+const subservice = ref('');
+const subservices = ref([]);
+const showSubserviceInput = ref(false)
 
 const errorNotes = ref("");
 const errorName = ref("");
 const errorDescription = ref("");
 const errorPrice = ref("");
+const errorSubservice = ref("");
 
 onMounted(() => {
   if (service) {
@@ -139,6 +163,9 @@ const handleChangePrice = () => {
 const handleChangeNote = () => {
   errorNotes.value = notes.value ? (notes.value.length > 300 ? 'Please provide between 10 and 300 characters for notes' : '') : 'The note field is required';
 };
+const handleChangeSubservice = () => {
+  errorSubservice.value = subservice.value ? '' : 'The subservice name field is required';
+};
 
 const validateForm = () => {
   handleChangeName();
@@ -147,6 +174,15 @@ const validateForm = () => {
   handleChangeNote();
   return !errorName.value && !errorDescription.value && !errorPrice.value && !errorNotes.value;
 };
+
+const handleAddSubservice = (event) => {
+  subservices.value.push(event.target.value);
+  subservice.value = "";
+  showSubserviceInput.value = false
+}
+const handleRemoveSubservice = (subservice) => {
+  subservices.value.splice(subservices.value.indexOf(subservice),1);
+}
 
 const createService = async () => {
   if (validateForm()) {
@@ -158,6 +194,12 @@ const createService = async () => {
         notes: notes.value,
         is_available: isAvailable.value,
       });
+      
+      subservices.value?.forEach(async subservice => {
+        await serviceStore.createSubService(subservice)
+      });
+
+      await serviceStore.fetchServices();
       toggleAddServiceModal({success: "Service created successfully"});
     } catch (e) {
       toggleAddServiceModal({error: e});
@@ -176,8 +218,6 @@ const updateService = async () => {
     };
 
     await serviceStore.updateService(service?.id, data);
-    await serviceStore.fetchServices();
-
     toggleAddServiceModal({success: `Service ${service?.id} updated successfully`});
   } catch (e) {
     toggleAddServiceModal({error: e})
