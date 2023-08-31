@@ -1,6 +1,6 @@
 <template>
   <div @click="toggleAddServiceModal({ show: false })" class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]">
-      <form @click.stop class="flex min-w-full flex-col gap-5 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[950px]">
+      <form @click.stop class="flex min-w-full flex-col gap-5 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[700px] lg:max-w-[800px]">
         <h2 class="heading__h2 font-bold text-[#025E7C]">
           {{ service ? 'Edit' : 'New' }} Service {{ service ? `#${service?.id}` : '' }}
         </h2>
@@ -70,24 +70,20 @@
           <InputSwitch v-model="isAvailable"/>
         </div>
         <div class="flex flex-col gap-2 max-h-[150px] overflow-y-auto">
-          <h4 class="heading__h4">List of subservices</h4>
-          <ul class="flex  gap-2" v-for="suServ in subservices" :key="suServ">
-            <li class="max-w-fit flex gap-3 items-center">
-            <span>
-              <font-awesome-icon icon="toolbox" />
-            </span>
+          <h4 class="heading__h4 text-gray-600">List of subservices</h4>
+          <ul class="flex flex-wrap gap-2" >
+            <li class="max-w-fit flex gap-3 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm" v-for="suServ in subservices" :key="suServ">
+              <font-awesome-icon icon="toolbox" class="text-gray-500" />
               <span class="span__element">
                 {{ suServ }}
               </span>
-              <span class="span__element cursor-pointer" @click="handleRemoveSubservice(suServ)">
-                <font-awesome-icon icon="circle-xmark" />
-              </span>
+              <font-awesome-icon icon="circle-xmark" class="span__element cursor-pointer text-red-500" @click="handleRemoveSubservice(suServ)"/>
             </li>
           </ul>
         </div>
         <div class="flex gap-3 items-center cursor-pointer" @click="showSubserviceInput = !showSubserviceInput">
           <font-awesome-icon icon="circle-plus" class="text-2xl text-[#0291BF] hover:scale-110 duration-150" />
-          <span class="span__element text-lg">Add subservice</span>
+          <span class="span__element text-sm">Add subservice</span>
         </div>
         <div v-if="showSubserviceInput" class="flex flex-col gap-1">
             <InputText 

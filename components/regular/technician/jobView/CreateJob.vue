@@ -452,7 +452,6 @@ const validateForm = () => {
 
     return props.technicianId ? checkedValue : checkedValue && !errorTechnician.value
 };
-
 const handleMoveToNextStep = () => {
   if(validateForm()){
         const newJob = {

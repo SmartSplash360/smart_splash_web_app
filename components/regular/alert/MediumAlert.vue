@@ -59,14 +59,21 @@
           <template #body="slotProps">
             <div class="flex flex-row gap-2">
               <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="viewAlert(slotProps.data)"
+              />
+              <Button
                   icon="pi pi-pencil"
                   text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
                   @click="editAlert(slotProps.data)"
               />
               <Button
                   icon="pi pi-trash"
                   text raised rounded
-                  class="p-button-danger"
+                  class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
                   @click="deleteAlert(slotProps?.data?.id)"
               />
             </div>
@@ -111,17 +118,23 @@
             </div>
             <div class="flex justify-end px-4 py-2 gap-2">
               <Button
+                icon="pi pi-eye"
+                text raised rounded
+                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                @click="viewItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
+              />
+              <Button
                 icon="pi pi-pencil"
                 text raised rounded
                 class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
                 @click="editItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
-            />
-            <Button
-                icon="pi pi-trash"
-                text raised rounded
-                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="deleteAlert(alert?.id)"
-            />
+              />
+              <Button
+                  icon="pi pi-trash"
+                  text raised rounded
+                  class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+                  @click="deleteAlert(alert?.id)"
+              />
             </div>
           </div>
           </AccordionTab>
@@ -138,7 +151,8 @@ const props = defineProps({
     default: () => [],
   },
   editItem : Function,
-  deleteItem : Function
+  deleteItem : Function,
+  viewItem : Function,
 });
 
 const loading = ref(true);
@@ -150,6 +164,9 @@ onMounted(async () => {
 });
 
 
+const viewAlert = (alert) => {
+  props.viewItem({ id: alert.id, item: { ...alert }})
+}
 const editAlert = (alert) => {
   props.editItem({ id: alert.id, item: { ...alert }})
 };

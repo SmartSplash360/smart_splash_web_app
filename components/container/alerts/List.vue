@@ -14,12 +14,23 @@
         :btnText="'Add Alert'"
           @click="createAlert"
         ></BaseAddButton>
+        <nuxt-link href="/alerts/notifications">
+          <Button 
+            label="View notifications" 
+            class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"
+          />
+        </nuxt-link>
       </div>
       <CreateAlertModal
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
         :alert="alert"
       ></CreateAlertModal>
+      <ModalsJobsCreateAlertJob
+        v-if="alertInfoModal"
+        :alert="alert"
+        :toggleShowAlertInfo="closeModal">
+      </ModalsJobsCreateAlertJob>
       <TabView v-model:activeIndex="active">
         <TabPanel>
           <template #header>
@@ -31,7 +42,12 @@
               >
             </div>
           </template>
-          <RegularAlertHighAlert :alerts="highAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertHighAlert>
+          <RegularAlertHighAlert 
+            :alerts="highAlerts" 
+            :viewItem="viewItem"
+            :editItem="editItem" 
+            :deleteItem="deleteItem">
+          </RegularAlertHighAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -43,7 +59,12 @@
               >
             </div>
           </template>
-          <RegularAlertMediumAlert :alerts="mediumAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertMediumAlert>
+          <RegularAlertMediumAlert 
+            :alerts="mediumAlerts" 
+            :viewItem="viewItem"
+            :editItem="editItem" 
+            :deleteItem="deleteItem">
+          </RegularAlertMediumAlert>
         </TabPanel>
         <TabPanel>
           <template #header>
@@ -55,7 +76,12 @@
               >
             </div>
           </template>
-          <RegularAlertLowAlert :alerts="lowAlerts" :editItem="editItem" :deleteItem="deleteItem"></RegularAlertLowAlert>
+          <RegularAlertLowAlert 
+            :alerts="lowAlerts" 
+            :viewItem="viewItem"
+            :editItem="editItem" 
+            :deleteItem="deleteItem">
+          </RegularAlertLowAlert>
         </TabPanel>
       </TabView>
     </div>
@@ -78,15 +104,32 @@ const confirm = useConfirm();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
+const alertInfoModal =  ref(false)
 const alerts = ref([]);
 const alert = ref()
 
 const active = ref(0);
 
-const createAlert = () => router.push('alerts/create-alert')
-const toggleAddAlertModal = () => (addAlertModal.value = true);
+onMounted(async () => {
+  alerts.value = alertStore.getAlerts;
+});
+
+const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'high'));
+const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
+const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
+
+const createAlert = () => {
+  router.push('alerts/create-alert')
+}
+const toggleAddAlertModal = () =>{ 
+  addAlertModal.value = true;
+}
+const toggleShowAlertInfo = () => {
+  alertInfoModal.value = true
+};
 const closeModal = ({ success, error }) => {
-  addAlertModal.value = false
+  addAlertModal.value = false;
+  alertInfoModal.value = false
   alert.value = null
 
   if (success) {
@@ -97,7 +140,17 @@ const closeModal = ({ success, error }) => {
     toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });
   }
 };
-
+const viewItem = ({ id, item, mobileEdit=false}) => {
+  alert.value = item
+  if(mobileEdit){
+    router.push({  
+      path: '/alerts/edit-alert',
+      query: { alertId: id }
+    });
+    return 
+  }
+  toggleShowAlertInfo()
+}
 const editItem = ({ id, item, mobileEdit=false}) => {
   alert.value = item
   if(mobileEdit){
@@ -109,7 +162,6 @@ const editItem = ({ id, item, mobileEdit=false}) => {
   }
   toggleAddAlertModal()
 }
-
 const deleteItem = async ({ id }) => {
   confirm.require({
     message: 'Are you sure you want to proceed?',
@@ -124,13 +176,8 @@ const deleteItem = async ({ id }) => {
   })
 }
 
-onMounted(async () => {
-  alerts.value = alertStore.getAlerts;
-});
 
-const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'high'));
-const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
-const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
+
 </script>
 
 
