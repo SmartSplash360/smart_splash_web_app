@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
-    <div v-else class="card flex flex-col gap-5 lg:gap-0">
+    <div v-else class="card flex flex-col gap-5 lg:gap-14">
       <div class="w-full justify-end gap-5 flex">
         <BaseAddButton
           class="hidden lg:flex"
@@ -26,62 +26,19 @@
         :toggleShowAlertInfo="closeModal"
       >
       </ModalsAlertInfoModal>
-      <TabView v-model:activeIndex="active">
-        <TabPanel>
-          <template #header>
-            <div class="flex-center gap-3">
-              <span class="span__element-medium">High</span>
-              <span
-                class="flex-center h-[30px] w-[30px] rounded-md text-[#D4382E] bg-red-300 shadow-md"
-                >{{ highAlerts.length }}</span
-              >
-            </div>
-          </template>
-          <RegularAlertHighAlert
-            :alerts="highAlerts"
-            :viewItem="viewItem"
-            :editItem="editItem"
-            :deleteItem="deleteItem"
-          >
-          </RegularAlertHighAlert>
-        </TabPanel>
-        <TabPanel>
-          <template #header>
-            <div class="flex-center gap-3">
-              <span class="span__element-medium">Medium</span>
-              <span
-                class="flex-center h-[30px] w-[30px] rounded-md text-[#FFA500] bg-[#FFEDCC] shadow-md"
-                >{{ mediumAlerts.length }}</span
-              >
-            </div>
-          </template>
-          <RegularAlertMediumAlert
-            :alerts="mediumAlerts"
-            :viewItem="viewItem"
-            :editItem="editItem"
-            :deleteItem="deleteItem"
-          >
-          </RegularAlertMediumAlert>
-        </TabPanel>
-        <TabPanel>
-          <template #header>
-            <div class="flex-center gap-3">
-              <span class="span__element-medium">Low</span>
-              <span
-                class="flex-center h-[30px] w-[30px] rounded-md text-[#02BF70] bg-[#CCF2E2] shadow-md"
-                >{{ lowAlerts.length }}</span
-              >
-            </div>
-          </template>
-          <RegularAlertLowAlert
-            :alerts="lowAlerts"
-            :viewItem="viewItem"
-            :editItem="editItem"
-            :deleteItem="deleteItem"
-          >
-          </RegularAlertLowAlert>
-        </TabPanel>
-      </TabView>
+      <Dropdown
+        v-model="priority"
+        :options="priorities"
+        placeholder="Select alert by priority"
+        class="w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
+        @change="handleChangePriority"
+      />
+      <RegularAlertTable
+        :alerts="alerts"
+        :viewItem="viewItem"
+        :editItem="editItem"
+        :deleteItem="deleteItem"
+      ></RegularAlertTable>
     </div>
   </section>
 </template>
@@ -104,12 +61,17 @@ const alertStore = useAlertStore();
 const addAlertModal = ref(false);
 const alertInfoModal = ref(false);
 const alerts = ref([]);
+const alertList = ref([]);
 const alert = ref();
 
 const active = ref(0);
 
+const priority = ref("");
+const priorities = ref(["All alerts", "Low", "Medium", "High"]);
+
 onMounted(async () => {
   alerts.value = alertStore.getAlerts;
+  alertList.value = alertStore.getAlerts;
 });
 
 const highAlerts = computed(() =>
@@ -122,6 +84,20 @@ const lowAlerts = computed(() =>
   alerts.value.filter((alert) => alert?.priority === "low")
 );
 
+const handleChangePriority = () => {
+  if (
+    priority.value === "Low" ||
+    priority.value === "Medium" ||
+    priority.value === "High"
+  ) {
+    alerts.value = alertList.value.filter(
+      (alert) => alert?.priority === priority.value.toLowerCase()
+    );
+  } else {
+    alerts.value = alertList.value;
+  }
+  console.log(alertList.value);
+};
 const createAlert = () => {
   router.push("alerts/create-alert");
 };

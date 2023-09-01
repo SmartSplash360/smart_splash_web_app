@@ -77,7 +77,7 @@
         </div>
         <div class="overflow-auto max-h-[60vh] flex flex-col gap-3">
           <div
-            class="xl:w-3/4 bg-[#d4ecf4] dark:bg-[#1B2028] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5"
+            class="xl:w-3/4 bg-[#edf7fb] dark:bg-[#1B2028] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5"
             v-for="product in products"
             :key="product.id"
           >
