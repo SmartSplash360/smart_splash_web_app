@@ -58,6 +58,13 @@
         <img :src="CardIcon" alt="card-icon" />
         <span class="min-w-max text-center span__element-large">Payments</span>
       </div>
+      <nuxt-link
+        to="/reports/reviews"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
+      >
+        <img :src="QuotesIconcon" alt="quotes-icon" />
+        <span class="min-w-max text-center span__element-large">Reviews</span>
+      </nuxt-link>
     </div>
     <div
       class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028] dark:border-gray-600"
