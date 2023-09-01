@@ -1,7 +1,7 @@
 <template>
   <form class="flex flex-col gap-3">
     <div
-      class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
+      class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">Payment Method</h2>
@@ -16,10 +16,16 @@
           severity="secondary"
           outlined
         />
-        <Button label="Save changes" class="!bg-[#0291BF] hover:shadow-lg text-white" @click="handleSaveChange"/>
+        <Button
+          label="Save changes"
+          class="!bg-[#0291BF] hover:shadow-lg text-white"
+          @click="handleSaveChange"
+        />
       </div>
     </div>
-    <div class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row xl:gap-64">
+    <div
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-10 sm:flex-row xl:gap-64"
+    >
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">Card details</h2>
         <span class="min-w-max span__element span__element-light"
@@ -27,7 +33,11 @@
         </span>
       </div>
       <div class="flex h-full w-full flex-col gap-3">
-      <div v-for="payment in paymentMethods" class="flex h-full w-full flex-col gap-3">
+        <div
+          v-for="payment in paymentMethods"
+          :key="payment.name"
+          class="flex h-full w-full flex-col gap-3"
+        >
           <BasePaymentMethodCard
             :payment="payment"
             :icon="payment.icon"
@@ -37,13 +47,17 @@
             :handleEdit="editCardMethod"
           ></BasePaymentMethodCard>
         </div>
-        <ModalsPaymentEditCreditCard 
+        <ModalsPaymentEditCreditCard
           v-if="showEditPaymentModal"
           :payment="card"
-          :toggleEditCreditCardModal="closeModal">
+          :toggleEditCreditCardModal="closeModal"
+        >
         </ModalsPaymentEditCreditCard>
-      
-        <div class="mt-5 flex items-center gap-3 px-6 cursor-pointer" @click="toggleEditCreditCardModal">
+
+        <div
+          class="mt-5 flex items-center gap-3 px-6 cursor-pointer"
+          @click="toggleEditCreditCardModal"
+        >
           <span class="span__element">+</span>
           <span class="span__element">Add new payment method</span>
         </div>
@@ -79,58 +93,65 @@ import QuickBookIcon from "@/assets/images/quickbooks-icon.svg";
 
 const method = ref("");
 const checked = ref(false);
-const showEditPaymentModal= ref(false)
+const showEditPaymentModal = ref(false);
 const paymentMethods = ref([
   {
-    icon : VisaIcon,
-    alt: 'visa-icon',        
-    name :'Visa',
-    method : method.value,
-    paymentDetails  : {
-        cardNumber : '123431234',
-        expiringDate : '06/2024',
-        cvv : '2343',
-        firstname : 'Jack',
-        lastname : 'Ma'
-    }
+    icon: VisaIcon,
+    alt: "visa-icon",
+    name: "Visa",
+    method: method.value,
+    paymentDetails: {
+      cardNumber: "123431234",
+      expiringDate: "06/2024",
+      cvv: "2343",
+      firstname: "Jack",
+      lastname: "Ma",
+    },
   },
   {
-    icon : MasterCardIcon,
-    alt: 'master-card-icon',        
-    name :'MasterCard',
-    method:method.value,
-    paymentDetails  : {
-        cardNumber : '32874387',
-        expiringDate : '12/2026',
-        cvv : '7686',
-        firstname : 'Elon',
-        lastname : 'Musk'
-    }
-  }
-])
-const card = ref()
-const handleSelectMethod = (value) => {
-}
-const toggleEditCreditCardModal = () => { 
-  card.value = null
-  showEditPaymentModal.value = !showEditPaymentModal.value
-}
+    icon: MasterCardIcon,
+    alt: "master-card-icon",
+    name: "MasterCard",
+    method: method.value,
+    paymentDetails: {
+      cardNumber: "32874387",
+      expiringDate: "12/2026",
+      cvv: "7686",
+      firstname: "Elon",
+      lastname: "Musk",
+    },
+  },
+]);
+const card = ref();
+const handleSelectMethod = (value) => {};
+const toggleEditCreditCardModal = () => {
+  card.value = null;
+  showEditPaymentModal.value = !showEditPaymentModal.value;
+};
 const editCardMethod = (item) => {
-  card.value = item
-  showEditPaymentModal.value = !showEditPaymentModal.value
-}
+  card.value = item;
+  showEditPaymentModal.value = !showEditPaymentModal.value;
+};
 const closeModal = ({ success, error }) => {
-  showEditPaymentModal.value = false
+  showEditPaymentModal.value = false;
   if (success) {
-    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 5000 });
+    toast.add({
+      severity: "success",
+      summary: "Alerts",
+      detail: success,
+      life: 5000,
+    });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });
+    toast.add({
+      severity: "error",
+      summary: "Alerts",
+      detail: `An error has occurred: ${error}`,
+      life: 5000,
+    });
   }
 };
 
-const handleSaveChange = () => {
-}
-
+const handleSaveChange = () => {};
 </script>

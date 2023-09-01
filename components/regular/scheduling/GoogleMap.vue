@@ -1,5 +1,10 @@
 <template>
-  <GoogleMap api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88" style="width: 100%; height: 500px" :center="center" :zoom="15">
+  <GoogleMap
+    api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
+    style="width: 100%; height: 500px;"
+    :center="center"
+    :zoom="15"
+  >
     <Marker :options="{ position: center }" />
   </GoogleMap>
 </template>
@@ -17,6 +22,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

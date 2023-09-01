@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="hidden h-[100px] gap-12 px-20 shadow-md sm:flex-between"
-  >
+  <header class="hidden h-[100px] gap-12 px-20 shadow-md sm:flex-between">
     <div class="w-1/5">
       <div class="h-[100px] max-h-[100px] bg-red-400 lg:w-[298px]">
         <img
@@ -28,7 +26,7 @@
         <nuxt-link to="/contact">Contact</nuxt-link>
       </li>
     </ul>
-    <div class="flex-between w-full  gap-5 lg:w-1/5">
+    <div class="flex-between w-full gap-5 lg:w-1/5">
       <BaseButton
         :bg="'#0291BF'"
         :btn-text="'Sign up'"

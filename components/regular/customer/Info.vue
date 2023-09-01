@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-wrap lg:gap-5 dark:bg-[#1B2028] dark:text-white">
+  <div
+    class="flex flex-col flex-wrap justify-between gap-8 rounded-xl bg-[#d4ecf4] px-5 py-5 sm:items-center md:flex-row md:flex-wrap lg:gap-5 dark:bg-[#1B2028] dark:text-white"
+  >
     <div class="flex gap-5">
       <div
         class="flex-between w-full flex-col gap-4 items-center lg:justify-start xl:flex-row"
@@ -14,7 +16,7 @@
             CUSTOMER INFO:
           </h3>
           <div class="flex items-center gap-2">
-            <span class="span__element ">{{ customerInfo.name }}</span>
+            <span class="span__element">{{ customerInfo.name }}</span>
             <img
               :src="ChatIcon"
               alt="chat-icon"
@@ -33,23 +35,23 @@
             :image="EmailIcon"
             size="medium"
         /></span>
-        <span class="span__element">{{
-          customerInfo?.email
-        }}</span>
+        <span class="span__element">{{ customerInfo?.email }}</span>
       </div>
       <div class="flex items-center gap-3">
-        <font-awesome-icon icon="phone" class="text-lg"/>
+        <font-awesome-icon icon="phone" class="text-lg" />
         <span class="min-w-max span__element">{{
           customerInfo?.phone_number
         }}</span>
       </div>
     </div>
-    <div class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start sm:justify-center gap-3 overflow-hidden text-ellipsis  xl:h-[75px] xl:gap-3">
-      <font-awesome-icon icon="location-dot" class="text-lg"/>
+    <div
+      class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start sm:justify-center gap-3 overflow-hidden text-ellipsis xl:h-[75px] xl:gap-3"
+    >
+      <font-awesome-icon icon="location-dot" class="text-lg" />
       <span class="span__element">{{ fullAddress }}</span>
     </div>
     <div
-      class="min-w-[250px] max-w-[350px] flex-1 flex-between   lg:flex-row xl:justify-between"
+      class="min-w-[250px] max-w-[350px] flex-1 flex-between lg:flex-row xl:justify-between"
     >
       <div class="relative flex-center flex-col">
         <img
@@ -64,8 +66,8 @@
           <span class="span__element dark:text-black">F5JKJGF</span>
         </div>
       </div>
-      <font-awesome-icon icon="lock" class="text-2xl"/>
-      <font-awesome-icon icon="dog" class="text-2xl"/>
+      <font-awesome-icon icon="lock" class="text-2xl" />
+      <font-awesome-icon icon="dog" class="text-2xl" />
     </div>
   </div>
 </template>
@@ -88,14 +90,14 @@ const props = defineProps({
 });
 
 const fullAddress = computed(() => {
-  let address = 'N/A'
+  let address = "N/A";
   if (props.customerInfo?.address && props.customerInfo?.address.length > 0) {
     address = `${props.customerInfo?.address[0]?.address_line1}, ${props.customerInfo?.address[0]?.city}, ${props.customerInfo?.address[0]?.state}
     ${props.customerInfo?.address[0]?.address_line2}
-    ${props.customerInfo?.address[0]?.country}`
+    ${props.customerInfo?.address[0]?.country}`;
   }
-  return address
-})
+  return address;
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -4,33 +4,28 @@
     <div v-else class="card flex flex-col gap-5 lg:gap-0">
       <div class="w-full justify-end gap-5 flex">
         <BaseAddButton
-        class="hidden lg:flex"
+          class="hidden lg:flex"
           :btnText="'Add Alert'"
           :buttonId="'add-alert-button'"
           @click="toggleAddAlertModal"
         ></BaseAddButton>
         <BaseAddButton
-        class="lg:hidden"
-        :btnText="'Add Alert'"
+          class="lg:hidden"
+          :btnText="'Add Alert'"
           @click="createAlert"
         ></BaseAddButton>
-        <nuxt-link href="/alerts/notifications">
-          <Button 
-            label="View notifications" 
-            class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"
-          />
-        </nuxt-link>
       </div>
       <CreateAlertModal
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
         :alert="alert"
       ></CreateAlertModal>
-      <ModalsJobsCreateAlertJob
+      <ModalsAlertInfoModal
         v-if="alertInfoModal"
         :alert="alert"
-        :toggleShowAlertInfo="closeModal">
-      </ModalsJobsCreateAlertJob>
+        :toggleShowAlertInfo="closeModal"
+      >
+      </ModalsAlertInfoModal>
       <TabView v-model:activeIndex="active">
         <TabPanel>
           <template #header>
@@ -42,11 +37,12 @@
               >
             </div>
           </template>
-          <RegularAlertHighAlert 
-            :alerts="highAlerts" 
+          <RegularAlertHighAlert
+            :alerts="highAlerts"
             :viewItem="viewItem"
-            :editItem="editItem" 
-            :deleteItem="deleteItem">
+            :editItem="editItem"
+            :deleteItem="deleteItem"
+          >
           </RegularAlertHighAlert>
         </TabPanel>
         <TabPanel>
@@ -59,11 +55,12 @@
               >
             </div>
           </template>
-          <RegularAlertMediumAlert 
-            :alerts="mediumAlerts" 
+          <RegularAlertMediumAlert
+            :alerts="mediumAlerts"
             :viewItem="viewItem"
-            :editItem="editItem" 
-            :deleteItem="deleteItem">
+            :editItem="editItem"
+            :deleteItem="deleteItem"
+          >
           </RegularAlertMediumAlert>
         </TabPanel>
         <TabPanel>
@@ -76,11 +73,12 @@
               >
             </div>
           </template>
-          <RegularAlertLowAlert 
-            :alerts="lowAlerts" 
+          <RegularAlertLowAlert
+            :alerts="lowAlerts"
             :viewItem="viewItem"
-            :editItem="editItem" 
-            :deleteItem="deleteItem">
+            :editItem="editItem"
+            :deleteItem="deleteItem"
+          >
           </RegularAlertLowAlert>
         </TabPanel>
       </TabView>
@@ -90,23 +88,23 @@
 
 <script setup>
 import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
-import {useToast} from "primevue/usetoast";
+import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
-import {useAlertStore} from "~/stores/alert";
+import { useAlertStore } from "~/stores/alert";
 
 defineProps({
-  loading : Boolean
-})
+  loading: Boolean,
+});
 
-const router = useRouter()
+const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
-const alertInfoModal =  ref(false)
+const alertInfoModal = ref(false);
 const alerts = ref([]);
-const alert = ref()
+const alert = ref();
 
 const active = ref(0);
 
@@ -114,70 +112,91 @@ onMounted(async () => {
   alerts.value = alertStore.getAlerts;
 });
 
-const highAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'high'));
-const mediumAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'medium'));
-const lowAlerts = computed(() => alerts.value.filter(alert => alert?.priority === 'low'));
+const highAlerts = computed(() =>
+  alerts.value.filter((alert) => alert?.priority === "high")
+);
+const mediumAlerts = computed(() =>
+  alerts.value.filter((alert) => alert?.priority === "medium")
+);
+const lowAlerts = computed(() =>
+  alerts.value.filter((alert) => alert?.priority === "low")
+);
 
 const createAlert = () => {
-  router.push('alerts/create-alert')
-}
-const toggleAddAlertModal = () =>{ 
+  router.push("alerts/create-alert");
+};
+const toggleAddAlertModal = () => {
   addAlertModal.value = true;
-}
+};
 const toggleShowAlertInfo = () => {
-  alertInfoModal.value = true
+  alertInfoModal.value = true;
 };
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false;
-  alertInfoModal.value = false
-  alert.value = null
+  alertInfoModal.value = false;
+  alert.value = null;
 
   if (success) {
-    toast.add({ severity: 'success', summary: 'Alerts', detail: success, life: 5000 });
+    toast.add({
+      severity: "success",
+      summary: "Alerts",
+      detail: success,
+      life: 5000,
+    });
   }
 
   if (error) {
-    toast.add({ severity: 'error', summary: 'Alerts', detail: `An error has occurred: ${error}`, life: 5000 });
+    toast.add({
+      severity: "error",
+      summary: "Alerts",
+      detail: `An error has occurred: ${error}`,
+      life: 5000,
+    });
   }
 };
-const viewItem = ({ id, item, mobileEdit=false}) => {
-  alert.value = item
-  if(mobileEdit){
-    router.push({  
-      path: '/alerts/edit-alert',
-      query: { alertId: id }
+const viewItem = ({ id, item, mobileEdit = false }) => {
+  alert.value = item;
+  if (mobileEdit) {
+    console.log(item);
+    router.push({
+      path: `/alerts/${id}`,
+      query: {
+        alertId: id,
+        technicianId: item.technician.id,
+        customerId: item.body_of_water.customer.id,
+      },
     });
-    return 
+    return;
   }
-  toggleShowAlertInfo()
-}
-const editItem = ({ id, item, mobileEdit=false}) => {
-  alert.value = item
-  if(mobileEdit){
-    router.push({  
-      path: '/alerts/edit-alert',
-      query: { alertId: id }
+  toggleShowAlertInfo();
+};
+const editItem = ({ id, item, mobileEdit = false }) => {
+  alert.value = item;
+  if (mobileEdit) {
+    router.push({
+      path: "/alerts/edit-alert",
+      query: { alertId: id },
     });
-    return 
+    return;
   }
-  toggleAddAlertModal()
-}
+  toggleAddAlertModal();
+};
 const deleteItem = async ({ id }) => {
   confirm.require({
-    message: 'Are you sure you want to proceed?',
-    header: 'Delete Alert',
-    icon: 'pi pi-exclamation-triangle',
+    message: "Are you sure you want to proceed?",
+    header: "Delete Alert",
+    icon: "pi pi-exclamation-triangle",
     accept: async () => {
       // delete item
-      const res = await alertStore.deleteAlert(id)
-      toast.add({ severity: 'info', summary: 'Delete Alert', detail: res?.message , life: 5000 });
+      const res = await alertStore.deleteAlert(id);
+      toast.add({
+        severity: "info",
+        summary: "Delete Alert",
+        detail: res?.message,
+        life: 5000,
+      });
     },
-    reject: () => {}
-  })
-}
-
-
-
+    reject: () => {},
+  });
+};
 </script>
-
-

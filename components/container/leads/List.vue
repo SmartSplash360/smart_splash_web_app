@@ -3,40 +3,52 @@
     <SkeletonCustomer></SkeletonCustomer>
   </section>
   <section v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
-      <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
-        <div class="flex-between gap-6">
-            <div class="flex-1">
-              <BaseSearchBar class="w-full" 
-               @handleSearch="value => handleSearch(value)"/>
-            </div>
-            <span
-              @click="showActiveRoute"
-              class="flex-center h-[30px] w-[30px] cursor-pointer text-white "
-              ><font-awesome-icon icon="bars" class="text-2xl" :class="[toggleActiveRoute && 'rotate-90']"
-            /></span>
+    <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
+      <div class="flex-between gap-6">
+        <div class="flex-1">
+          <BaseSearchBar
+            class="w-full"
+            @handleSearch="(value) => handleSearch(value)"
+          />
         </div>
-        <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-          <RegularCustomerActivityCard           
-              :loading="loading"
-              :routes="routes">
-          </RegularCustomerActivityCard>
-        </div>
+        <span
+          @click="showActiveRoute"
+          class="flex-center h-[30px] w-[30px] cursor-pointer text-white"
+          ><font-awesome-icon
+            icon="bars"
+            class="text-2xl"
+            :class="[toggleActiveRoute && 'rotate-90']"
+        /></span>
+      </div>
+      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
+        <RegularCustomerActivityCard :loading="loading" :routes="routes">
+        </RegularCustomerActivityCard>
+      </div>
     </div>
     <div class="flex flex-col gap-5">
-      <RegularLeadTable 
-        :callLead="callLead" 
-        :editItem="editItem" 
+      <RegularLeadTable
+        :callLead="callLead"
+        :editItem="editItem"
         :deleteItem="deleteItem"
         :convertToCustomer="convertToCustomer"
         :leadsMobiles="leadsMobiles"
-        :handleSort="handleSort">
+        :handleSort="handleSort"
+      >
       </RegularLeadTable>
     </div>
     <!-- <Toast /> -->
     <!-- <ConfirmDialog></ConfirmDialog> -->
-    <ModalsLeadEditLeadModal v-if="editLeadModal" :toggleEditLeadModal="closeModal" :lead="lead">
+    <ModalsLeadEditLeadModal
+      v-if="editLeadModal"
+      :toggleEditLeadModal="closeModal"
+      :lead="lead"
+    >
     </ModalsLeadEditLeadModal>
-    <ModalsCommunicationVoiceCallModal v-if="voiceCallModal" :toggleCallModal="closeVoiceCallModal" :lead="lead">
+    <ModalsCommunicationVoiceCallModal
+      v-if="voiceCallModal"
+      :toggleCallModal="closeVoiceCallModal"
+      :lead="lead"
+    >
     </ModalsCommunicationVoiceCallModal>
   </section>
 </template>
@@ -53,11 +65,11 @@ defineProps({
 const toast = useToast();
 const confirm = useConfirm();
 const leadStore = useLeadStore();
-const router = useRouter()
+const router = useRouter();
 const editLeadModal = ref(false);
 const voiceCallModal = ref(false);
 const lead = ref();
-const leadsMobiles = ref()
+const leadsMobiles = ref();
 
 const routes = reactive({
   activeRoute: 131,
@@ -68,16 +80,15 @@ const routes = reactive({
 
 const toggleActiveRoute = ref(false);
 
-
 leadsMobiles.value = leadStore.getLeads;
 const handleSearch = (value) => {
-  leadStore.searchQuery = value
+  leadStore.searchQuery = value;
   leadsMobiles.value = leadStore.filterLeads(value);
-}
+};
 
 const handleSort = () => {
-    leadsMobiles.value = leadStore.sortLeads();
-}
+  leadsMobiles.value = leadStore.sortLeads();
+};
 
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value;
@@ -139,7 +150,7 @@ const convertToCustomer = ({ id }) => {
         });
       }
     },
-    reject: () => { },
+    reject: () => {},
   });
 };
 
@@ -148,14 +159,14 @@ const callLead = (item) => {
   toggleVoiceCallModal();
 };
 
-const editItem = ({ id, item, mobileEdit=false }) => {
+const editItem = ({ id, item, mobileEdit = false }) => {
   lead.value = item;
-  if(mobileEdit){
-    router.push({  
-      path: '/leads/edit-lead',
-      query: { leadId: id }
+  if (mobileEdit) {
+    router.push({
+      path: "/leads/edit-lead",
+      query: { leadId: id },
     });
-    return 
+    return;
   }
   toggleEditLeadModal();
 };
@@ -184,7 +195,7 @@ const deleteItem = async ({ id }) => {
         });
       }
     },
-    reject: () => { },
+    reject: () => {},
   });
 };
 </script>

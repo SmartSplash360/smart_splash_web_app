@@ -1,85 +1,89 @@
 <template>
-  <div class="hidden lg:block card alert-table dark:text-white" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
-    <DataTable
-        :value="alerts"
-        dataKey="id"
-        :rows="10"
-        :loading="loading"
-    >
+  <div
+    class="hidden lg:block card alert-table dark:text-white"
+    :class="[currentMode == 'dark' ? 'dark-mode' : '']"
+  >
+    <DataTable :value="alerts" dataKey="id" :rows="10" :loading="loading">
       <template #empty>
-          <div class="flex-center">
-          <h3 class="heading__h3">No alerts found. </h3>
-          </div>
+        <div class="flex-center">
+          <h3 class="heading__h3">No alerts found.</h3>
+        </div>
       </template>
       <Column
-          field="id"
-          header="Alert"
-          sortable
-          class="w-[1%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
+        field="id"
+        header="Alert"
+        sortable
+        class="w-[1%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500"
       ></Column>
       <Column
-          field="name"
-          header="Customer name"
-          class="w-[5%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500 "
-          sortable
+        field="name"
+        header="Customer name"
+        class="w-[5%] lg:w-[20%] dark:bg-[#31353F] dark:text-gray-500"
+        sortable
       >
         <template #body="slotProps">
           {{ slotProps.data?.body_of_water?.customer?.name }}
-          {{ slotProps.data?.body_of_water?.customer?.surname ?? '' }}
+          {{ slotProps.data?.body_of_water?.customer?.surname ?? "" }}
         </template>
       </Column>
-      <Column
-          field="description"
-          header="Address"
-          class="w-[5%] lg:w-[20%]"
-      >
+      <Column field="description" header="Address" class="w-[5%] lg:w-[20%]">
         <template #body="slotProps">
-          {{ slotProps.data?.body_of_water?.customer?.address[0]?.address_line1 }}
+          {{
+            slotProps.data?.body_of_water?.customer?.address[0]?.address_line1
+          }}
         </template>
       </Column>
       <Column
-          field="alert_type_id"
-          header="Alert type"
-          class="w-[5%] lg:w-[15%]"
-          sortable
+        field="alert_type_id"
+        header="Alert type"
+        class="w-[5%] lg:w-[15%]"
+        sortable
       >
         <template #body="slotProps">
           {{ slotProps.data?.alert_type?.name }}
         </template>
       </Column>
-      <Column
-          field="price"
-          header="Technician"
-          class="w-[5%] lg:w-[15%]"
-      >
+      <Column field="price" header="Technician" class="w-[5%] lg:w-[15%]">
         <template #body="slotProps">
-          {{ slotProps.data?.technician?.name ?? `Technician ${slotProps.data.technician}` }}
+          {{
+            slotProps.data?.technician?.name ??
+            `Technician ${slotProps.data.technician}`
+          }}
         </template>
       </Column>
-      <Column
-          field="status"
-          header="Status"
-          class="w-[5%] lg:w-[15%]"
-          sortable
-      >
+      <Column field="status" header="Status" class="w-[5%] lg:w-[15%]" sortable>
         <template #body="slotProps">
-          <Tag :value="slotProps.data?.status"
-                :severity="slotProps.data?.status === 'open' ? 'success': 'danger'"/>
+          <Tag
+            :value="slotProps.data?.status"
+            :severity="slotProps.data?.status === 'open' ? 'success' : 'danger'"
+          />
         </template>
       </Column>
       <Column>
         <template #body="slotProps">
           <div class="flex flex-row gap-2">
             <Button
-                icon="pi pi-pencil"
-                text raised rounded
-                @click="editAlert(slotProps.data)"
+              icon="pi pi-eye"
+              text
+              raised
+              rounded
+              class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+              @click="viewAlert(slotProps.data)"
             />
             <Button
-                icon="pi pi-trash"
-                text raised rounded
-                class="p-button-danger"
-                @click="deleteAlert(slotProps?.data?.id)"
+              icon="pi pi-pencil"
+              text
+              raised
+              rounded
+              @click="editAlert(slotProps.data)"
+            />
+            <Button
+              icon="pi pi-trash"
+              text
+              raised
+              rounded
+              class="p-button-danger"
+              @click="deleteAlert(slotProps?.data?.id)"
             />
           </div>
         </template>
@@ -87,57 +91,91 @@
     </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
-      <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
-        <h5 class="heading__h5 flex-1">Alert</h5>
-        <h5 class="heading__h5 flex-1 flex justify-start">Customer</h5>
-      </div>
-      <div v-if="alertCount == 0" class="flex-center">
-        <h5 class="heading__h5">
-          There is no alert
-        </h5>
-      </div>
-      <Accordion v-else :activeIndex="0">
-          <AccordionTab v-for="alert in alerts" :key="alert.id" >
-          <template #header>
-            <div class="flex-between w-full dark:text-white">
-              <span class="flex-1 paragraph__p">{{ alert.alert_type?.name }}</span>
-              <span class="flex-1 paragraph__p">{{ alert.body_of_water?.customer?.name  }}</span>
-              <span class="flex"> 
-                <font-awesome-icon icon="ellipsis-vertical" /> 
-                <font-awesome-icon icon="ellipsis-vertical" />
-              </span>
-            </div>
-          </template>
-          <div class="flex flex-col mt-1 bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white">
-            <div class="flex-between px-4 py-2 rounded-md">
-              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Address</span>
-              <span class="text-xs flex-1 flex justify-start">{{alert.body_of_water?.customer?.address[0]?.address_line1 }}</span>
-            </div>
-            <div class="flex-between px-4 py-2 rounded-md">
-              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Pool name</span>
-              <span class="text-xs flex-1 flex justify-start">{{alert.alert_type?.name}}</span>
-            </div>
-            <div class="flex-between px-4 py-2 rounded-md">
-              <span class="text-gray-500 dark:text-gray-300 span__element flex-1">Technician Responsible</span>
-              <span class="text-xs flex-1 flex justify-start">{{alert.technician?.name }}</span>
-            </div>
-            <div class="flex justify-end px-4 py-2 gap-2">
-              <Button
-                icon="pi pi-pencil"
-                text raised rounded
-                class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="editItem({ id: alert.id, item: { ...alert },mobileEdit : true })"
+    <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
+      <h5 class="heading__h5 flex-1">Alert</h5>
+      <h5 class="heading__h5 flex-1 flex justify-start">Customer</h5>
+    </div>
+    <div v-if="alertCount == 0" class="flex-center">
+      <h5 class="heading__h5">
+        There is no alert
+      </h5>
+    </div>
+    <Accordion v-else :activeIndex="0">
+      <AccordionTab v-for="alert in alerts" :key="alert.id">
+        <template #header>
+          <div class="flex-between w-full dark:text-white">
+            <span class="flex-1 paragraph__p">{{
+              alert.alert_type?.name
+            }}</span>
+            <span class="flex-1 paragraph__p">{{
+              alert.body_of_water?.customer?.name
+            }}</span>
+            <span class="flex">
+              <font-awesome-icon icon="ellipsis-vertical" />
+              <font-awesome-icon icon="ellipsis-vertical" />
+            </span>
+          </div>
+        </template>
+        <div
+          class="flex flex-col mt-1 bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
+        >
+          <div class="flex-between px-4 py-2 rounded-md">
+            <span class="text-gray-500 dark:text-gray-300 span__element flex-1"
+              >Address</span
+            >
+            <span class="text-xs flex-1 flex justify-start">{{
+              alert.body_of_water?.customer?.address[0]?.address_line1
+            }}</span>
+          </div>
+          <div class="flex-between px-4 py-2 rounded-md">
+            <span class="text-gray-500 dark:text-gray-300 span__element flex-1"
+              >Pool name</span
+            >
+            <span class="text-xs flex-1 flex justify-start">{{
+              alert.alert_type?.name
+            }}</span>
+          </div>
+          <div class="flex-between px-4 py-2 rounded-md">
+            <span class="text-gray-500 dark:text-gray-300 span__element flex-1"
+              >Technician Responsible</span
+            >
+            <span class="text-xs flex-1 flex justify-start">{{
+              alert.technician?.name
+            }}</span>
+          </div>
+          <div class="flex justify-end px-4 py-2 gap-2">
+            <Button
+              icon="pi pi-eye"
+              text
+              raised
+              rounded
+              class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+              @click="
+                viewItem({ id: alert.id, item: { ...alert }, mobileEdit: true })
+              "
             />
             <Button
-                icon="pi pi-trash"
-                text raised rounded
-                class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
-                @click="deleteAlert(alert?.id)"
+              icon="pi pi-pencil"
+              text
+              raised
+              rounded
+              class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+              @click="
+                editItem({ id: alert.id, item: { ...alert }, mobileEdit: true })
+              "
             />
-            </div>
+            <Button
+              icon="pi pi-trash"
+              text
+              raised
+              rounded
+              class="p-button-danger !w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
+              @click="deleteAlert(alert?.id)"
+            />
           </div>
-          </AccordionTab>
-      </Accordion>
+        </div>
+      </AccordionTab>
+    </Accordion>
   </div>
 </template>
 
@@ -150,7 +188,8 @@ const props = defineProps({
     default: () => [],
   },
   editItem: Function,
-  deleteItem: Function
+  deleteItem: Function,
+  viewItem: Function,
 });
 
 onMounted(async () => {
@@ -160,14 +199,16 @@ onMounted(async () => {
 const loading = ref(true);
 
 const alertCount = computed(() => props.alerts.length);
-const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 
-
+const viewAlert = (alert) => {
+  props.viewItem({ id: alert.id, item: { ...alert } });
+};
 const editAlert = (alert) => {
-  props.editItem({ id: alert.id, item: { ...alert } })
+  props.editItem({ id: alert.id, item: { ...alert } });
 };
 
 const deleteAlert = async (id) => {
-  props.deleteItem({ id })
+  props.deleteItem({ id });
 };
 </script>

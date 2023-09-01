@@ -3,19 +3,18 @@
 </template>
 
 <script setup>
-import {useLeadStore} from "~/stores/leads";
+import { useLeadStore } from "~/stores/leads";
 
-const store = useLeadStore()
-const loading = ref(true)
+const store = useLeadStore();
+const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchLeads();
-  loading.value = false
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
 </script>
-  

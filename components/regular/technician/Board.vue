@@ -34,17 +34,14 @@
 </template>
 
 <script setup>
-import { useTechnicianStore} from "~/stores/technician";
+import { useTechnicianStore } from "~/stores/technician";
 
-const statuses = ref([
-  { state : 'Active'},
-  {state : 'Inactive'}
-])
-const router = useRouter()
+const statuses = ref([{ state: "Active" }, { state: "Inactive" }]);
+const router = useRouter();
 const technicianStore = useTechnicianStore();
 const techniciansCount = computed(() => technicianStore.technicians.length);
 
-const addTechnician = () => router.push('/technicians/create-technician')
+const addTechnician = () => router.push("/technicians/create-technician");
 
 const status = ref();
 </script>

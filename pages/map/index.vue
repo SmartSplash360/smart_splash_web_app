@@ -10,7 +10,7 @@
       </div>
       <GoogleMap
         api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-        style="width: 100%; height: 700px"
+        style="width: 100%; height: 700px;"
         :center="center"
         class="border-2"
         :zoom="13"
@@ -19,18 +19,29 @@
         <Polyline
           v-for="jobTechnicianPath in jobTechnicianPaths"
           :options="jobTechnicianPath"
+          :key="jobTechnicianPath"
         />
 
-        <Marker v-for="marker in jobMarkers" :options="marker">
+        <Marker
+          v-for="marker in jobMarkers"
+          :options="marker"
+          :key="marker.job.id"
+        >
           <InfoWindow :options="{ position: marker.position }">
             <div class="flex flex-col text-black">
-              <nuxt-link :to="`/customers/${marker?.job?.customer?.id}`" class="tx pb-5 font-bold">
+              <nuxt-link
+                :to="`/customers/${marker?.job?.customer?.id}`"
+                class="tx pb-5 font-bold"
+              >
                 {{ marker?.job?.customer?.name }}
               </nuxt-link>
               <div>{{ marker.content }}</div>
               <Divider type="solid" />
               <div class="flex justify-between">
-                <nuxt-link :to="`/technicians/${marker?.job?.technician?.id}`" class="flex flex-col">
+                <nuxt-link
+                  :to="`/technicians/${marker?.job?.technician?.id}`"
+                  class="flex flex-col"
+                >
                   <span class="pb-2">TECHNICIAN</span>
                   <span class="font-bold">{{
                     marker?.job?.technician?.name
@@ -79,6 +90,7 @@
 
         <div
           v-for="technician in technicianDetails"
+          :key="technician.id"
           class="flex w-1/4 flex-col rounded-[0.5rem] border-2 p-3"
         >
           <div class="flex flex-row justify-between gap-2">
@@ -96,7 +108,7 @@
               <i
                 class="pi pi-map-marker"
                 :style="{ color: technician?.color }"
-                style="font-size: 1.5rem"
+                style="font-size: 1.5rem;"
               ></i>
               <span class="self-center text-sm">{{
                 technician?.jobCount
@@ -244,7 +256,8 @@ const svgMarker = {
   viewBox: "0 0 15 20",
   // path: fontawesome.MAP_MARKER,
   // path:  'M384 192c0 87.4-117 243-168.3 307.2c-12.3 15.3-35.1 15.3-47.4 0C117 435 0 279.4 0 192C0 86 86 0 192 0S384 86 384 192z',
-  path: "m13.1 39c-4-5-13.1-17.2-13.1-24 0-8.3 6.7-15 15-15 8.3 0 15 6.7 15 15 0 6.8-9.1 19-13.1 24-1 1.2-2.8 1.2-3.8 0zm6.9-24c0-2.8-2.2-5-5-5-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5z",
+  path:
+    "m13.1 39c-4-5-13.1-17.2-13.1-24 0-8.3 6.7-15 15-15 8.3 0 15 6.7 15 15 0 6.8-9.1 19-13.1 24-1 1.2-2.8 1.2-3.8 0zm6.9-24c0-2.8-2.2-5-5-5-2.8 0-5 2.2-5 5 0 2.8 2.2 5 5 5 2.8 0 5-2.2 5-5z",
   fillOpacity: 1,
   strokeWeight: 1,
   strokeColor: "#fff",

@@ -24,7 +24,7 @@
         </div>
         <div class="h-2.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"></div>
       </div>
-      <div class="pt-5  flex-between">
+      <div class="pt-5 flex-between">
         <div>
           <div
             class="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600"
@@ -81,4 +81,3 @@
     </div>
   </div>
 </template>
-

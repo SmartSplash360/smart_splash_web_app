@@ -74,10 +74,13 @@ const confirm = useConfirm();
 
 const router = useRouter();
 
-const toggleEditTemplateModal = () => showEditModal.value = false;
+const toggleEditTemplateModal = () => (showEditModal.value = false);
 
-const viewTemplate = () => router.push(`/campaigns/${props.template.id}?campaignType=${props.campaignType}&templateId=${props.template.id}`);
-const editTemplate = () => showEditModal.value = !showEditModal.value;
+const viewTemplate = () =>
+  router.push(
+    `/campaigns/${props.template.id}?campaignType=${props.campaignType}&templateId=${props.template.id}`
+  );
+const editTemplate = () => (showEditModal.value = !showEditModal.value);
 
 const deleteTemplate = async (id) => {
   try {

@@ -3,13 +3,13 @@
     class="flex max-h-[110vh] flex-col dark:bg-[#31353F] dark:text-white sm:flex-row"
   >
     <div class="hidden lg:block" :class="[toggleSide && 'w-[100px]']">
-      <UiTheSidebar 
+      <UiTheSidebar
         :toggleSide="toggleSide"
         :handleToggleSide="handleToggleSide"
-        ></UiTheSidebar>
+      ></UiTheSidebar>
     </div>
     <div
-        class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto"
+      class="max-h-[100vh] min-h-[100vh] w-full overflow-hidden overflow-y-auto"
     >
       <UiTheNavbar :setColorTheme="setColorTheme"></UiTheNavbar>
       <div class="lg:hidden">
@@ -25,11 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import {useUserStore} from "~/stores/users";
-
+import { useUserStore } from "~/stores/users";
 
 const toggleSide = ref(false);
-const handleToggleSide = () => toggleSide.value =! toggleSide.value
+const handleToggleSide = () => (toggleSide.value = !toggleSide.value);
 
 type Theme = "light" | "dark";
 
@@ -51,46 +50,73 @@ const setColorTheme = (newTheme: Theme) => {
   filter: blur(1rem);
 }
 .customer-table .p-datatable-wrapper {
-    border: 1px solid #dee2e6;
-    border-bottom: 0;
-    background-color: inherit ;
+  border: 1px solid #dee2e6;
+  border-bottom: 0;
+  background-color: inherit;
 }
 
 .dark-mode .p-datatable-wrapper {
-    border: 1px solid #4B5563;
-    border-bottom: 0;
-    background-color: inherit ;
+  border: 1px solid #4b5563;
+  border-bottom: 0;
+  background-color: inherit;
 }
 
-.customer-table  .p-datatable .p-datatable-tbody > tr > td {
-    text-align: left;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+.customer-table .p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #dee2e6;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
 }
 
 .dark-mode .p-datatable .p-datatable-tbody > tr > td {
-    text-align: left;
-    border: 1px solid #4B5563;
-    border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+  text-align: left;
+  border: 1px solid #4b5563;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem;
 }
 
-.customer-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.customer-job-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.alert-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.products-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.services-table  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.report-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.user-setting-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover,
-.technician-job-table .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover{
+.customer-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.customer-job-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.alert-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.products-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.services-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.report-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.user-setting-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover,
+.technician-job-table
+  .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover {
   background: #d4ecf4;
-  color: #6B7280;
+  color: #6b7280;
   cursor: pointer;
 }
-.dark-mode > .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover {
-  background: #1B2028;
-  color: #FFF;
+.dark-mode
+  > .p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover {
+  background: #1b2028;
+  color: #fff;
   cursor: pointer;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-    <ContainerCampaignOverview></ContainerCampaignOverview>
+  <ContainerCampaignOverview></ContainerCampaignOverview>
 </template>
 
 <script setup>
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
 </script>

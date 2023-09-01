@@ -165,7 +165,11 @@
       </div>
 
       <div class="flex w-full">
-        <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
+        <div
+          ref="mapDiv"
+          class="border-2"
+          style="width: 100%; height: 300px;"
+        />
       </div>
 
       <!-- image upload -->
@@ -192,7 +196,14 @@
                 rounded
                 outlined
               ></Button>
-              <!-- <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload" rounded outlined severity="success" :disabled="!files || files.length === 0"></Button> -->
+              <Button
+                @click="uploadEvent(uploadCallback)"
+                icon="pi pi-cloud-upload"
+                rounded
+                outlined
+                severity="success"
+                :disabled="!files || files.length === 0"
+              ></Button>
               <Button
                 @click="clearCallback()"
                 icon="pi pi-times"
@@ -205,11 +216,13 @@
             <ProgressBar
               :value="totalSizePercent"
               :showValue="false"
-              :class="[
-                'md:w-20rem h-1rem w-full md:ml-auto',
-                { 'exceeded-progress-bar': totalSizePercent > 100 },
-              ]"
-              ><span class="white-space-nowrap"
+              :class="
+                totalSizePercent > 100
+                  ? 'md:w-20rem h-1rem w-full md:ml-auto'
+                  : 'exceeded-progress-bar'
+              "
+            >
+              <span class="white-space-nowrap"
                 >{{ totalSize }}B / 1Mb</span
               ></ProgressBar
             >
@@ -227,7 +240,10 @@
         class="flex flex-wrap justify-center gap-2"
       >
         <!-- storage/appc -->
-        <div v-for="image in bodyOfWater.gallery.images">
+        <div
+          v-for="image in bodyOfWater.gallery.images"
+          :key="image.image_path"
+        >
           <img
             class="m-2 h-20 w-20 rounded-md object-cover"
             :src="config.public.imageUrl + image.image_path"
@@ -586,8 +602,7 @@ const totalSize = ref(0);
 const totalSizePercent = ref(0);
 const gallery = ref([]);
 
-const onAdvancedUpload = ($event) => {
-};
+const onAdvancedUpload = ($event) => {};
 
 const onSelectedFiles = (event) => {
   gallery.value = event.files;

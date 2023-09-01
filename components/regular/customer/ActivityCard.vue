@@ -1,27 +1,27 @@
 <template>
   <BaseActivityCard
-      :icon="ActiveRouteIcon"
-      :alt="'active-route-icon'"
-      :status="'Active (routed)'"
-      :count="routes.activeRoute"
-      :loading="loading"
-      :bg="'primary'"
+    :icon="ActiveRouteIcon"
+    :alt="'active-route-icon'"
+    :status="'Active (routed)'"
+    :count="routes.activeRoute"
+    :loading="loading"
+    :bg="'primary'"
   ></BaseActivityCard>
   <BaseActivityCard
-      :icon="ActiveNoRoute"
-      :iconMobile="ActiveNoRouteMobile"
-      :alt="'active-no-route'"
-      :status="'Active (no route)'"
-      :count="routes.activeNoRoute"
-      :loading="loading"
+    :icon="ActiveNoRoute"
+    :iconMobile="ActiveNoRouteMobile"
+    :alt="'active-no-route'"
+    :status="'Active (no route)'"
+    :count="routes.activeNoRoute"
+    :loading="loading"
   ></BaseActivityCard>
   <BaseActivityCard
-      :icon="InactiveRoute"
-      :alt="'inactive-route'"
-      :status="'Inactive'"
-      :count="routes.inactive"
-      :loading="loading"
-      :bg="'primary'"
+    :icon="InactiveRoute"
+    :alt="'inactive-route'"
+    :status="'Inactive'"
+    :count="routes.inactive"
+    :loading="loading"
+    :bg="'primary'"
   ></BaseActivityCard>
 </template>
 
@@ -38,6 +38,6 @@ defineProps({
   showLeads: {
     type: Boolean,
     default: true,
-  }
+  },
 });
 </script>

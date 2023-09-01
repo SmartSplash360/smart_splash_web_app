@@ -1,12 +1,10 @@
 <template>
-  <ContainerProductsList 
-    :loading="loading" >
-  </ContainerProductsList>
+  <ContainerProductsList :loading="loading"> </ContainerProductsList>
 </template>
 
 <script setup>
-import { useProductStore} from "~/stores/products";
-import { useServiceStore} from "~/stores/services";
+import { useProductStore } from "~/stores/products";
+import { useServiceStore } from "~/stores/services";
 
 const loading = ref(true);
 
@@ -16,12 +14,11 @@ const serviceStore = useServiceStore();
 onMounted(async () => {
   await productStore.fetchProducts();
   await serviceStore.fetchServices();
-  loading.value = false
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
-
 </script>

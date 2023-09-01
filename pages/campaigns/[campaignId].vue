@@ -1,7 +1,5 @@
 <template>
-  <ContainerCampaignOverview
-    :campaignId="campaignId"
-    :edit="edit">
+  <ContainerCampaignOverview :campaignId="campaignId" :edit="edit">
   </ContainerCampaignOverview>
 </template>
 

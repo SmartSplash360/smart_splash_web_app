@@ -26,11 +26,6 @@ export const sideBarLinks = [
     to: "/products",
   },
   {
-    icon: "inbox",
-    name: "Inbox",
-    to: "/inbox",
-  },
-  {
     icon: "file-lines",
     name: "Reports",
     to: "/reports",

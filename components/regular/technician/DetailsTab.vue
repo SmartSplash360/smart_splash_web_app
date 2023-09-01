@@ -16,9 +16,7 @@
       @click="$emit('select-tab', 'INVOICES')"
       class="cursor-pointer rounded-xl bg-[#d4ecf4] px-3 py-2 text-white sm:px-10"
     >
-      <span class="text-center span__element"
-        >Feedbacks</span
-      >
+      <span class="text-center span__element">Feedbacks</span>
     </div>
   </div>
 </template>
