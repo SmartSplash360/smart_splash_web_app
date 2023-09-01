@@ -1,9 +1,6 @@
 <template>
   <form class="lg:overflow-auto flex flex-col gap-8 dark:bg-[#31353F] lg:p-5">
-    <div
-      class="hidden flex gap-3 items-center w-fit"
-      @click="handlePreviousStep()"
-    >
+    <div class="flex gap-3 items-center w-fit" @click="handlePreviousStep()">
       <font-awesome-icon icon="arrow-left" />
       <span class="hidden sm:flex span__element">Back</span>
     </div>

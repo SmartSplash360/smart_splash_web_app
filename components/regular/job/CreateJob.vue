@@ -160,7 +160,7 @@
             optionValue="value"
             optionLabel="label"
             placeholder="Select a status"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-500 dark:text-gray-300 dark:text-white w-full lg:flex-1"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-500 dark:text-gray-300 w-full lg:flex-1"
             :class="errorStatus && 'border-red-300'"
             @change="handleChangeStatus"
           />
