@@ -178,7 +178,6 @@ const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 
 onMounted(async () => {
   loading.value = false;
-  console.log(props.alerts);
 });
 
 const viewAlert = (alert) => {

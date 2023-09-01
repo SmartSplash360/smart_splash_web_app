@@ -40,19 +40,19 @@
           <p>
             <span class="span__element text-xs text-gray-600"> Name : </span>
             <span class="span__element text-xs text-gray-400">
-              {{ technician.name }}</span
+              {{ technician?.name }}</span
             >
           </p>
           <p>
             <span class="span__element text-xs text-gray-600"> Email : </span>
             <span class="span__element text-xs text-gray-400">
-              {{ technician.email }}</span
+              {{ technician?.email }}</span
             >
           </p>
           <p>
             <span class="span__element text-xs text-gray-600"> Phone : </span>
             <span class="span__element text-xs text-gray-400">
-              {{ technician.phone_number }}</span
+              {{ technician?.phone_number }}</span
             >
           </p>
         </div>
@@ -63,13 +63,13 @@
           <p>
             <span class="span__element text-xs text-gray-600"> Name : </span>
             <span class="span__element text-xs text-gray-400">
-              {{ customer.name }}</span
+              {{ customer?.name }}</span
             >
           </p>
           <p>
             <span class="span__element text-xs text-gray-600"> Email : </span>
             <span class="span__element text-xs text-gray-400">
-              {{ customer.email }}</span
+              {{ customer?.email }}</span
             >
           </p>
         </div>
@@ -121,9 +121,15 @@ const loading = ref(true);
 
 onMounted(async () => {
   alert.value = await alertStore.fetchAlert(alertId);
-  technician.value = await technicianStore.getTechnicianById(34);
-  customer.value = await customerStore.getCustomerById(28);
+  technician.value = await technicianStore.getTechnicianById(
+    parseInt(technicianId)
+  );
+  customer.value = await customerStore.getCustomerById(parseInt(customerId));
   loading.value = false;
+
+  console.log(customer.value);
+  console.log(technician.value);
+  console.log(alert.value);
 });
 
 const handleCreateJob = () => {
@@ -132,7 +138,7 @@ const handleCreateJob = () => {
     query: {
       technicianIdAlert: technicianId,
       customerIdAlert: customerId,
-      poolIdAlert: alert.body_of_water_id,
+      poolIdAlert: alert.value.body_of_water_id,
     },
   });
 };

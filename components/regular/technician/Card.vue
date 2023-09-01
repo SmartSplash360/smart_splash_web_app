@@ -12,7 +12,7 @@
                   ? 'text-[#02BF70] bg-[#e5f9f1] border border-[#02BF70] dark:bg-[#1f504a] dark:text-[#27C498]'
                   : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
               "
-              class="rounded-md px-5 span__element shadow-md"
+              class="rounded-md px-5 span__element shadow-md flex justify-center items-center"
               >{{ technician?.status == 1 ? "Active" : "Inactive" }}</span
             >
             <span class="card ml-auto cursor-pointer" @click="toggleMenu">

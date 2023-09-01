@@ -54,7 +54,7 @@
                         ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
                         : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
                     "
-                    class="w-[100px] rounded-md px-5 span__element shadow-md"
+                    class="w-[100px] rounded-md px-5 span__element shadow-md flex justify-center items-center"
                   >
                     {{
                       service.is_available === 1 ? "Available" : "Unavailable"
@@ -96,7 +96,7 @@
                     ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
                     : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
                 "
-                class="w-[100px] h-8 rounded-md px-5 span__element shadow-md"
+                class="w-[100px] h-8 rounded-md px-5 span__element shadow-md flex justify-center items-center"
               >
                 {{ product.is_available === 1 ? "Available" : "Unavailable" }}
               </span>

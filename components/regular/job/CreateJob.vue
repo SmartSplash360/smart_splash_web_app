@@ -18,8 +18,8 @@
           >Add new job</span
         >
       </div>
-      <div class="flex gap-2 sm:gap-5 lg:w-3/5">
-        <div v-if="!technicianId" class="flex w-1/2 lg:w-full flex-col gap-2">
+      <div class="flex flex-wrap lg:flex-nowrap gap-2 sm:gap-5 lg:w-3/5">
+        <div v-if="!technicianId" class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
             v-model="selectedTechnician"
             :options="technicians"
@@ -36,7 +36,7 @@
             }}</span>
           </p>
         </div>
-        <div class="flex w-1/2 lg:w-full flex-col gap-2">
+        <div class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
             v-model="customerId"
             :options="customers"
@@ -53,7 +53,7 @@
             }}</span>
           </p>
         </div>
-        <div class="flex w-1/2 lg:w-full flex-col gap-2">
+        <div class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
             :disabled="disablePoolSelect"
             v-model="poolId"
@@ -190,7 +190,7 @@
           <label class="text-sm" for="address"> Description* </label>
           <Textarea
             type="text"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500 dark:text-gray-300"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-sm text-gray-500 dark:text-gray-300"
             v-model="description"
             rows="3"
             cols="10"
@@ -207,7 +207,7 @@
           <label class="text-sm" for="address"> Technical Notes* </label>
           <Textarea
             type="text"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white text-sm text-gray-500 dark:text-gray-300"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-sm text-gray-500 dark:text-gray-300"
             v-model="technical_notes"
             rows="3"
             cols="10"
@@ -241,11 +241,12 @@
                     <div class="flex items-center gap-3">
                       <span>{{ service.name }} </span>
                       <i class="pi pi-chevron-right text-xs"></i>
-                      <!-- <i class="pi pi-chevron-down text-xs"></i> -->
                     </div>
                   </div>
                 </template>
-                <div class="flex justify-between items-center pl-5">
+                <div
+                  class="flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center pl-5"
+                >
                   <div class="flex items-center gap-4">
                     <Checkbox
                       v-model="selectedServices"
@@ -255,7 +256,7 @@
                     />
                     <span class="span__element">{{ service.name }}</span>
                   </div>
-                  <span class="span__element w-1/3 font-bold"
+                  <span class="span__element font-bold"
                     >Price : ${{ service.price }}</span
                   >
                   <span
@@ -264,7 +265,7 @@
                         ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
                         : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
                     "
-                    class="w-[100px] rounded-md px-5 span__element shadow-md"
+                    class="w-[100px] rounded-md px-5 span__element shadow-md flex justify-center items-center"
                   >
                     {{
                       service.is_available === 1 ? "Available" : "Unavailable"
@@ -399,17 +400,18 @@ onMounted(async () => {
 
   if (route.query.technicianIdAlert) {
     const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
+    console.log(technicianIdAlert, customerIdAlert, poolIdAlert);
 
-    selectedTechnician.value = Number(technicianIdAlert);
-    customerId.value = Number(customerIdAlert);
+    selectedTechnician.value = parseInt(technicianIdAlert);
+    customerId.value = parseInt(customerIdAlert);
 
     if (customerId.value) {
       let customer = customerStore.getCustomerById(customerId.value);
-      bodiesOfWater.value = customer.bodies_of_water;
+      bodiesOfWater.value = customer?.bodies_of_water;
       disablePoolSelect.value = false;
     }
 
-    poolId.value = Number(poolIdAlert);
+    poolId.value = parseInt(poolIdAlert);
   }
 });
 
