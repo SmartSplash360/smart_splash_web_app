@@ -99,7 +99,9 @@
                 text
                 raised
                 rounded
-                @click="editItem(slotProps.data)"
+                @click="
+                  editItem(slotProps.data.id, { ...slotProps.data }, false)
+                "
               />
               <Button
                 icon="pi pi-trash"

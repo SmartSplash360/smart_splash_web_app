@@ -130,8 +130,7 @@
           class="hover:shadow-xl"
         />
         <Button
-          label="Submit"
-          icon="pi pi-check"
+          :label="customer ? 'Update Customer' : 'Create Customer '"
           class="!bg-[#0291BF] hover:shadow-xl text-white"
           @click="customer ? updateCustomer() : createCustomer()"
         />

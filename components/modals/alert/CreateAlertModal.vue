@@ -242,7 +242,6 @@ onMounted(async () => {
   await alertTypeStore.fetchAlertTypes();
 
   if (alert) {
-    const { alert } = props;
     status.value = alert.status;
     priority.value = alert.priority;
     dateTime.value = new Date(alert?.date_time);
