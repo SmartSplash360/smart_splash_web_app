@@ -17,7 +17,7 @@
               <AccordionTab v-for="service in services" :key="service.id">
                 <template #header>
                   <div
-                    class="flex gap-5 text-gray-600 dark:text-gray-200 w-full"
+                    class="flex items-center gap-5 text-gray-600 dark:text-gray-200 w-full"
                   >
                     <span class="flex">
                       <i class="pi pi-ellipsis-v ml-2"></i>
@@ -35,7 +35,9 @@
                     </div>
                   </div>
                 </template>
-                <div class="flex justify-between pl-5">
+                <div
+                  class="flex flex-col lg:flex-row gap-4 justify-between pl-5"
+                >
                   <div class="flex items-center gap-4">
                     <Checkbox
                       v-model="selectedServices"
@@ -43,9 +45,9 @@
                       :value="service"
                       :disabled="service.is_available === 0"
                     />
-                    <span class="span__element w-1/3">{{ service.name }}</span>
+                    <span class="span__element">{{ service.name }}</span>
                   </div>
-                  <span class="span__element w-1/3 font-bold"
+                  <span class="span__element font-bold"
                     >Price : ${{ service.price }}</span
                   >
                   <span
