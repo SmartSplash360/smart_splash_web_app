@@ -84,6 +84,22 @@
           }}</span>
         </p>
       </div>
+      <div class="flex w-full flex-col gap-3">
+        <label class="span__element" for="technician"> Subject* </label>
+        <InputText
+          type="text"
+          v-model="subject"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorSubject && 'border-red-300'"
+          @blur="handleChangeSubject"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorSubject" class="text-[#D42F24] text-xs">{{
+            errorSubject
+          }}</span>
+        </p>
+      </div>
     </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
       <div class="flex w-full flex-col gap-3">
@@ -216,6 +232,7 @@ const status = ref("open");
 const priority = ref("medium");
 const dateTime = ref(null);
 const notes = ref("");
+const subject = ref("");
 const alertTypeId = ref();
 const bodyOfWaterId = ref();
 const technicianId = ref();
@@ -238,6 +255,7 @@ const errorAlertTypeId = ref();
 const errorBodyOfWaterId = ref();
 const errorTechnicianId = ref();
 const errorDate = ref();
+const errorSubject = ref();
 
 /** Date limits */
 let today = new Date();
@@ -270,6 +288,7 @@ onMounted(async () => {
   alertTypeId.value = alert.alert_type_id;
   bodyOfWaterId.value = alert.body_of_water_id;
   technicianId.value = alert.technician_id;
+  subject.value = alert.subject;
 
   loading.value = false;
 });
@@ -286,6 +305,9 @@ const handleChangeTechnician = () => {
   errorTechnicianId.value = technicianId.value
     ? ""
     : "Please select technician";
+};
+const handleChangeSubject = () => {
+  errorSubject.value = subject.value ? "" : "Please Add a subject";
 };
 const handleChangeNote = () => {
   errorNotes.value = notes.value
@@ -326,6 +348,7 @@ const updateAlert = async () => {
         alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
+        subject: subject.value,
       });
 
       await alertStore.fetchAlerts();

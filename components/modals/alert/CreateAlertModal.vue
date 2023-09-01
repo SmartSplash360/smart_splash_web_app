@@ -72,6 +72,22 @@
             }}</span>
           </p>
         </div>
+        <div class="flex w-full flex-col gap-3">
+          <label class="span__element" for="technician"> Subject* </label>
+          <InputText
+            type="text"
+            v-model="subject"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorSubject && 'border-red-300'"
+            @blur="handleChangeSubject"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorSubject" class="text-[#D42F24] text-xs">{{
+              errorSubject
+            }}</span>
+          </p>
+        </div>
       </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-3">
@@ -161,6 +177,7 @@ import { useAlertTypeStore } from "~/stores/alertType";
 import { useTechnicianStore } from "~/stores/technician";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useAlertStore } from "~/stores/alert";
+import { sub } from "date-fns";
 
 const alertTypeStore = useAlertTypeStore();
 const technicianStore = useTechnicianStore();
@@ -184,6 +201,7 @@ const statusOptions = ref([
 
 const status = ref("open");
 const priority = ref("medium");
+const subject = ref("");
 const dateTime = ref(null);
 
 const notes = ref("");
@@ -195,6 +213,7 @@ const errorNotes = ref();
 const errorAlertTypeId = ref();
 const errorBodyOfWaterId = ref();
 const errorTechnicianId = ref();
+const errorSubject = ref();
 
 const minDate = ref(new Date());
 const maxDate = ref(new Date());
@@ -247,6 +266,9 @@ const handleChangeTechnician = () => {
     ? ""
     : "Please select technician";
 };
+const handleChangeSubject = () => {
+  errorSubject.value = subject.value ? "" : "Please Add a subject";
+};
 const handleChangeNote = () => {
   errorNotes.value = notes.value
     ? notes.value.length > 300
@@ -260,11 +282,13 @@ const validateForm = () => {
   handleChangeBodyOfWater();
   handleChangeTechnician();
   handleChangeNote();
+  handleChangeSubject();
   return (
     !errorAlertTypeId.value &&
     !errorBodyOfWaterId.value &&
     !errorTechnicianId.value &&
-    !errorNotes.value
+    !errorNotes.value &&
+    !errorSubject.value
   );
 };
 
@@ -282,6 +306,7 @@ const createAlert = async () => {
         alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
+        subject: subject.value,
       };
 
       await alertStore.createAlert(data);
@@ -307,6 +332,7 @@ const updateAlert = async () => {
         alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
+        subject: subject.value,
       };
 
       await alertStore.updateAlert(alert?.id, data);

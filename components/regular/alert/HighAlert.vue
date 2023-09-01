@@ -104,9 +104,7 @@
       <AccordionTab v-for="alert in alerts" :key="alert.id">
         <template #header>
           <div class="flex-between w-full dark:text-white">
-            <span class="flex-1 paragraph__p">{{
-              alert.alert_type?.name
-            }}</span>
+            <span class="flex-1 paragraph__p">{{ alert.subject }}</span>
             <span class="flex-1 paragraph__p">{{
               alert.body_of_water?.customer?.name
             }}</span>
