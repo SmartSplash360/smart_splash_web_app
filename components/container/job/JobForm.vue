@@ -25,6 +25,7 @@
 <script setup>
 import { useToast } from "primevue/usetoast";
 import { useJobStore } from "~/stores/jobs";
+import { useQuoteStore } from "~/stores/quote";
 
 const props = defineProps({
   technicianId: String | Number,
@@ -34,6 +35,7 @@ const props = defineProps({
 const router = useRouter();
 const toast = useToast();
 const jobStore = useJobStore();
+const quoteStore = useQuoteStore();
 
 const currentStep = ref(0);
 const newJobPayload = ref();
@@ -52,15 +54,20 @@ const handlePreviousStep = () => {
   currentStep.value = currentStep.value - 1;
 };
 
-const createJob = async () => {
+const createJob = async (totalPrice) => {
   try {
-    await jobStore.createJob(newJobPayload.value);
+    const createdJob = await jobStore.createJob(newJobPayload.value);
     selectedServices.value.forEach(async (service) => {
       await jobStore.createJobActivity({
         service_id: service.id,
         date: newJobPayload.value.start_date,
         description: service.description,
       });
+    });
+    quoteStore.createQuote({
+      job_id: createdJob.id,
+      reference: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
+      total_amount: Number(totalPrice),
     });
     toast.add({
       severity: "success",

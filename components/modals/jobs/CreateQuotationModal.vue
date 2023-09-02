@@ -169,6 +169,15 @@ const totalPrice = computed(
     props.totalPriceServices + props.totalPriceProducts + props.totalPriceChems
 );
 
+onMounted(() => {
+  const poolInfo = props.customerDetails.bodies_of_water?.filter(
+    (bodyOfWaterItem) => (bodyOfWaterItem.pool_id = props.newJobPayload.pool_id)
+  )[0];
+  email.value = props.customerDetails.email;
+  address.value = poolInfo.address;
+  bodyOfWater.value = poolInfo.name;
+});
+
 const handleSendQuote = () => {
   confirm.require({
     message: "Are you sure you want to proceed?",
@@ -182,20 +191,12 @@ const handleSendQuote = () => {
         detail: "You have successfully sent a quote to " + email.value,
         life: 5000,
       });
+      console.log("total", totalPrice.value);
       setTimeout(() => {
-        props.createJob();
+        props.createJob(totalPrice.value);
       }, 3000);
     },
     reject: () => {},
   });
 };
-
-onMounted(() => {
-  const poolInfo = props.customerDetails.bodies_of_water?.filter(
-    (bodyOfWaterItem) => (bodyOfWaterItem.pool_id = props.newJobPayload.pool_id)
-  )[0];
-  email.value = props.customerDetails.email;
-  address.value = poolInfo.address;
-  bodyOfWater.value = poolInfo.name;
-});
 </script>
