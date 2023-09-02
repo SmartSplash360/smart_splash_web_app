@@ -2,7 +2,11 @@
   <section v-if="loading">
     <SkeletonReportPage></SkeletonReportPage>
   </section>
-  <section v-else class="flex flex-col gap-14">
+  <section v-else class="flex flex-col gap-8">
+    <div class="flex gap-3 items-center cursor-pointer" @click="$router.back()">
+      <font-awesome-icon icon="arrow-left" />
+      <span class="sm:flex span__element">Back</span>
+    </div>
     <div class="flex flex-col sm:flex-row gap-5 justify-between border-b pb-5">
       <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px]">
         <h2 class="text-3xl font-bold text-[#025E7C]">Invoices</h2>
