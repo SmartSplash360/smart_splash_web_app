@@ -10,7 +10,9 @@
     <div class="flex flex-col sm:flex-row gap-5 justify-between border-b pb-5">
       <div class="flex gap-2 items-center lg:gap-5">
         <h2 class="text-3xl font-bold text-[#025E7C]">Quotes</h2>
-        <span class="span__element font-bold text-gray-500">(62 Results)</span>
+        <span class="span__element font-bold text-gray-500"
+          >({{ quoteCount }} Results)</span
+        >
       </div>
       <BaseSearchBar />
     </div>
@@ -27,23 +29,21 @@
     <div class="flex flex-col gap-4">
       <div
         class="border rounded-lg py-5 px-5 flex flex-col gap-8 dark:bg-[#1B2028]"
-        v-for="invoice in invoices"
-        :key="invoice.number"
+        v-for="quote in quotes"
+        :key="quote.number"
       >
         <div class="w-full flex justify-between">
           <div class="flex flex-col">
-            <span class="span__element">{{ invoice.client }}</span>
-            <span class="span__element text-gray-400"
-              >#{{ invoice.number }}</span
-            >
+            <span class="span__element">{{ quote.customer_name }}</span>
+            <span class="span__element text-gray-400">#{{ quote.id }}</span>
           </div>
           <div class="flex items-center text-[#3B7DDF] w-32">
             <span
               class="w-3 h-3 rounded-full"
               :class="
-                invoice.status === 'accepted'
+                quote.status === 'sent'
                   ? 'bg-[#07C56E]'
-                  : invoice.status === 'pending'
+                  : quote.status === 'pending'
                   ? 'bg-[#3B7DDF]'
                   : 'bg-[#D4382E]'
               "
@@ -51,18 +51,18 @@
             </span>
             <span
               :class="
-                invoice.status === 'accepted'
+                quote.status === 'sent'
                   ? 'text-[#07C56E]'
-                  : invoice.status === 'pending'
+                  : quote.status === 'pending'
                   ? 'text-[#3B7DDF]'
                   : 'text-[#D4382E]'
               "
               class="px-5 flex justify-center span__element"
             >
               {{
-                invoice.status === "accepted"
-                  ? "Accepted "
-                  : invoice.status === "pending"
+                quote.status === "sent"
+                  ? "Sent "
+                  : quote.status === "pending"
                   ? "Pending"
                   : "Declined"
               }}
@@ -76,32 +76,34 @@
             <span class="span__element text-gray-400 w-1/3 lg:w-full"
               >Address</span
             >
-            <span class="span__element lg:w-3/5">{{ invoice.address }}</span>
+            <span class="span__element lg:w-3/5">{{ quote.pool_address }}</span>
           </div>
           <div class="flex gap-8 lg:flex-col lg:w-1/3 lg:gap-2">
             <span class="span__element text-gray-400 w-1/3 lg:w-full"
               >Technician</span
             >
             <span class="span__element font-medium"
-              >{{ invoice.technician }}.00</span
+              >{{ quote.technician_name }}.00</span
             >
           </div>
           <div class="flex gap-8 lg:flex-col lg:w-1/3 lg:gap-2">
             <span class="span__element text-gray-400 w-1/3 lg:w-full"
               >Issued Date</span
             >
-            <span class="span__element font-bold">${{ invoice.date }}.00</span>
+            <span class="span__element font-bold">{{
+              renderDate(quote.created_at)
+            }}</span>
           </div>
         </div>
         <div class="flex justify-end xl:justify-between gap-5 xl:w-1/6">
           <span
             class="span__element text-[#5B7CFF] cursor-pointer"
-            @click="toggleJobQuoteModal({ invoice, readOnlyValue: true })"
+            @click="toggleJobQuoteModal({ quote, readOnlyValue: true })"
             >View Quote</span
           >
           <nuxt-link
             class="span__element text-[#5B7CFF] cursor-pointer"
-            :to="`/reports/quotes/${invoice.number}`"
+            :to="`/reports/quotes/${quote.id}`"
             >Edit Quote</nuxt-link
           >
         </div>
@@ -111,71 +113,18 @@
 </template>
 
 <script setup>
+import { useQuoteStore } from "~/stores/quote";
 defineProps({
   loading: Boolean,
 });
+
+const quoteStore = useQuoteStore();
 
 const showQuotationModal = ref(false);
 const customerDetails = ref();
 const totalPriceServices = ref(154);
 const totalPriceProducts = ref(454);
 const totalPriceChems = ref(205);
-const invoices = ref([
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "accepted",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "declined",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "accepted",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "pending",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "accepted",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-  {
-    number: "B375e1728",
-    date: "August 18, 2023",
-    client: "A.J.Beson",
-    amount: 125.0,
-    status: "declined",
-    address: "24436 Harbour View DrivePonte Vedra Beach, Florida 32082",
-    technician: "Evans King",
-  },
-]);
 const job = ref({
   technician_id: "33",
   pool_id: 6,
@@ -191,11 +140,29 @@ const job = ref({
 });
 const readOnly = ref(false);
 
+const quotes = computed(() => quoteStore.getQuotes);
+const quoteCount = computed(() => quoteStore.getQuoteCount);
+
+const renderDate = (data) => {
+  const dateObject = new Date(data);
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  return dateObject.toLocaleDateString("en-US", options);
+};
 const closeModal = () => (showQuotationModal.value = false);
-const toggleJobQuoteModal = ({ invoice, readOnlyValue }) => {
+const toggleJobQuoteModal = ({ quote, readOnlyValue }) => {
+  // retrieve technician
+  // retrieve job
+  // retrieve customer
   customerDetails.value = {
     id: 24,
-    name: invoice.client,
+    name: quote.customer_name,
     email: "bartell.ethyl@example.org",
     email_verified_at: "2023-08-17T09:08:38.000000Z",
     created_at: "2023-08-17T09:08:38.000000Z",

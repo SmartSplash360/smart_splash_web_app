@@ -74,6 +74,7 @@
         ></RegularCustomerJobs>
         <RegularCustomerQuotes
           v-else-if="currentTab === 'QUOTES'"
+          :quotes="quotes"
         ></RegularCustomerQuotes>
         <RegularCustomerInvoices
           v-else-if="currentTab === 'INVOICES'"
@@ -89,8 +90,11 @@
 <script setup>
 import { useCustomerStore } from "~/stores/customer";
 import { useJobStore } from "~/stores/jobs";
+import { useQuoteStore } from "~/stores/quote";
+
 const store = useCustomerStore();
 const jobStore = useJobStore();
+const quoteStore = useQuoteStore();
 
 const props = defineProps({
   customerId: String,
@@ -116,11 +120,14 @@ const jobsInprogress = ref([
 
 const customer = ref({});
 const jobs = ref([]);
+const quotes = ref([]);
 
 onMounted(async () => {
   loading.value = true;
+  await quoteStore.fetchCustomerQuotes(props.customerId);
   customer.value = await store.fetchCustomer(props.customerId);
   jobs.value = await jobStore.fetchCustomerJobs(props.customerId);
+  quotes.value = quoteStore.getQuotesByCustomerId(props.customerId);
   loading.value = false;
 });
 

@@ -48,7 +48,7 @@
       ></Column>
       <Column field="photo" header="Photo" exportHeader="Customer Photo">
         <template #body="slotProps">
-          <nuxt-link :to="`/customers/${slotProps.data.id}`">
+          <nuxt-link :to="`/customers/${slotProps.data?.id}`">
             <Avatar
               :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
               :alt="slotProps.data.name"
@@ -61,7 +61,7 @@
       </Column>
       <Column field="name" header="Customer" sortable>
         <template #body="slotProps">
-          <nuxt-link :to="`/customers/${slotProps.data.id}`">
+          <nuxt-link :to="`/customers/${slotProps.data?.id}`">
             {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
           </nuxt-link>
         </template>
