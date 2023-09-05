@@ -35,7 +35,7 @@
         <nuxt-link href="/reports">
           <Button
             label="View Reports"
-            class="w-full !text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm text-white hover:shadow-xl"
+            class="w-full text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm hover:shadow-xl"
           />
         </nuxt-link>
       </div>
@@ -55,6 +55,7 @@
       ></RegularTechnicianJobs>
       <RegularTechnicianQuotes
         v-else-if="currentTab === 'QUOTES'"
+        :quotes="quotes"
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks v-else></RegularTechnicianFeedbacks>
     </div>
@@ -63,15 +64,18 @@
 </template>
 
 <script setup>
-import { useTechnicianStore } from "~/stores/technician";
-import { useJobStore } from "~/stores/jobs";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { useTechnicianStore } from "~/stores/technician";
+import { useJobStore } from "~/stores/jobs";
+import { useQuoteStore } from "~/stores/quote";
 
 const toast = useToast();
+const confirm = useConfirm();
+
 const technicianStore = useTechnicianStore();
 const jobStore = useJobStore();
-const confirm = useConfirm();
+const quoteStore = useQuoteStore();
 
 const props = defineProps({
   technicianId: {
@@ -82,16 +86,20 @@ const props = defineProps({
 
 const router = useRouter();
 
-const currentTab = ref("JOBS");
+const currentTab = ref();
 const loading = ref(true);
 const technician = ref();
 const jobs = ref([]);
+const quotes = ref([]);
 const job = ref();
 const readOnly = ref(false);
 
 onMounted(async () => {
+  loading.value = true;
+  await quoteStore.fetchTechnicianQuotes(props.technicianId);
   technician.value = await technicianStore.fetchTechnician(props.technicianId);
   jobs.value = await jobStore.fetchTechnicianJobs(props.technicianId);
+  quotes.value = quoteStore.getTechnicianQuotes(props.technicianId);
   loading.value = false;
 });
 

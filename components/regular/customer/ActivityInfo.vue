@@ -23,13 +23,6 @@
       :count="routes.inactive"
       :loading="loading"
     ></BaseActivityInfoItem>
-    <BaseActivityInfoItem
-      :icon="LeadsIcon"
-      :alt="'lead-route'"
-      :status="'Leads'"
-      :count="routes.leads"
-      :loading="loading"
-    ></BaseActivityInfoItem>
   </div>
 </template>
 

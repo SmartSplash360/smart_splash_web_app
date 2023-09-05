@@ -57,25 +57,26 @@ export const useQuoteStore = defineStore("quote", {
         //     }
         // },
         async fetchTechnicianQuotes(technicianId: any) {
+            console.log("tech id",technicianId)
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byTechnician/${technicianId}` : `http://localhost:8000/api/v1/quotes/byTechnician/${technicianId}`
             try {
                 const res = await axios.get(url);
-                this.technicianQuotes = res.data.data.data;
+                this.technicianQuotes = res.data.data;
+                console.log(res)
+                return res.data.data
             } catch (error) {
                 return error
             }
         },
         async fetchCustomerQuotes(customerId: any) {
-            console.log("Customer id", customerId)
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byCustomer/${customerId}` : `http://localhost:8000/api/v1/quotes/byCustomer/${customerId}`
             try {
                 const res = await axios.get(url);
                 this.customerQuotes = res.data.data;
-                console.log(this.customerQuotes);
                 return res.data.data
             } catch (error) {
                 return error
