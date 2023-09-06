@@ -30,7 +30,11 @@
           {{ slotProps.data?.body_of_water?.name }}
         </template>
       </Column>
-      <Column field="technicians" header="Service level"></Column>
+      <Column
+        field="technicians"
+        header="Service level"
+        class="hidden"
+      ></Column>
       <Column field="status" header="Status">
         <template #body="slotProps">
           {{

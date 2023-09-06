@@ -141,7 +141,6 @@ const totalPriceChems = ref();
 
 onMounted(async () => {
   loading.value = true;
-  await jobStore.getJobs;
   await quoteStore.fetchCustomerQuotes(props.customerId);
   customer.value = await store.fetchCustomer(props.customerId);
   jobs.value = await jobStore.fetchCustomerJobs(props.customerId);
