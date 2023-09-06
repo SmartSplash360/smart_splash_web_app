@@ -2,7 +2,33 @@
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
-      <div class="w-full justify-end gap-5 flex">
+      <div class="w-full gap-5 flex justify-between">
+        <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px]">
+          <div class="flex gap-2 items-center lg:gap-5">
+            <h2 class="text-3xl font-bold text-[#025E7C]">
+              {{ priority }} Alerts
+            </h2>
+            <span class="span__element font-bold text-gray-500"
+              >({{
+                priority == "high"
+                  ? countHighAlert
+                  : priority == "medium"
+                  ? countMediumAlert
+                  : priority == "low"
+                  ? countLowAlert
+                  : alerts.length
+              }}
+              Results)</span
+            >
+          </div>
+        </div>
+        <Dropdown
+          v-model="priority"
+          :options="priorities"
+          placeholder="Select alert by priority"
+          class="w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
+          @change="handleChangePriority"
+        />
         <BaseAddButton
           class="hidden lg:flex"
           :btnText="'Add Alert'"
@@ -26,13 +52,6 @@
         :toggleShowAlertInfo="closeModal"
       >
       </ModalsAlertInfoModal>
-      <Dropdown
-        v-model="priority"
-        :options="priorities"
-        placeholder="Select alert by priority"
-        class="w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
-        @change="handleChangePriority"
-      />
       <RegularAlertTable
         :alerts="alerts"
         :viewItem="viewItem"
@@ -64,9 +83,14 @@ const alerts = ref([]);
 const alertList = ref([]);
 const alert = ref();
 
+const countAllAlert = ref(0);
+const countHighAlert = ref(0);
+const countMediumAlert = ref(0);
+const countLowAlert = ref(0);
+
 const active = ref(0);
 
-const priority = ref("");
+const priority = ref("All");
 const priorities = ref(["All alerts", "Low", "Medium", "High"]);
 
 onMounted(async () => {
@@ -74,15 +98,21 @@ onMounted(async () => {
   alertList.value = alertStore.getAlerts;
 });
 
-const highAlerts = computed(() =>
-  alerts.value.filter((alert) => alert?.priority === "high")
-);
-const mediumAlerts = computed(() =>
-  alerts.value.filter((alert) => alert?.priority === "medium")
-);
-const lowAlerts = computed(() =>
-  alerts.value.filter((alert) => alert?.priority === "low")
-);
+const highAlerts = computed(() => {
+  const list = alerts.value.filter((alert) => alert?.priority === "high");
+  countHighAlert.value = list.length;
+  return list;
+});
+const mediumAlerts = computed(() => {
+  const list = alerts.value.filter((alert) => alert?.priority === "medium");
+  countMediumAlert.value = list.length;
+  return list;
+});
+const lowAlerts = computed(() => {
+  const list = alerts.value.filter((alert) => alert?.priority === "low");
+  countLowAlert.value = list.length;
+  return list;
+});
 
 const handleChangePriority = () => {
   if (
