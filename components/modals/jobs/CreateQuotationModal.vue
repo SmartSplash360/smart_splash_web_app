@@ -9,7 +9,7 @@
     >
       <div class="flex-between items-center">
         <h3 class="heading__h3 text-[#025E7C] font-bold">
-          Create Quotation
+          {{ readOnly ? " Quote Details" : "Create Quotation" }}
         </h3>
         <span @click="toggleJobQuoteModal({ show: false })"
           ><font-awesome-icon
@@ -73,7 +73,7 @@
           </InputText>
         </div>
       </div>
-      <div class="flex gap-3 items-center -mt-4 mb-4">
+      <div v-if="!readOnly" class="flex gap-3 items-center -mt-4 mb-4">
         <Checkbox v-model="recurringInvoice" name="invoice" value="invoice" />
         <label class="span__element dark:text-gray-400"
           >This is a recurring invoice (Monthly)</label
@@ -107,7 +107,10 @@
           </h2>
         </li>
       </ul>
-      <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+      <div
+        v-if="!readOnly"
+        class="mt-5 flex flex-col justify-end gap-5 sm:flex-row"
+      >
         <Button
           label="Cancel"
           severity="secondary"
@@ -147,6 +150,7 @@ const props = defineProps({
   },
   readOnly: Boolean,
   technicianId: String | Number,
+  technicianName: String | Number,
   totalPriceServices: String | Number,
   totalPriceProducts: String | Number,
   totalPriceChems: String | Number,

@@ -35,6 +35,16 @@
         </div>
       </div>
       <Divider class="p-0 m-0" />
+      <ModalsJobsCreateQuotationModal
+        v-if="showQuotationModal"
+        :customerDetails="customer"
+        :totalPriceServices="totalPriceServices"
+        :totalPriceProducts="totalPriceProducts"
+        :totalPriceChems="totalPriceChems"
+        :newJobPayload="job"
+        :readOnly="true"
+        :toggleJobQuoteModal="closeModal"
+      ></ModalsJobsCreateQuotationModal>
       <div class="flex flex-col gap-10">
         <div
           class="flex justify-between rounded-xl bg-[#d4ecf4] dark:bg-[#1B2028] xl:w-1/2"
@@ -75,6 +85,7 @@
         <RegularCustomerQuotes
           v-else-if="currentTab === 'QUOTES'"
           :quotes="quotes"
+          :viewQuote="viewQuote"
         ></RegularCustomerQuotes>
         <RegularCustomerInvoices
           v-else-if="currentTab === 'INVOICES'"
@@ -120,10 +131,17 @@ const jobsInprogress = ref([
 
 const customer = ref({});
 const jobs = ref([]);
+const job = ref();
 const quotes = ref([]);
+const quote = ref();
+const showQuotationModal = ref(false);
+const totalPriceServices = ref();
+const totalPriceProducts = ref();
+const totalPriceChems = ref();
 
 onMounted(async () => {
   loading.value = true;
+  await jobStore.getJobs;
   await quoteStore.fetchCustomerQuotes(props.customerId);
   customer.value = await store.fetchCustomer(props.customerId);
   jobs.value = await jobStore.fetchCustomerJobs(props.customerId);
@@ -133,5 +151,17 @@ onMounted(async () => {
 
 const switchTabs = (tab) => {
   currentTab.value = tab;
+};
+
+const closeModal = () => (showQuotationModal.value = false);
+const viewQuote = ({ item }) => {
+  quote.value = item;
+  job.value = jobs.value.find((job) => job.id === item.job_id);
+
+  totalPriceServices.value = 258.25;
+  totalPriceProducts.value = 78.25;
+  totalPriceChems.value = 787;
+
+  showQuotationModal.value = !showQuotationModal.value;
 };
 </script>
