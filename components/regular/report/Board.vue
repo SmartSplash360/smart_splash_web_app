@@ -16,7 +16,7 @@
       <!-- @click="toggleQuoteModal" -->
       <nuxt-link
         to="/reports/quotes"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="min-w-max text-center span__element-large">Quotes</span>
@@ -41,7 +41,7 @@
       ></ModalsReportInvoicesModal>
       <div
         @click="toggleChemCostModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="ChemicalIcon" alt="chemical-tank-icon" />
         <span class="lg:text-md min-w-max text-center span__element-large"
@@ -60,7 +60,7 @@
       </div>
       <nuxt-link
         to="/reports/reviews"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-[#0291BF] hover:shadow-xl sm:px-6 dark:bg-[#1B2028]"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="min-w-max text-center span__element-large">Reviews</span>

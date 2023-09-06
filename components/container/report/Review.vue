@@ -27,7 +27,7 @@
           <div
             class="flex flex-col lg:flex-row items-center gap-5 lg:w-1/4 lg:mr-20"
           >
-            <div class="w-full ounded-full flex items-center justify-center">
+            <div class="w-fit ounded-full flex items-center justify-center">
               <Avatar
                 :image="technician?.photo ?? 'https://plchldr.co/i/500x500'"
                 class="mr-2 !w-1/2 !h-1/2 lg:!w-14 lg:!h-14"
