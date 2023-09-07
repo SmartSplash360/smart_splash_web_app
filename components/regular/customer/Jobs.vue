@@ -50,6 +50,20 @@
           {{ slotProps.data?.technician?.surname ?? "" }}
         </template>
       </Column>
+      <Column>
+        <template #body="slotProps">
+          <div class="flex flex-row gap-2">
+            <Button
+              icon="pi pi-eye"
+              text
+              raised
+              rounded
+              class="p-button-success"
+              @click="viewItem(slotProps.data)"
+            />
+          </div>
+        </template>
+      </Column>
     </DataTable>
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
@@ -125,6 +139,7 @@
 <script setup>
 const props = defineProps({
   jobs: Array,
+  viewItem: Function,
 });
 
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));

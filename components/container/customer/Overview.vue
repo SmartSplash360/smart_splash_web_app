@@ -35,6 +35,13 @@
         </div>
       </div>
       <Divider class="p-0 m-0" />
+      <ModalsJobsCreateJobModal
+        v-if="addJobModal"
+        :toggleAddJobModal="closeModal"
+        :job="job"
+        :readOnly="readOnly"
+        :technicianId="job.technician_id"
+      ></ModalsJobsCreateJobModal>
       <ModalsJobsCreateQuotationModal
         v-if="showQuotationModal"
         :customerDetails="customer"
@@ -81,6 +88,7 @@
         <RegularCustomerJobs
           v-if="currentTab === 'JOBS'"
           :jobs="jobs"
+          :viewItem="viewJob"
         ></RegularCustomerJobs>
         <RegularCustomerQuotes
           v-else-if="currentTab === 'QUOTES'"
@@ -138,6 +146,8 @@ const showQuotationModal = ref(false);
 const totalPriceServices = ref();
 const totalPriceProducts = ref();
 const totalPriceChems = ref();
+const readOnly = ref(false);
+const addJobModal = ref(false);
 
 onMounted(async () => {
   loading.value = true;
@@ -152,7 +162,10 @@ const switchTabs = (tab) => {
   currentTab.value = tab;
 };
 
-const closeModal = () => (showQuotationModal.value = false);
+const closeModal = () => {
+  showQuotationModal.value = false;
+  addJobModal.value = false;
+};
 const viewQuote = ({ item }) => {
   quote.value = item;
   job.value = jobs.value.find((job) => job.id === item.job_id);
@@ -162,5 +175,11 @@ const viewQuote = ({ item }) => {
   totalPriceChems.value = 787;
 
   showQuotationModal.value = !showQuotationModal.value;
+};
+const viewJob = (item) => {
+  readOnly.value = true;
+  job.value = { ...item };
+  console.log(job.value);
+  addJobModal.value = true;
 };
 </script>

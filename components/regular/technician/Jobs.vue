@@ -50,9 +50,6 @@
         header="Service level"
         style="width: 15%;"
       ></Column>
-      <!--      <Column field="" header="Alert" style="width: 10%">-->
-      <!--        <template #body="slotProps">0</template>-->
-      <!--      </Column>-->
       <Column>
         <template #body="slotProps">
           <div class="flex flex-row gap-2">
