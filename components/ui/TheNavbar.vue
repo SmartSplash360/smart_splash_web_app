@@ -46,7 +46,11 @@
             />
           </svg>
         </button>
-        <span class="flex-center cursor-pointer">
+        <ModalsNotificationViewNotificationModal
+          v-if="showNotificationModal"
+          :toggleNotificationModal="toggleNotificationModal"
+        ></ModalsNotificationViewNotificationModal>
+        <span class="flex-center cursor-pointer" @click="handleNotification">
           <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl" />
         </span>
         <span class="span__element font-light"
@@ -189,6 +193,7 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const sideBarVisible = ref(false);
+const showNotificationModal = ref(true);
 const menu = ref();
 const items = ref([
   {
@@ -294,6 +299,11 @@ const pageIcon = computed(() => {
 const onImageRightClick = (event) => {
   menu.value.show(event);
 };
+const handleNotification = () => {
+  showNotificationModal.value = true;
+};
+
+const toggleNotificationModal = () => (showNotificationModal.value = false);
 const toggleSideBar = () => {
   sideBarVisible.value = !sideBarVisible.value;
 };

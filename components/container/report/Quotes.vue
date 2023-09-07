@@ -114,34 +114,29 @@
 
 <script setup>
 import { useQuoteStore } from "~/stores/quote";
+import { useJobStore } from "~/stores/jobs";
 defineProps({
   loading: Boolean,
 });
 
 const quoteStore = useQuoteStore();
+const jobStore = useJobStore();
 
 const showQuotationModal = ref(false);
 const customerDetails = ref();
 const totalPriceServices = ref(154);
 const totalPriceProducts = ref(454);
 const totalPriceChems = ref(205);
-const job = ref({
-  technician_id: "33",
-  pool_id: 6,
-  customer_id: 24,
-  start_time: "17:42",
-  end_time: "19:42",
-  start_date: "23-08-23",
-  status: "incomplete",
-  description:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-  technical_notes:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-});
+const jobs = ref();
+const job = ref();
 const readOnly = ref(false);
 
 const quotes = computed(() => quoteStore.getQuotes);
 const quoteCount = computed(() => quoteStore.getQuoteCount);
+
+onMounted(async () => {
+  jobs.value = jobStore.getJobs;
+});
 
 const renderDate = (data) => {
   const dateObject = new Date(data);
@@ -157,8 +152,9 @@ const renderDate = (data) => {
 };
 const closeModal = () => (showQuotationModal.value = false);
 const toggleJobQuoteModal = ({ quote, readOnlyValue }) => {
+  job.value = jobs.value.find((job) => job.id === quote.job_id);
   // retrieve technician
-  // retrieve job
+
   // retrieve customer
   customerDetails.value = {
     id: 24,

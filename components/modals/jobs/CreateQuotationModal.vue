@@ -5,7 +5,7 @@
   >
     <form
       @click.stop
-      class="overflow-auto flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-8 mx-auto lg:min-w-[600px] dark:bg-[#31353F]"
+      class="overflow-auto flex min-h-[500px] flex-col gap-5 rounded-md bg-white p-5 mx-auto lg:min-w-[750px] dark:bg-[#31353F]"
     >
       <div class="flex-between items-center">
         <h3 class="heading__h3 text-[#025E7C] font-bold">
@@ -79,27 +79,116 @@
           >This is a recurring invoice (Monthly)</label
         >
       </div>
-      <ul class="flex flex-col gap-5">
+      <ul class="flex flex-col gap-2">
         <li class="flex justify-between items-center">
-          <h6 class="heading__h6 text-gray-600 dark:text-gray-400">Services</h6>
-          <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-            ${{ totalPriceServices }}
-          </h6>
+          <div class="w-full">
+            <Accordion v-model:activeIndex="active">
+              <AccordionTab>
+                <template #header>
+                  <div
+                    class="flex gap-5 text-gray-600 w-full dark:text-gray-200"
+                  >
+                    <h6
+                      class="flex-1 heading__h6 text-gray-600 dark:text-gray-400"
+                    >
+                      Services
+                    </h6>
+                    <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
+                      ${{ totalPriceServices }}
+                    </h6>
+                  </div>
+                </template>
+                <div
+                  class="max-h-[300px] overflow-y-auto flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center"
+                  v-for="service in services"
+                  :key="service.id"
+                >
+                  <div class="flex items-center gap-4">
+                    <span class="span__element text-gray-500">{{
+                      service.name
+                    }}</span>
+                  </div>
+                  <span class="span__element font-bold text-[#025E7C]">
+                    ${{ service.price }}</span
+                  >
+                </div>
+              </AccordionTab>
+            </Accordion>
+          </div>
         </li>
         <li class="flex justify-between items-center">
-          <h6 class="heading__h6 text-gray-600 dark:text-gray-400">Products</h6>
-          <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-            ${{ totalPriceProducts }}
-          </h6>
+          <div class="w-full">
+            <Accordion>
+              <AccordionTab>
+                <template #header>
+                  <div
+                    class="flex gap-5 text-gray-600 w-full dark:text-gray-200"
+                  >
+                    <h6
+                      class="flex-1 heading__h6 text-gray-600 dark:text-gray-400"
+                    >
+                      Products
+                    </h6>
+                    <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
+                      ${{ totalPriceProducts }}
+                    </h6>
+                  </div>
+                </template>
+                <div
+                  class="max-h-[300px] overflow-y-auto flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center"
+                  v-for="service in services"
+                  :key="service.id"
+                >
+                  <div class="flex items-center gap-4">
+                    <span class="span__element text-gray-500">{{
+                      service.name
+                    }}</span>
+                  </div>
+                  <span class="span__element font-bold text-[#025E7C]">
+                    ${{ service.price }}</span
+                  >
+                </div>
+              </AccordionTab>
+            </Accordion>
+          </div>
         </li>
         <li class="flex justify-between items-center">
-          <h6 class="heading__h6 text-gray-600 dark:text-gray-400">
-            Chemical Readings
-          </h6>
-          <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-            ${{ totalPriceChems }}
-          </h6>
+          <div class="w-full">
+            <Accordion>
+              <AccordionTab>
+                <template #header>
+                  <div
+                    class="flex gap-5 text-gray-600 w-full dark:text-gray-200"
+                  >
+                    <h6
+                      class="flex-1 heading__h6 text-gray-600 dark:text-gray-400"
+                    >
+                      Chemical Reading
+                    </h6>
+                    <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
+                      ${{ totalPriceChems }}
+                    </h6>
+                  </div>
+                </template>
+                <div
+                  class="max-h-[300px] overflow-y-auto flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center"
+                  v-for="service in services"
+                  :key="service.id"
+                >
+                  <div class="flex items-center gap-4">
+                    <span class="span__element text-gray-500">{{
+                      service.name
+                    }}</span>
+                  </div>
+                  <span class="span__element font-bold text-[#025E7C]">
+                    ${{ service.price }}</span
+                  >
+                </div>
+              </AccordionTab>
+            </Accordion>
+          </div>
         </li>
+
         <li class="flex justify-between items-center mt-6">
           <h2 class="heading__h2 text-gray-800 dark:text-gray-400">Total</h2>
           <h2 class="heading__h2 text-gray-800 dark:text-gray-400">
@@ -132,9 +221,12 @@
 <script setup>
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
+import { useServiceStore } from "~/stores/services";
 
 const toast = useToast();
 const confirm = useConfirm();
+
+const serviceStores = useServiceStore();
 
 const props = defineProps({
   toggleJobQuoteModal: Function,
@@ -168,6 +260,12 @@ const issuedDate = ref(new Date());
 const dueDate = ref();
 const recurringInvoice = ref();
 
+const services = ref([]);
+const products = ref();
+const chemicalReadings = ref();
+
+const active = ref(0);
+
 const totalPrice = computed(
   () =>
     props.totalPriceServices + props.totalPriceProducts + props.totalPriceChems
@@ -180,6 +278,16 @@ onMounted(() => {
   email.value = props.customerDetails.email;
   address.value = poolInfo.address;
   bodyOfWater.value = poolInfo.name;
+  const array = [];
+
+  if (props.newJobPayload) {
+    // console.log(props.newJobPayload, "job");
+    props.newJobPayload.job_activities?.forEach((activity) => {
+      const list = serviceStores.getServiceId(activity.service_id);
+      array.push(list);
+    });
+  }
+  services.value = [...array];
 });
 
 const handleSendQuote = () => {

@@ -18,7 +18,10 @@ export const useServiceStore = defineStore("service", {
     getters: {
         getServices(state) {
             return state.services
-        }
+        },
+        getServiceId: (state) => (id: number | string) => {
+            return state.services.find((service: Service) => service.id === id);
+        },
     },
     actions: {
         async fetchServices() {
