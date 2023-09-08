@@ -80,15 +80,17 @@
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useTechnicianStore } from "~/stores/technician";
+import { useCustomerStore } from "~/stores/customer";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
 
 const toast = useToast();
 const confirm = useConfirm();
 
-const technicianStore = useTechnicianStore();
 const jobStore = useJobStore();
 const quoteStore = useQuoteStore();
+const customerStore = useCustomerStore();
+const technicianStore = useTechnicianStore();
 
 const props = defineProps({
   technicianId: {
@@ -217,8 +219,8 @@ const viewQuote = ({ item }) => {
   totalPriceProducts.value = 78.25;
   totalPriceChems.value = 787;
 
-  // CUSTOMER DETAILS NEEDED
-
+  customer.value = customerStore.getCustomerById(item.customer_id);
+  technician.value = technicianStore.getTechnicianById(item.technician_id);
   showQuotationModal.value = !showQuotationModal.value;
 };
 </script>

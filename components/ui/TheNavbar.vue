@@ -193,7 +193,7 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const sideBarVisible = ref(false);
-const showNotificationModal = ref(true);
+const showNotificationModal = ref(false);
 const menu = ref();
 const items = ref([
   {

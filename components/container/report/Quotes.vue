@@ -19,6 +19,7 @@
     <ModalsJobsCreateQuotationModal
       v-if="showQuotationModal"
       :customerDetails="customerDetails"
+      :technician="technician"
       :totalPriceServices="totalPriceServices"
       :totalPriceProducts="totalPriceProducts"
       :totalPriceChems="totalPriceChems"
@@ -115,15 +116,20 @@
 <script setup>
 import { useQuoteStore } from "~/stores/quote";
 import { useJobStore } from "~/stores/jobs";
+import { useTechnicianStore } from "~/stores/technician";
+import { useCustomerStore } from "~/stores/customer";
 defineProps({
   loading: Boolean,
 });
 
 const quoteStore = useQuoteStore();
 const jobStore = useJobStore();
+const customerStore = useCustomerStore();
+const technicianStore = useTechnicianStore();
 
 const showQuotationModal = ref(false);
 const customerDetails = ref();
+const technician = ref();
 const totalPriceServices = ref(154);
 const totalPriceProducts = ref(454);
 const totalPriceChems = ref(205);
@@ -135,6 +141,8 @@ const quotes = computed(() => quoteStore.getQuotes);
 const quoteCount = computed(() => quoteStore.getQuoteCount);
 
 onMounted(async () => {
+  await quoteStore.fetchQuotes();
+  await jobStore.fetchJobs();
   jobs.value = jobStore.getJobs;
 });
 
@@ -153,75 +161,8 @@ const renderDate = (data) => {
 const closeModal = () => (showQuotationModal.value = false);
 const toggleJobQuoteModal = ({ quote, readOnlyValue }) => {
   job.value = jobs.value.find((job) => job.id === quote.job_id);
-  // retrieve technician
-
-  // retrieve customer
-  customerDetails.value = {
-    id: 24,
-    name: quote.customer_name,
-    email: "bartell.ethyl@example.org",
-    email_verified_at: "2023-08-17T09:08:38.000000Z",
-    created_at: "2023-08-17T09:08:38.000000Z",
-    updated_at: "2023-08-17T09:08:38.000000Z",
-    stripe_id: null,
-    pm_type: null,
-    pm_last_four: null,
-    trial_ends_at: null,
-    surname: "Nienow",
-    phone_number: "+1.504.790.3961",
-    status: 1,
-    photo: "https://xsgames.co/randomusers/avatar.php?g=male",
-    role_id: 3,
-    bodies_of_water: [
-      {
-        id: 6,
-        created_at: "2023-08-17T09:08:38.000000Z",
-        updated_at: "2023-08-17T09:08:38.000000Z",
-        customer_id: 24,
-        name: "Pool 6",
-        type: "Spa",
-        size: "10,000 gal",
-        condition: "Good",
-        google_place_id: null,
-        address: "25 Queen Victoria St, Gardens, Cape Town, 8001",
-        lng: "18.4151481",
-        lat: "-33.9285663",
-        gallery_id: null,
-        pool_specs: {
-          id: 1,
-          created_at: "2023-08-17T09:08:38.000000Z",
-          updated_at: "2023-08-17T09:08:38.000000Z",
-          pool_id: 6,
-          property_type: "residential",
-          pool_type: "in ground",
-          pool_shape: "oval",
-          gallons: 5873,
-          pool_length: 93,
-          pool_width: 71,
-          pool_depth: 54,
-          pool_volume: 7564,
-          pool_surface_area: 2477,
-          pool_perimeter: 7845,
-          pool_area: 1472,
-          pool_circulation: "skimmer and main drain",
-          pool_sanitation: "mineral",
-          pool_heating: "solar",
-          pool_pump: "dual speed",
-          pool_filter: "sand",
-          pool_cleaner: "robotic",
-          pool_chemicals: "liquid",
-          pool_chemical_controller: "no",
-          pool_salt_chlorinator: "no",
-          pool_ozonator: "yes",
-          pool_uv_sanitizer: "yes",
-          pool_ionizer: "no",
-          pool_chemical_feeder: "yes",
-        },
-        gallery: null,
-        pool_id: 6,
-      },
-    ],
-  };
+  customerDetails.value = customerStore.getCustomerById(quote.customer_id);
+  technician.value = technicianStore.getTechnicianById(quote.technician_id);
   readOnly.value = readOnlyValue;
   showQuotationModal.value = !showQuotationModal.value;
 };
