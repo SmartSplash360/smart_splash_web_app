@@ -33,23 +33,14 @@
           </div>
         </div>
       </template>
-      <Column
-        field="id"
-        header="Alert"
-        sortable
-        class="dark:bg-[#31353F] dark:text-gray-500"
-      >
+      <Column field="id" header="Alert" sortable>
         <template #body="slotProps">
           <span class="span__element">
             {{ slotProps.data?.id }}
           </span>
         </template></Column
       >
-      <Column
-        field="name"
-        header="Customer"
-        class="dark:bg-[#31353F] dark:text-gray-500"
-      >
+      <Column field="name" header="Customer">
         <template #body="slotProps">
           {{ slotProps.data?.body_of_water?.customer?.name }}
           {{ slotProps.data?.body_of_water?.customer?.surname ?? "" }}
