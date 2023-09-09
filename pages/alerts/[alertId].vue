@@ -126,10 +126,6 @@ onMounted(async () => {
   );
   customer.value = await customerStore.getCustomerById(parseInt(customerId));
   loading.value = false;
-
-  console.log(customer.value);
-  console.log(technician.value);
-  console.log(alert.value);
 });
 
 const handleCreateJob = () => {

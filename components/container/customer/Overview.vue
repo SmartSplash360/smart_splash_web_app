@@ -179,7 +179,6 @@ const viewQuote = ({ item }) => {
 const viewJob = (item) => {
   readOnly.value = true;
   job.value = { ...item };
-  console.log(job.value);
   addJobModal.value = true;
 };
 </script>

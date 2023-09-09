@@ -28,10 +28,4 @@
 const props = defineProps({
   currentTab: String,
 });
-
-onMounted(() => {
-  console.log(props.currentTab);
-});
 </script>
-
-<style lang="scss" scoped></style>

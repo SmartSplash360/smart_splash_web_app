@@ -281,7 +281,6 @@ onMounted(() => {
   const array = [];
 
   if (props.newJobPayload) {
-    // console.log(props.newJobPayload, "job");
     props.newJobPayload.job_activities?.forEach((activity) => {
       const list = serviceStores.getServiceId(activity.service_id);
       array.push(list);
@@ -303,7 +302,6 @@ const handleSendQuote = () => {
         detail: "You have successfully sent a quote to " + email.value,
         life: 5000,
       });
-      console.log("total", totalPrice.value);
       setTimeout(() => {
         props.createJob(totalPrice.value);
       }, 3000);

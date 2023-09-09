@@ -98,7 +98,6 @@ export const useServiceStore = defineStore("service", {
                     service_id : this.createdServiceId,
                     name : subServicePayload
                 });
-                console.log("Subservice created", res.data.data)
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

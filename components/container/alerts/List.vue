@@ -2,7 +2,7 @@
   <section class="flex flex-col gap-10">
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
-      <div class="w-full gap-5 flex justify-between">
+      <div class="w-full gap-5 flex flex-col lg:flex-row justify-between">
         <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px]">
           <div class="flex gap-2 items-center lg:gap-5">
             <h2 class="text-3xl font-bold text-[#025E7C]">
@@ -36,7 +36,7 @@
           @click="toggleAddAlertModal"
         ></BaseAddButton>
         <BaseAddButton
-          class="lg:hidden"
+          class="lg:hidden w-fit self-end"
           :btnText="'Add Alert'"
           @click="createAlert"
         ></BaseAddButton>
@@ -126,7 +126,6 @@ const handleChangePriority = () => {
   } else {
     alerts.value = alertList.value;
   }
-  console.log(alertList.value);
 };
 const createAlert = () => {
   router.push("alerts/create-alert");
@@ -163,7 +162,6 @@ const closeModal = ({ success, error }) => {
 const viewItem = ({ id, item, mobileEdit = false }) => {
   alert.value = item;
   if (mobileEdit) {
-    console.log(item);
     router.push({
       path: `/alerts/${id}`,
       query: {

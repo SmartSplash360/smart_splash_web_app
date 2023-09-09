@@ -400,7 +400,6 @@ onMounted(async () => {
 
   if (route.query.technicianIdAlert) {
     const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
-    console.log(technicianIdAlert, customerIdAlert, poolIdAlert);
 
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);

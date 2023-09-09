@@ -129,9 +129,9 @@
             />
           </svg>
         </button>
-        <span class="flex-center"
+        <nuxt-link class="flex-center cursor-pointer" to="/notifications"
           ><font-awesome-icon :icon="['far', 'bell']" class="text-xl"
-        /></span>
+        /></nuxt-link>
         <div class="flex items-center gap-2">
           <Avatar
             :image="user?.photo || userProfile"

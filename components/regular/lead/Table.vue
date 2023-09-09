@@ -228,11 +228,11 @@
 </template>
 
 <script setup>
+import Dropdown from "v-dropdown";
+import { format } from "date-fns";
 import { FilterMatchMode } from "primevue/api";
 import SortIcon from "~/assets/icons/arrow-sort.svg";
-import Dropdown from "v-dropdown";
 import { useLeadStore } from "~/stores/leads";
-import { format } from "date-fns";
 
 const props = defineProps({
   convertToCustomer: Function,
