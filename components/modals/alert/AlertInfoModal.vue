@@ -47,19 +47,19 @@
             <p>
               <span class="span__element text-xs text-gray-600"> Name : </span>
               <span class="span__element text-xs text-gray-400">
-                {{ alert.technician.name }}</span
+                {{ alert?.technician.name }}</span
               >
             </p>
             <p>
               <span class="span__element text-xs text-gray-600"> Email : </span>
               <span class="span__element text-xs text-gray-400">
-                {{ alert.technician.email }}</span
+                {{ alert?.technician.email }}</span
               >
             </p>
             <p>
               <span class="span__element text-xs text-gray-600"> Phone : </span>
               <span class="span__element text-xs text-gray-400">
-                {{ alert.technician.phone_number }}</span
+                {{ alert?.technician.phone_number }}</span
               >
             </p>
           </div>
@@ -70,13 +70,13 @@
             <p>
               <span class="span__element text-xs text-gray-600"> Name : </span>
               <span class="span__element text-xs text-gray-400">
-                {{ alert.body_of_water.customer.name }}</span
+                {{ alert?.body_of_water.customer.name }}</span
               >
             </p>
             <p>
               <span class="span__element text-xs text-gray-600"> Email : </span>
               <span class="span__element text-xs text-gray-400">
-                {{ alert.body_of_water.customer.email }}</span
+                {{ alert?.body_of_water.customer.email }}</span
               >
             </p>
           </div>
@@ -106,7 +106,8 @@ const handleCreateJob = () => {
   router.push({
     path: "/jobs/create-technician-job",
     query: {
-      technicianIdAlert: props.alert.technician.id,
+      alertId: props.alert.id,
+      technicianIdAlert: props.alert.technician_id,
       customerIdAlert: props.alert.body_of_water.customer_id,
       poolIdAlert: props.alert.body_of_water.id,
     },

@@ -228,20 +228,42 @@
         <span class="span__element text-gray-500 dark:text-gray-300"
           >Pick services needed for the job</span
         >
+        <p class="min-h-[20px]">
+          <span v-show="errorServicesSelected" class="text-[#D42F24] text-xs">{{
+            errorServicesSelected
+          }}</span>
+        </p>
         <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
           <div class="create-job-accordion">
             <Accordion v-model:activeIndex="active">
               <AccordionTab v-for="service in services" :key="service.id">
                 <template #header>
-                  <div class="flex gap-5 text-gray-600 dark:text-gray-200">
-                    <span class="flex">
-                      <i class="pi pi-ellipsis-v ml-2"></i>
-                      <i class="pi pi-ellipsis-v -ml-2"></i>
-                    </span>
-                    <div class="flex items-center gap-3">
-                      <span>{{ service.name }} </span>
-                      <i class="pi pi-chevron-right text-xs"></i>
+                  <div
+                    class="flex justify-between items-center w-full"
+                    @click="getSubservices(service.id)"
+                  >
+                    <div class="flex gap-5 text-gray-600 dark:text-gray-200">
+                      <span class="flex">
+                        <i class="pi pi-ellipsis-v ml-2"></i>
+                        <i class="pi pi-ellipsis-v -ml-2"></i>
+                      </span>
+                      <div class="flex items-center gap-3">
+                        <span>{{ service.name }} </span>
+                        <i class="pi pi-chevron-right text-xs"></i>
+                      </div>
                     </div>
+                    <span
+                      :class="
+                        service.is_available === 1
+                          ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
+                          : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
+                      "
+                      class="w-[100px] rounded-md px-5 span__element shadow-md flex justify-center items-center"
+                    >
+                      {{
+                        service.is_available === 1 ? "Available" : "Unavailable"
+                      }}
+                    </span>
                   </div>
                 </template>
                 <div
@@ -254,24 +276,36 @@
                       :value="service"
                       :disabled="service.is_available === 0"
                     />
-                    <span class="span__element">{{ service.name }}</span>
+                    <p class="text-lg font-bold text-[#025E7C]">
+                      {{ service.name }}
+                    </p>
                   </div>
-                  <span class="span__element font-bold"
-                    >Price : ${{ service.price }}</span
-                  >
-                  <span
-                    :class="
-                      service.is_available === 1
-                        ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
-                        : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
-                    "
-                    class="w-[100px] rounded-md px-5 span__element shadow-md flex justify-center items-center"
-                  >
-                    {{
-                      service.is_available === 1 ? "Available" : "Unavailable"
-                    }}
-                  </span>
                 </div>
+                <div
+                  class="flex flex-col gap-2 mt-4"
+                  v-if="service.is_available === 1 && subservices.length > 0"
+                >
+                  <span class="span__element text-gray-500 pl-5">
+                    Select subservices
+                  </span>
+                  <div class="lg:grid grid-cols-4 gap-2">
+                    <div
+                      v-for="subservice in subservices"
+                      :key="subservice.id"
+                      class="flex flex-col lg:flex-row gap-5 pl-5"
+                    >
+                      <div class="flex items-center gap-4">
+                        <Checkbox
+                          v-model="selectedSubservices"
+                          :name="subservice.name"
+                          :value="subservice"
+                        />
+                        <span class="span__element">{{ subservice.name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="flex justify-end pl-5 mt-10 border-t pt-5">
                   <span class="span__element text-gray-500"
                     >Subtotal : ${{ service.price }}</span
@@ -364,6 +398,7 @@ const errorEndTime = ref("");
 const errorStatus = ref("");
 const errorDescription = ref("");
 const errorNotes = ref();
+const errorServicesSelected = ref("");
 
 const disablePoolSelect = ref(true);
 
@@ -376,6 +411,8 @@ const statuses = ref([
 ]);
 const services = ref([]);
 const selectedServices = ref([]);
+const subservices = ref([]);
+const selectedSubservices = ref([]);
 const bodiesOfWater = ref([]);
 
 const customers = computed(() => customerStore.getCustomers);
@@ -398,9 +435,9 @@ onMounted(async () => {
     technical_notes.value = props.job.technical_notes;
   }
 
-  if (route.query.technicianIdAlert) {
-    const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
+  const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
 
+  if (technicianIdAlert && customerIdAlert && poolIdAlert) {
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);
 
@@ -414,6 +451,9 @@ onMounted(async () => {
   }
 });
 
+const getSubservices = async (serviceId) => {
+  subservices.value = await serviceStore.fechSubservicesByServiceId(serviceId);
+};
 const handleChangeTechnician = () => {
   errorTechnician.value = selectedTechnician.value
     ? ""
@@ -501,7 +541,10 @@ const handleChangeNote = () => {
       : ""
     : "Please add a note";
 };
-
+const handleSelectedServices = () => {
+  errorServicesSelected.value =
+    selectedServices.value.length < 1 ? "Please select available services" : "";
+};
 function compareTimes(time1, time2) {
   const [hours1, minutes1] = time1?.split(":").map(Number);
   const [hours2, minutes2] = time2?.split(":").map(Number);
@@ -525,6 +568,7 @@ const validateForm = () => {
   handleChangeStatus();
   handleChangeSDescription();
   handleChangeNote();
+  handleSelectedServices();
 
   let checkedValue =
     !errorCustomer.value &&
@@ -534,7 +578,8 @@ const validateForm = () => {
     !errorEndTime.value &&
     !errorStatus.value &&
     !errorDescription.value &&
-    !errorNotes.value;
+    !errorNotes.value &&
+    !errorServicesSelected.value;
 
   return props.technicianId
     ? checkedValue
@@ -562,7 +607,7 @@ const handleMoveToNextStep = () => {
       description: description.value,
       technical_notes: technical_notes.value,
     };
-    props.handleNextStep(newJob, selectedServices.value);
+    props.handleNextStep(newJob, selectedServices.value, route.query.alertId);
   }
 };
 </script>

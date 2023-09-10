@@ -89,6 +89,17 @@ export const useServiceStore = defineStore("service", {
                 throw error
             }
         },
+        async fechSubservicesByServiceId(id : string | number) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/subServices/getByService/${id}` : `http://localhost:8000/api/v1/subServices/getByService/${id}`
+            try {
+                const res = await axios.get(url);
+                return res.data.data
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async createSubService(subServicePayload : any) {
             try {
                 const jwt = useUserStore().getJwt;

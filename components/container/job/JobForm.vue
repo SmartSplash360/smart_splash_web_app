@@ -26,6 +26,7 @@
 import { useToast } from "primevue/usetoast";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
+import { useAlertStore } from "~/stores/alert";
 
 const props = defineProps({
   technicianId: String | Number,
@@ -36,14 +37,17 @@ const router = useRouter();
 const toast = useToast();
 const jobStore = useJobStore();
 const quoteStore = useQuoteStore();
+const alertStore = useAlertStore();
 
 const currentStep = ref(0);
+const alertId = ref();
 const newJobPayload = ref();
 const selectedServices = ref();
 const totalPriceServices = ref(0);
 
-const handleNextStep = (jobPayload, servicesPayload) => {
+const handleNextStep = (jobPayload, servicesPayload, alertIdParams) => {
   newJobPayload.value = jobPayload;
+  alertId.value = alertIdParams;
   selectedServices.value = servicesPayload;
   servicesPayload.forEach((service) => {
     totalPriceServices.value += service.price;
@@ -69,6 +73,12 @@ const createJob = async (totalPrice) => {
       reference: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
       total_amount: Number(totalPrice),
     });
+
+    if (alertId.value) {
+      alertStore.updateAlert(alertId.value, {
+        status: "closed",
+      });
+    }
     toast.add({
       severity: "success",
       summary: "Job created Successfully",
