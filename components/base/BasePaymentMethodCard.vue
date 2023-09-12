@@ -7,13 +7,15 @@
       <img :src="icon" :alt="icon" class="h-full w-full" />
     </div>
     <div class="flex flex-col gap-2 sm:gap-3">
-      <h4 class="heading__h4">
-        {{ name }} ending in {{endingDigit}}
-      </h4>
-      <p class="paragraph__p">Expiring {{ payment.paymentDetails.expiringDate }}</p>
+      <h4 class="heading__h4">{{ name }} ending in {{ endingDigit }}</h4>
+      <p class="paragraph__p">
+        Expiring {{ payment.paymentDetails.expiringDate }}
+      </p>
       <div class="mt-4 flex justify-between items-center">
         <p class="paragraph__p">Set as default</p>
-        <span class="span__element cursor-pointer" @click="handleEdit(payment)">Edit</span>
+        <span class="span__element cursor-pointer" @click="handleEdit(payment)"
+          >Edit</span
+        >
       </div>
     </div>
     <div class="flex flex-1 justify-end">
@@ -33,12 +35,11 @@ const props = defineProps({
   name: String,
   expiringDate: String,
   method: String,
-  handleEdit : Function,
-  payment : Object,
+  handleEdit: Function,
+  payment: Object,
 });
-
 
 const endingDigit = computed(() => {
   return parseInt(props.payment.paymentDetails.cardNumber) % 10000;
-})
+});
 </script>

@@ -17,10 +17,8 @@
 </template>
 
 <script setup>
-
 defineProps({
-  loading : Boolean,
-})
+  loading: Boolean,
+});
 const active = ref(0);
-
 </script>

@@ -1,19 +1,25 @@
 <template>
   <div
-      class="desktop+ hidden min-h-[80px] w-full px-10 shadow-md lg:flex-between"
+    class="desktop+ hidden min-h-[80px] w-full px-10 shadow-md lg:flex-between"
   >
     <div class="min-w-2/5 flex-between gap-3">
-      <font-awesome-icon :icon="pageIcon"/>
-      <h1 class="heading__h3" >{{ pageName }}</h1>
+      <font-awesome-icon :icon="pageIcon" />
+      <h1 class="heading__h3">{{ pageName }}</h1>
     </div>
     <div class="ml-auto flex-between">
       <div class="min-w-[400px] flex-between ml-14">
-        <div class="bg-[#0291BF] text-white rounded-md dark:bg-[#1B2028] dark:border-[#1B2028]">
-            <SplitButton  icon="pi pi-plus" :model="menuList" />
+        <div
+          class="bg-[#0291BF] text-white rounded-md dark:bg-[#1B2028] dark:border-[#1B2028]"
+        >
+          <SplitButton icon="pi pi-plus" :model="menuList" />
         </div>
         <button
-          v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
-          @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
+          v-tooltip.top="
+            $colorMode.value == 'dark' ? 'dark mode' : 'light mode'
+          "
+          @click="
+            setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')
+          "
         >
           <svg
             v-if="$colorMode.value == 'dark'"
@@ -40,45 +46,63 @@
             />
           </svg>
         </button>
-        <span class="flex-center cursor-pointer">
-          <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl"/>
+        <ModalsNotificationViewNotificationModal
+          v-if="showNotificationModal"
+          :toggleNotificationModal="toggleNotificationModal"
+        ></ModalsNotificationViewNotificationModal>
+        <span class="flex-center cursor-pointer" @click="handleNotification">
+          <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl" />
         </span>
-        <span class="span__element font-light">{{ user?.name }} {{ user?.surname || '' }}</span>
+        <span class="span__element font-light"
+          >{{ user?.name }} {{ user?.surname || "" }}</span
+        >
         <div class="flex items-center gap-2">
           <div class="rounded-full">
             <Avatar
-                @contextmenu="onImageRightClick"
-                aria-haspopup="true"
-                :image="user?.photo || userProfile"
-                class="mr-2 min-w-[50px] min-h-[50px]"
-                shape="circle"
+              @contextmenu="onImageRightClick"
+              aria-haspopup="true"
+              :image="user?.photo || userProfile"
+              class="mr-2 min-w-[50px] min-h-[50px]"
+              shape="circle"
             />
           </div>
-          <div class="card flex justify-content-center">          
+          <div class="card flex justify-content-center">
             <span class="flex-center cursor-pointer">
-              <font-awesome-icon icon="chevron-down" class="text-lg font-light ml-3" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"/>
+              <font-awesome-icon
+                icon="chevron-down"
+                class="text-lg font-light ml-3"
+                @click="toggle"
+                aria-haspopup="true"
+                aria-controls="overlay_menu"
+              />
             </span>
             <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
             <!-- <Toast /> -->
             <ContextMenu ref="menu" :model="items" />
-        </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="mobile- sticky min-h-[70px] w-full items-center justify-between px-5 sm:shadow-md lg:hidden">
+  <div
+    class="mobile- sticky min-h-[70px] w-full items-center justify-between px-5 sm:shadow-md lg:hidden"
+  >
     <div class="flex-between">
       <div class="h-[60px] max-h-[60px] bg-red-400">
         <img
-            :src="SmartPlashLogo"
-            alt="Smart-Splash-Logo"
-            class="h-full w-full"
+          :src="SmartPlashLogo"
+          alt="Smart-Splash-Logo"
+          class="h-full w-full"
         />
       </div>
       <div class="flex-between gap-4">
         <button
-          v-tooltip.top="$colorMode.value == 'dark' ? 'dark mode' : 'light mode'"
-          @click=" setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
+          v-tooltip.top="
+            $colorMode.value == 'dark' ? 'dark mode' : 'light mode'
+          "
+          @click="
+            setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')
+          "
         >
           <svg
             v-if="$colorMode.value == 'dark'"
@@ -105,40 +129,44 @@
             />
           </svg>
         </button>
-        <span class="flex-center"
-        ><font-awesome-icon :icon="['far', 'bell']" class="text-xl"
-        /></span>
+        <nuxt-link class="flex-center cursor-pointer" to="/notifications"
+          ><font-awesome-icon :icon="['far', 'bell']" class="text-xl"
+        /></nuxt-link>
         <div class="flex items-center gap-2">
           <Avatar
-              :image="user?.photo || userProfile"
-              class="mr-2"
-              size="xmedium"
-              shape="circle"
+            :image="user?.photo || userProfile"
+            class="mr-2"
+            size="xmedium"
+            shape="circle"
           />
-          <span
-              @click="toggleSideBar"
-              class="flex-center h-[30px] w-[30px]"
-          ><font-awesome-icon icon="bars" class="cursor-pointer text-2xl"
+          <span @click="toggleSideBar" class="flex-center h-[30px] w-[30px]"
+            ><font-awesome-icon icon="bars" class="cursor-pointer text-2xl"
           /></span>
         </div>
       </div>
     </div>
-      <div v-if="sideBarVisible">
+    <div v-if="sideBarVisible">
       <ul class="flex flex-col gap-2 text-white">
-        <li v-for="link in sideBarLinks" @click="toggleSideBar" :key="link.name">
+        <li
+          v-for="link in sideBarLinks"
+          @click="toggleSideBar"
+          :key="link.name"
+        >
           <nuxt-link
-              :to="link?.to"
-              class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
+            :to="link?.to"
+            class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
           >
             <span class="flex-center h-[16px] w-[16px] span__element">
-              <font-awesome-icon :icon="link?.icon"/>
+              <font-awesome-icon :icon="link?.icon" />
             </span>
-            <span class="span__element ">{{ link.name }}</span>
+            <span class="span__element">{{ link.name }}</span>
           </nuxt-link>
-        </li> 
-        <li class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white">           
-          <span >
-            <i class="pi pi-sign-out text-lg font-light" @click="signout"/>
+        </li>
+        <li
+          class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
+        >
+          <span>
+            <i class="pi pi-sign-out text-lg font-light" @click="signout" />
           </span>
           <span class="span__element">Logout</span>
         </li>
@@ -150,9 +178,9 @@
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-import {sideBarLinks} from "@/utils/sidebarLinks";
-import {useUserStore} from "~/stores/users";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { sideBarLinks } from "@/utils/sidebarLinks";
+import { useUserStore } from "~/stores/users";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useConfirm } from "primevue/useconfirm";
 
 defineProps({
@@ -162,126 +190,132 @@ defineProps({
 const route = useRoute();
 const confirm = useConfirm();
 const userStore = useUserStore();
-const router = useRouter()
+const router = useRouter();
 
 const sideBarVisible = ref(false);
+const showNotificationModal = ref(false);
 const menu = ref();
 const items = ref([
   {
-    label: 'Logout',
-    icon: 'pi pi-sign-out',
-    command : () => signout()
-    
-  }
+    label: "Logout",
+    icon: "pi pi-sign-out",
+    command: () => signout(),
+  },
 ]);
 
 const menuList = [
-    {
-        label: 'Alert',
-        icon: 'pi pi-exclamation-triangle',
-        command: () => {
-            router.push('/alerts');
-            setTimeout(() => {
-                document.getElementById('add-alert-button').click()
-            },2000)
-        }
+  {
+    label: "Alert",
+    icon: "pi pi-exclamation-triangle",
+    command: () => {
+      router.push("/alerts");
+      setTimeout(() => {
+        document.getElementById("add-alert-button").click();
+      }, 2000);
     },
-    {
-        label: 'Customer',
-        icon: 'pi pi-user',
-        command: () => {
-          router.push('/customers');
-          setTimeout(() => {
-            document.getElementById('add-customer-button').click()
-          },2000)
-        }
+  },
+  {
+    label: "Customer",
+    icon: "pi pi-user",
+    command: () => {
+      router.push("/customers");
+      setTimeout(() => {
+        document.getElementById("add-customer-button").click();
+      }, 2000);
     },
-    {
-        label: 'Technician',
-        icon: 'pi pi-briefcase',
-        command: () => {
-          router.push('/technicians');
-          setTimeout(() => {
-            document.getElementById('add-technician-button').click()
-          },2000)
-        }
+  },
+  {
+    label: "Technician",
+    icon: "pi pi-briefcase",
+    command: () => {
+      router.push("/technicians");
+      setTimeout(() => {
+        document.getElementById("add-technician-button").click();
+      }, 2000);
     },
-    {
-        label: 'Product',
-        icon: 'pi pi-box',
-        command: () => {
-          router.push('/products');
-          setTimeout(() => {
-             document.getElementById('add-product-button').click()
-          },2000)
-        }
+  },
+  {
+    label: "Product",
+    icon: "pi pi-box",
+    command: () => {
+      router.push("/products");
+      setTimeout(() => {
+        document.getElementById("add-product-button").click();
+      }, 2000);
     },
-    {
-        label: 'Service',
-        icon: 'pi pi-wrench',
-        command: () => {
-          router.push('/products');
-          setTimeout(() => {
-                let serviceTab = document.querySelectorAll('.p-tabview-header')[1];
-                let tabEl = serviceTab.querySelector(':scope > #pv_id_12_1_header_action')
-                console.log(tabEl)
-                // serviceTab.click() 
-                document.getElementById('add-service-button').click()
-          },2000)
-        }
+  },
+  {
+    label: "Service",
+    icon: "pi pi-wrench",
+    command: () => {
+      router.push("/products");
+      setTimeout(() => {
+        let serviceTab = document.querySelectorAll(".p-tabview-header")[1];
+        let tabEl = serviceTab.querySelector(
+          ":scope > #pv_id_12_1_header_action"
+        );
+        // serviceTab.click()
+        document.getElementById("add-service-button").click();
+      }, 2000);
     },
-    {
-        label: 'Job',
-        icon: 'pi pi-user',
-        command: () => {
-          router.push('/jobs/create-technician-job');
-        }
+  },
+  {
+    label: "Job",
+    icon: "pi pi-user",
+    command: () => {
+      router.push("/jobs/create-technician-job");
     },
-        {
-        label: 'Quotes',
-        icon: 'pi pi-file-pdf',
-        command: () => {
-          router.push('/reports/quotes');
-        }
+  },
+  {
+    label: "Quotes",
+    icon: "pi pi-file-pdf",
+    command: () => {
+      router.push("/reports/quotes");
     },
-        {
-        label: 'Invoices',
-        icon: 'pi pi-file',
-        command: () => {
-          router.push('/reports/invoices');
-        }
+  },
+  {
+    label: "Invoices",
+    icon: "pi pi-file",
+    command: () => {
+      router.push("/reports/invoices");
     },
+  },
 ];
-
 
 const user = computed(() => userStore.getCurrentUser);
 const pageName = computed(() => {
   let name = route.name;
-  let routeName= name.split('-')[0]
+  let routeName = name.split("-")[0];
   return routeName[0].toUpperCase() + routeName.slice(1);
-})
+});
 const pageIcon = computed(() => {
   let name = route.name;
-  let sideBarLink = sideBarLinks.find(sideBarLink => sideBarLink.name.toLowerCase() == name)
-  return sideBarLink?.icon ?? 'user-lock'
-})
-
+  let sideBarLink = sideBarLinks.find(
+    (sideBarLink) => sideBarLink.name.toLowerCase() == name
+  );
+  return sideBarLink?.icon ?? "user-lock";
+});
 
 const onImageRightClick = (event) => {
   menu.value.show(event);
 };
+const handleNotification = () => {
+  showNotificationModal.value = true;
+};
+
+const toggleNotificationModal = () => (showNotificationModal.value = false);
 const toggleSideBar = () => {
   sideBarVisible.value = !sideBarVisible.value;
 };
 const toggle = (event) => {
-    menu.value.toggle(event);
+  menu.value.toggle(event);
 };
-const signout = () =>  {
+const signout = () => {
   confirm.require({
     message: "Are you sure you want to logout?",
     accept: () => {
-      userStore.logout()
+      userStore.logout();
     },
   });
-}
+};
 </script>

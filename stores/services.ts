@@ -13,11 +13,15 @@ export const useServiceStore = defineStore("service", {
     },
     state: () => ({
         services: [],
+        createdServiceId : null
     }),
     getters: {
         getServices(state) {
             return state.services
-        }
+        },
+        getServiceId: (state) => (id: number | string) => {
+            return state.services.find((service: Service) => service.id === id);
+        },
     },
     actions: {
         async fetchServices() {
@@ -48,6 +52,7 @@ export const useServiceStore = defineStore("service", {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
                 let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/services` : `http://localhost:8000/api/v1/services`
                 const res = await axios.post(url, servicePayload);
+                this.createdServiceId = res.data.data.id
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);
@@ -83,6 +88,34 @@ export const useServiceStore = defineStore("service", {
                 console.log(error)
                 throw error
             }
-        }
+        },
+        async fechSubservicesByServiceId(id : string | number) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/subServices/getByService/${id}` : `http://localhost:8000/api/v1/subServices/getByService/${id}`
+            try {
+                const res = await axios.get(url);
+                return res.data.data
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async createSubService(subServicePayload : any) {
+            try {
+                const jwt = useUserStore().getJwt;
+                axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/subServices` : `http://localhost:8000/api/v1/subServices`
+                const res = await axios.post(url, {
+                    service_id : this.createdServiceId,
+                    name : subServicePayload
+                });
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                throw error
+            }
+        },
     },
 });

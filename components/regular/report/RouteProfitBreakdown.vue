@@ -1,6 +1,9 @@
 <template>
   <div class="hidden flex-col gap-10 sm:flex">
-    <div class="card rounded-t-lg report-table" :class="[currentMode == 'dark' ? 'dark-mode' : '']">
+    <div
+      class="card rounded-t-lg report-table"
+      :class="[currentMode == 'dark' ? 'dark-mode' : '']"
+    >
       <DataTable
         v-model:selection="selectedProduct"
         v-model:filters="filters"
@@ -15,35 +18,15 @@
       >
         <template #header>
           <div class="py-2 text-center">
-            <h3 class="heading__h3 text-gray-600"> Route Profit Breakdown </h3>
+            <h3 class="heading__h3 text-gray-600">Route Profit Breakdown</h3>
           </div>
         </template>
-        <Column
-          field="property"
-          header="Prpoerty"
-          sortable
-        ></Column>
-        <Column
-          field="invoiced"
-          header="Invoiced"
-          sortable
-        ></Column>
-        <Column
-          field="chemSpend"
-          header="Chem Spend"
-        ></Column>
-        <Column
-          field="techPay"
-          header="Tech Pay"
-        ></Column>
-        <Column
-          field="profit"
-          header="Profit"
-        ></Column>
-        <Column
-          field="profitRate"
-          header="Profit%"
-        ></Column>
+        <Column field="property" header="Prpoerty" sortable></Column>
+        <Column field="invoiced" header="Invoiced" sortable></Column>
+        <Column field="chemSpend" header="Chem Spend"></Column>
+        <Column field="techPay" header="Tech Pay"></Column>
+        <Column field="profit" header="Profit"></Column>
+        <Column field="profitRate" header="Profit%"></Column>
       </DataTable>
     </div>
   </div>
@@ -66,7 +49,5 @@ onMounted(() => {
   loading.value = false;
 });
 
-const currentMode = ref(localStorage.getItem('nuxt-color-mode'));
-
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 </script>
-

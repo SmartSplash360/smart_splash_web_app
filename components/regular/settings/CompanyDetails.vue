@@ -13,11 +13,15 @@
         class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
       >
         <Button label="Cancel" severity="secondary" outlined />
-        <Button label="Save changes" class="!bg-[#0291BF] text-white" @click="updatecompanyDetails"/>
+        <Button
+          label="Save changes"
+          class="!bg-[#0291BF] text-white"
+          @click="updatecompanyDetails"
+        />
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-5 sm:flex-row sm:gap-20 sm:py-10"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-5 sm:flex-row sm:gap-20 sm:py-10"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max heading__h3">Company Logo</h2>
@@ -28,7 +32,7 @@
       <div
         class="flex flex-col gap-5 sm:flex-1 sm:flex-row items-center sm:justify-center lg:gap-14"
       >
-        <div v-if="files.length < 1 " class="flex-center">
+        <div v-if="files.length < 1" class="flex-center">
           <img
             :src="currentLogo"
             alt="Smart-Splash-Logo"
@@ -53,9 +57,7 @@
             class="bg-yellow-300"
           >
             <template #header="{ chooseCallback }">
-              <div
-                class="justify-between items-center flex  gap-2"
-              >
+              <div class="justify-between items-center flex gap-2">
                 <div class="flex gap-2">
                   <Button
                     @click="chooseCallback()"
@@ -73,8 +75,8 @@
               }"
             >
               <div v-if="uploadedFiles.length > 0">
-                <div class="flex flex-col gap-3 p-0 ">
-                  <Badge value="Completed"  severity="success" />
+                <div class="flex flex-col gap-3 p-0">
+                  <Badge value="Completed" severity="success" />
                   <div
                     v-for="(file, index) of uploadedFiles"
                     :key="file.name + file.type + file.size"
@@ -82,13 +84,13 @@
                   >
                     <div class="flex-between items-start">
                       <Button
-                      icon="pi pi-times"
-                      @click="removeUploadedFileCallback(index)"
-                      outlined
-                      rounded
-                      severity="danger"
-                      class="!w-6 !h-6"
-                    />
+                        icon="pi pi-times"
+                        @click="removeUploadedFileCallback(index)"
+                        outlined
+                        rounded
+                        severity="danger"
+                        class="!w-6 !h-6"
+                      />
                     </div>
                   </div>
                 </div>
@@ -105,7 +107,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:items-center sm:gap-64"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-64"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
         <h2 class="min-w-max heading__h3">Company Name</h2>
@@ -132,9 +134,9 @@
         </span>
       </div>
       <div
-        class="flex-between w-full flex-col  gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
+        class="flex-between w-full flex-col gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
       >
-      <div class="card justify-content-center w-full">
+        <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
             <Dropdown
               v-model="selectedState"
@@ -212,26 +214,35 @@
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { useToast } from "primevue/usetoast";
-import { stateList } from '@/utils/usaStateName'
+import { stateList } from "@/utils/usaStateName";
 
 const toast = useToast();
 const companyName = ref();
 const zipCode = ref();
-const currentLogo = ref()
+const currentLogo = ref();
 const files = ref([]);
 
 const selectedCity = ref();
 const selectedState = ref();
 const states = ref(stateList);
 
-onMounted(async() => {
+onMounted(async () => {
   //fetch company Details
-  companyName.value = 'Smart Splash',
-  selectedState.value = {name : 'Alabama',cities : ['Birmingham', 'Montgomery', 'Mobile', 'Huntsville', 'Tuscaloosa']}
-  selectedCity.value = 'Birmingham'
-  zipCode.value = '7744'
-  currentLogo.value = SmartPlashLogo
-})
+  (companyName.value = "Smart Splash"),
+    (selectedState.value = {
+      name: "Alabama",
+      cities: [
+        "Birmingham",
+        "Montgomery",
+        "Mobile",
+        "Huntsville",
+        "Tuscaloosa",
+      ],
+    });
+  selectedCity.value = "Birmingham";
+  zipCode.value = "7744";
+  currentLogo.value = SmartPlashLogo;
+});
 
 const onSelectedFiles = (event) => {
   files.value = event.files;
@@ -246,25 +257,22 @@ const onTemplatedUpload = () => {
   });
 };
 
-
 const updatecompanyDetails = () => {
-
   try {
     const companDetails = {
-    logo : files.value,
-    name : companyName.value,
-    address : {
-      city : selectedCity.value,
-      state : selectedState.value.name,
-      zipCode : zipCode.value,
-    }
-    // call the API
+      logo: files.value,
+      name: companyName.value,
+      address: {
+        city: selectedCity.value,
+        state: selectedState.value.name,
+        zipCode: zipCode.value,
+      },
+      // call the API
+    };
+  } catch (error) {
+    console.log(error.message);
   }
-  }catch(error){
-    console.log(error.message)
-  }
-}
-
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -83,7 +83,11 @@
           <Marker :options="locationMarker"> </Marker>
         </GoogleMap> -->
 
-        <div ref="mapDiv" class="border-2" style="width: 100%; height: 300px" />
+        <div
+          ref="mapDiv"
+          class="border-2"
+          style="width: 100%; height: 300px;"
+        />
       </div>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -434,6 +438,5 @@ const updateBodyOfWater = async () => {
 };
 
 // TODO: add map selected function to get lat/lng, address and google place id
-const pinDropped = (locationData) => {
-};
+const pinDropped = (locationData) => {};
 </script>

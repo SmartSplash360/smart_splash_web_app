@@ -11,10 +11,10 @@
           <BaseSearchBar></BaseSearchBar>
         </div>
         <Button
-        icon="pi pi-map-marker"
+          icon="pi pi-map-marker"
           label="View Bodies Of Water"
           @click="toggleAddBodyOfListModal"
-          class=" rounded-xl bg-[#0291BF] text-white"
+          class="rounded-xl bg-[#0291BF] text-white"
         />
         <ModalsBodiesOfWaterBodyOfWaterListModal
           v-if="bodyOfWaterListModal"
@@ -29,9 +29,8 @@
 <script setup>
 const props = defineProps({
   loading: Boolean,
-  customerId: Number
+  customerId: Number,
 });
-
 
 const bodyOfWaterListModal = ref(false);
 
@@ -43,6 +42,5 @@ const closeBodyOfWaterModal = ({ add, update, view }) => {
   if (add) {
     toggleAddBodyOfWaterModal();
   }
-
 };
 </script>

@@ -38,11 +38,11 @@ const router = useRoute();
 const { templateId } = router.query;
 
 onMounted(async () => {
-  if(props.campaignId){
+  if (props.campaignId) {
     template.value = await templateStore.fetchTemplate(props.campaignId);
   }
-  loading.value = false
-})
+  loading.value = false;
+});
 
 const createCampaign = async (data) => {
   try {
@@ -50,7 +50,6 @@ const createCampaign = async (data) => {
     if (data.templateType === 2) {
       // check if lead
       if (data.lead) {
-
         await campaignStore.createCampaignEmail({
           title: data.name,
           role_id: 5,
@@ -79,7 +78,6 @@ const createCampaign = async (data) => {
           life: 5000,
         });
       }
-
     } else if (data.templateType === 3) {
       // check if lead
       if (data.lead) {

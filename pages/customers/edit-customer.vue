@@ -1,137 +1,161 @@
 <template>
-    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
-    <form v-else class="flex min-h-[500px] flex-col gap-5 rounded-md bg-white dark:bg-[#31353F]">        
-      <div class="flex items-center gap-4 text-[#025E7C] mb-5">
-          <nuxt-link to="/customers">
-              <font-awesome-icon icon="chevron-left" />
-          </nuxt-link>
-          <h2 class="heading__h2 font-bold text-[#025E7C]">
-            Edit Customer {{customerId}}
-          </h2>
-      </div>
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Name* </label>
-          <InputText 
-            type="text" 
-            v-model="name"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="errorName && 'border-red-300'" 
-            @blur="handleChangeName">
-          </InputText>
-            <p class="min-h-[20px]">
-              <span v-show="errorName" class="text-[#D42F24] text-xs">{{ errorName }}</span>
-          </p>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="name"> Surname* </label>
-            <InputText 
-              type="text" 
-              v-model="surname"
-              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-              :class="errorSurname && 'border-red-300'" 
-            @blur="handleChangeSurname">
-          </InputText>
-            <p class="min-h-[20px]">
-              <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{ errorSurname }}</span>
-            </p>
-      </div>
-      </div>
-      <div class="flex flex-col justify-between gap-5">
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="email address"> Email address* </label>
-          <InputText 
-            type="email" 
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            v-model="email"
-            :class="errorEmail && 'border-red-300'" 
-            @blur="handleChangeEmail">
-          </InputText>
-          <p class="min-h-[20px]">
-            <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{ errorEmail }}</span>
-          </p>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element text-sm" for="cell number"> Cell number </label>
-          <InputText 
-            type="text" 
-            v-model="phoneNumber"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white" 
-            :class="errorPhoneNumber && 'border-red-300'" 
-            @blur="handleChangePhoneNumber"
-            ></InputText>
-          <p class="min-h-[20px]">
-            <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{ errorPhoneNumber }}</span>
+  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+  <form
+    v-else
+    class="flex min-h-[500px] flex-col gap-5 rounded-md bg-white dark:bg-[#31353F]"
+  >
+    <div class="flex items-center gap-4 text-[#025E7C] mb-5">
+      <nuxt-link to="/customers">
+        <font-awesome-icon icon="chevron-left" />
+      </nuxt-link>
+      <h2 class="heading__h2 font-bold text-[#025E7C]">
+        Edit Customer {{ customerId }}
+      </h2>
+    </div>
+    <div class="flex flex-col justify-between gap-5 sm:flex-row">
+      <div class="flex w-full flex-col gap-2">
+        <label class="span__element text-sm" for="name"> Name* </label>
+        <InputText
+          type="text"
+          v-model="name"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorName && 'border-red-300'"
+          @blur="handleChangeName"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+            errorName
+          }}</span>
         </p>
-        </div>
       </div>
-      <div class="mt-10 flex justify-end gap-5">
-        <Button
-            label="Cancel"
-            severity="secondary"
-            outlined
-            class="hover:shadow-xl"
-            @click="cancel"
-        />
-        <Button
-            label="Edit customer"
-            class="!bg-[#0291BF] hover:shadow-xl text-white"
-            @click="updateCustomer()"
-        />
+      <div class="flex w-full flex-col gap-2">
+        <label class="span__element text-sm" for="name"> Surname* </label>
+        <InputText
+          type="text"
+          v-model="surname"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorSurname && 'border-red-300'"
+          @blur="handleChangeSurname"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
+            errorSurname
+          }}</span>
+        </p>
       </div>
-    </form>
+    </div>
+    <div class="flex flex-col justify-between gap-5">
+      <div class="flex w-full flex-col gap-2">
+        <label class="span__element text-sm" for="email address">
+          Email address*
+        </label>
+        <InputText
+          type="email"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          v-model="email"
+          :class="errorEmail && 'border-red-300'"
+          @blur="handleChangeEmail"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
+            errorEmail
+          }}</span>
+        </p>
+      </div>
+      <div class="flex w-full flex-col gap-2">
+        <label class="span__element text-sm" for="cell number">
+          Cell number
+        </label>
+        <InputText
+          type="text"
+          v-model="phoneNumber"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorPhoneNumber && 'border-red-300'"
+          @blur="handleChangePhoneNumber"
+        ></InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
+            errorPhoneNumber
+          }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="mt-10 flex justify-end gap-5">
+      <Button
+        label="Cancel"
+        severity="secondary"
+        outlined
+        class="hover:shadow-xl"
+        @click="cancel"
+      />
+      <Button
+        label="Edit customer"
+        class="!bg-[#0291BF] hover:shadow-xl text-white"
+        @click="updateCustomer()"
+      />
+    </div>
+  </form>
 </template>
-  
+
 <script setup>
 import { useToast } from "primevue/usetoast";
-import {useCustomerStore} from "~/stores/customer";
+import { useCustomerStore } from "~/stores/customer";
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
-
 
 const store = useCustomerStore();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 
-const customerId = route.query.customerId
+const customerId = route.query.customerId;
 
-const name = ref('')
-const surname = ref('')
-const email = ref('')
-const phoneNumber = ref('')
+const name = ref("");
+const surname = ref("");
+const email = ref("");
+const phoneNumber = ref("");
 const loading = ref(true);
 
-const errorName = ref('');
-const errorSurname = ref('');
-const errorEmail = ref('');
-const errorPhoneNumber = ref('');
-  
+const errorName = ref("");
+const errorSurname = ref("");
+const errorEmail = ref("");
+const errorPhoneNumber = ref("");
+
 onMounted(async () => {
-  const customer = await store.fetchCustomer(customerId)
-    name.value = customer.name
-    surname.value = customer.surname
-    email.value = customer.email
-    phoneNumber.value = customer.phone_number
-    loading.value = false
-  
-})
+  const customer = await store.fetchCustomer(customerId);
+  name.value = customer.name;
+  surname.value = customer.surname;
+  email.value = customer.email;
+  phoneNumber.value = customer.phone_number;
+  loading.value = false;
+});
 
 const handleChangeName = () => {
-  errorName.value = name.value ? '' :'The name field is required'; 
-}
+  errorName.value = name.value ? "" : "The name field is required";
+};
 const handleChangeSurname = () => {
-  errorSurname.value = surname.value ? '' :'The surname field is required'; 
-}
+  errorSurname.value = surname.value ? "" : "The surname field is required";
+};
 const handleChangeEmail = () => {
-  errorEmail.value = email.value ? (!email.value.match(emailRegex) ? 'Please provide a valid email' : '') : 'The email field is required'
-}
+  errorEmail.value = email.value
+    ? !email.value.match(emailRegex)
+      ? "Please provide a valid email"
+      : ""
+    : "The email field is required";
+};
 const handleChangePhoneNumber = () => {
-  errorPhoneNumber.value = phoneNumber.value ? (!phoneNumber.value.match(phoneNumberRegex) ? 'Please provide a valid phone number' : '') : 'The phone number field is required'
-}
+  errorPhoneNumber.value = phoneNumber.value
+    ? !phoneNumber.value.match(phoneNumberRegex)
+      ? "Please provide a valid phone number"
+      : ""
+    : "The phone number field is required";
+};
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
@@ -139,30 +163,46 @@ const validateForm = () => {
   handleChangePhoneNumber();
   handleChangePassword();
   handleChangePasswordMatching();
-  return !errorName.value && !errorSurname.value && !errorEmail.value && !errorPhoneNumber.value && errorPassword.value;
+  return (
+    !errorName.value &&
+    !errorSurname.value &&
+    !errorEmail.value &&
+    !errorPhoneNumber.value &&
+    errorPassword.value
+  );
 };
 
 const updateCustomer = async () => {
-  if(validateForm()){
+  if (validateForm()) {
     try {
       const data = {
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-      }
-  
-      await store.updateCustomer(customerId, data)
-      await store.fetchCustomers()
-      toast.add({ severity: 'success', summary: 'Customer', detail: 'Customer created successfully', life: 5000 });
-    router.push('/alerts');
-  } catch (error) {
-    toast.add({ severity: 'error', summary: 'Customer', detail: `An error has occurred: ${error}`, life: 5000 });
+      };
+
+      await store.updateCustomer(customerId, data);
+      await store.fetchCustomers();
+      toast.add({
+        severity: "success",
+        summary: "Customer",
+        detail: "Customer created successfully",
+        life: 5000,
+      });
+      router.push("/alerts");
+    } catch (error) {
+      toast.add({
+        severity: "error",
+        summary: "Customer",
+        detail: `An error has occurred: ${error}`,
+        life: 5000,
+      });
+    }
   }
-  }
-}
+};
 
 const cancel = () => {
-  router.push('/customers')
-}
-  </script>
+  router.push("/customers");
+};
+</script>

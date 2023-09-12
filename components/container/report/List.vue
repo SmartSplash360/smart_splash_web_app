@@ -20,6 +20,6 @@
 
 <script setup>
 defineProps({
-  loading : Boolean
-})
+  loading: Boolean,
+});
 </script>

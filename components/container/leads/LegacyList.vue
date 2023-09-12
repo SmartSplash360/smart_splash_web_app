@@ -19,7 +19,9 @@
       <RegularMessagingChat :selectedChat="selectedChat"></RegularMessagingChat>
     </div>
     <div class="xl:w-[20%]">
-      <RegularMessagingChatProfile :selectedChat="selectedChat"></RegularMessagingChatProfile>
+      <RegularMessagingChatProfile
+        :selectedChat="selectedChat"
+      ></RegularMessagingChatProfile>
     </div>
   </section>
 </template>
@@ -28,9 +30,9 @@
 import { inboxService } from "@/services/InboxServices";
 
 const loading = ref(false);
-const selectedChat = ref(inboxService[0])
+const selectedChat = ref(inboxService[0]);
 
 const selectChat = (chat) => {
-  selectedChat.value = chat
-}
+  selectedChat.value = chat;
+};
 </script>

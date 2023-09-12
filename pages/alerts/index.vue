@@ -1,24 +1,20 @@
 <template>
-  <ContainerAlertsList 
-    :loading="loading">
-  </ContainerAlertsList>
+  <ContainerAlertsList :loading="loading"> </ContainerAlertsList>
 </template>
 
 <script setup>
-import { useAlertStore} from "~/stores/alert";
+import { useAlertStore } from "~/stores/alert";
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
 
-
-const loading = ref(true)
+const loading = ref(true);
 const alertStore = useAlertStore();
-
 
 onMounted(async () => {
   await alertStore.fetchAlerts();
-  loading.value = false
+  loading.value = false;
 });
 </script>

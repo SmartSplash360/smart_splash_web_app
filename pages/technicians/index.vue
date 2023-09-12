@@ -3,17 +3,17 @@
 </template>
 
 <script setup>
-import { useTechnicianStore } from '~/stores/technician';
+import { useTechnicianStore } from "~/stores/technician";
 const store = useTechnicianStore();
-const loading = ref(true)
+const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchTechnicians();
-  loading.value = false
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
 </script>

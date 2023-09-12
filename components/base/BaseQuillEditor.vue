@@ -1,15 +1,14 @@
 <template>
-  <div ref="editorContainer">
-  </div>
+  <div ref="editorContainer"></div>
 </template>
 
 <script setup>
-import Quill from 'quill';
+import Quill from "quill";
 const props = defineProps({
-  description : String
-})
+  description: String,
+});
 
-const emit = defineEmits(['handleEditorChange'])
+const emit = defineEmits(["handleEditorChange"]);
 const editorContainer = ref(null);
 
 let editor;
@@ -17,15 +16,15 @@ let content = ref();
 
 onMounted(() => {
   const options = {
-    theme: 'snow', 
-    placeholder: 'Enter text here...', 
+    theme: "snow",
+    placeholder: "Enter text here...",
     modules: {
       toolbar: [
-        [{ header: [1, 2, 3,4, false] }], 
-        ['bold', 'italic', 'underline','strike'], 
-        ['link', 'image'], 
-        [{ list: 'ordered' }, { list: 'bullet' }], 
-        ['clean'], 
+        [{ header: [1, 2, 3, 4, false] }],
+        ["bold", "italic", "underline", "strike"],
+        ["link", "image"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["clean"],
       ],
     },
     allowRawHTML: true,
@@ -33,14 +32,13 @@ onMounted(() => {
 
   editor = new Quill(editorContainer.value, options);
 
-  editor.root.innerHTML =  props.description ?? ''
+  editor.root.innerHTML = props.description ?? "";
 
   content.value = editor.root.innerHTML;
 
-  
-  editor.on('text-change', () => {
+  editor.on("text-change", () => {
     content.value = editor.root.innerHTML;
-    emit('handleEditorChange', content.value)
+    emit("handleEditorChange", content.value);
   });
 });
 </script>

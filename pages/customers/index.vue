@@ -3,18 +3,18 @@
 </template>
 
 <script setup>
-import { useCustomerStore} from "~/stores/customer";
+import { useCustomerStore } from "~/stores/customer";
 
 const store = useCustomerStore();
-const loading = ref(true)
+const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchCustomers();
-  loading.value = false
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: ['auth','auto-theme'],
+  middleware: ["auth", "auto-theme"],
 });
 </script>

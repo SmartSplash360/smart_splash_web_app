@@ -5,7 +5,9 @@
         class="flex max-w-[350px] flex-col items-center gap-6 rounded-lg bg-white px-8 py-10 text-center"
       >
         <img :src="img_pool" alt="img__pool" class="h-[137px] w-[200px]" />
-        <h3 class="heading__h3 text-black">A Revolutionary Pool Maintenance Software</h3>
+        <h3 class="heading__h3 text-black">
+          A Revolutionary Pool Maintenance Software
+        </h3>
         <p class="paragraph__p">
           Offers far more than other common pool maintenance software in the
           market
@@ -13,13 +15,11 @@
       </div>
     </div>
     <div class="hero-signin-container" v-else>
-      <h2
-        class="min-w-max text-center text-[40px] font-medium text-[#0291BF]"
-      >
+      <h2 class="min-w-max text-center text-[40px] font-medium text-[#0291BF]">
         Welcome Back!
       </h2>
       <div
-        class="flex lg:w-[320px] 2xl:w-[400px]  flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
+        class="flex lg:w-[320px] 2xl:w-[400px] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
       >
         <img
           :src="img_browser_stat"

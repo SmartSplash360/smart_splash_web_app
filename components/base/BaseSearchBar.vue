@@ -14,14 +14,11 @@
 </template>
 
 <script setup>
-
 const props = defineProps({
-  handleSearch : Function,
-  searchQuery : String,
+  handleSearch: Function,
+  searchQuery: String,
   size: String,
-})
+});
 const value = ref(props.searchQuery);
-const emits = defineEmits(['handleSearch'])
-
-
+const emits = defineEmits(["handleSearch"]);
 </script>
