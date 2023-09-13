@@ -266,9 +266,12 @@ const chemicalReadings = ref();
 
 const active = ref(0);
 
-const totalPrice = computed(
-  () =>
-    props.totalPriceServices + props.totalPriceProducts + props.totalPriceChems
+const totalPrice = computed(() =>
+  (
+    props.totalPriceServices +
+    props.totalPriceProducts +
+    props.totalPriceChems
+  ).toFixed(2)
 );
 
 onMounted(() => {
