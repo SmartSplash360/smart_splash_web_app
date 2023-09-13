@@ -216,13 +216,12 @@ const validateForm = () => {
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value &&
-    !errorPassword.value
+    !errorPhoneNumber.value
   );
 };
 
 const createCustomer = async () => {
-  if (validateForm()) {
+  if (validateForm() && !errorPassword.value) {
     try {
       await store.createCustomer({
         name: name.value,

@@ -282,25 +282,28 @@
                   </div>
                 </div>
                 <div
-                  class="flex flex-col gap-2 mt-4"
+                  class="flex flex-col gap-4 mt-4"
                   v-if="service.is_available === 1 && subservices.length > 0"
                 >
                   <span class="span__element text-gray-500 pl-5">
-                    Select subservices
+                    List of subservices
                   </span>
-                  <div class="lg:grid grid-cols-4 gap-2">
+                  <div class="flex flex-wrap gap-3">
                     <div
                       v-for="subservice in subservices"
                       :key="subservice.id"
-                      class="flex flex-col lg:flex-row gap-5 pl-5"
+                      class="flex gap-5 pl-5"
                     >
-                      <div class="flex items-center gap-4">
-                        <Checkbox
-                          v-model="selectedSubservices"
-                          :name="subservice.name"
-                          :value="subservice"
+                      <div
+                        class="flex gap-2 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm"
+                      >
+                        <font-awesome-icon
+                          icon="toolbox"
+                          class="text-gray-500"
                         />
-                        <span class="span__element">{{ subservice.name }}</span>
+                        <span class="span__element">
+                          {{ subservice.name }}
+                        </span>
                       </div>
                     </div>
                   </div>
