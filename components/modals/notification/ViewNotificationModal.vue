@@ -33,9 +33,9 @@
           </div>
           <div class="flex flex-col justify-between p-2">
             <div class="flex items-center gap-2">
-              <span class="span__element">{{ notification.user }}:</span>
+              <span class="span__element">{{ notification.subject }}:</span>
               <span class="span__element text-gray-500">{{
-                notification.content
+                notification.subject
               }}</span>
             </div>
             <span class="text-[#015D7B] span__element font-medium">{{
@@ -60,6 +60,7 @@
                 icon="pi pi-trash"
                 label="Delete"
                 class="w-full border-none self-start !text-[#015D7B]"
+                @click="deleteNotification(notification.id)"
               />
             </div>
           </Dropdown>
@@ -71,6 +72,7 @@
           severity="secondary"
           outlined
           class="hover:shadow-xl w-3/5 !border-red-400 !bg-red-200 !text-gray-700"
+          @click="deleteAllNotification"
         />
       </div>
     </div>
@@ -79,59 +81,22 @@
 
 <script setup>
 import Dropdown from "v-dropdown";
+import { useNotificationStore } from "~/stores/notification";
+
+const notificationStore = useNotificationStore();
 
 const props = defineProps({
   toggleNotificationModal: Function,
 });
 
-const notificationsList = ref([
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-]);
+const notifications = ref([]);
+const notificationsList = ref([]);
 const allNotifications = ref();
 const currentTab = ref("All");
 
-onMounted(() => {
+onMounted(async () => {
+  await notificationStore.fetchNotifications();
+  notificationsList.value = notificationStore.getNotifications;
   allNotifications.value = notificationsList.value;
 });
 
@@ -143,5 +108,17 @@ const handleChangeTab = (tab) => {
   } else {
     allNotifications.value = notificationsList.value;
   }
+};
+
+const deleteNotification = async (id) => {
+  await notificationStore.deleteNotification(id);
+  props.toggleNotificationModal();
+};
+
+const deleteAllNotification = () => {
+  allNotifications.value.forEach(async (notification) => {
+    await notificationStore.deleteNotification(notification.id);
+  });
+  props.toggleNotificationModal();
 };
 </script>

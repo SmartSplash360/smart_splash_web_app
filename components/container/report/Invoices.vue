@@ -55,7 +55,7 @@
       </div>
       <div class="flex flex-col gap-4">
         <div
-          class="bg-[#d4ecf4] hover:shadow-md py-5 rounded-lg grid grid-cols-3 gap-2 lg:flex justify-between items-center px-3 lg:px-5"
+          class="bg-[#d4ecf4] dark:bg-[#1B2028] hover:shadow-md py-5 rounded-lg grid grid-cols-3 gap-2 lg:flex justify-between items-center px-3 lg:px-5"
           v-for="invoice in invoices"
           :key="invoice.number"
         >
@@ -68,7 +68,7 @@
               invoice.status === 'paid'
                 ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
                 : invoice.status === 'pending'
-                ? 'text-[#3B7DDF] bg-[#c9dff5] border border-[#3B7DDF] dark:bg-[#c9dff5] dark:text-[#27C498]'
+                ? 'text-[#3B7DDF] bg-[#c9dff5] dark:bg-inherit border border-[#3B7DDF]  dark:text-[#3B7DDF]'
                 : 'text-[#DF9D3B] bg-[#eae5d5] border border-[#DF9D3B] dark:bg-[#DF9D3B] dark:text-white'
             "
             class="w-[100px] rounded-2xl px-5 flex justify-center span__element shadow-md"

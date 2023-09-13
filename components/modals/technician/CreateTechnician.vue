@@ -234,6 +234,9 @@ const createTechnician = async () => {
         company: company.value,
       });
       toggleAddTechnicianModal({ success: "Technician created successfully" });
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     } catch (e) {
       toggleAddTechnicianModal({ error: "Opps, something went wrong!" });
     }
@@ -254,6 +257,9 @@ const updateTechnician = async () => {
     toggleAddTechnicianModal({
       success: `Technician ${technician?.id} updated successfully`,
     });
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
   } catch (e) {
     toggleAddTechnicianModal({ error: e });
   }

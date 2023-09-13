@@ -42,8 +42,8 @@
               >
             </div>
           </div>
-          <div class="flex flex-1 justify-between">
-            <div class="flex items-center gap-3">
+          <div class="flex flex-1 justify-between px-10">
+            <div class="hidden items-center gap-3">
               <span class="span__element">87</span>
               <span class="span__element text-gray-500 dark:text-gray-400"
                 >Comments</span
@@ -56,8 +56,8 @@
                   class="text-sm text-white"
                 />
               </span>
-              <span class="text-sm text-gray-500 dark:text-gray-400"
-                >64 likes</span
+              <span class="text-sm text-gray-500 dark:text-gray-400">
+                {{ technician.like_reaction_count }} likes</span
               >
             </div>
             <div class="flex items-center gap-3">
@@ -67,7 +67,7 @@
                   class="text-sm text-white"
               /></span>
               <span class="text-sm text-gray-500 dark:text-gray-400"
-                >14 dislikes</span
+                >{{ technician.dislike_reaction_count }} dislikes</span
               >
             </div>
           </div>

@@ -407,6 +407,9 @@ const createBodyOfWater = async () => {
     props.toggleAddBodyOfWaterModal({
       success: "Body Of Water created successfully",
     });
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
   } catch (e) {
     props.toggleAddBodyOfWaterModal({ error: e });
   }
@@ -432,6 +435,9 @@ const updateBodyOfWater = async () => {
     props.toggleAddBodyOfWaterModal({
       success: `Body Of Water ${props.bodyOfWater?.id} updated successfully`,
     });
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
   } catch (e) {
     props.toggleAddBodyOfWaterModal({ error: e });
   }

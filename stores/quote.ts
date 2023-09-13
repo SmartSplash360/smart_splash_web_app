@@ -44,17 +44,6 @@ export const useQuoteStore = defineStore("quote", {
                 return error
             }
         },
-        // async fetchQuotesByJob(jobId: any) {
-        //     const jwt = useUserStore().getJwt;
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-        //     let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byJob/${jobId}` : `http://localhost:8000/api/v1/quotes/byJob/${jobId}`
-        //     try {
-        //         const res = await axios.get(url);
-        //         this.quotes = res.data.data.data;
-        //     } catch (error) {
-        //         return error
-        //     }
-        // },
         async fetchTechnicianQuotes(technicianId: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;

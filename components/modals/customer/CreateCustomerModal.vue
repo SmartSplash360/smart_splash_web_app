@@ -217,7 +217,7 @@ const validateForm = () => {
     !errorSurname.value &&
     !errorEmail.value &&
     !errorPhoneNumber.value &&
-    errorPassword.value
+    !errorPassword.value
   );
 };
 
@@ -233,6 +233,9 @@ const createCustomer = async () => {
         password_confirmation: passwordConfirmation.value,
       });
       toggleAddCustomerModal({ success: "Customer created successfully" });
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     } catch (e) {
       toggleAddCustomerModal({ error: "Opps, something went wrong!" });
     }
@@ -254,6 +257,9 @@ const updateCustomer = async () => {
       toggleAddCustomerModal({
         success: `Customer ${customer?.id} updated successfully`,
       });
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     } catch (e) {
       toggleAddCustomerModal({ error: e });
     }
