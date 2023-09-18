@@ -306,7 +306,7 @@ const handleSendQuote = () => {
         life: 5000,
       });
       setTimeout(() => {
-        props.createJob(totalPrice.value);
+        props.createJob(totalPrice.value, email.value);
       }, 3000);
     },
     reject: () => {},

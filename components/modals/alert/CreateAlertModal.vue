@@ -176,12 +176,16 @@
 import { useAlertTypeStore } from "~/stores/alertType";
 import { useTechnicianStore } from "~/stores/technician";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
+import { useNotificationStore } from "~/stores/notification";
 import { useAlertStore } from "~/stores/alert";
+import { useUserStore } from "~/stores/users";
 import { sub } from "date-fns";
 
 const alertTypeStore = useAlertTypeStore();
 const technicianStore = useTechnicianStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
+const notificationStore = useNotificationStore();
+const userStore = useUserStore();
 const alertStore = useAlertStore();
 
 const { toggleAddAlertModal, alert } = defineProps([
@@ -221,6 +225,7 @@ const maxDate = ref(new Date());
 const bodiesOfWater = computed(() => bodyOfWaterStore.getBodiesOfWater);
 const technicians = computed(() => technicianStore.getTechnicians);
 const alertTypes = computed(() => alertTypeStore.getAlertTypes);
+const user = computed(() => userStore.getCurrentUser);
 
 /** Date limits */
 let today = new Date();
@@ -308,7 +313,15 @@ const createAlert = async () => {
         subject: subject.value,
       };
 
-      await alertStore.createAlert(data);
+      const createdAlert = await alertStore.createAlert(data);
+
+      await notificationStore.createNotification({
+        subject: "ALERT CREATED",
+        description: "An Alert has been created successfully",
+        user_id: user.id,
+        alert_id: createdAlert.id,
+        type: "Alert",
+      });
       await alertStore.fetchAlerts();
 
       toggleAddAlertModal({ success: "Alert created successfully" });

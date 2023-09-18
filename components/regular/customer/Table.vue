@@ -136,8 +136,8 @@
                 >{{ customer.id }}</span
               >
             </div>
-            <span class="flex-1 paragraph__p">{{ customer.name }}</span>
-            <span class="flex-1 paragraph__p">{{ customer.email }}</span>
+            <span class="flex-1 span__element">{{ customer.name }}</span>
+            <span class="flex-1 span__element">{{ customer.email }}</span>
             <span class="ml-2">
               <font-awesome-icon icon="ellipsis-vertical"
             /></span>
@@ -162,14 +162,7 @@
               customer?.phone_number
             }}</span>
           </div>
-          <div class="flex-between px-4 py-2">
-            <span class="text-[#025E7C] dark:text-white span__element flex-1"
-              >Cell Number</span
-            >
-            <span class="text-xs flex-1 flex justify-start">{{
-              customer?.phone_number
-            }}</span>
-          </div>
+
           <div class="flex justify-end px-4 py-2 gap-2">
             <Button
               icon="pi pi-eye"

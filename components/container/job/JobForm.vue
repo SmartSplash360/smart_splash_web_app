@@ -27,6 +27,8 @@ import { useToast } from "primevue/usetoast";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
 import { useAlertStore } from "~/stores/alert";
+import { useUserStore } from "~/stores/users";
+import { useNotificationStore } from "~/stores/notification";
 
 const props = defineProps({
   technicianId: String | Number,
@@ -38,12 +40,15 @@ const toast = useToast();
 const jobStore = useJobStore();
 const quoteStore = useQuoteStore();
 const alertStore = useAlertStore();
+const notificationStore = useNotificationStore();
 
 const currentStep = ref(0);
 const alertId = ref();
 const newJobPayload = ref();
 const selectedServices = ref();
 const totalPriceServices = ref(0);
+
+const user = computed(() => userStore.getCurrentUser);
 
 const handleNextStep = (jobPayload, servicesPayload, alertIdParams) => {
   newJobPayload.value = jobPayload;
@@ -58,7 +63,7 @@ const handlePreviousStep = () => {
   currentStep.value = currentStep.value - 1;
 };
 
-const createJob = async (totalPrice) => {
+const createJob = async (totalPrice, quoteRecipient) => {
   try {
     const createdJob = await jobStore.createJob(newJobPayload.value);
     selectedServices.value.forEach(async (service) => {
@@ -73,7 +78,13 @@ const createJob = async (totalPrice) => {
       reference: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
       total_amount: Number(totalPrice),
     });
-
+    await notificationStore.createNotification({
+      subject: "JOB CREATED",
+      description: `A job has been created successfully and a quote was sent to ${quoteRecipient}`,
+      user_id: user.id,
+      alert_id: createdJob.id,
+      type: "Job",
+    });
     if (alertId.value) {
       alertStore.updateAlert(alertId.value, {
         status: "closed",

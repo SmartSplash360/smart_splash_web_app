@@ -5,7 +5,7 @@
   >
     <div
       @click.stop=""
-      class="absolute z-50 flex flex-col gap-14 rounded-md bg-white p-4 mr-64 mt-28 h-[665px] min-w-[364px] lg:gap-3 -right-4 -top-7"
+      class="absolute z-50 flex flex-col gap-14 rounded-md bg-white p-4 mr-64 mt-28 h-[665px] w-[450px] lg:gap-3 -right-4 -top-7"
     >
       <div class="flex justify-between w-full bg-[#d4ecf4] p-2 rounded-md">
         <span
@@ -19,13 +19,13 @@
           >Unread</span
         >
       </div>
-      <div class="flex flex-col gap-4 overflow-auto">
+      <div class="h-full flex flex-col gap-4 overflow-auto">
         <div
-          class="flex gap-5 items-center border rounded-md p-2"
+          class="flex gap-5 items-center justify-between border rounded-md p-2 cursor-pointer hover:shadow-xl hover:bg-slate-100"
           v-for="(notification, index) in allNotifications"
           :key="index"
         >
-          <div class="w-[50px] h-[50px] rounded-full flex-center">
+          <div class="hidden w-[50px] h-[50px] rounded-full flex-center">
             <img
               :src="notification.profilePic"
               class="w-full h-full rounded-full"
@@ -33,37 +33,22 @@
           </div>
           <div class="flex flex-col justify-between p-2">
             <div class="flex items-center gap-2">
-              <span class="span__element">{{ notification.subject }}:</span>
+              <span class="span__element font-bold text-xs uppercase"
+                >{{ notification.type }}:</span
+              >
               <span class="span__element text-gray-500">{{
                 notification.subject
               }}</span>
             </div>
             <span class="text-[#015D7B] span__element font-medium">{{
-              notification.subject
+              notification.description
             }}</span>
           </div>
-          <Dropdown>
-            <!-- dropdown trigger -->
-            <template #trigger>
-              <Button type="button" class="border-none self-start">
-                <font-awesome-icon icon="ellipsis" />
-              </Button>
-            </template>
-
-            <div class="flex flex-col">
-              <Button
-                icon="pi pi-eye"
-                label="View"
-                class="w-full border-none self-start !text-[#015D7B]"
-              />
-              <Button
-                icon="pi pi-trash"
-                label="Delete"
-                class="w-full border-none self-start !text-[#015D7B]"
-                @click="deleteNotification(notification.id)"
-              />
-            </div>
-          </Dropdown>
+          <Button
+            icon="pi pi-trash"
+            class="w-full border-none !text-red-500"
+            @click="deleteNotification(notification.id)"
+          />
         </div>
       </div>
       <div class="h-1/5 flex-center border-t pt-5">
@@ -81,6 +66,7 @@
 
 <script setup>
 import Dropdown from "v-dropdown";
+import { useUserStore } from "~/stores/users";
 import { useNotificationStore } from "~/stores/notification";
 
 const notificationStore = useNotificationStore();

@@ -24,7 +24,7 @@
         @handleSearch="(value) => handleSearch(value)"
       />
       <div class="flex flex-col gap-8 overflow-y-auto max-h-[80vh] mt-10">
-        <div class="flex flex-col gap-4 lg:w-4/5">
+        <div class="flex flex-col gap-4 lg:w-3/5">
           <div
             class="hidden lg:w-[95%] xl:self-end py-5 rounded-lg gap-2 lg:flex justify-between items-center px-3 lg:px-5"
           >
@@ -32,10 +32,7 @@
               class="paragraph__p bg-[#d4ecf4] dark:bg-[#1B202A] px-3 py-2 rounded-xl w-28 flex items-center justify-center text-gray-600 dark:text-gray-300"
               >Customer</span
             >
-            <span
-              class="paragraph__p bg-[#d4ecf4] dark:bg-[#1B202A] px-3 py-2 rounded-xl w-28 flex items-center justify-center text-gray-600 dark:text-gray-300"
-              >Comment</span
-            >
+
             <span
               class="paragraph__p bg-[#d4ecf4] dark:bg-[#1B202A] px-3 py-2 rounded-xl w-28 flex items-center justify-center text-gray-600 dark:text-gray-300"
               >rating</span
@@ -68,20 +65,13 @@
                 </span>
               </div>
             </div>
-            <div class="flex flex-col xl:flex-row justify-between flex-1 mt-4">
-              <span
-                class="text-center span__element text-xs text-gray-500 dark:text-gray-300"
-                >Lorem ipsum dolor sit amet consectetur. Adipiscing sit vitae
-                fringilla rhoncus.</span
-              >
-              <div class="flex items-center lg:justify-end gap-3">
-                <span class="bg-[#009F10] rounded-full p-1">
-                  <font-awesome-icon
-                    icon="thumbs-up"
-                    class="text-sm text-white"
-                  />
-                </span>
-              </div>
+            <div class="flex flex-col xl:flex-row justify-end flex-1 mt-4">
+              <span class="bg-[#009F10] rounded-full p-1">
+                <font-awesome-icon
+                  icon="thumbs-up"
+                  class="text-sm text-white"
+                />
+              </span>
             </div>
           </div>
         </div>
