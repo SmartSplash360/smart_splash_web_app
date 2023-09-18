@@ -46,18 +46,15 @@
         v-if="chemCostModal"
         :toggleChemCostModal="toggleChemCostModal"
       ></ModalsReportChemicalSpentModal>
-      <div
-        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] hover:bg-[#025E7C] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
-      >
-        <img :src="CardIcon" alt="card-icon" />
-        <span class="min-w-max text-center span__element-large">Payments</span>
-      </div>
+
       <nuxt-link
-        to="/reports/reviews"
+        to="/reports/reviews/technician"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="min-w-max text-center span__element-large">Reviews</span>
+        <span class="min-w-max text-center span__element-large"
+          >Technician reviews</span
+        >
       </nuxt-link>
     </div>
     <div

@@ -176,7 +176,7 @@
           </div>
         </template>
         <div
-          class="flex flex-col  bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
+          class="flex flex-col bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
         >
           <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
             <span class="text-[#025E7C] dark:text-white span__element flex-1"
@@ -260,7 +260,7 @@ const dt = ref();
 const createLead = () => router.push("/leads/create-lead");
 // const viewLead = (id) => router.push(`/leads/${id}`);
 
-const leadCount = computed(() => leads.lenght);
+const leadCount = computed(() => leads.length);
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };

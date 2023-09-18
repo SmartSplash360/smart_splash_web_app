@@ -227,7 +227,7 @@ const filters = ref({
   representative: { value: null, matchMode: FilterMatchMode.IN },
 });
 
-const customercount = computed(() => props.customerMobiles.lenght);
+const customercount = computed(() => props.customerMobiles.length);
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 
 onMounted(() => {
