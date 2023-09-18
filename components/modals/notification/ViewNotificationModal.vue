@@ -109,9 +109,9 @@ const handleViewNotification = (notification) => {
     props.toggleNotificationModal();
   }
   // Get Customer details
-  // if (notification.type.toLowerCase() === "job") {
-  //   router.push("/alerts");
-  // }
+  if (notification.type.toLowerCase() === "job") {
+    router.push("/customers");
+  }
   if (notification.type.toLowerCase() == "Campaign") {
     router.push("/campaigns");
     props.toggleNotificationModal();
