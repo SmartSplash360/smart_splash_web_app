@@ -69,7 +69,7 @@
           <FileUpload
             name="basic"
             @upload="handleUpload($event)"
-            :multiple="true"
+            :multiple="false"
             accept="image/*"
             :maxFileSize="1000000"
           >
@@ -119,9 +119,21 @@ import { useTemplateStore } from "@/stores/templates";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
-const { edit, campaignId, createCampaign } = defineProps([
-  "edit, campaignId,createCampaign",
-]);
+const props = defineProps({
+  campaignId: {
+    type: String,
+    default: () => null,
+    required: false,
+  },
+  edit: {
+    type: Boolean,
+    default: () => false,
+    required: false,
+  },
+  createCampaign: {
+    type: Function,
+  },
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -156,7 +168,7 @@ const store = useTemplateStore();
 const template = computed(() => store.getTemplateById(templateId));
 
 onMounted(async () => {
-  if (campaignId) {
+  if (props.campaignId) {
     name.value = template.value?.name;
     templateType.value = template.value?.template_type_id;
   }
@@ -177,12 +189,12 @@ const handleChangeName = () => {
   errorName.value = name.value ? "" : "The title field is required";
 };
 const handleUpload = (event) => {
+  selectedFile.value = event.files[0];
   if (!selectedFile.value) {
     errorCover.value = "Please Select a file and upload";
     return;
   } else {
     errorCover.value = "";
-    selectedFile.value = event.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
       imageSrc.value = e.target.result;
@@ -260,7 +272,7 @@ const sendCampaign = () => {
     return;
   }
 
-  createCampaign({
+  props.createCampaign({
     name: name.value,
     description: description.value,
     templateId,

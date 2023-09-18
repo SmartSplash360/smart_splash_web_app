@@ -19,23 +19,39 @@
 </template>
 
 <script setup>
+import { useToast } from "primevue/usetoast";
 import { useTemplateStore } from "@/stores/templates";
 import { useCampaignStore } from "@/stores/campaign";
-import { useToast } from "primevue/usetoast";
+import { useUserStore } from "~/stores/users";
+import { useNotificationStore } from "~/stores/notification";
 
 const toast = useToast();
 const props = defineProps({
-  campaignId: String,
-  edit: Boolean,
+  campaignId: {
+    type: String,
+    default: () => null,
+    required: false,
+  },
+  edit: {
+    type: Boolean,
+    default: () => false,
+    required: false,
+  },
 });
 
 const templateStore = useTemplateStore();
 const campaignStore = useCampaignStore();
+const notificationStore = useNotificationStore();
+
 const loading = ref(true);
 const template = ref();
 
-const router = useRoute();
-const { templateId } = router.query;
+const router = useRouter();
+const route = useRoute();
+
+const { templateId } = route.query;
+
+const user = computed(() => userStore.getCurrentUser);
 
 onMounted(async () => {
   if (props.campaignId) {
@@ -109,6 +125,21 @@ const createCampaign = async (data) => {
         });
       }
     }
+
+    router.push("/campaigns");
+    await notificationStore.createNotification({
+      subject: "CAMPAIGN CREATED",
+      description: `Campaign sent to all ${
+        data.lead && data.customer
+          ? "Leads and Customers"
+          : data.lead
+          ? "Leads"
+          : "Customers"
+      }`,
+      user_id: user.id,
+      alert_id: "",
+      type: "Campaign",
+    });
   } catch (error) {
     toast.add({
       severity: "error",

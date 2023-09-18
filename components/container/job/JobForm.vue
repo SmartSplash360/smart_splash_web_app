@@ -73,11 +73,13 @@ const createJob = async (totalPrice, quoteRecipient) => {
         description: service.description,
       });
     });
+
     quoteStore.createQuote({
       job_id: createdJob.id,
       reference: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
       total_amount: Number(totalPrice),
     });
+
     await notificationStore.createNotification({
       subject: "JOB CREATED",
       description: `A job has been created successfully and a quote was sent to ${quoteRecipient}`,
@@ -85,6 +87,7 @@ const createJob = async (totalPrice, quoteRecipient) => {
       alert_id: createdJob.id,
       type: "Job",
     });
+
     if (alertId.value) {
       alertStore.updateAlert(alertId.value, {
         status: "closed",

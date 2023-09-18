@@ -9,12 +9,14 @@
     >
       <div class="flex justify-between w-full bg-[#d4ecf4] p-2 rounded-md">
         <span
-          class="bg-white p-2 w-1/2 rounded-md flex-center cursor-pointer hover:shadow-lg"
+          class="p-2 w-1/2 rounded-md flex-center cursor-pointer"
+          :class="currentTab === 'All' && 'bg-white'"
           @click="handleChangeTab('All')"
           >All</span
         >
         <span
           class="w-1/2 rounded-md flex-center cursor-pointer"
+          :class="currentTab === 'Unread' && 'bg-white'"
           @click="handleChangeTab('Unread')"
           >Unread</span
         >
@@ -24,6 +26,7 @@
           class="flex gap-5 items-center justify-between border rounded-md p-2 cursor-pointer hover:shadow-xl hover:bg-slate-100"
           v-for="(notification, index) in allNotifications"
           :key="index"
+          @click="handleViewNotification(notification)"
         >
           <div class="hidden w-[50px] h-[50px] rounded-full flex-center">
             <img
@@ -75,6 +78,8 @@ const props = defineProps({
   toggleNotificationModal: Function,
 });
 
+const router = useRouter();
+
 const notifications = ref([]);
 const notificationsList = ref([]);
 const allNotifications = ref();
@@ -88,14 +93,34 @@ onMounted(async () => {
 
 const handleChangeTab = (tab) => {
   if (tab === "Unread") {
+    currentTab.value = "Unread";
     allNotifications.value = notificationsList.value.filter(
       (notif) => notif.status === "unread"
     );
   } else {
     allNotifications.value = notificationsList.value;
+    currentTab.value = "All";
   }
 };
 
+const handleViewNotification = (notification) => {
+  if (notification.type.toLowerCase() == "Alert") {
+    router.push("/alerts");
+    props.toggleNotificationModal();
+  }
+  // Get Customer details
+  // if (notification.type.toLowerCase() === "job") {
+  //   router.push("/alerts");
+  // }
+  if (notification.type.toLowerCase() == "Campaign") {
+    router.push("/campaigns");
+    props.toggleNotificationModal();
+  }
+  if (notification.type.toLowerCase() == "Customer") {
+    router.push("/customers");
+    props.toggleNotificationModal();
+  }
+};
 const deleteNotification = async (id) => {
   await notificationStore.deleteNotification(id);
   props.toggleNotificationModal();
