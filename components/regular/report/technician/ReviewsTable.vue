@@ -77,7 +77,7 @@
       <h5 class="heading__h5 flex justify-start">Likes</h5>
       <h5 class="heading__h5 flex justify-start">Dislikes</h5>
     </div>
-    <div v-if="technicians.length == 0" class="flex-center">
+    <div v-if="technicians?.length == 0" class="flex-center">
       <h5 class="heading__h5">
         There is no technician
       </h5>

@@ -18,10 +18,16 @@
     <div v-if="jobsCount == 0">
       <h3 class="heading__h3 text-[#025E7C] mt-10">No jobs found</h3>
     </div>
-    <div class="flex flex-col lg:flex-row gap-20">
+    <div v-else class="flex flex-col lg:flex-row gap-20">
+      <ModalsReportJobComments
+        v-if="showComments"
+        :handleToggleShowComment="closeModal"
+        :jobDetails="jobDetails"
+      />
       <RegularReportTechnicianJobsTable
         :jobs="jobs"
         :technicianId="technicianId"
+        :handleToggleShowComment="handleToggleShowComment"
       />
       <RegularReportTechnicianChart
         :chartData="chartData"
@@ -46,13 +52,15 @@ const customerStore = useCustomerStore();
 
 const route = useRoute();
 const technicianId = route.params.technicianId;
+
 const technicians = ref([]);
 const technician = ref();
 const jobs = ref();
+const jobDetails = ref();
 const jobsCount = ref();
 const totalLikes = ref(0);
 const totalDislikes = ref(0);
-
+const showComments = ref(false);
 const chartData = ref();
 const chartOptions = ref({
   cutout: "60%",
@@ -89,5 +97,13 @@ const setChartData = () => {
       },
     ],
   };
+};
+const handleToggleShowComment = (data, customerProfile, customerName) => {
+  console.log(data, customerName, customerProfile);
+  jobDetails.value = { ...data, customerProfile, customerName };
+  showComments.value = !showComments.value;
+};
+const closeModal = () => {
+  showComments.value = false;
 };
 </script>

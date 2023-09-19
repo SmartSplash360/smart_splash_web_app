@@ -53,8 +53,17 @@
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="min-w-max text-center span__element-large"
-          >Technician reviews</span
-        >
+          >Technicians
+        </span>
+      </nuxt-link>
+      <nuxt-link
+        to="/reports/reviews/customer"
+        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
+      >
+        <img :src="QuotesIconcon" alt="quotes-icon" />
+        <span class="min-w-max text-center span__element-large"
+          >Customers
+        </span>
       </nuxt-link>
     </div>
     <div
@@ -115,6 +124,7 @@ const days = ref();
 const jobModal = ref(false);
 const quoteModal = ref();
 const invoiceModal = ref();
+
 const chemCostModal = ref();
 const numberOfDays = ref([
   {
@@ -132,6 +142,7 @@ const numberOfDays = ref([
 ]);
 
 const completedJobs = computed(() => jobStore.getAllCompletedJobs);
+
 const toggleJobModal = () => (jobModal.value = !jobModal.value);
 const toggleQuoteModal = () => (quoteModal.value = !quoteModal.value);
 const toggleInvoiceModal = () => (invoiceModal.value = !invoiceModal.value);
