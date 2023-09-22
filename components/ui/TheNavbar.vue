@@ -50,8 +50,15 @@
           v-if="showNotificationModal"
           :toggleNotificationModal="toggleNotificationModal"
         ></ModalsNotificationViewNotificationModal>
-        <span class="flex-center cursor-pointer" @click="handleNotification">
-          <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl" />
+        <span
+          class="relative flex-between cursor-pointer"
+          @click="handleNotification"
+        >
+          <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
+          <span
+            class="bg-red-500 rounded-full w-4 h-4 flex-center absolute right-0 top-0 text-lg"
+            >1</span
+          >
         </span>
         <span class="span__element font-light"
           >{{ user?.name }} {{ user?.surname || "" }}</span

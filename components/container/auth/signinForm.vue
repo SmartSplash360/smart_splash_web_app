@@ -87,6 +87,7 @@ import { useProductStore } from "~/stores/products";
 import { useServiceStore } from "~/stores/services";
 import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
+import { useMenuStore } from "~/stores/menu";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
@@ -97,6 +98,7 @@ const productStore = useProductStore();
 const serviceStore = useServiceStore();
 const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
+const menuStore = useMenuStore();
 
 const router = useRouter();
 
@@ -137,6 +139,8 @@ async function login() {
     await serviceStore.fetchServices();
     await templateStore.fetchTemplates();
     await quoteStore.fetchQuotes();
+    await menuStore.fetchMenuByRole(1);
+
     await router.push("/customers");
     toast.add({
       severity: "success",

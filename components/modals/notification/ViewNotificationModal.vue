@@ -28,12 +28,17 @@
           :key="index"
           @click="handleViewNotification(notification)"
         >
-          <div class="hidden w-[50px] h-[50px] rounded-full flex-center">
+          <div class="rounded-full flex-center gap-2 self-start">
+            <span class="bg-[#0291BF] w-2 h-2 rounded-full"></span>
             <img
-              :src="notification.profilePic"
-              class="w-full h-full rounded-full"
+              :src="
+                notification.profilePic ||
+                'https://xsgames.co/randomusers/avatar.php?g=male'
+              "
+              class="w-10 h-10 rounded-full"
             />
           </div>
+
           <div class="flex flex-col justify-between p-2">
             <div class="flex items-center gap-2">
               <span class="span__element font-bold text-xs uppercase"

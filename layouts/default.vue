@@ -3,7 +3,6 @@
   <main>
     <slot></slot>
   </main>
-  <UiTheFooter></UiTheFooter>
 </template>
 
 <style>
