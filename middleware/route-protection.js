@@ -6,7 +6,5 @@ export default defineNuxtRouteMiddleware((to, _from) => {
     
     if (user.role_id !== 1) {
         return navigateTo('/customers');
-    } else {
-        console.log("first")
-    }
+    } 
 })

@@ -43,7 +43,6 @@ const totalDislikes = ref(0);
 onMounted(() => {
   chartData.value = setChartData();
   technicians.value.forEach((tech) => {
-    console.log(tech.like_reaction_count);
     totalLikes.value += tech.like_reaction_count;
     totalDislikes.value += tech.dislike_reaction_count;
   });

@@ -5,6 +5,7 @@
       :value="technicians"
       paginator
       dataKey="id"
+      ref="dt"
       filterDisplay="row"
       :loading="loading"
       selectionMode="single"
@@ -24,13 +25,19 @@
               />
             </span>
           </div>
+          <Button
+            label="Download"
+            icon="pi pi-cloud-download"
+            class="!bg-[#d4ecf4] hover:shadow-lg"
+            @click="exportCSV($event)"
+          />
         </div>
       </template>
       <template #empty> No technicians found.</template>
       <template #loading> Loading technicians data. Please wait.</template>
       <Column field="name" header="technician" sortable>
         <template #body="slotProps">
-          <nuxt-link :to="`/reports/reviews/technician/${slotProps.data?.id}`">
+          <nuxt-link :to="`/reports/reviews/${slotProps.data?.id}`">
             <Avatar
               :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
               :alt="slotProps.data.name"
@@ -87,7 +94,7 @@
       class="flex-between w-full dark:text-white p-5 gap-10"
       v-for="technician in technicians"
       :key="technician.id"
-      :to="`/reports/reviews/technician/${technician.id}`"
+      :to="`/reports/reviews/${technician.id}`"
     >
       <span class="flex-1 span__element min-w-max">{{ technician.name }}</span>
 
@@ -128,4 +135,9 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
+
+const dt = ref();
+const exportCSV = (event) => {
+  dt.value.exportCSV();
+};
 </script>

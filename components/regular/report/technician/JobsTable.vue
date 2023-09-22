@@ -5,6 +5,7 @@
       :value="jobs"
       paginator
       dataKey="id"
+      ref="dt"
       filterDisplay="row"
       :loading="loading"
       selectionMode="single"
@@ -24,15 +25,12 @@
               />
             </span>
           </div>
-          <div class="flex ml-auto">
-            <Dropdown
-              v-model="days"
-              :options="numberOfDays"
-              optionLabel="name"
-              placeholder="90 Days"
-              class="xl:w-[10rem] bg-[#025E7C] !text-white !text-center"
-            />
-          </div>
+          <Button
+            label="Download"
+            icon="pi pi-cloud-download"
+            class="!bg-[#d4ecf4] hover:shadow-lg"
+            @click="exportCSV($event)"
+          />
         </div>
       </template>
       <template #empty> No jobs found.</template>
@@ -153,6 +151,7 @@ const customerStore = useCustomerStore();
 
 const reloadKey = ref(0);
 const loading = ref(false);
+const dt = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -187,5 +186,9 @@ const getCustomerName = (id) => {
 const getCustomerProfil = (id) => {
   const customer = customerStore.getCustomerById(id);
   return customer.photo;
+};
+
+const exportCSV = (event) => {
+  dt.value.exportCSV();
 };
 </script>

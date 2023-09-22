@@ -56,8 +56,10 @@
         >
           <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
           <span
-            class="bg-red-500 rounded-full w-4 h-4 flex-center absolute right-0 top-0 text-lg"
-            >1</span
+            v-if="notificationCount"
+            class="bg-red-500 rounded-full text-white p-1 w-[1.25rem] h-[1.25rem] flex-center absolute right-0 top-0 text-sm"
+          >
+            {{ notificationCount }}</span
           >
         </span>
         <span class="span__element font-light"
@@ -187,6 +189,7 @@ import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { sideBarLinks } from "@/utils/sidebarLinks";
 import { useUserStore } from "~/stores/users";
+import { useNotificationStore } from "~/stores/notification";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useConfirm } from "primevue/useconfirm";
 
@@ -196,11 +199,15 @@ defineProps({
 
 const route = useRoute();
 const confirm = useConfirm();
-const userStore = useUserStore();
 const router = useRouter();
+const userStore = useUserStore();
+const notificationStore = useNotificationStore();
 
 const sideBarVisible = ref(false);
 const showNotificationModal = ref(false);
+const notificationCount = computed(
+  () => notificationStore.getNotificationCount
+);
 const menu = ref();
 const items = ref([
   {

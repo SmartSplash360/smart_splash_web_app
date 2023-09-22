@@ -1,6 +1,6 @@
 <template>
-  <ContainerReportReviewsTechnicianReview :loading="loading">
-  </ContainerReportReviewsTechnicianReview>
+  <ContainerReportReviewsReviewDetail :loading="loading">
+  </ContainerReportReviewsReviewDetail>
 </template>
 
 <script setup>

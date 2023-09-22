@@ -109,7 +109,8 @@ const handleChangeTab = (tab) => {
 };
 
 const handleViewNotification = (notification) => {
-  if (notification.type.toLowerCase() == "Alert") {
+  console.log(notification);
+  if (notification.type.toLowerCase() == "alert") {
     router.push("/alerts");
     props.toggleNotificationModal();
   }
@@ -117,11 +118,11 @@ const handleViewNotification = (notification) => {
   if (notification.type.toLowerCase() === "job") {
     router.push("/customers");
   }
-  if (notification.type.toLowerCase() == "Campaign") {
+  if (notification.type.toLowerCase() == "campaign") {
     router.push("/campaigns");
     props.toggleNotificationModal();
   }
-  if (notification.type.toLowerCase() == "Customer") {
+  if (notification.type.toLowerCase() == "customer") {
     router.push("/customers");
     props.toggleNotificationModal();
   }

@@ -33,37 +33,13 @@
         v-if="invoiceModal"
         :toggleInvoiceModal="toggleInvoiceModal"
       ></ModalsReportInvoicesModal>
-      <div
-        @click="toggleChemCostModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
-      >
-        <img :src="ChemicalIcon" alt="chemical-tank-icon" />
-        <span class="lg:text-md min-w-max text-center span__element-large"
-          >Chemical Cost</span
-        >
-      </div>
-      <ModalsReportChemicalSpentModal
-        v-if="chemCostModal"
-        :toggleChemCostModal="toggleChemCostModal"
-      ></ModalsReportChemicalSpentModal>
 
       <nuxt-link
-        to="/reports/reviews/technician"
+        to="/reports/reviews"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="min-w-max text-center span__element-large"
-          >Technicians
-        </span>
-      </nuxt-link>
-      <nuxt-link
-        to="/reports/reviews/customer"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
-      >
-        <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="min-w-max text-center span__element-large"
-          >Customers
-        </span>
+        <span class="min-w-max text-center span__element-large">Reviews </span>
       </nuxt-link>
     </div>
     <div

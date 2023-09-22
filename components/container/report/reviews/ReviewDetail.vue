@@ -99,7 +99,6 @@ const setChartData = () => {
   };
 };
 const handleToggleShowComment = (data, customerProfile, customerName) => {
-  console.log(data, customerName, customerProfile);
   jobDetails.value = { ...data, customerProfile, customerName };
   showComments.value = !showComments.value;
 };

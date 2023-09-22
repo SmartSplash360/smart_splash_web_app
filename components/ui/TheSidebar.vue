@@ -61,7 +61,6 @@ const menuStore = useMenuStore();
 const menu = ref();
 onMounted(async () => {
   menu.value = menuStore.getMenu;
-  console.log(menu.value);
 });
 </script>
 
