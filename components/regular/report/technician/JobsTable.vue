@@ -28,7 +28,7 @@
           <Button
             label="Download"
             icon="pi pi-cloud-download"
-            class="!bg-[#d4ecf4] hover:shadow-lg"
+            class="!bg-[#d4ecf4] hover:shadow-lg dark:!bg-[#1B2028]"
             @click="exportCSV($event)"
           />
         </div>

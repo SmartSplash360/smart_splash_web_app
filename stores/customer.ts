@@ -18,6 +18,14 @@ export const useCustomerStore = defineStore("customer", {
         getCustomers(state) {
             return state.customers;
         },
+        getActiveCustomers(state) {
+            const actives = state.customers.filter((customer: Customer) => customer.status === 1);
+            return actives.length
+        },
+        getInactiveCustomers(state) {
+            const inactives = state.customers.filter((customer: Customer) => customer.status === 0);
+            return inactives?.length
+        },
         getCustomerById: (state) => (id: number | string) => {
             return state.customers.find((customer: Customer) => customer.id === id);
         },

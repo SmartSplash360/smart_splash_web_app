@@ -50,7 +50,9 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">Active Customer</h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">156</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">
+            {{ activeCustomers }}
+          </h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
@@ -93,13 +95,16 @@ import InvoiceIcon from "@/assets/icons/invoice-icon.svg";
 import ChemicalIcon from "@/assets/icons/chemical-tank-icon.svg";
 import CardIcon from "@/assets/icons/payment-icon.svg";
 import { useJobStore } from "~/stores/jobs";
+import { useCustomerStore } from "~/stores/customer";
 
 const jobStore = useJobStore();
+const customerStore = useCustomerStore();
 
 const days = ref();
 const jobModal = ref(false);
 const quoteModal = ref();
 const invoiceModal = ref();
+const activeCustomers = computed(() => customerStore.getActiveCustomers);
 
 const chemCostModal = ref();
 const numberOfDays = ref([

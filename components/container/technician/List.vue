@@ -5,6 +5,7 @@
   <section v-else class="sm:gap-13 flex flex-col gap-16">
     <RegularTechnicianBoard
       @open-modal="toggleAddTechnicianModal"
+      @selectStatus="(status) => handleStatus(status)"
     ></RegularTechnicianBoard>
     <ModalsTechnicianCreateTechnician
       v-if="addTechnicianModal"
@@ -13,7 +14,7 @@
     ></ModalsTechnicianCreateTechnician>
     <div
       class="card-container grid items-center justify-between gap-x-5 gap-y-10"
-      v-if="technicians.length > 0"
+      v-if="technicians?.length > 0"
     >
       <RegularTechnicianCard
         v-for="technician in technicians"
@@ -41,10 +42,11 @@ defineProps({
 const toast = useToast();
 const confirm = useConfirm();
 const router = useRouter();
-const addTechnicianModal = ref(false);
-const technician = ref();
-
 const store = useTechnicianStore();
+
+const addTechnicianModal = ref(false);
+const technicians = ref();
+const technician = ref();
 
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
 
@@ -71,7 +73,7 @@ const closeModal = ({ success, error }) => {
   }
 };
 
-const technicians = computed(() => store.getTechnicians);
+const technicianList = computed(() => store.getTechnicians);
 
 const editItem = ({ id, item, mobileEdit = false }) => {
   technician.value = item;
@@ -112,6 +114,24 @@ const deleteItem = async ({ id }) => {
     },
     reject: () => {},
   });
+};
+
+onMounted(() => {
+  technicians.value = store.getTechnicians;
+});
+
+const handleStatus = ({ option }) => {
+  if (option === "active") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 1
+    );
+  } else if (option === "inactive") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 0
+    );
+  } else {
+    technicians.value = technicianList.value;
+  }
 };
 </script>
 

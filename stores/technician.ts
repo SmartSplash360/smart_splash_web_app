@@ -20,6 +20,7 @@ export const useTechnicianStore = defineStore("technician", {
         getTechnicianById: (state) => (id: number | string) => {
             return state.technicians.find((technician: Technician) => technician?.id === id);
         }
+        
     },
     actions: {
         async fetchTechnicians() {
