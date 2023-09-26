@@ -30,8 +30,8 @@
         :handleToggleShowComment="handleToggleShowComment"
       />
       <RegularReportTechnicianChart
-        :chartData="chartData"
-        :chartOptions="chartOptions"
+        :chartData="data"
+        :chartOptions="options"
         :totalLikes="totalLikes"
         :totalDislikes="totalDislikes"
       />
@@ -61,9 +61,18 @@ const jobsCount = ref();
 const totalLikes = ref(0);
 const totalDislikes = ref(0);
 const showComments = ref(false);
-const chartData = ref();
-const chartOptions = ref({
-  cutout: "60%",
+const data = ref({
+  labels: ["Likes", "Dislikes"],
+  datasets: [
+    {
+      backgroundColor: ["#D4382E", "#009F10"],
+      data: [40, 30],
+    },
+  ],
+});
+const options = ref({
+  responsive: true,
+  maintainAspectRatio: false,
 });
 
 onMounted(async () => {
@@ -74,30 +83,8 @@ onMounted(async () => {
 
   jobs.value = technician.value?.technician_jobs;
   jobsCount.value = jobs.value.length;
-  chartData.value = setChartData();
 });
 
-const setChartData = () => {
-  const documentStyle = getComputedStyle(document.body);
-
-  return {
-    datasets: [
-      {
-        data: [325, 702],
-        // data: [totalDislikes.value, totalLikes.value],
-
-        backgroundColor: [
-          documentStyle.getPropertyValue("--red-500"),
-          documentStyle.getPropertyValue("--green-500"),
-        ],
-        hoverBackgroundColor: [
-          documentStyle.getPropertyValue("--red-400"),
-          documentStyle.getPropertyValue("--green-400"),
-        ],
-      },
-    ],
-  };
-};
 const handleToggleShowComment = (data, customerProfile, customerName) => {
   jobDetails.value = { ...data, customerProfile, customerName };
   showComments.value = !showComments.value;

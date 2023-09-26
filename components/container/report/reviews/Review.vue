@@ -11,8 +11,8 @@
     <div class="flex flex-col lg:flex-row gap-20">
       <RegularReportTechnicianReviewsTable :technicians="technicians" />
       <RegularReportTechnicianChart
-        :chartData="chartData"
-        :chartOptions="chartOptions"
+        :chartData="data"
+        :chartOptions="options"
         :technicianCount="technicianCount"
         :totalLikes="totalLikes"
         :totalDislikes="totalDislikes"
@@ -28,45 +28,33 @@ defineProps({
   loading: Boolean,
 });
 
-const store = useTechnicianStore();
-
-const chartData = ref();
-const chartOptions = ref({
-  cutout: "60%",
-});
-
-const technicians = computed(() => store.getTechnicians);
-const technicianCount = technicians.value.length;
 const totalLikes = ref(0);
 const totalDislikes = ref(0);
+const data = ref({
+  labels: ["Likes", "Dislikes"],
+  datasets: [
+    {
+      backgroundColor: ["#D4382E", "#009F10"],
+      data: [40, 30],
+    },
+  ],
+});
+const options = ref({
+  responsive: true,
+  maintainAspectRatio: false,
+});
+
+const store = useTechnicianStore();
+
+const technicians = computed(() => store.getTechnicians);
+
+const technicianCount = computed(() => technicians.value.length);
 
 onMounted(() => {
-  chartData.value = setChartData();
-  technicians.value.forEach((tech) => {
+  const technicians = store.getTechnicians;
+  technicians.forEach((tech) => {
     totalLikes.value += tech.like_reaction_count;
     totalDislikes.value += tech.dislike_reaction_count;
   });
 });
-
-const setChartData = () => {
-  const documentStyle = getComputedStyle(document.body);
-
-  return {
-    datasets: [
-      {
-        data: [325, 702],
-        // data: [totalDislikes.value, totalLikes.value],
-
-        backgroundColor: [
-          documentStyle.getPropertyValue("--red-500"),
-          documentStyle.getPropertyValue("--green-500"),
-        ],
-        hoverBackgroundColor: [
-          documentStyle.getPropertyValue("--red-400"),
-          documentStyle.getPropertyValue("--green-400"),
-        ],
-      },
-    ],
-  };
-};
 </script>

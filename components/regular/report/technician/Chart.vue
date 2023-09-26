@@ -2,13 +2,9 @@
   <div class="flex flex-col items-center gap-10">
     <h4 class="heading__h4 text-gray-700 font-medium">Summary</h4>
     <div class="card flex flex-col justify-between items-center gap-10">
-      <!-- <h4 class="heading__h4">{{ technicianCount }} Technicians</h4> -->
-      <Chart
-        type="doughnut"
-        :data="chartData"
-        :options="chartOptions"
-        class="w-full md:w-30rem"
-      />
+      <div class="h-[30vh] min-w-[100%]">
+        <Doughnut :data="chartData" :options="chartOptions" />
+      </div>
       <div class="flex gap-10">
         <div class="flex items-center gap-3">
           <span class="border-[#009F10] border rounded-full p-1">
@@ -37,7 +33,12 @@
 </template>
 
 <script setup>
-const props = defineProps({
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "vue-chartjs";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+defineProps({
   chartData: Object,
   chartOptions: Object,
   technicianCount: Number | String,

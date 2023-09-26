@@ -37,7 +37,7 @@
       <template #loading> Loading technicians data. Please wait.</template>
       <Column field="name" header="technician" sortable>
         <template #body="slotProps">
-          <nuxt-link :to="`/reports/reviews/${slotProps.data?.id}`">
+          <span @click="loadReviews(slotProps.data?.id)">
             <Avatar
               :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
               :alt="slotProps.data.name"
@@ -46,7 +46,7 @@
               shape="circle"
             />
             {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
-          </nuxt-link>
+          </span>
         </template>
       </Column>
       <Column field="comments" header="Comments"></Column>
@@ -139,5 +139,9 @@ const filters = ref({
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
+};
+
+const loadReviews = (url) => {
+  window.location.href = `/reports/reviews/${url}`;
 };
 </script>

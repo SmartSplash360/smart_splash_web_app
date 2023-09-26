@@ -42,7 +42,7 @@
     "@vuepic/vue-datepicker": "^5.4.0",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.4.0",
-    "chart.js": "^4.3.0",
+    "chart.js": "^4.4.0",
     "date-fns": "^2.30.0",
     "flowbite": "^1.6.6",
     "fontawesome-markers": "^4.6.1",
@@ -54,6 +54,7 @@
     "v-dropdown": "^3.0.0-beta.1",
     "v-dropdown-menu": "^2.0.2",
     "vee-validate": "^4.11.1",
+    "vue-chartjs": "^5.2.0",
     "vue3-google-map": "^0.15.0",
     "yup": "^1.2.0"
   }

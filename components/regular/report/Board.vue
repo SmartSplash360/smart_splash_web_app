@@ -34,13 +34,13 @@
         :toggleInvoiceModal="toggleInvoiceModal"
       ></ModalsReportInvoicesModal>
 
-      <nuxt-link
-        to="/reports/reviews"
+      <span
+        @click="loadReviews"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
         <span class="min-w-max text-center span__element-large">Reviews </span>
-      </nuxt-link>
+      </span>
     </div>
     <div
       class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028] dark:border-gray-600"
@@ -123,6 +123,10 @@ const numberOfDays = ref([
 ]);
 
 const completedJobs = computed(() => jobStore.getAllCompletedJobs);
+
+const loadReviews = () => {
+  window.location.href = "/reports/reviews";
+};
 
 const toggleJobModal = () => (jobModal.value = !jobModal.value);
 const toggleQuoteModal = () => (quoteModal.value = !quoteModal.value);
