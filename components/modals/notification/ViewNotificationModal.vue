@@ -5,7 +5,7 @@
   >
     <div
       @click.stop=""
-      class="absolute z-50 flex flex-col gap-14 rounded-md bg-white p-4 mr-64 mt-28 h-[665px] w-[450px] lg:gap-3 -right-4 -top-7"
+      class="absolute z-50 flex flex-col gap-14 rounded-md bg-white dark:bg-[#1B2028] p-4 mr-64 mt-28 h-[665px] w-[450px] lg:gap-3 -right-4 -top-7"
     >
       <div class="flex justify-between w-full bg-[#d4ecf4] p-2 rounded-md">
         <span
@@ -29,7 +29,7 @@
           @click="handleViewNotification(notification)"
         >
           <div class="rounded-full flex-center gap-2 self-start">
-            <span class="bg-[#0291BF] w-2 h-2 rounded-full"></span>
+            <!-- <span class="bg-[#0291BF] w-2 h-2 rounded-full"></span> -->
             <img
               :src="
                 notification.profilePic ||

@@ -25,16 +25,17 @@
         :jobDetails="jobDetails"
       />
       <RegularReportTechnicianJobsTable
-        :jobs="jobs"
         :technicianId="technicianId"
         :handleToggleShowComment="handleToggleShowComment"
       />
-      <RegularReportTechnicianChart
-        :chartData="data"
-        :chartOptions="options"
-        :totalLikes="totalLikes"
-        :totalDislikes="totalDislikes"
-      />
+      <div v-if="jobs?.length > 0">
+        <RegularReportTechnicianChart
+          :chartData="data"
+          :chartOptions="options"
+          :totalLikes="totalLikes"
+          :totalDislikes="totalDislikes"
+        />
+      </div>
     </div>
   </section>
 </template>

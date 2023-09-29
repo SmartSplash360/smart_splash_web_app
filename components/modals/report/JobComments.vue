@@ -23,6 +23,12 @@
           <p class="paragraph__p font-bold">{{ jobDetails.customerName }}</p>
         </div>
       </div>
+      <div class="flex flex-col border shadow-sm rounded-md p-4">
+        <div class="flex flex-col gap-4">
+          <p class="paragraph__p text-gray-400">{{ createdDate }}</p>
+          <p class="paragraph__p">{{ jobDetails.comments }}</p>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -33,6 +39,15 @@ const props = defineProps({
   jobDetails: Object,
 });
 
+const createdDate = computed(() => {
+  const dateObj = new Date(props.jobDetails.created_at);
+
+  return dateObj.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+});
 onMounted(() => {
   console.log(props.jobDetails);
 });

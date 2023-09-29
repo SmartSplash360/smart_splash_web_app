@@ -13,6 +13,13 @@ export default defineNuxtConfig({
       twilioApiKeySid: "",
       twilioApiKeySecret: "",
     },
+    pwa: {
+      workbox: {
+        importScripts: [
+          'firebase-messaging-sw.js'
+        ],
+      },
+    },
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -43,7 +50,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/color-mode",
   ],
-  plugins: ["~/plugins/ckEditor"],
+  plugins: ["~/plugins/ckEditor", "~/plugins/firebase"],
   colorMode: {
     classSuffix: "",
   },
@@ -58,5 +65,6 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue", "@vuepic/vue-datepicker"],
   },
+
   ssr: false,
 });

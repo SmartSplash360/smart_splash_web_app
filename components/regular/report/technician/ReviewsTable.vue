@@ -35,6 +35,7 @@
       </template>
       <template #empty> No technicians found.</template>
       <template #loading> Loading technicians data. Please wait.</template>
+      <Column field="id" header="ID"></Column>
       <Column field="name" header="technician" sortable>
         <template #body="slotProps">
           <span @click="loadReviews(slotProps.data?.id)">
@@ -129,6 +130,7 @@ const props = defineProps({
   technicians: Array,
 });
 
+const router = useRouter();
 const reloadKey = ref(0);
 const loading = ref(false);
 const filters = ref({
@@ -143,5 +145,6 @@ const exportCSV = (event) => {
 
 const loadReviews = (url) => {
   window.location.href = `/reports/reviews/${url}`;
+  // router.push(`/reports/reviews/${url}`);
 };
 </script>

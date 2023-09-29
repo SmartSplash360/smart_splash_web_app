@@ -2,7 +2,7 @@
   <div class="lg:w-3/4 customer-table laptop+ card hidden lg:block">
     <DataTable
       v-model:filters="filters"
-      :value="jobs"
+      :value="reviews"
       paginator
       dataKey="id"
       ref="dt"
@@ -33,8 +33,13 @@
           />
         </div>
       </template>
-      <template #empty> No jobs found.</template>
+      <template #empty> No Reviews found</template>
       <template #loading> Loading jobs data. Please wait.</template>
+      <Column field="id" header="Job ID">
+        <template #body="slotProps">
+          <span> {{ slotProps.data.job.id }} </span>
+        </template>
+      </Column>
       <Column field="name" header="Customer" sortable>
         <template #body="slotProps">
           <div>
@@ -52,39 +57,50 @@
           </div>
         </template>
       </Column>
-      <Column field="comments" header="Comments">
+      <Column field="star_rating" header="Ratings">
         <template #body="slotProps">
-          <div
-            class="flex items-center gap-3"
-            @click="
-              handleToggleShowComment(
-                slotProps.data,
-                getCustomerProfil(slotProps.data.customer_id),
-                getCustomerName(slotProps.data.customer_id)
-              )
-            "
-          >
-            <span> 15 comments</span>
-            <font-awesome-icon icon="arrow-right" />
-          </div> </template
-      ></Column>
-      <Column field="Likes" header="Likes">
-        <template #body="">
           <div class="flex items-center gap-3">
-            <span class="bg-[#009F10] rounded-full p-1">
-              <font-awesome-icon icon="thumbs-up" class="text-sm text-white" />
+            <span class="p-1 text-gray-500">
+              <font-awesome-icon
+                icon="star"
+                :class="slotProps.data.star_rating >= 1 && 'text-yellow-400'"
+              />
+              <font-awesome-icon
+                icon="star"
+                :class="slotProps.data.star_rating >= 2 && 'text-yellow-400'"
+              />
+              <font-awesome-icon
+                icon="star"
+                :class="slotProps.data.star_rating >= 3 && 'text-yellow-400'"
+              />
+              <font-awesome-icon
+                icon="star"
+                :class="slotProps.data.star_rating >= 4 && 'text-yellow-400'"
+              />
+              <font-awesome-icon
+                icon="star"
+                :class="slotProps.data.star_rating >= 5 && 'text-yellow-400'"
+              />
             </span>
-            <span class="text-sm text-gray-500 dark:text-gray-400"> 7</span>
           </div>
         </template>
       </Column>
-      <Column field="Dislikes" header="Dislikes">
-        <template #body="">
-          <div class="flex items-center gap-3">
-            <span class="bg-[#D4382E] rounded-full p-1">
-              <font-awesome-icon icon="thumbs-down" class="text-sm text-white"
-            /></span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">2</span>
+      <Column>
+        <template #body="slotProps">
+          <div class="flex flex-row gap-2">
+            <Button
+              icon="pi pi-eye"
+              text
+              raised
+              rounded
+              @click="
+                handleToggleShowComment(
+                  slotProps.data,
+                  getCustomerProfil(slotProps.data.customer_id),
+                  getCustomerName(slotProps.data.customer_id)
+                )
+              "
+            />
           </div>
         </template>
       </Column>
@@ -137,8 +153,8 @@ import { FilterMatchMode } from "primevue/api";
 import Avatar from "primevue/avatar";
 import SortIcon from "~/assets/icons/arrow-sort.svg";
 import Tag from "primevue/tag";
-import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
+import { useReviewStore } from "~/stores/reviews";
 
 const props = defineProps({
   technicianId: Number | String,
@@ -146,11 +162,12 @@ const props = defineProps({
   handleToggleShowComment: Function,
 });
 
-const technicianStore = useTechnicianStore();
 const customerStore = useCustomerStore();
+const reviewStore = useReviewStore();
 
 const reloadKey = ref(0);
 const loading = ref(false);
+const reviews = ref([]);
 const dt = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -171,12 +188,10 @@ const numberOfDays = ref([
     option: 30,
   },
 ]);
-
-onMounted(() => {
-  const listCustomers = [];
-  props.jobs?.forEach((job) => {
-    listCustomers.push(customerStore.NameById(job.customer_id));
-  });
+const comments = ref([]);
+onMounted(async () => {
+  reviews.value = await reviewStore.fetchReviewByTechnician(props.technicianId);
+  console.log(reviews.value);
 });
 
 const getCustomerName = (id) => {

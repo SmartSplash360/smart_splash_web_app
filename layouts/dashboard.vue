@@ -24,20 +24,42 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useUserStore } from "~/stores/users";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import messaging from "@/plugins/firebase";
 
 const toggleSide = ref(false);
 const handleToggleSide = () => (toggleSide.value = !toggleSide.value);
 
-type Theme = "light" | "dark";
+// type Theme = "light" | "dark";
 
 const userStore = useUserStore();
 
-const setColorTheme = (newTheme: Theme) => {
+const setColorTheme = (newTheme) => {
   useColorMode().preference = newTheme;
   userStore.userDefinedTheme = true;
 };
+
+const activate = async () => {
+  const token = await getToken(messaging, {
+    vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q",
+  });
+
+  if (token) {
+    console.log(token);
+  } else {
+    // request
+  }
+};
+
+onMounted(() => {
+  const messaging = getMessaging();
+
+  onMessage(messaging, (payload) => {
+    console.log("Message on Client", payload);
+  });
+});
 </script>
 <style>
 .page-enter-active,
