@@ -28,14 +28,14 @@
         :technicianId="technicianId"
         :handleToggleShowComment="handleToggleShowComment"
       />
-      <div v-if="jobs?.length > 0">
+      <!-- <div v-if="jobs?.length > 0">
         <RegularReportTechnicianChart
           :chartData="data"
           :chartOptions="options"
           :totalLikes="totalLikes"
           :totalDislikes="totalDislikes"
         />
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
