@@ -3,7 +3,10 @@
     <SkeletonReportPage></SkeletonReportPage>
   </section>
   <section v-else class="flex flex-col gap-10">
-    <div class="flex gap-3 items-center cursor-pointer" @click="$router.back()">
+    <div
+      class="w-fit flex gap-3 items-center cursor-pointer"
+      @click="handletechnicianReviews()"
+    >
       <font-awesome-icon icon="arrow-left" />
       <span class="sm:flex span__element">Back</span>
     </div>
@@ -12,11 +15,11 @@
         {{ technician?.name }}
       </h2>
       <span class="span__element text-gray-500 dark:text-gray-300"
-        >({{ jobsCount }} Results)</span
+        >({{ reviewCount }} Results)</span
       >
     </div>
-    <div v-if="jobsCount == 0">
-      <h3 class="heading__h3 text-[#025E7C] mt-10">No jobs found</h3>
+    <div v-if="reviewCount == 0">
+      <h3 class="heading__h3 text-[#025E7C] mt-10">No reviews found</h3>
     </div>
     <div v-else class="flex flex-col lg:flex-row gap-20">
       <ModalsReportJobComments
@@ -24,18 +27,11 @@
         :handleToggleShowComment="closeModal"
         :jobDetails="jobDetails"
       />
-      <RegularReportTechnicianJobsTable
+      <RegularReportTechnicianReviewTable
         :technicianId="technicianId"
         :handleToggleShowComment="handleToggleShowComment"
+        :reviews="reviews"
       />
-      <!-- <div v-if="jobs?.length > 0">
-        <RegularReportTechnicianChart
-          :chartData="data"
-          :chartOptions="options"
-          :totalLikes="totalLikes"
-          :totalDislikes="totalDislikes"
-        />
-      </div> -->
     </div>
   </section>
 </template>
@@ -43,6 +39,7 @@
 <script setup>
 import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
+import { useReviewStore } from "~/stores/reviews";
 
 defineProps({
   loading: Boolean,
@@ -50,27 +47,18 @@ defineProps({
 
 const technicianStore = useTechnicianStore();
 const customerStore = useCustomerStore();
+const reviewStore = useReviewStore();
 
 const route = useRoute();
 const technicianId = route.params.technicianId;
 
 const technicians = ref([]);
 const technician = ref();
-const jobs = ref();
 const jobDetails = ref();
-const jobsCount = ref();
-const totalLikes = ref(0);
-const totalDislikes = ref(0);
+const reviewCount = ref();
+const reviews = ref([]);
 const showComments = ref(false);
-const data = ref({
-  labels: ["Likes", "Dislikes"],
-  datasets: [
-    {
-      backgroundColor: ["#D4382E", "#009F10"],
-      data: [40, 30],
-    },
-  ],
-});
+
 const options = ref({
   responsive: true,
   maintainAspectRatio: false,
@@ -81,9 +69,8 @@ onMounted(async () => {
   technician.value = technicians.value.filter(
     (tech) => tech.id === parseInt(technicianId)
   )[0];
-
-  jobs.value = technician.value?.technician_jobs;
-  jobsCount.value = jobs.value.length;
+  reviews.value = await reviewStore.fetchReviewByTechnician(technicianId);
+  reviewCount.value = reviews.value.length;
 });
 
 const handleToggleShowComment = (data, customerProfile, customerName) => {
@@ -92,5 +79,8 @@ const handleToggleShowComment = (data, customerProfile, customerName) => {
 };
 const closeModal = () => {
   showComments.value = false;
+};
+const handletechnicianReviews = () => {
+  window.location.href = "/reports/reviews";
 };
 </script>

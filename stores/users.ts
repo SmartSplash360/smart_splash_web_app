@@ -57,6 +57,7 @@ export const useUserStore = defineStore("user", {
 
                     // set authorization header
                     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
+                    return res.data.data.user;
                 } else {
                     throw new Error(res.data.message)
                 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:w-3/4 customer-table laptop+ card hidden lg:block">
+  <div class="lg:w-full customer-table laptop+ card hidden lg:block">
     <DataTable
       v-model:filters="filters"
       :value="technicians"
@@ -38,7 +38,7 @@
       <Column field="id" header="ID"></Column>
       <Column field="name" header="technician" sortable>
         <template #body="slotProps">
-          <span @click="loadReviews(slotProps.data?.id)">
+          <nuxt-link :to="`/reports/reviews/${slotProps.data?.id}`">
             <Avatar
               :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
               :alt="slotProps.data.name"
@@ -47,7 +47,7 @@
               shape="circle"
             />
             {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
-          </span>
+          </nuxt-link>
         </template>
       </Column>
       <Column field="comments" header="Comments"></Column>
@@ -141,10 +141,5 @@ const filters = ref({
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
-};
-
-const loadReviews = (url) => {
-  window.location.href = `/reports/reviews/${url}`;
-  // router.push(`/reports/reviews/${url}`);
 };
 </script>

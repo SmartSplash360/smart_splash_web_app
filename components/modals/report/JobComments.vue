@@ -5,7 +5,7 @@
   >
     <form
       @click.stop=""
-      class="flex flex-col rounded-md bg-white p-10 lg:h-[600px] lg:min-w-[687px] lg:gap-5"
+      class="flex flex-col rounded-md bg-white p-10 lg:min-h-fit lg:min-w-[687px] lg:gap-5"
     >
       <div class="flex-between w-full">
         <h3 class="heading__h3 text-[#025E7C]">

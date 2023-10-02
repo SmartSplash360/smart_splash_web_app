@@ -130,7 +130,7 @@ async function login() {
   }
 
   try {
-    await store.login(email.value, password.value);
+    const user = await store.login(email.value, password.value);
     await customerStore.fetchCustomers();
     await alertStore.fetchAlerts();
     await leadStore.fetchLeads();
@@ -139,7 +139,11 @@ async function login() {
     await serviceStore.fetchServices();
     await templateStore.fetchTemplates();
     await quoteStore.fetchQuotes();
-    await menuStore.fetchMenuByRole(1);
+
+    if (user) {
+      console.log(user);
+      await menuStore.fetchMenuByRole(user.role_id);
+    }
 
     await router.push("/customers");
     toast.add({

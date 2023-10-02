@@ -55,7 +55,6 @@
 
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-import { sideBarLinks } from "~/utils/sidebarLinks";
 import { useMenuStore } from "~/stores/menu";
 
 defineProps({

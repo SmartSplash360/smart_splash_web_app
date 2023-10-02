@@ -27,7 +27,10 @@
       :readOnly="readOnly"
       :toggleJobQuoteModal="closeModal"
     ></ModalsJobsCreateQuotationModal>
-    <div class="flex flex-col gap-4">
+    <div v-if="quoteCount === 0" class="flex">
+      <h3 class="heading__h3">No quotes</h3>
+    </div>
+    <div v-else class="flex flex-col gap-4">
       <div
         class="border rounded-lg py-5 px-5 flex flex-col gap-8 dark:bg-[#1B2028]"
         v-for="quote in quotes"

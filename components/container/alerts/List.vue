@@ -3,25 +3,22 @@
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
       <div class="w-full gap-5 flex flex-col lg:flex-row justify-between">
-        <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px]">
-          <div class="flex gap-2 items-center lg:gap-5">
-            <h2 class="text-3xl font-bold text-[#025E7C]">
-              {{ priority }} Alerts
-            </h2>
-            <span class="span__element font-bold text-gray-500"
-              >({{
-                priority == "high"
-                  ? countHighAlert
-                  : priority == "medium"
-                  ? countMediumAlert
-                  : priority == "low"
-                  ? countLowAlert
-                  : alerts.length
-              }}
-              Results)</span
-            >
-          </div>
-          <button></button>
+        <div class="flex gap-2 items-center lg:gap-5 lg:min-w-[350px]">
+          <h2 class="text-3xl font-bold text-[#025E7C]">
+            {{ priority }} Alerts
+          </h2>
+          <span class="span__element font-bold text-gray-500"
+            >({{
+              priority == "high"
+                ? countHighAlert
+                : priority == "medium"
+                ? countMediumAlert
+                : priority == "low"
+                ? countLowAlert
+                : alerts.length
+            }}
+            Results)</span
+          >
         </div>
         <Dropdown
           v-model="priority"

@@ -11,7 +11,7 @@
       selectionMode="single"
       sortMode="multiple"
       :rows="3"
-      :globalFilterFields="['name']"
+      :globalFilterFields="['customer.name']"
     >
       <template #header>
         <div class="flex-between dark:border-0 mb-5">
@@ -34,7 +34,7 @@
         </div>
       </template>
       <template #empty> No Reviews found</template>
-      <template #loading> Loading jobs data. Please wait.</template>
+      <template #loading> Loading reviews data. Please wait.</template>
       <Column field="id" header="Job ID">
         <template #body="slotProps">
           <span> {{ slotProps.data.job.id }} </span>
@@ -45,15 +45,14 @@
           <div>
             <Avatar
               :image="
-                getCustomerProfil(slotProps.data.customer_id) ||
-                'https://plchldr.co/i/500x2500'
+                slotProps.data.customer.photo || 'https://plchldr.co/i/500x2500'
               "
               :alt="slotProps.data.name"
               class="mr-2 translate-y-4"
               size="large"
               shape="circle"
             />
-            {{ getCustomerName(slotProps.data.customer_id) }}
+            {{ slotProps.data.customer.name }}
           </div>
         </template>
       </Column>
@@ -96,8 +95,8 @@
               @click="
                 handleToggleShowComment(
                   slotProps.data,
-                  getCustomerProfil(slotProps.data.customer_id),
-                  getCustomerName(slotProps.data.customer_id)
+                  slotProps.data.customer.photo,
+                  slotProps.data.customer.name
                 )
               "
             />
@@ -109,40 +108,57 @@
   <div
     class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] rounded-t-xl border"
   >
-    <div class="flex-between py-5 px-5 border-b gap-10">
-      <h5 class="heading__h5 flex-1">Technician</h5>
-      <h5 class="heading__h5 flex justify-start">Likes</h5>
-      <h5 class="heading__h5 flex justify-start">Dislikes</h5>
+    <div class="flex-between py-5 px-4 border-b gap-10">
+      <h5 class="heading__h5 flex-1">Job ID</h5>
+      <h5 class="heading__h5 flex-1 self-start">Customer</h5>
+      <h5 class="heading__h5 flex flex-1 justify-end">Ratings</h5>
     </div>
-    <div v-if="jobs?.length == 0" class="flex-center">
-      <h5 class="heading__h5">
-        There is no Jobs
+    <div v-if="reviews?.length == 0" class="flex-center">
+      <h5 class="heading__h5 p-4">
+        There is no Reviews
       </h5>
     </div>
 
     <div
-      class="flex-between w-full dark:text-white p-5 gap-10"
-      v-for="job in jobs"
-      :key="job.id"
+      class="flex-between w-full dark:text-white px-4 py-4 gap-10"
+      v-for="review in reviews"
+      :key="review.id"
     >
-      <span class="flex-1 span__element min-w-max">{{ job.name }}</span>
+      <span class="span__element min-w-max">{{ review.id }}</span>
 
-      <div class="flex items-center gap-3">
-        <span class="bg-[#009F10] rounded-full p-1">
-          <font-awesome-icon icon="thumbs-up" class="text-sm text-white" />
-        </span>
-        <span class="text-sm text-gray-500 dark:text-gray-400">
-          {{ job.like_reaction_count }}</span
+      <div class="flex flex-1 justify-start gap-3">
+        <span class="text-xs text-gray-500 dark:text-gray-400">
+          {{ review.customer.name }}</span
         >
       </div>
-
       <div class="flex items-center gap-3">
-        <span class="bg-[#D4382E] rounded-full p-1">
-          <font-awesome-icon icon="thumbs-down" class="text-sm text-white"
-        /></span>
-        <span class="text-sm text-gray-500 dark:text-gray-400">{{
-          job.dislike_reaction_count
-        }}</span>
+        <span class="p-1 text-gray-500 min-w-max">
+          <font-awesome-icon
+            icon="star"
+            class="text-xs"
+            :class="review.star_rating >= 1 && 'text-yellow-400'"
+          />
+          <font-awesome-icon
+            icon="star"
+            class="text-xs"
+            :class="review.star_rating >= 2 && 'text-yellow-400'"
+          />
+          <font-awesome-icon
+            icon="star"
+            class="text-xs"
+            :class="review.star_rating >= 3 && 'text-yellow-400'"
+          />
+          <font-awesome-icon
+            icon="star"
+            class="text-xs"
+            :class="review.star_rating >= 4 && 'text-yellow-400'"
+          />
+          <font-awesome-icon
+            icon="star"
+            class="text-xs"
+            :class="review.star_rating >= 5 && 'text-yellow-400'"
+          />
+        </span>
       </div>
     </div>
   </div>
@@ -153,21 +169,15 @@ import { FilterMatchMode } from "primevue/api";
 import Avatar from "primevue/avatar";
 import SortIcon from "~/assets/icons/arrow-sort.svg";
 import Tag from "primevue/tag";
-import { useCustomerStore } from "~/stores/customer";
-import { useReviewStore } from "~/stores/reviews";
 
 const props = defineProps({
   technicianId: Number | String,
-  jobs: Array,
+  reviews: Array,
   handleToggleShowComment: Function,
 });
 
-const customerStore = useCustomerStore();
-const reviewStore = useReviewStore();
-
 const reloadKey = ref(0);
 const loading = ref(false);
-const reviews = ref([]);
 const dt = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -189,19 +199,6 @@ const numberOfDays = ref([
   },
 ]);
 const comments = ref([]);
-onMounted(async () => {
-  reviews.value = await reviewStore.fetchReviewByTechnician(props.technicianId);
-  console.log(reviews.value);
-});
-
-const getCustomerName = (id) => {
-  const customer = customerStore.getCustomerById(id);
-  return customer.name;
-};
-const getCustomerProfil = (id) => {
-  const customer = customerStore.getCustomerById(id);
-  return customer.photo;
-};
 
 const exportCSV = (event) => {
   dt.value.exportCSV();

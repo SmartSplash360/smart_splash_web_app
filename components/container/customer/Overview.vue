@@ -3,7 +3,7 @@
     <section v-if="loading">
       <SkeletonCustomerDetail></SkeletonCustomerDetail>
     </section>
-    <section v-else class="sn:gap-20 flex flex-col gap-3 lg:gap-10">
+    <section v-else class="sm:gap-20 flex flex-col gap-3 lg:gap-10">
       <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
       <p class="hidden lg:block text-2xl">Bodies of Water</p>
       <ContainerBodyOfWaterList
@@ -13,7 +13,7 @@
       ></ContainerBodyOfWaterList>
       <Divider class="p-0 m-0" />
       <div
-        class="sm:min-:w-[30rem] flex-center self-center text-[#025E7C] sm:gap-20"
+        class="hidden sm:min-:w-[30rem] flex-center self-center text-[#025E7C] sm:gap-20"
       >
         <div class="card flex justify-center">
           <Dropdown
@@ -34,7 +34,7 @@
           />
         </div>
       </div>
-      <Divider class="p-0 m-0" />
+      <!-- <Divider class="p-0 m-0" /> -->
       <ModalsJobsCreateJobModal
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"

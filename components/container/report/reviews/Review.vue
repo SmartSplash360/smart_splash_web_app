@@ -3,13 +3,16 @@
     <SkeletonReportPage></SkeletonReportPage>
   </section>
   <section v-else class="flex flex-col gap-8">
-    <div class="flex gap-3 items-center cursor-pointer" @click="$router.back()">
+    <nuxt-link
+      class="w-fit flex gap-3 items-center cursor-pointer"
+      to="/reports"
+    >
       <font-awesome-icon icon="arrow-left" />
       <span class="sm:flex span__element">Back</span>
-    </div>
+    </nuxt-link>
     <h2 class="text-3xl font-bold text-[#025E7C]">Technician Reviews</h2>
     <div class="flex flex-col lg:flex-row gap-20">
-      <RegularReportTechnicianReviewsTable :technicians="technicians" />
+      <RegularReportTechnicianTable :technicians="technicians" />
       <RegularReportTechnicianChart
         :chartData="data"
         :chartOptions="options"
