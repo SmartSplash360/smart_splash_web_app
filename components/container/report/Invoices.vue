@@ -3,7 +3,10 @@
     <SkeletonReportPage></SkeletonReportPage>
   </section>
   <section v-else class="flex flex-col gap-8">
-    <div class="flex gap-3 items-center cursor-pointer" @click="$router.back()">
+    <div
+      class="w-fit flex gap-3 items-center cursor-pointer"
+      @click="$router.back()"
+    >
       <font-awesome-icon icon="arrow-left" />
       <span class="sm:flex span__element">Back</span>
     </div>

@@ -197,6 +197,8 @@ const deleteItem = async ({ id }) => {
         detail: res?.message,
         life: 5000,
       });
+
+      location.reload(true);
     },
     reject: () => {},
   });

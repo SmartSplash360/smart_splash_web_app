@@ -62,8 +62,10 @@ defineProps({
   handleToggleSide: Function,
 });
 
+const router = useRouter();
 const menuStore = useMenuStore();
 const menu = ref();
+
 onMounted(async () => {
   menu.value = menuStore.getMenu;
 });

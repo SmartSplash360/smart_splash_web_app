@@ -10,7 +10,7 @@
       :loading="loading"
       selectionMode="single"
       sortMode="multiple"
-      :rows="3"
+      :rows="6"
       :globalFilterFields="['name']"
     >
       <template #header>
@@ -50,7 +50,6 @@
           </nuxt-link>
         </template>
       </Column>
-      <Column field="comments" header="Comments"></Column>
       <Column field="Likes" header="Likes">
         <template #body="slotProps">
           <div class="flex items-center gap-3">

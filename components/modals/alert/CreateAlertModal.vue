@@ -254,6 +254,7 @@ onMounted(async () => {
     alertTypeId.value = alert.alert_type_id;
     bodyOfWaterId.value = alert.body_of_water_id;
     technicianId.value = alert.technician_id;
+    subject.value = alert.subject;
   }
 });
 

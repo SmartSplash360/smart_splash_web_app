@@ -162,7 +162,7 @@
           :key="link.name"
         >
           <nuxt-link
-            :to="link?.to"
+            :to="link?.url"
             class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
           >
             <span class="flex-center h-[16px] w-[16px] span__element">

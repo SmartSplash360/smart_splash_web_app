@@ -241,6 +241,7 @@ const createService = async () => {
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
+        // quantity: "1",
       });
 
       subservices.value?.forEach(async (subservice) => {
@@ -253,7 +254,7 @@ const createService = async () => {
         location.reload();
       }, 3000);
     } catch (e) {
-      toggleAddServiceModal({ error: e });
+      // toggleAddServiceModal({ error: e });
     }
   }
 };

@@ -10,7 +10,7 @@
       />
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-6">
-      <h3 class="heading__h3 font-bold py-4">Create a Compagnie</h3>
+      <h3 class="heading__h3 font-bold py-4">Create a Compagny</h3>
       <span class="p-float-label">
         <InputText
           id="email"
@@ -87,7 +87,6 @@ const website = ref("");
 async function registerTenant() {
   try {
     // TODO: add validation
-
     const tenantPayload = {
       id: "Splash" + Math.floor(Math.random() * (10000 + 1)),
       domain:
@@ -102,8 +101,8 @@ async function registerTenant() {
       website: website.value,
       tenancy_db_name: name.value.replace(/\s/g, ""),
     };
-    await store.register(tenantPayload);
 
+    await store.register(tenantPayload);
     await customerStore.fetchCustomers();
     await alertStore.fetchAlerts();
     await leadStore.fetchLeads();

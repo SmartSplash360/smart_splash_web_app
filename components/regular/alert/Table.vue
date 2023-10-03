@@ -102,6 +102,7 @@
               @click="viewAlert(slotProps.data)"
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-pencil"
               text
               raised
@@ -109,6 +110,7 @@
               @click="editAlert(slotProps.data)"
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -185,6 +187,7 @@
             />
             <Button
               icon="pi pi-pencil"
+              v-if="user.role_id === 1"
               text
               raised
               rounded
@@ -194,6 +197,7 @@
               "
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -211,6 +215,7 @@
 <script setup>
 import Tag from "primevue/tag";
 import { FilterMatchMode } from "primevue/api";
+import { useUserStore } from "~/stores/users";
 
 const props = defineProps({
   alerts: {
@@ -221,6 +226,8 @@ const props = defineProps({
   deleteItem: Function,
   viewItem: Function,
 });
+
+const userStore = useUserStore();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -234,6 +241,7 @@ onMounted(async () => {
 
 const loading = ref(true);
 
+const user = computed(() => userStore.getCurrentUser);
 const alertCount = computed(() => props.alerts.length);
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 

@@ -3,9 +3,9 @@
     <section v-if="loading">
       <SkeletonCustomerDetail></SkeletonCustomerDetail>
     </section>
-    <section v-else class="sm:gap-20 flex flex-col gap-3 lg:gap-10">
+    <section v-else class="flex flex-col gap-3 lg:gap-10">
       <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
-      <p class="hidden lg:block text-2xl">Bodies of Water</p>
+      <p class="hidden lg:block text-2xl mt-10">Bodies of Water</p>
       <ContainerBodyOfWaterList
         :loading="loading"
         :customerId="customer?.id"

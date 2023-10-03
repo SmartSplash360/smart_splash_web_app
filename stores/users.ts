@@ -71,17 +71,17 @@ export const useUserStore = defineStore("user", {
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
                 this.currentUser = res.data;
-                this.firstUserTenant = userPayload;
+                // this.firstUserTenant = userPayload;
                 
                 if (res.data.success) {
                     // TODO: store in local storage
                     this.currentUser = res.data.data.user;
                     this.jwt = res.data.data.token;
                     this.loggedIn = true;
-                    window.location.href = 'http://localhost:3000/tenants/register'
 
                     // set authorization header
                     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
+                    
                 } else {
                     throw new Error(res.data.message)
                 }

@@ -1,17 +1,6 @@
 <template>
   <div class="relative flex flex-col gap-14">
     <div class="hidden gap-5 rounded-xl lg:flex">
-      <div
-        @click="toggleJobModal"
-        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] hover:bg-[#025E7C] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
-      >
-        <img :src="WorkCaseIcon" alt="work-case-icon" />
-        <span class="min-w-max text-center span__element-large">Jobs</span>
-      </div>
-      <ModalsReportJobModal
-        v-if="jobModal"
-        :toggleJobModal="toggleJobModal"
-      ></ModalsReportJobModal>
       <nuxt-link
         to="/reports/quotes"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"

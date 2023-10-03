@@ -3,7 +3,10 @@
     <SkeletonReportPage></SkeletonReportPage>
   </section>
   <section v-else class="flex flex-col gap-8">
-    <div class="flex gap-3 items-center cursor-pointer" @click="$router.back()">
+    <div
+      class="w-fit flex gap-3 items-center cursor-pointer"
+      @click="$router.back()"
+    >
       <font-awesome-icon icon="arrow-left" />
       <span class="sm:flex span__element">Back</span>
     </div>
@@ -105,11 +108,11 @@
             @click="toggleJobQuoteModal({ quote, readOnlyValue: true })"
             >View Quote</span
           >
-          <nuxt-link
+          <!-- <nuxt-link
             class="span__element text-[#5B7CFF] cursor-pointer"
             :to="`/reports/quotes/${quote.id}`"
             >Edit Quote</nuxt-link
-          >
+          > -->
         </div>
       </div>
     </div>

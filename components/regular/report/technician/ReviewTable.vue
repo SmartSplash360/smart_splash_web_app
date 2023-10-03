@@ -10,7 +10,7 @@
       :loading="loading"
       selectionMode="single"
       sortMode="multiple"
-      :rows="3"
+      :rows="6"
       :globalFilterFields="['customer.name']"
     >
       <template #header>
@@ -37,7 +37,7 @@
       <template #loading> Loading reviews data. Please wait.</template>
       <Column field="id" header="Job ID">
         <template #body="slotProps">
-          <span> {{ slotProps.data.job.id }} </span>
+          <span> {{ slotProps.data.job?.id }} </span>
         </template>
       </Column>
       <Column field="name" header="Customer" sortable>
@@ -45,14 +45,15 @@
           <div>
             <Avatar
               :image="
-                slotProps.data.customer.photo || 'https://plchldr.co/i/500x2500'
+                slotProps.data.customer?.photo ||
+                'https://plchldr.co/i/500x2500'
               "
-              :alt="slotProps.data.name"
+              :alt="slotProps.data?.name"
               class="mr-2 translate-y-4"
               size="large"
               shape="circle"
             />
-            {{ slotProps.data.customer.name }}
+            {{ slotProps.data.customer?.name }}
           </div>
         </template>
       </Column>
@@ -95,8 +96,8 @@
               @click="
                 handleToggleShowComment(
                   slotProps.data,
-                  slotProps.data.customer.photo,
-                  slotProps.data.customer.name
+                  slotProps.data.customer?.photo,
+                  slotProps.data.customer?.name
                 )
               "
             />
@@ -128,7 +129,7 @@
 
       <div class="flex flex-1 justify-start gap-3">
         <span class="text-xs text-gray-500 dark:text-gray-400">
-          {{ review.customer.name }}</span
+          {{ review.customer?.name }}</span
         >
       </div>
       <div class="flex items-center gap-3">
@@ -199,6 +200,10 @@ const numberOfDays = ref([
   },
 ]);
 const comments = ref([]);
+
+onMounted(() => {
+  console.log(props.reviews);
+});
 
 const exportCSV = (event) => {
   dt.value.exportCSV();

@@ -184,6 +184,7 @@ const createProduct = async () => {
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
+        quantity: "1",
       });
       await productStore.fetchProducts();
       toggleAddProductModal({ success: "Product created successfully" });
@@ -191,7 +192,7 @@ const createProduct = async () => {
         location.reload();
       }, 3000);
     } catch (e) {
-      toggleAddProductModal({ error: e });
+      // toggleAddProductModal({ error: e });
     }
   }
 };

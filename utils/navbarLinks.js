@@ -1,3 +1,4 @@
+const router = useRouter();
 export const menuListAdmin = [
   {
     label: "Alert",

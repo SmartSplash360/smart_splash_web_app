@@ -13,11 +13,11 @@
 import { useUserStore } from "~/stores/users";
 definePageMeta({
   layout: "",
-  middleware: ["auth", "auto-theme"],
 });
 
 const store = useUserStore();
 const user = ref();
+
 onMounted(async () => {
   user.value = await store.getCurrentUser;
 });

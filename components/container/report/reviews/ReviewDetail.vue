@@ -71,6 +71,7 @@ onMounted(async () => {
   )[0];
   reviews.value = await reviewStore.fetchReviewByTechnician(technicianId);
   reviewCount.value = reviews.value.length;
+  console.log(reviews.length);
 });
 
 const handleToggleShowComment = (data, customerProfile, customerName) => {
