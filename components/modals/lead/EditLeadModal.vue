@@ -11,52 +11,51 @@
         {{ lead ? "Edit" : "New" }} Lead {{ lead ? `#${lead?.id}` : "" }}
       </h2>
 
-      <div class="flex gap-5">
-        <div class="flex flex-col gap-2">
-          <div class="flex flex-col justify-between gap-5 sm:flex-row">
-            <div class="flex w-full flex-col gap-2">
-              <label class="span__element text-sm" for="name"> Name* </label>
-              <InputText
-                type="text"
-                class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                v-model="name"
-              ></InputText>
-            </div>
-            <div class="flex w-full flex-col gap-2">
-              <label class="span__element text-sm" for="name"> Surname* </label>
-              <InputText
-                type="text"
-                class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                v-model="surname"
-              ></InputText>
-            </div>
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-col justify-between gap-5 sm:flex-row">
+          <div class="flex w-full flex-col gap-2">
+            <label class="span__element text-sm" for="name"> Name* </label>
+            <InputText
+              type="text"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              v-model="name"
+            ></InputText>
           </div>
-          <div class="flex flex-col justify-between gap-5">
-            <div class="flex w-full flex-col gap-2">
-              <label class="span__element text-sm" for="email address">
-                Email address*
-              </label>
-              <InputText
-                type="email"
-                class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                v-model="email"
-              ></InputText>
-            </div>
-            <div class="flex w-full flex-col gap-2">
-              <label class="span__element text-sm" for="cell number">
-                Cell number
-              </label>
-              <InputText
-                type="text"
-                class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-                v-model="phoneNumber"
-              ></InputText>
-            </div>
+          <div class="flex w-full flex-col gap-2">
+            <label class="span__element text-sm" for="name"> Surname* </label>
+            <InputText
+              type="text"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              v-model="surname"
+            ></InputText>
           </div>
         </div>
-
-        <div class="flex flex-col gap-2">
-          <label class="span__element text-sm" for="cell number"> Notes </label>
+        <div class="flex flex-col lg:flex-row justify-between gap-5">
+          <div class="w-full flex flex-col gap-2">
+            <label class="span__element text-sm" for="email address">
+              Email address*
+            </label>
+            <InputText
+              type="email"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              v-model="email"
+            ></InputText>
+          </div>
+          <div class="w-full flex flex-col gap-2">
+            <label class="span__element text-sm" for="cell number">
+              Cell number
+            </label>
+            <InputText
+              type="text"
+              class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              v-model="phoneNumber"
+            ></InputText>
+          </div>
+        </div>
+        <div class="hidden flex-col gap-2">
+          <label class="span__element text-sm" for="cell number">
+            Notes
+          </label>
           <Textarea class="w-full" cols="50" rows="8" />
         </div>
       </div>
@@ -148,6 +147,7 @@ const updateLead = async () => {
     props.toggleEditLeadModal({
       success: `Lead ${props.lead?.id} updated successfully`,
     });
+    // window.location.reload();
   } catch (e) {
     props.toggleEditLeadModal({ error: e });
   }

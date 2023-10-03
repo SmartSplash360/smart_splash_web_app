@@ -42,7 +42,11 @@
             </div>
           </div>
         </template>
-        <template #empty> No products found. </template>
+        <template #empty>
+          <div class="flex-center my-5">
+            <h3 class="heading__h3 text-gray-600">No Products found.</h3>
+          </div>
+        </template>
         <Column
           field="created_at"
           header="Created Date"

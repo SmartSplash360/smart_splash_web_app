@@ -10,6 +10,12 @@
       paginator
       :rows="4"
     >
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No Jobs found.</h3>
+        </div>
+      </template>
+      <template #loading> Loading jobs data. Please wait.</template>
       <Column field="date" header="Date">
         <template #body="slotProps">
           {{ slotProps.data?.start_date }}

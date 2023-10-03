@@ -256,9 +256,6 @@ const updateCustomer = async () => {
       toggleAddCustomerModal({
         success: `Customer ${customer?.id} updated successfully`,
       });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
     } catch (e) {
       toggleAddCustomerModal({ error: e });
     }

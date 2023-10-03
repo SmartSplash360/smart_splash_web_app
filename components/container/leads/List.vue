@@ -152,6 +152,7 @@ const convertToCustomer = ({ id }) => {
           alert_id: "",
           type: "Customer",
         });
+        router.push("/customers");
       } catch (e) {
         toast.add({
           severity: "error",
@@ -197,6 +198,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        location.reload();
       } catch (e) {
         toast.add({
           severity: "error",

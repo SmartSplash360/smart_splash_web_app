@@ -371,7 +371,6 @@ const status = ref("");
 const description = ref("");
 const technical_notes = ref("");
 
-const technicians = ref(null);
 const selectedTechnician = ref();
 
 const dateTime = ref(null);
@@ -419,12 +418,13 @@ const selectedSubservices = ref([]);
 const bodiesOfWater = ref([]);
 
 const customers = computed(() => customerStore.getCustomers);
+const technicians = computed(() => technicianStore.getTechnicians);
 
 onMounted(async () => {
+  console.log(technicians.value);
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
   services.value = await serviceStore.getServices;
-  technicians.value = await technicianStore.getTechnicians;
 
   if (props.job) {
     let customer = customerStore.getCustomerById(props.job.customer_id);
@@ -441,6 +441,10 @@ onMounted(async () => {
   const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
 
   if (technicianIdAlert && customerIdAlert && poolIdAlert) {
+    const resutl = technicians.value.find(
+      (tech) => tech.id === parseInt(technicianIdAlert)
+    );
+    console.log(resutl);
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);
 

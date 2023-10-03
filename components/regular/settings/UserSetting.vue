@@ -33,7 +33,11 @@
             </span>
           </div>
         </template>
-        <template #empty> No customers found. </template>
+        <template #empty>
+          <div class="flex-center my-5">
+            <h3 class="heading__h3 text-gray-600">No Customers found.</h3>
+          </div>
+        </template>
         <Column field="name" header="Name" style="min-width: 12rem;">
           <template #body="{ data }">
             <div class="align-items-center flex gap-2">

@@ -33,7 +33,11 @@
           />
         </div>
       </template>
-      <template #empty> No technicians found.</template>
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No Technicians found.</h3>
+        </div>
+      </template>
       <template #loading> Loading technicians data. Please wait.</template>
       <Column field="id" header="ID"></Column>
       <Column field="name" header="technician" sortable>

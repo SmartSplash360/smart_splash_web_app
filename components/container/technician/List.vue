@@ -48,6 +48,12 @@ const addTechnicianModal = ref(false);
 const technicians = ref();
 const technician = ref();
 
+const technicianList = computed(() => store.getTechnicians);
+
+onMounted(() => {
+  technicians.value = store.getTechnicians;
+});
+
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
 
 const closeModal = ({ success, error }) => {
@@ -72,9 +78,19 @@ const closeModal = ({ success, error }) => {
     });
   }
 };
-
-const technicianList = computed(() => store.getTechnicians);
-
+const handleStatus = ({ option }) => {
+  if (option === "active") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 1
+    );
+  } else if (option === "inactive") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 0
+    );
+  } else {
+    technicians.value = technicianList.value;
+  }
+};
 const editItem = ({ id, item, mobileEdit = false }) => {
   technician.value = item;
   if (mobileEdit) {
@@ -86,7 +102,6 @@ const editItem = ({ id, item, mobileEdit = false }) => {
   }
   toggleAddTechnicianModal();
 };
-
 const deleteItem = async ({ id }) => {
   confirm.require({
     message: "Are you sure you want to proceed?",
@@ -103,6 +118,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        location.reload();
       } catch (e) {
         toast.add({
           severity: "error",
@@ -114,24 +130,6 @@ const deleteItem = async ({ id }) => {
     },
     reject: () => {},
   });
-};
-
-onMounted(() => {
-  technicians.value = store.getTechnicians;
-});
-
-const handleStatus = ({ option }) => {
-  if (option === "active") {
-    technicians.value = technicianList.value.filter(
-      (technician) => technician.status == 1
-    );
-  } else if (option === "inactive") {
-    technicians.value = technicianList.value.filter(
-      (technician) => technician.status == 0
-    );
-  } else {
-    technicians.value = technicianList.value;
-  }
 };
 </script>
 

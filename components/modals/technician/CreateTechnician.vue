@@ -81,6 +81,15 @@
           </p>
         </div>
       </div>
+      <div class="flex w-1/2 flex-col gap-2">
+        <label class="span__element font-bold" for="status">
+          Status :
+          <span :class="status ? 'text-green-400' : 'text-red-500'">{{
+            status ? "Active" : "Inactive"
+          }}</span>
+        </label>
+        <InputSwitch v-model="status" />
+      </div>
       <div
         v-if="!technician"
         class="flex flex-col justify-between gap-5 sm:flex-row"
@@ -159,6 +168,7 @@ const phoneNumber = ref("");
 const password = ref("");
 const passwordConfirmation = ref("");
 const company = ref("1");
+const status = ref(true);
 
 const errorName = ref("");
 const errorSurname = ref("");
@@ -203,7 +213,9 @@ onMounted(() => {
     surname.value = technician.surname;
     email.value = technician.email;
     phoneNumber.value = technician.phone_number;
+    status.value = technician.status ? true : false;
   }
+  console.log(technician);
 });
 
 const validateForm = () => {
@@ -236,7 +248,7 @@ const createTechnician = async () => {
       toggleAddTechnicianModal({ success: "Technician created successfully" });
       setTimeout(() => {
         location.reload();
-      }, 3000);
+      }, 1000);
     } catch (e) {
       toggleAddTechnicianModal({ error: "Opps, something went wrong!" });
     }
@@ -250,6 +262,7 @@ const updateTechnician = async () => {
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
+      status: status.value ? 1 : 0,
     };
     await store.updateTechnician(technician?.id, data);
     await store.fetchTechnicians();
@@ -259,7 +272,7 @@ const updateTechnician = async () => {
     });
     setTimeout(() => {
       location.reload();
-    }, 3000);
+    }, 1000);
   } catch (e) {
     toggleAddTechnicianModal({ error: e });
   }

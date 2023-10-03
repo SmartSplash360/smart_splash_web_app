@@ -15,8 +15,8 @@
       :globalFilterFields="['name', 'id', 'technician']"
     >
       <template #empty>
-        <div class="flex-center">
-          <h3 class="heading__h3">No alerts found.</h3>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No alerts found.</h3>
         </div>
       </template>
       <template #header>

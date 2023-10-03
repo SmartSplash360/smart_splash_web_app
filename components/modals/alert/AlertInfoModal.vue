@@ -102,14 +102,16 @@ const props = defineProps({
   toggleShowAlertInfo: Function,
 });
 
+const { id, technician_id, body_of_water } = props.alert;
+
 const handleCreateJob = () => {
   router.push({
     path: "/jobs/create-technician-job",
     query: {
-      alertId: props.alert.id,
-      technicianIdAlert: props.alert.technician_id,
-      customerIdAlert: props.alert.body_of_water.customer_id,
-      poolIdAlert: props.alert.body_of_water.id,
+      alertId: id,
+      technicianIdAlert: technician_id,
+      customerIdAlert: body_of_water.customer_id,
+      poolIdAlert: body_of_water.id,
     },
   });
 };

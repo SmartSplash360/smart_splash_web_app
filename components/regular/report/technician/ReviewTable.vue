@@ -33,7 +33,11 @@
           />
         </div>
       </template>
-      <template #empty> No Reviews found</template>
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No Reviews found.</h3>
+        </div>
+      </template>
       <template #loading> Loading reviews data. Please wait.</template>
       <Column field="id" header="Job ID">
         <template #body="slotProps">
