@@ -129,12 +129,15 @@ import { useQuoteStore } from "~/stores/quote";
 import { useJobStore } from "~/stores/jobs";
 import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
+import { useUserStore } from "~/stores/users";
+
 defineProps({
   loading: Boolean,
 });
 
-const quoteStore = useQuoteStore();
 const jobStore = useJobStore();
+const userStore = useUserStore();
+const quoteStore = useQuoteStore();
 const customerStore = useCustomerStore();
 const technicianStore = useTechnicianStore();
 
@@ -150,15 +153,31 @@ const job = ref();
 const readOnly = ref(false);
 const quoteCountSearch = ref();
 
+const user = computed(() => userStore.getCurrentUser);
 const quoteList = computed(() => quoteStore.getQuotes);
-const quoteCount = computed(() => quoteStore.getQuoteCount);
+const quoteCount = ref();
 
 onMounted(async () => {
   await quoteStore.fetchQuotes();
   await jobStore.fetchJobs();
   jobs.value = jobStore.getJobs;
 
-  quotes.value = quoteStore.getQuotes;
+  if (user.value.role_id == 1) {
+    quotes.value = quoteStore.getQuotes;
+    quoteCount.value = quotes.value.length;
+  }
+  if (user.value.role_id == 3) {
+    quotes.value = quoteList.value.filter(
+      (quote) => quote.customer_id === user.value.id
+    );
+    quoteCount.value = quotes.value.length;
+  }
+  if (user.value.role_id == 4) {
+    quotes.value = quoteList.value.filter((quote) => {
+      return quote.technician_id === user.value.id;
+    });
+    quoteCount.value = quotes.value.length;
+  }
 });
 
 const handleSearchQuote = (event) => {

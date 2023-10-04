@@ -28,12 +28,14 @@
           @change="handleChangePriority"
         />
         <BaseAddButton
+          v-if="user.role_id !== 3"
           class="hidden lg:flex"
           :btnText="'Add Alert'"
           :buttonId="'add-alert-button'"
           @click="toggleAddAlertModal"
         ></BaseAddButton>
         <BaseAddButton
+          v-if="user.role_id !== 3"
           class="lg:hidden w-fit self-end"
           :btnText="'Add Alert'"
           @click="createAlert"
@@ -65,6 +67,7 @@ import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useAlertStore } from "~/stores/alert";
+import { useUserStore } from "~/stores/users";
 
 defineProps({
   loading: Boolean,
@@ -73,6 +76,7 @@ defineProps({
 const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
+const userStore = useUserStore();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
@@ -92,10 +96,28 @@ const priority = ref("All");
 const priorities = ref(["All alerts", "Low", "Medium", "High"]);
 
 onMounted(async () => {
-  alerts.value = alertStore.getAlerts;
-  alertList.value = alertStore.getAlerts;
+  const list = alertStore.getAlerts;
+  if (user.value.role_id == 1) {
+    alerts.value = list;
+    alertList.value = list;
+  }
+  if (user.value.role_id == 3) {
+    const items = list.filter((alert) => {
+      return alert.body_of_water.customer_id == user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+  }
+  if (user.value.role_id == 4) {
+    const items = list.filter((alert) => {
+      return alert.technician_id === user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+  }
 });
 
+const user = computed(() => userStore.getCurrentUser);
 const highAlerts = computed(() => {
   const list = alerts.value.filter((alert) => alert?.priority === "high");
   countHighAlert.value = list.length;
