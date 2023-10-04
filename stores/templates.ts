@@ -73,7 +73,6 @@ export const useTemplateStore = defineStore("template", {
       let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/templates` : `http://localhost:8000/api/v1/templates`
       try {
         const res = await axios.post(url, templatePayload);
-        console.log(res);
 
         if (!res.data.success) {
           throw new Error(res.data.message);

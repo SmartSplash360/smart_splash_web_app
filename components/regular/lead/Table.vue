@@ -175,14 +175,6 @@
         <div
           class="flex flex-col bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
         >
-          <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
-            <span class="text-[#025E7C] dark:text-white span__element flex-1"
-              >Physical Address</span
-            >
-            <span class="text-xs flex-1 flex justify-start">{{
-              lead.address_line1
-            }}</span>
-          </div>
           <div class="flex-between px-4 py-2">
             <span class="text-[#025E7C] dark:text-white span__element flex-1"
               >Cell Number</span

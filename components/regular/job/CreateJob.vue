@@ -421,7 +421,6 @@ const customers = computed(() => customerStore.getCustomers);
 const technicians = computed(() => technicianStore.getTechnicians);
 
 onMounted(async () => {
-  console.log(technicians.value);
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
   services.value = await serviceStore.getServices;
@@ -444,7 +443,6 @@ onMounted(async () => {
     const resutl = technicians.value.find(
       (tech) => tech.id === parseInt(technicianIdAlert)
     );
-    console.log(resutl);
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);
 

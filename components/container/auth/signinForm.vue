@@ -141,7 +141,6 @@ async function login() {
     await quoteStore.fetchQuotes();
 
     if (user) {
-      console.log(user);
       await menuStore.fetchMenuByRole(user.role_id);
     }
 

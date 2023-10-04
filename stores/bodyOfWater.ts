@@ -72,8 +72,6 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
             }
           );
 
-          console.log(res)
-
           // add gallery_id to body of water payload
 
           if (!res.data.success) {

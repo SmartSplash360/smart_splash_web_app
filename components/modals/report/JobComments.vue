@@ -48,7 +48,4 @@ const createdDate = computed(() => {
     day: "numeric",
   });
 });
-onMounted(() => {
-  console.log(props.jobDetails);
-});
 </script>

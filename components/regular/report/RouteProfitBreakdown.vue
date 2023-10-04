@@ -18,7 +18,9 @@
       >
         <template #header>
           <div class="py-2 text-center">
-            <h3 class="heading__h3 text-gray-600">Route Profit Breakdown</h3>
+            <h3 class="heading__h3 text-gray-600 dark:text-white">
+              Route Profit Breakdown
+            </h3>
           </div>
         </template>
         <Column field="property" header="Prpoerty" sortable></Column>

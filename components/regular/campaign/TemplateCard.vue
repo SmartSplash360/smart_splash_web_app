@@ -97,7 +97,7 @@ const deleteTemplate = async (id) => {
           detail: res?.message,
           life: 5000,
         });
-        router.replace("/campaigns");
+        location.reload(true);
       },
       reject: () => {},
     });
@@ -117,11 +117,6 @@ const items = ref([
     label: "View Template",
     icon: "pi pi-eye",
     command: () => viewTemplate(),
-  },
-  {
-    label: "Edit Template",
-    icon: "pi pi-pencil",
-    command: () => editTemplate(),
   },
   {
     label: "Delete Template",

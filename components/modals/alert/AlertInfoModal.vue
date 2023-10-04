@@ -19,29 +19,38 @@
             }}</span>
           </div>
           <p>
-            <span class="span__element text-gray-600">Adrress : </span>
+            <span class="span__element text-gray-600 dark:text-gray-400"
+              >Adrress :
+            </span>
             <span class="span__element text-gray-400">
               {{ alert.body_of_water.address }}</span
             >
           </p>
           <p>
-            <span class="span__element text-gray-600">Status : </span>
+            <span class="span__element text-gray-600 dark:text-gray-400"
+              >Status :
+            </span>
             <span class="span__element text-gray-400"> {{ alert.status }}</span>
           </p>
           <p>
-            <span class="span__element text-gray-600">Priority : </span>
+            <span class="span__element text-gray-600 dark:text-gray-400"
+              >Priority :
+            </span>
             <span class="span__element text-gray-400">
               {{ alert.priority }}</span
             >
           </p>
           <p>
-            <span class="span__element text-gray-600">Created at : </span>
+            <span class="span__element text-gray-600 dark:text-gray-400"
+              >Created at :
+            </span>
             <span class="span__element text-gray-400">
               {{ alert.created_at }}</span
             >
           </p>
           <div class="flex flex-col gap-2 my-2">
-            <span class="span__element text-gray-600 font-bold"
+            <span
+              class="span__element text-gray-600 dark:text-gray-400 font-bold"
               >Technician info
             </span>
             <p>
@@ -64,7 +73,8 @@
             </p>
           </div>
           <div class="flex flex-col gap-2 my-2">
-            <span class="span__element text-gray-600 font-bold"
+            <span
+              class="span__element text-gray-600 dark:text-gray-400 font-bold"
               >Customer info
             </span>
             <p>

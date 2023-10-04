@@ -205,10 +205,6 @@ const numberOfDays = ref([
 ]);
 const comments = ref([]);
 
-onMounted(() => {
-  console.log(props.reviews);
-});
-
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };

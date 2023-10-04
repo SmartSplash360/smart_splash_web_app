@@ -17,7 +17,9 @@
           >({{ quoteCount }} Results)</span
         >
       </div>
-      <BaseSearchBar />
+      <BaseSearchBar
+        @keyup="(value) => handleSearchQuote(value)"
+      ></BaseSearchBar>
     </div>
     <ModalsJobsCreateQuotationModal
       v-if="showQuotationModal"
@@ -136,6 +138,7 @@ const technicianStore = useTechnicianStore();
 const showQuotationModal = ref(false);
 const customerDetails = ref();
 const technician = ref();
+const quotes = ref();
 const totalPriceServices = ref(154);
 const totalPriceProducts = ref(454);
 const totalPriceChems = ref(205);
@@ -143,15 +146,23 @@ const jobs = ref();
 const job = ref();
 const readOnly = ref(false);
 
-const quotes = computed(() => quoteStore.getQuotes);
+const quoteList = computed(() => quoteStore.getQuotes);
 const quoteCount = computed(() => quoteStore.getQuoteCount);
 
 onMounted(async () => {
   await quoteStore.fetchQuotes();
   await jobStore.fetchJobs();
   jobs.value = jobStore.getJobs;
+
+  quotes.value = quoteStore.getQuotes;
 });
 
+const handleSearchQuote = (event) => {
+  const name = event.target.value;
+  quotes.value = quoteList.value.filter((quote) =>
+    quote.customer_name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
+  );
+};
 const renderDate = (data) => {
   const dateObject = new Date(data);
   const options = {
@@ -165,6 +176,7 @@ const renderDate = (data) => {
   return dateObject.toLocaleDateString("en-US", options);
 };
 const closeModal = () => (showQuotationModal.value = false);
+
 const toggleJobQuoteModal = ({ quote, readOnlyValue }) => {
   job.value = jobs.value.find((job) => job.id === quote.job_id);
   customerDetails.value = customerStore.getCustomerById(quote.customer_id);

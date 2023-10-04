@@ -274,7 +274,6 @@ onMounted(async () => {
   await bodyOfWaterStore.fetchBodiesOfWaters();
 
   if (props.job) {
-    console.log(props.job);
     let customer = customerStore.getCustomerById(props.job.customer_id);
     bodiesOfWater.value = customer?.bodies_of_water;
     poolId.value = props.job.pool_id;
@@ -411,7 +410,6 @@ const validateForm = () => {
 const updateJob = async () => {
   if (validateForm()) {
     try {
-      console.log("first");
       const data = {
         pool_id: poolId.value,
         technician_id: props.technicianId,

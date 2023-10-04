@@ -11,18 +11,6 @@
             @handleSearch="(value) => handleSearch(value)"
           />
         </div>
-        <span
-          @click="showActiveRoute"
-          class="flex-center h-[30px] w-[30px] cursor-pointer text-white"
-          ><font-awesome-icon
-            icon="bars"
-            class="text-2xl"
-            :class="[toggleActiveRoute && 'rotate-90']"
-        /></span>
-      </div>
-      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes">
-        </RegularCustomerActivityCard>
       </div>
     </div>
     <div class="flex flex-col gap-5">

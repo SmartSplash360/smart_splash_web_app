@@ -39,7 +39,6 @@ export const useTenantStore = defineStore("tenant", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
-                console.log(tenantPayload)
                 const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
                 this.currentTenant = res.data;
                 this.currentTenantDomain = res.data.data.domain

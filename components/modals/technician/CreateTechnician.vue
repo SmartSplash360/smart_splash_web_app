@@ -215,7 +215,6 @@ onMounted(() => {
     phoneNumber.value = technician.phone_number;
     status.value = technician.status ? true : false;
   }
-  console.log(technician);
 });
 
 const validateForm = () => {

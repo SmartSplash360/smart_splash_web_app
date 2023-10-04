@@ -279,7 +279,6 @@ const services = computed(() =>
 
 onMounted(() => {
   loading.value = false;
-  console.log(services.value);
 });
 
 const toggleAddServiceModal = () => (addServiceModal.value = true);

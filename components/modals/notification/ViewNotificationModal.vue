@@ -109,7 +109,6 @@ const handleChangeTab = (tab) => {
 };
 
 const handleViewNotification = (notification) => {
-  console.log(notification);
   if (notification.type.toLowerCase() == "alert") {
     router.push("/alerts");
     props.toggleNotificationModal();
