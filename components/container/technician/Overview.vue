@@ -34,6 +34,7 @@
         ></BaseAddButton>
         <nuxt-link href="/reports">
           <Button
+            v-if="user.role_id === 1"
             label="View Reports"
             class="w-full text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm hover:shadow-xl"
           />
@@ -62,7 +63,7 @@
         :viewQuote="viewQuote"
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks
-        v-else-if="currentTab === 'FEEDDBACK'"
+        v-else-if="currentTab === 'FEEDBACK'"
       ></RegularTechnicianFeedbacks>
       <RegularTechnicianJobs
         v-else
@@ -83,11 +84,13 @@ import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
+import { useUserStore } from "~/stores/users";
 
 const toast = useToast();
 const confirm = useConfirm();
 
 const jobStore = useJobStore();
+const userStore = useUserStore();
 const quoteStore = useQuoteStore();
 const customerStore = useCustomerStore();
 const technicianStore = useTechnicianStore();
@@ -120,6 +123,7 @@ const customer = ref();
 const profileImage = computed(() => {
   return technician.value?.photo ?? "";
 });
+const user = computed(() => userStore.getCurrentUser);
 
 onMounted(async () => {
   loading.value = true;
@@ -140,6 +144,7 @@ const toggleAddJobModal = () => (addJobModal.value = true);
 
 const closeModal = ({ success, error }) => {
   addJobModal.value = false;
+  showQuotationModal.value = false;
   job.value = null;
   readOnly.value = false;
 

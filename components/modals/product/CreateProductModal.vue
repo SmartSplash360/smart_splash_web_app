@@ -48,9 +48,25 @@
           </p>
         </div>
       </div>
+      <div class="flex w-full lg:w-1/2 flex-col gap-3">
+        <label class="span__element" for="name"> Quantity* </label>
+        <InputText
+          type="number"
+          v-model="quantity"
+          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          :class="errorQuantity && 'border-red-300'"
+          @blur="handleChangeQuantity"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorQuantity" class="text-[#D42F24] text-xs">{{
+            errorQuantity
+          }}</span>
+        </p>
+      </div>
       <div class="card justify-content-center flex flex-col gap-3">
         <label class="span__element" for="description">
-          Description (10 to 300 characters)
+          Description (10 to 200 characters)
         </label>
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -69,7 +85,7 @@
       </div>
       <div class="card justify-content-center flex flex-col gap-3">
         <label class="span__element" for="notes">
-          Notes (10 to 300 characters)</label
+          Notes (10 to 200 characters)</label
         >
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -125,19 +141,24 @@ const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.0);
+const quantity = ref(1);
 
 const errorName = ref("");
 const errorNotes = ref("");
 const errorDescription = ref("");
 const errorPrice = ref("");
+const errorQuantity = ref("");
 
 const handleChangeName = () => {
   errorName.value = name.value ? "" : "The name field is required";
 };
+const handleChangeQuantity = () => {
+  errorQuantity.value = name.value ? "" : "The quantity field is required";
+};
 const handleChangeDescription = () => {
   errorDescription.value = description.value
-    ? description.value.length > 300
-      ? "Please enter between 10 and 300 characters"
+    ? description.value.length > 200
+      ? "Please enter between 10 and 200 characters"
       : ""
     : "The description field is required";
 };
@@ -146,8 +167,8 @@ const handleChangePrice = () => {
 };
 const handleChangeNote = () => {
   errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please provide between 10 and 300 characters for notes"
+    ? notes.value.length > 200
+      ? "Please provide between 10 and 200 characters for notes"
       : ""
     : "The note field is required";
 };
@@ -184,7 +205,7 @@ const createProduct = async () => {
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
-        quantity: "1",
+        // quantity: quantity.value,
       });
       await productStore.fetchProducts();
       toggleAddProductModal({ success: "Product created successfully" });
@@ -206,6 +227,7 @@ const updateProduct = async () => {
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
+        // quantity: quantity.value,
       };
 
       await productStore.updateProduct(product?.id, data);

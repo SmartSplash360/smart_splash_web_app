@@ -95,7 +95,7 @@
             }}</span>
           </p>
         </div>
-        <div class="flex w-full flex-col gap-2">
+        <!-- <div class="hidden w-full flex-col gap-2">
           <label class="text-sm" for="lat"> End Time* </label>
           <Calendar
             id="calendar-timeonly"
@@ -111,7 +111,7 @@
               errorEndTime
             }}</span>
           </p>
-        </div>
+        </div> -->
       </div>
       <div class="flex flex-col justify-between items-center gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
@@ -145,7 +145,7 @@
             rows="3"
             cols="30"
             :class="errorDescription && 'border-red-300'"
-            @blur="handleChangeSDescription"
+            @blur="handleChangeDescription"
           />
           <p v-if="!readOnly" class="min-h-[20px]">
             <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{
@@ -219,7 +219,11 @@ const props = defineProps({
 const poolId = ref();
 const customerId = ref();
 const startTime = ref();
+const startingTimeComputed = ref();
+
 const endTime = ref();
+const endingTimeComputed = ref();
+
 const status = ref("");
 const description = ref("");
 const technical_notes = ref("");
@@ -270,13 +274,14 @@ onMounted(async () => {
   await bodyOfWaterStore.fetchBodiesOfWaters();
 
   if (props.job) {
+    console.log(props.job);
     let customer = customerStore.getCustomerById(props.job.customer_id);
     bodiesOfWater.value = customer?.bodies_of_water;
     poolId.value = props.job.pool_id;
     customerId.value = props.job.customer_id;
     dateTime.value = props.job.start_date;
     startTime.value = props.job.start_time;
-    endTime.value = props.job.end_date;
+    endTime.value = props.job.end_time;
     status.value = props.job.status;
     description.value = props.job.description;
     technical_notes.value = props.job.technical_notes;
@@ -302,32 +307,60 @@ const handleChangeStartTime = () => {
     const dateObject = new Date(startTime.value);
     const hours = dateObject.getHours();
     const minutes = dateObject.getMinutes();
-    startTime.value = `${hours
+    startingTimeComputed.value = `${hours
       .toString()
       .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+
+    // respect the G.I format four trailing 0
+
+    const parts = startingTimeComputed.value.split(":");
+
+    if (parts.length === 2) {
+      const hour = parseInt(parts[0], 10);
+      const minute = parseInt(parts[1], 10);
+
+      const formattedHour = hour.toString();
+      const formattedMinute = minute.toString().padStart(2, "0");
+
+      startingTimeComputed.value = `${formattedHour}:${formattedMinute}`;
+    }
   }
   errorStartTime.value = startTime.value ? "" : "Please enter a starting time";
 };
-const handleChangeEndTime = () => {
-  if (endTime.value) {
-    const dateObject = new Date(endTime.value);
-    const hours = dateObject.getHours();
-    const minutes = dateObject.getMinutes();
-    endTime.value = `${hours
-      .toString()
-      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-  } else {
-    errorEndTime.value = endTime.value ? "" : "Please enter an ending time";
-  }
+// const handleChangeEndTime = () => {
+//   if (endTime.value) {
+//     const dateObject = new Date(endTime.value);
+//     const hours = dateObject.getHours();
+//     const minutes = dateObject.getMinutes();
 
-  errorEndTime.value = compareTimes(startTime.value, endTime.value)
-    ? ""
-    : "the end time must be greater than start time";
-};
+//     endingTimeComputed.value = `${hours
+//       .toString()
+//       .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+
+//     // respect the G.I format four trailing 0
+//     const parts = endingTimeComputed.value.split(":");
+//     if (parts.length === 2) {
+//       const hour = parseInt(parts[0], 10);
+//       const minute = parseInt(parts[1], 10);
+
+//       const formattedHour = hour.toString();
+//       const formattedMinute = minute.toString().padStart(2, "0");
+
+//       endingTimeComputed.value = `${formattedHour}:${formattedMinute}`;
+//     }
+//   } else {
+//     errorEndTime.value = endTime.value ? "" : "Please enter an ending time";
+//     return;
+//   }
+
+//   // errorEndTime.value = compareTimes(startTime.value, endTime.value)
+//   //   ? ""
+//   //   : "the end time must be greater than start time";
+// };
 const handleChangeStatus = () => {
   errorStatus.value = status.value ? "" : "Please enter a ending date";
 };
-const handleChangeSDescription = () => {
+const handleChangeDescription = () => {
   errorDescription.value = description.value
     ? description.value.length > 300
       ? "Please enter between 10 and 300 characters"
@@ -342,26 +375,27 @@ const handleChangeNote = () => {
     : "Please add a note";
 };
 
-function compareTimes(time1, time2) {
-  const [hours1, minutes1] = time1.split(":").map(Number);
-  const [hours2, minutes2] = time2.split(":").map(Number);
+// function compareTimes(time1, time2) {
+//   const [hours1, minutes1] = time1?.split(":").map(Number);
+//   const [hours2, minutes2] = time2?.split(":").map(Number);
 
-  if (hours2 > hours1 || (hours2 === hours1 && minutes2 > minutes1)) {
-    return true; // time2 is greater
-  } else {
-    return false; // time2 is not greater
-  }
-}
+//   if (hours2 > hours1 || (hours2 === hours1 && minutes2 > minutes1)) {
+//     return true; // time2 is greater
+//   } else {
+//     return false; // time2 is not greater
+//   }
+// }
 
 const validateForm = () => {
   handleChangeCustomer();
   handleChangePool();
   handleChangeStartDate();
   handleChangeStartTime();
-  handleChangeEndTime();
+  // handleChangeEndTime();
   handleChangeStatus();
-  handleChangeSDescription();
+  handleChangeDescription();
   handleChangeNote();
+
   return (
     !errorCustomer.value &&
     !errorPool.value &&
@@ -375,14 +409,24 @@ const validateForm = () => {
 };
 
 const updateJob = async () => {
-  try {
-    if (validateForm) {
+  if (validateForm()) {
+    try {
+      console.log("first");
       const data = {
         pool_id: poolId.value,
         technician_id: props.technicianId,
         customer_id: customerId.value,
-        start_date: startTime.value,
+        start_time: startingTimeComputed.value,
         end_date: endTime.value,
+        start_date: `${dateTime.value
+          ?.getDate()
+          .toString()
+          .padStart(2, "0")}-${(dateTime.value.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${dateTime.value
+          .getDate()
+          .toString()
+          .padStart(2, "0")}`,
         status: status.value,
         description: description.value,
         technical_notes: technical_notes.value,
@@ -394,9 +438,10 @@ const updateJob = async () => {
       props.toggleAddJobModal({
         success: `Job ${props.job?.id} updated successfully`,
       });
+    } catch (e) {
+      console.log(e);
+      props.toggleAddJobModal({ error: e });
     }
-  } catch (e) {
-    props.toggleAddJobModal({ error: e });
   }
 };
 </script>

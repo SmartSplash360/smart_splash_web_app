@@ -50,7 +50,7 @@
       </div>
       <div class="card justify-content-center flex flex-col gap-1">
         <label class="span__element" for="description">
-          Description (10 to 300 characters)
+          Description (10 to 200 characters)
         </label>
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -69,7 +69,7 @@
       </div>
       <div class="card justify-content-center flex flex-col gap-1">
         <label class="span__element" for="notes">
-          Notes (10 to 300 characters)
+          Notes (10 to 200 characters)
         </label>
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -189,8 +189,8 @@ const handleChangeName = () => {
 };
 const handleChangeDescription = () => {
   errorDescription.value = description.value
-    ? description.value.length > 300
-      ? "Please enter between 10 and 300 characters"
+    ? description.value.length > 200
+      ? "Please enter between 10 and 200 characters"
       : ""
     : "The description field is required";
 };
@@ -199,8 +199,8 @@ const handleChangePrice = () => {
 };
 const handleChangeNote = () => {
   errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please provide between 10 and 300 characters for notes"
+    ? notes.value.length > 200
+      ? "Please provide between 10 and 200 characters for notes"
       : ""
     : "The note field is required";
 };
@@ -252,7 +252,7 @@ const createService = async () => {
       toggleAddServiceModal({ success: "Service created successfully" });
       setTimeout(() => {
         location.reload();
-      }, 3000);
+      }, 2000);
     } catch (e) {
       // toggleAddServiceModal({ error: e });
     }
@@ -269,13 +269,17 @@ const updateService = async () => {
         is_available: isAvailable.value,
       };
 
+      subservices.value?.forEach(async (subservice) => {
+        await serviceStore.createSubService(subservice);
+      });
+
       await serviceStore.updateService(service?.id, data);
       toggleAddServiceModal({
         success: `Service ${service?.id} updated successfully`,
       });
       setTimeout(() => {
         location.reload();
-      }, 3000);
+      }, 2000);
     } catch (e) {
       toggleAddServiceModal({ error: e });
     }

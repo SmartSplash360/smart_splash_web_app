@@ -229,21 +229,20 @@ const props = defineProps({
 
 const userStore = useUserStore();
 
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   customer: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   technician: { value: null, matchMode: FilterMatchMode.IN },
 });
-
-onMounted(async () => {
-  loading.value = false;
-});
-
 const loading = ref(true);
 
 const user = computed(() => userStore.getCurrentUser);
 const alertCount = computed(() => props.alerts.length);
-const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
+
+onMounted(async () => {
+  loading.value = false;
+});
 
 const viewAlert = (alert) => {
   props.viewItem({ id: alert.id, item: { ...alert } });
