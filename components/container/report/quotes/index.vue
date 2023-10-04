@@ -35,6 +35,9 @@
     <div v-if="quoteCount === 0" class="flex">
       <h3 class="heading__h3">No quotes</h3>
     </div>
+    <div v-if="quoteCountSearch === 0" class="flex">
+      <h3 class="heading__h3">No result</h3>
+    </div>
     <div v-else class="flex flex-col gap-4">
       <div
         class="border rounded-lg py-5 px-5 flex flex-col gap-8 dark:bg-[#1B2028]"
@@ -145,6 +148,7 @@ const totalPriceChems = ref(205);
 const jobs = ref();
 const job = ref();
 const readOnly = ref(false);
+const quoteCountSearch = ref();
 
 const quoteList = computed(() => quoteStore.getQuotes);
 const quoteCount = computed(() => quoteStore.getQuoteCount);
@@ -162,6 +166,8 @@ const handleSearchQuote = (event) => {
   quotes.value = quoteList.value.filter((quote) =>
     quote.customer_name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
   );
+
+  quoteCountSearch.value = quotes.value.length;
 };
 const renderDate = (data) => {
   const dateObject = new Date(data);

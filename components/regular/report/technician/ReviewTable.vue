@@ -181,29 +181,12 @@ const props = defineProps({
   handleToggleShowComment: Function,
 });
 
-const reloadKey = ref(0);
 const loading = ref(false);
 const dt = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
-const days = ref();
-const numberOfDays = ref([
-  {
-    name: "90 Days",
-    option: 90,
-  },
-  {
-    name: "60 Days",
-    option: 60,
-  },
-  {
-    name: "30 Days",
-    option: 30,
-  },
-]);
-const comments = ref([]);
 
 const exportCSV = (event) => {
   dt.value.exportCSV();
