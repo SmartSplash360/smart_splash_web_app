@@ -8,9 +8,11 @@
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
     >
       <h2 class="heading__h2 font-bold text-[#025E7C]">
-        {{ customer ? "Edit" : "New" }} Customer
-        {{ customer ? `#${customer?.id}` : "" }}
+        {{ profile ? "Update my profile" : customer ? "Edit" : "New" }}
+        {{ !profile ? "Customer" : "" }}
+        {{ customer && !profile ? `#${customer?.id}` : "" }}
       </h2>
+
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="span__element text-sm" for="name"> Name* </label>
@@ -142,9 +144,10 @@
 <script setup lang="ts">
 import { useCustomerStore } from "~/stores/customer";
 
-const { toggleAddCustomerModal, customer } = defineProps([
+const { toggleAddCustomerModal, customer, profile } = defineProps([
   "toggleAddCustomerModal",
   "customer",
+  "profile",
 ]);
 
 const store = useCustomerStore();
@@ -249,6 +252,7 @@ const updateCustomer = async () => {
         email: email.value,
         phone_number: phoneNumber.value,
       };
+      console.log(data);
 
       await store.updateCustomer(customer?.id, data);
       await store.fetchCustomers();
