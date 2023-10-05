@@ -113,13 +113,6 @@ export const menuListCustomer = [
     },
   },
   {
-    label: "Job",
-    icon: "pi pi-user",
-    command: () => {
-      router.push("/jobs/create-technician-job");
-    },
-  },
-  {
     label: "Quotes",
     icon: "pi pi-file-pdf",
     command: () => {
@@ -168,13 +161,6 @@ export const menuListTechnicina = [
         );
         document.getElementById("add-service-button").click();
       }, 2000);
-    },
-  },
-  {
-    label: "Job",
-    icon: "pi pi-user",
-    command: () => {
-      router.push("/jobs/create-technician-job");
     },
   },
   {

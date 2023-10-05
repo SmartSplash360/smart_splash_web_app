@@ -21,7 +21,6 @@
       <div class="flex flex-wrap lg:flex-nowrap gap-2 sm:gap-5 lg:w-3/5">
         <div v-if="!technicianId" class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
-            :disabled="disbaleTechnicianSelect"
             v-model="selectedTechnician"
             :options="technicians"
             optionValue="id"
@@ -39,7 +38,6 @@
         </div>
         <div class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
-            :disabled="disbaleCustomerSelect"
             v-model="customerId"
             :options="customers"
             optionValue="id"
@@ -407,8 +405,6 @@ const errorNotes = ref();
 const errorServicesSelected = ref("");
 
 const disablePoolSelect = ref(true);
-const disbaleCustomerSelect = ref(false);
-const disbaleTechnicianSelect = ref(false);
 
 const statuses = ref([
   { value: "scheduled", label: "Scheduled" },
@@ -458,21 +454,7 @@ onMounted(async () => {
       bodiesOfWater.value = customer?.bodies_of_water;
       disablePoolSelect.value = false;
     }
-
     poolId.value = parseInt(poolIdAlert);
-  }
-
-  if (user.value.role_id === 3) {
-    customerId.value = user.value.id;
-    disbaleCustomerSelect.value = true;
-    let customer = customerStore.getCustomerById(customerId.value);
-    bodiesOfWater.value = customer?.bodies_of_water;
-    disablePoolSelect.value = false;
-  }
-
-  if (user.value.role_id === 4) {
-    selectedTechnician.value = user.value.id;
-    disbaleTechnicianSelect.value = true;
   }
 });
 
