@@ -41,8 +41,8 @@
 </template>
 
 <script setup>
-import { useUserStore } from "~/stores/users";
 import { useToast } from "primevue/usetoast";
+import { useUserStore } from "~/stores/users";
 import { useConfirm } from "primevue/useconfirm";
 import { useCustomerStore } from "~/stores/customer";
 

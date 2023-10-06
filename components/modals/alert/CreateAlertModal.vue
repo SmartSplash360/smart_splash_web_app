@@ -12,7 +12,7 @@
       </h2>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-3">
+        <!-- <div class="flex w-full flex-col gap-3">
           <label class="span__element" for="alertType"> Alert Type* </label>
           <Dropdown
             v-model="alertTypeId"
@@ -29,7 +29,7 @@
               errorAlertTypeId
             }}</span>
           </p>
-        </div>
+        </div> -->
         <div class="flex w-full flex-col gap-3">
           <label class="span__element" for="bodyOfWater">
             Body of Water*
@@ -249,9 +249,9 @@ onMounted(async () => {
   if (alert) {
     status.value = alert.status;
     priority.value = alert.priority;
-    dateTime.value = new Date(alert?.date_time);
+    // dateTime.value = new Date(alert?.date_time);
     notes.value = alert.notes;
-    alertTypeId.value = alert.alert_type_id;
+    // alertTypeId.value = alert.alert_type_id;
     bodyOfWaterId.value = alert.body_of_water_id;
     technicianId.value = alert.technician_id;
     subject.value = alert.subject;
@@ -259,7 +259,7 @@ onMounted(async () => {
 });
 
 const handleChangeAlertType = () => {
-  errorAlertTypeId.value = alertTypeId.value ? "" : "Please select alert type";
+  // errorAlertTypeId.value = alertTypeId.value ? "" : "Please select alert type";
 };
 const handleChangeBodyOfWater = () => {
   errorBodyOfWaterId.value = bodyOfWaterId.value
@@ -283,7 +283,7 @@ const handleChangeNote = () => {
 };
 
 const validateForm = () => {
-  handleChangeAlertType();
+  // handleChangeAlertType();
   handleChangeBodyOfWater();
   handleChangeTechnician();
   handleChangeNote();
@@ -308,7 +308,7 @@ const createAlert = async () => {
           .slice(0, 19)
           .replace("T", " "),
         notes: notes.value,
-        alert_type_id: alertTypeId.value,
+        // alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
         subject: subject.value,
@@ -340,12 +340,12 @@ const updateAlert = async () => {
       const data = {
         status: status.value,
         priority: priority.value,
-        date_time: new Date(dateTime.value)
-          .toISOString()
-          .slice(0, 19)
-          .replace("T", " "),
+        // date_time: new Date(dateTime.value)
+        //   .toISOString()
+        //   .slice(0, 19)
+        //   .replace("T", " "),
         notes: notes.value,
-        alert_type_id: alertTypeId.value,
+        // alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
         subject: subject.value,

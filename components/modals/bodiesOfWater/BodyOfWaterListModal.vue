@@ -13,6 +13,7 @@
         </h3>
 
         <BaseAddButton
+          v-if="user.role_id === 1"
           :btnText="'Add Body Of Water'"
           @click="toggleAddBodyOfWaterModal"
         ></BaseAddButton>
@@ -38,9 +39,10 @@
 
 <script setup>
 import { useToast } from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
+import { useUserStore } from "~/stores/users";
 import { useCustomerStore } from "~/stores/customer";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
-import { useConfirm } from "primevue/useconfirm";
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -54,10 +56,13 @@ const props = defineProps({
 });
 
 const customer = ref();
+const userStore = useUserStore();
 
 const addBodyOfWaterModal = ref(false);
 const readOnly = ref(false);
 const bodyOfWater = ref();
+
+const user = computed(() => userStore.getCurrentUser);
 
 onMounted(() => {
   customer.value = customerStore.getCustomerById(props.customerId);

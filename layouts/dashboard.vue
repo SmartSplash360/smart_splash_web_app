@@ -32,13 +32,12 @@ import messaging from "@/plugins/firebase";
 const toggleSide = ref(false);
 const handleToggleSide = () => (toggleSide.value = !toggleSide.value);
 
-// type Theme = "light" | "dark";
-
 const userStore = useUserStore();
 
 const setColorTheme = (newTheme) => {
   useColorMode().preference = newTheme;
   userStore.userDefinedTheme = true;
+  location.reload();
 };
 
 const activate = async () => {
@@ -47,7 +46,7 @@ const activate = async () => {
   });
 
   if (token) {
-    console.log(token);
+    // console.log(token);
   } else {
     // request
   }
@@ -57,7 +56,7 @@ onMounted(() => {
   const messaging = getMessaging();
 
   onMessage(messaging, (payload) => {
-    console.log("Message on Client", payload);
+    // console.log("Message on Client", payload);
   });
 });
 </script>

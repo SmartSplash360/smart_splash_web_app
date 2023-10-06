@@ -53,11 +53,11 @@
           }}
         </template>
       </Column>
-      <Column field="alert_type_id" header="Alert type" sortable>
+      <!-- <Column field="alert_type_id" header="Alert type" sortable>
         <template #body="slotProps">
           {{ slotProps.data?.alert_type?.name }}
         </template>
-      </Column>
+      </Column> -->
       <Column field="priority" header="Prority" sortable>
         <template #body="slotProps">
           <Tag
