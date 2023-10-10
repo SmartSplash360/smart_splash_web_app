@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col rounded-md border dark:border-gray-600 dark:bg-[#1B2028] dark:border-gray-600"
+    class="flex flex-col rounded-md border dark:bg-[#1B2028] dark:border-gray-600"
   >
     <div class="flex-between border-b dark:border-b-gray-600 px-5 py-4">
       <h3 class="heading__h3">Stats</h3>
