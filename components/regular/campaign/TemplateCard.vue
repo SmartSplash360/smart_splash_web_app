@@ -5,16 +5,16 @@
     >
       <template #header>
         <div class="flex-center px-3 py-5 pb-5 text-[#025E7C]">
-          <img :src="template.cover" alt="template-icon" />
+          <img :src="templateCover" alt="template-icon" />
         </div>
       </template>
       <template #title>
         <div class="flex items-start justify-between">
           <div class="relative flex flex-col items-start">
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 overflow-hidden">
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
               <p
-                class="paragraph__p text-gray-400"
+                class="paragraph__p text-gray-400 h-[100px]"
                 v-html="template.description"
               ></p>
             </div>
@@ -73,7 +73,36 @@ const toast = useToast();
 const confirm = useConfirm();
 
 const router = useRouter();
+const menu = ref();
+const items = ref([
+  {
+    label: "View Template",
+    icon: "pi pi-eye",
+    command: () => viewTemplate(),
+  },
+  {
+    label: "Delete Template",
+    icon: "pi pi-trash",
+    command: () => deleteTemplate(props.template.id),
+  },
+]);
+const templateCover = ref();
+const toggle = (event) => {
+  menu.value.toggle(event);
+};
 
+onMounted(() => {
+  console.log(props.template.cover.includes("public/images/"));
+  if (props.template.cover.includes("public/images/")) {
+    let cover = props.template.cover.replace(
+      "public/images/",
+      "storage/images/"
+    );
+    templateCover.value = `http://localhost:8000/${cover}`;
+  } else {
+    templateCover.value = props.template.cover;
+  }
+});
 const toggleEditTemplateModal = () => (showEditModal.value = false);
 
 const viewTemplate = () =>
@@ -109,22 +138,5 @@ const deleteTemplate = async (id) => {
       life: 5000,
     });
   }
-};
-
-const menu = ref();
-const items = ref([
-  {
-    label: "View Template",
-    icon: "pi pi-eye",
-    command: () => viewTemplate(),
-  },
-  {
-    label: "Delete Template",
-    icon: "pi pi-trash",
-    command: () => deleteTemplate(props.template.id),
-  },
-]);
-const toggle = (event) => {
-  menu.value.toggle(event);
 };
 </script>

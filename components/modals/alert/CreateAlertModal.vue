@@ -111,7 +111,7 @@
       </div>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-3">
+        <div v-if="!alert" class="flex w-full flex-col gap-3">
           <label class="span__element" for="date"> Date</label>
           <Calendar
             id="date"
@@ -249,7 +249,6 @@ onMounted(async () => {
   if (alert) {
     status.value = alert.status;
     priority.value = alert.priority;
-    // dateTime.value = new Date(alert?.date_time);
     notes.value = alert.notes;
     // alertTypeId.value = alert.alert_type_id;
     bodyOfWaterId.value = alert.body_of_water_id;
@@ -340,10 +339,6 @@ const updateAlert = async () => {
       const data = {
         status: status.value,
         priority: priority.value,
-        // date_time: new Date(dateTime.value)
-        //   .toISOString()
-        //   .slice(0, 19)
-        //   .replace("T", " "),
         notes: notes.value,
         // alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,

@@ -144,7 +144,7 @@ const confirm = useConfirm();
 const toast = useToast();
 const types = ref([
   { state: "Email Campaign", option: 2 },
-  { state: "SMS Campaign", option: 3 },
+  { state: "SMS Campaign", option: 1 },
 ]);
 
 const lead = ref(null);
@@ -255,7 +255,7 @@ const createTemplate = async () => {
       life: 5000,
     });
     setTimeout(() => {
-      router.replace("/campaigns");
+      window.location.href = "/campaigns";
     }, 5000);
   } catch (error) {
     toast.add({

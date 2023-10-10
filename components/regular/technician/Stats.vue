@@ -24,7 +24,7 @@
           Average Start time
         </h4>
         <h2 class="text-lg md:heading__h2 text-[#015D7B] font-bold">
-          12:50 pm
+          -
         </h2>
       </div>
       <div
@@ -34,7 +34,7 @@
           Average Finish time
         </h4>
         <h2 class="text-lg md:heading__h2 text-[#015D7B] font-bold">
-          6:01 pm
+          -
         </h2>
       </div>
       <div
@@ -44,7 +44,7 @@
           Average time on site
         </h4>
         <h2 class="text-lg md:heading__h2 text-[#015D7B] font-bold">
-          40m 8s
+          -
         </h2>
       </div>
       <div class="flex flex-col justify-center gap-3 p-4 lg:p-3 sm:p-5">
@@ -52,7 +52,7 @@
           Average chem cost per pool
         </h4>
         <h2 class="text-lg md:heading__h2 text-[#015D7B] font-bold">
-          $2.96
+          -
         </h2>
       </div>
     </div>

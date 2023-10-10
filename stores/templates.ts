@@ -29,12 +29,12 @@ export const useTemplateStore = defineStore("template", {
     },
     getTemplateTypeEmail: (state) => {
       return state.templates.filter(
-        (template: any) => template.template_type_id === 1
+        (template: any) => template.template_type_id === 2
       );
     },
     getTemplateTypeSMS: (state) => {
       return state.templates.filter(
-        (template: any) => template.template_type_id === 2
+        (template: any) => template.template_type_id === 1
       );
     },
     getTemplateCount(state) {
