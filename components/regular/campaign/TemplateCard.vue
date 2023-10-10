@@ -4,8 +4,8 @@
       class="min-w-full shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
     >
       <template #header>
-        <div class="flex-center px-3 py-5 pb-5 text-[#025E7C]">
-          <img :src="templateCover" alt="template-icon" />
+        <div class="flex-center pb-5 text-[#025E7C] lg:h-[400px]">
+          <img :src="templateCover" alt="template-icon" class="w-full h-full" />
         </div>
       </template>
       <template #title>
@@ -92,7 +92,6 @@ const toggle = (event) => {
 };
 
 onMounted(() => {
-  console.log(props.template.cover.includes("public/images/"));
   if (props.template.cover.includes("public/images/")) {
     let cover = props.template.cover.replace(
       "public/images/",
@@ -103,14 +102,13 @@ onMounted(() => {
     templateCover.value = props.template.cover;
   }
 });
-const toggleEditTemplateModal = () => (showEditModal.value = false);
 
+const toggleEditTemplateModal = () => (showEditModal.value = false);
+const editTemplate = () => (showEditModal.value = !showEditModal.value);
 const viewTemplate = () =>
   router.push(
     `/campaigns/${props.template.id}?campaignType=${props.campaignType}&templateId=${props.template.id}`
   );
-const editTemplate = () => (showEditModal.value = !showEditModal.value);
-
 const deleteTemplate = async (id) => {
   try {
     confirm.require({
