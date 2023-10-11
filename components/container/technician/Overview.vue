@@ -197,6 +197,9 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 3000);
       } catch (e) {
         toast.add({
           severity: "error",
