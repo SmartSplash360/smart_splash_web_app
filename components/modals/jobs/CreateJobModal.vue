@@ -62,6 +62,7 @@
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="date"> Date*</label>
           <Calendar
+            :disabled="readOnly"
             id="date"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
             v-model="dateTime"
@@ -414,17 +415,17 @@ const updateJob = async () => {
         pool_id: poolId.value,
         technician_id: props.technicianId,
         customer_id: customerId.value,
-        start_time: startingTimeComputed.value,
-        end_date: endTime.value,
-        start_date: `${dateTime.value
-          ?.getDate()
-          .toString()
-          .padStart(2, "0")}-${(dateTime.value.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}-${dateTime.value
-          .getDate()
-          .toString()
-          .padStart(2, "0")}`,
+        // start_time: startingTimeComputed.value,
+        // end_date: endTime.value,
+        // start_date: `${dateTime.value
+        //   ?.getDate()
+        //   .toString()
+        //   .padStart(2, "0")}-${(dateTime.value.getMonth() + 1)
+        //   .toString()
+        //   .padStart(2, "0")}-${dateTime.value
+        //   .getDate()
+        //   .toString()
+        //   .padStart(2, "0")}`,
         status: status.value,
         description: description.value,
         technical_notes: technical_notes.value,

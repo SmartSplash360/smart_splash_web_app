@@ -94,7 +94,7 @@
                       Services
                     </h6>
                     <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-                      ${{ totalPriceServices }}
+                      ${{ totalPriceServices.toFixed(2) }}
                     </h6>
                   </div>
                 </template>
@@ -109,7 +109,7 @@
                     }}</span>
                   </div>
                   <span class="span__element font-bold text-[#025E7C]">
-                    ${{ service.price }}</span
+                    ${{ service.price.toFixed(2) }}</span
                   >
                 </div>
               </AccordionTab>
@@ -130,7 +130,7 @@
                       Products
                     </h6>
                     <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-                      ${{ totalPriceProducts }}
+                      ${{ totalPriceProducts.toFixed(2) }}
                     </h6>
                   </div>
                 </template>
@@ -145,7 +145,7 @@
                     }}</span>
                   </div>
                   <span class="span__element font-bold text-[#025E7C]">
-                    ${{ service.price }}</span
+                    ${{ service.price.toFixed(2) }}</span
                   >
                 </div>
               </AccordionTab>
@@ -166,7 +166,7 @@
                       Chemical Reading
                     </h6>
                     <h6 class="heading__h6 text-gray-800 dark:text-gray-400">
-                      ${{ totalPriceChems }}
+                      ${{ totalPriceChems.toFixed(2) }}
                     </h6>
                   </div>
                 </template>
@@ -181,7 +181,7 @@
                     }}</span>
                   </div>
                   <span class="span__element font-bold text-[#025E7C]">
-                    ${{ service.price }}</span
+                    ${{ service.price.toFixed(2) }}</span
                   >
                 </div>
               </AccordionTab>
@@ -264,7 +264,7 @@ const services = ref([]);
 const products = ref();
 const chemicalReadings = ref();
 
-const active = ref(0);
+const active = ref();
 
 const totalPrice = computed(() =>
   (
