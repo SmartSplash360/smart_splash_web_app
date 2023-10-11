@@ -41,7 +41,7 @@
         </div>
         <div v-else class="max-h-[80px] max-w-[225px]">
           <img
-            :src="files[0]?.objectURL"
+            :src="files?.objectURL"
             alt="Smart-Splash-Logo"
             class="h-40 w-40 rounded-full object-contain"
           />
@@ -50,7 +50,7 @@
           <FileUpload
             name="CompanyLogo[]"
             @upload="onTemplatedUpload($event)"
-            :multiple="true"
+            :multiple="false"
             accept="image/*"
             :maxFileSize="1000000"
             @select="onSelectedFiles"
@@ -215,6 +215,9 @@
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { useToast } from "primevue/usetoast";
 import { stateList } from "@/utils/usaStateName";
+import { useTenantStore } from "@/stores/tenants";
+
+const tenantStore = useTenantStore();
 
 const toast = useToast();
 const companyName = ref();
@@ -245,7 +248,8 @@ onMounted(async () => {
 });
 
 const onSelectedFiles = (event) => {
-  files.value = event.files;
+  console.log(event.files[0]);
+  files.value = event.files[0];
 };
 
 const onTemplatedUpload = () => {
@@ -257,18 +261,13 @@ const onTemplatedUpload = () => {
   });
 };
 
-const updatecompanyDetails = () => {
+const updatecompanyDetails = async () => {
   try {
-    const companDetails = {
+    await tenantStore.updateTenant({
       logo: files.value,
       name: companyName.value,
-      address: {
-        city: selectedCity.value,
-        state: selectedState.value.name,
-        zipCode: zipCode.value,
-      },
-      // call the API
-    };
+      address: `${selectedCity.value} - ${selectedState.value.name} - ${zipCode.value}`,
+    });
   } catch (error) {
     console.log(error.message);
   }

@@ -40,16 +40,17 @@ export const useTenantStore = defineStore("tenant", {
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
-                this.currentTenant = res.data;
+                this.currentTenant = res.data.data;
                 this.currentTenantDomain = res.data.data.domain
-                this.registerFirstUser()
+                // this.registerFirstUser()
+                console.log(res.data)
 
-                if(res.data){
-                    const router = useRouter();
-                    router.push('/customers');
-                }
+                // if(res.data){
+                //     const router = useRouter();
+                //     router.push('/customers');
+                // }
             } catch (error) {
-                alert(error)
+                // alert(error)
                 console.log(error)
             }
         },
@@ -84,6 +85,25 @@ export const useTenantStore = defineStore("tenant", {
                 alert(error)
                 console.log(error)
             }
-        }
+        },
+        async updateTenant( tenantPayload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            // Get Current Tenant Info
+            let tenant = this.getCurrentTenant
+            console.log("Tenant", tenant)
+            console.log("Payload", tenantPayload)
+
+            // let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `http://localhost:8000/api/v1/customers/${id}`
+            // try {
+            //     const res = await axios.post(url, customerPayload);
+            //     if (!res.data.success) {
+            //         throw new Error(res.data.message);
+            //     }
+            // } catch (error) {
+            //     console.log(error);
+            //     throw error
+            // }
+        },
     },
 });
