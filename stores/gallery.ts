@@ -6,6 +6,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useGalleryStore = defineStore("gallery", {
   state: () => ({}),
   getters: {},
@@ -14,7 +17,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `http://localhost:8000/api/v1/galleries`
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `${apiUrl}/galleries`
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -26,7 +29,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}` : `http://localhost:8000/api/v1/galleries/${id}`
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}` : `${apiUrl}/galleries/${id}`
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -38,7 +41,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `http://localhost:8000/api/v1/galleries`
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `${apiUrl}/galleries`
 
         const formData = new FormData();
         formData.append("name", galleryPayload.name);
@@ -57,7 +60,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ?  `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}` : `http://localhost:8000/api/v1/galleries/${id}`
+        let url = useTenantStore().getCurrentTenantDomain ?  `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}` : `${apiUrl}/galleries/${id}`
         const res = await axios.post(url , galleryPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -71,7 +74,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}`  : `http://localhost:8000/api/v1/galleries/${id}`
+        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries/${id}`  : `${apiUrl}/galleries/${id}`
         const res = await axios.delete(url);
 
         if (!res.data.success) {

@@ -6,6 +6,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useMenuStore = defineStore("menu", {
     persist: {
         storage: persistedState.localStorage,
@@ -24,7 +27,7 @@ export const useMenuStore = defineStore("menu", {
         async fetchMenuByRole(id : number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/roleMenus/getMenuByRole/${id}` : `http://localhost:8000/api/v1/roleMenus/getMenuByRole/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/roleMenus/getMenuByRole/${id}` : `${apiUrl}/roleMenus/getMenuByRole/${id}`
             try {
                 const res = await axios.get(url);
                 this.menu = res.data.data;

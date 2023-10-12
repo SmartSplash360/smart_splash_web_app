@@ -4,7 +4,7 @@ const baseUrl = "/";
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiUrl: "",
+      apiUrl: "http://localhost:8000/api/v1",
       imageUrl: "",
       googleMapsApiKey: "",
       twilioAccountSid: "",

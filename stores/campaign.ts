@@ -6,6 +6,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useCampaignStore = defineStore("camapign", {
     persist: {
         storage: persistedState.localStorage,
@@ -28,7 +31,7 @@ export const useCampaignStore = defineStore("camapign", {
         async createCampaignEmail(campaignPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns` : `http://localhost:8000/api/v1/campaigns`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns` : `${apiUrl}/campaigns`
             try {
                 const res = await axios.post(url, campaignPayload);
                 if (!res.data.success) {
@@ -41,7 +44,7 @@ export const useCampaignStore = defineStore("camapign", {
         async createCampaignSMS(campaignPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns/sms` :`http://localhost:8000/api/v1/campaigns/sms`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/campaigns/sms` :`${apiUrl}/campaigns/sms`
             try {
                 const res = await axios.post(url, campaignPayload);
 

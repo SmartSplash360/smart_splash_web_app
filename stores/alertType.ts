@@ -6,6 +6,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useAlertTypeStore = defineStore("alertType", {
     persist: {
         storage: persistedState.localStorage,
@@ -22,7 +25,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertTypes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `http://localhost:8000/api/v1/alertTypes`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `${apiUrl}/alertTypes`
             try {
                 const res = await axios.get(url);
                 this.alertTypes = res.data.data.data
@@ -34,7 +37,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertType(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}` : `http://localhost:8000/api/v1/alertTypes/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}` : `${apiUrl}/alertTypes/${id}`
             try {
                 const res = await axios.get(url);
                 return res.data.data
@@ -46,7 +49,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async createAlertType(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `http://localhost:8000/api/v1/alertTypes`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `${apiUrl}/alertTypes`
             try {
                 await axios.post(url, payload);
             } catch (error) {

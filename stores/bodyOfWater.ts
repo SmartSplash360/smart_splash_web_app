@@ -7,6 +7,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useBodyOfWaterStore = defineStore("bodyOfWater", {
   persist: {
     storage: persistedState.localStorage,
@@ -23,7 +26,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodiesOfWaters() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater` : `http://localhost:8000/api/v1/bodyOfWater`
+      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater` : `${apiUrl}/bodyOfWater`
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data.data;
@@ -34,7 +37,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `http://localhost:8000/api/v1/bodyOfWater/${id}`
+      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data;
@@ -65,7 +68,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           const headers = {
             'Content-Type': 'multipart/form-data',
           };
-          let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `http://localhost:8000/api/v1/galleries`
+          let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/galleries` : `${apiUrl}/galleries`
 
           const res = await axios.post(url, formData,{
               headers
@@ -82,7 +85,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         }
 
         // create pool
-        let url2 = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater` : `http://localhost:8000/api/v1/bodyOfWater`
+        let url2 = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater` : `${apiUrl}/bodyOfWater`
         const res = await axios.post(url2, payload);
 
         if (!res.data.success) {
@@ -107,7 +110,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `http://localhost:8000/api/v1/bodyOfWater/${id}`
+      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.post(url,  payload);
         if (!res.data.success) {
@@ -127,7 +130,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async deleteBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `http://localhost:8000/api/v1/bodyOfWater/${id}`
+      let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/bodyOfWater/${id}` : `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.delete(url);
 

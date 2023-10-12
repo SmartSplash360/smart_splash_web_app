@@ -4,7 +4,9 @@ import axios from "axios";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
-// axios.defaults.withCredentials = true;
+
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
 
 export const useUserStore = defineStore("user", {
     persist: {
@@ -47,7 +49,7 @@ export const useUserStore = defineStore("user", {
     actions: {
         async login(email: String, password: String) {
             try {
-                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login` : `http://localhost:8000/api/v1/auth/login`
+                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login` : `${apiUrl}/auth/login`
                 const res = await axios.post( url , {email, password});
                 if (res.data.success) {
                     // TODO: store in local storage
@@ -69,7 +71,7 @@ export const useUserStore = defineStore("user", {
         },
         async register(userPayload: {}) {
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
+                const res = await axios.post("${apiUrl}/auth/register", userPayload);
                 this.currentUser = res.data;
                 this.firstUserTenant = userPayload;
                 
@@ -94,7 +96,7 @@ export const useUserStore = defineStore("user", {
          },
         async logout() {
             const router = useRouter();
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout` : `http://localhost:8000/api/v1/auth/logout`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout` : `${apiUrl}/auth/logout`
             await axios.post(url); 
             this.currentUser = null
             this.jwt = "";

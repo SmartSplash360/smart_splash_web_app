@@ -6,6 +6,9 @@ import {useTenantStore} from "~/stores/tenants";
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 export const useTechnicianStore = defineStore("technician", {
     persist: {
         storage: persistedState.localStorage,
@@ -26,7 +29,7 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnicians() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `http://localhost:8000/api/v1/technicians`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `${apiUrl}/technicians`
             try {
                 const res = await axios.get(url);
                 this.technicians = res.data.data.data;
@@ -38,7 +41,7 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `${apiUrl}/technicians/${id}`
 
             try {
                 const res = await axios.get(url);
@@ -51,7 +54,7 @@ export const useTechnicianStore = defineStore("technician", {
         async createTechnician(technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `http://localhost:8000/api/v1/technicians`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians` : `${apiUrl}/technicians`
             try {
                 const res = await axios.post(url, technicianPayload);
 
@@ -66,7 +69,7 @@ export const useTechnicianStore = defineStore("technician", {
         async updateTechnician(id: number | string, technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `${apiUrl}/technicians/${id}`
             try {
                 const res = await axios.post(url, technicianPayload);
                 if (!res.data.success) {
@@ -80,7 +83,7 @@ export const useTechnicianStore = defineStore("technician", {
         async deleteTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `http://localhost:8000/api/v1/technicians/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/technicians/${id}` : `${apiUrl}/technicians/${id}`
 
             try {
                 const res = await axios.delete(url);

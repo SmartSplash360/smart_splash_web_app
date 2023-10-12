@@ -7,6 +7,9 @@ import { useTenantStore } from "~/stores/tenants";
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiUrl;
+
 
 export const useReviewStore = defineStore("review", {
     persist: {
@@ -27,7 +30,7 @@ export const useReviewStore = defineStore("review", {
         async fetchReviewByTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/reviews/byTechnician/${id}` : `http://localhost:8000/api/v1/reviews/byTechnician/${id}`
+            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/reviews/byTechnician/${id}` : `${apiUrl}/reviews/byTechnician/${id}`
             try {
                 const res = await axios.get(url);
                 this.reviews = res.data.data
