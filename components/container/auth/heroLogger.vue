@@ -19,7 +19,7 @@
         Welcome Back!
       </h2>
       <div
-        class="flex lg:w-[320px] 2xl:w-[400px] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
+        class="flex lg:w-[285px] 2xl:w-[400px] flex-1 flex-col items-center gap-6 rounded-lg bg-[#f2fafc] px-8 py-10 text-center"
       >
         <img
           :src="img_browser_stat"

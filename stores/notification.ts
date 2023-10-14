@@ -19,7 +19,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
 
 // const soundUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 
@@ -42,7 +51,7 @@ export const useNotificationStore = defineStore("notification", {
         async fetchNotifications() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/notifications` : `${apiUrl}/notifications`
+            let url = `${apiUrl}/notifications`
             try {
                 const res = await axios.get(url);
                 this.notifications = res.data.data.data;
@@ -54,7 +63,7 @@ export const useNotificationStore = defineStore("notification", {
         async fetchNotification(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/notifications/${id}` : `${apiUrl}/notifications/${id}`
+            let url = `${apiUrl}/notifications/${id}`
             try {
                 const res = await axios.get(url);
                 return res.data.data;
@@ -66,15 +75,15 @@ export const useNotificationStore = defineStore("notification", {
         async createNotification(notificationPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/notifications` : `${apiUrl}/notifications`
+            let url = `${apiUrl}/notifications`
             try {
                 const res = await axios.post(url, notificationPayload);
                 // var audio = new Audio(require('~/assets/sound/notification.wav'));
                 // audio.play();
-                play(800,1e3)
-                if (!res.data.success) {
-                    throw new Error(res.data.message);
-                }
+                // play(800,1e3)
+                // if (!res.data.success) {
+                //     throw new Error(res.data.message);
+                // }
             } catch (error) {
                 console.log(error)
                 throw error
@@ -83,7 +92,7 @@ export const useNotificationStore = defineStore("notification", {
         async deleteNotification(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/notifications/${id}` : `${apiUrl}/notifications/${id}`
+            let url = `${apiUrl}/notifications/${id}`
             try {
                 const res = await axios.delete(url);
                 if (!res.data.success) {

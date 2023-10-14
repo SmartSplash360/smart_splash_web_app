@@ -7,7 +7,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
 
 export const useAlertTypeStore = defineStore("alertType", {
     persist: {
@@ -25,7 +34,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertTypes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `${apiUrl}/alertTypes`
+            let url = `${apiUrl}/alertTypes`
             try {
                 const res = await axios.get(url);
                 this.alertTypes = res.data.data.data
@@ -37,7 +46,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertType(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes/${id}` : `${apiUrl}/alertTypes/${id}`
+            let url = `${apiUrl}/alertTypes/${id}`
             try {
                 const res = await axios.get(url);
                 return res.data.data
@@ -49,7 +58,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async createAlertType(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alertTypes` : `${apiUrl}/alertTypes`
+            let url = `${apiUrl}/alertTypes`
             try {
                 await axios.post(url, payload);
             } catch (error) {

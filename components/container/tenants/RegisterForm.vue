@@ -16,7 +16,7 @@
           <InputText
             id="email"
             v-model="email"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorEmail && 'border-red-300'"
             @blur="handleChangeEmail"
           />
@@ -33,7 +33,7 @@
           <InputText
             id="phone"
             v-model="phone"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorPhoneNumber && 'border-red-300'"
             @blur="handleChangePhoneNumber"
           />
@@ -48,9 +48,26 @@
       <div class="flex flex-col gap-2 w-full">
         <span class="p-float-label">
           <InputText
+            id="address"
+            v-model="address"
+            class="w-full border-gray-300 rounded-md"
+            :class="errorAddress && 'border-red-300'"
+            @blur="handleChangeAddress"
+          />
+          <label for="phone">Address</label>
+        </span>
+        <p class="min-h-[10px]">
+          <span v-show="errorAddress" class="text-[#D42F24] text-xs">{{
+            errorAddress
+          }}</span>
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <span class="p-float-label">
+          <InputText
             id="name"
             v-model="name"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorName && 'border-red-300'"
             @blur="handleChangeName"
           />
@@ -67,7 +84,7 @@
           <InputText
             id="website"
             v-model="website"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorWebsite && 'border-red-300'"
             @blur="handleChangeWebsite"
           />
@@ -102,6 +119,7 @@ import { useTechnicianStore } from "~/stores/technician";
 import { useProductStore } from "~/stores/products";
 import { useServiceStore } from "~/stores/services";
 import { useTemplateStore } from "~/stores/templates";
+import { useToast } from "primevue/usetoast";
 
 const props = defineProps({
   user: Object,
@@ -109,6 +127,9 @@ const props = defineProps({
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+const toast = useToast();
+const router = useRouter();
 
 const store = useTenantStore();
 const customerStore = useCustomerStore();
@@ -122,15 +143,20 @@ const templateStore = useTemplateStore();
 const email = ref("");
 const name = ref("");
 const phone = ref("");
+const address = ref("");
 const website = ref("");
 
 const errorEmail = ref("");
 const errorName = ref("");
 const errorPhoneNumber = ref("");
+const errorAddress = ref("");
 const errorWebsite = ref("");
 
 const handleChangeName = () => {
   errorName.value = name.value ? "" : "The name field is required";
+};
+const handleChangeAddress = () => {
+  errorAddress.value = address.value ? "" : "The address field is required";
 };
 const handleChangeEmail = () => {
   errorEmail.value = email.value
@@ -155,6 +181,7 @@ const validateForm = () => {
   handleChangeWebsite();
   handleChangeEmail();
   handleChangePhoneNumber();
+  handleChangeAddress();
   return (
     !errorName.value &&
     !errorWebsite.value &&
@@ -168,7 +195,7 @@ async function registerTenant() {
     try {
       // TODO: add validation
       const tenantPayload = {
-        id: "Splash" + Math.floor(Math.random() * (1000000 + 1)),
+        address: address.value,
         domain:
           name.value.replace(/\s/g, "") +
           "smartsplash360" +
@@ -176,7 +203,7 @@ async function registerTenant() {
           ".localhost",
         owner: props.user.id,
         email: email.value,
-        phone: phone.value,
+        phone_number: phone.value,
         name: name.value,
         website: website.value,
         tenancy_db_name: name.value.replace(/\s/g, ""),
@@ -190,7 +217,22 @@ async function registerTenant() {
       await productStore.fetchProducts();
       await serviceStore.fetchServices();
       await templateStore.fetchTemplates();
+
+      toast.add({
+        severity: "success",
+        summary: "Register Tenant success",
+        detail: "Tenant registration succeeded",
+        life: 3000,
+      });
+
+      router.push("/");
     } catch (error) {
+      toast.add({
+        severity: "danger",
+        summary: "Register Tenant failed",
+        detail: "Tenant registration failed",
+        life: 3000,
+      });
       throw new Error(error.message);
     }
   }

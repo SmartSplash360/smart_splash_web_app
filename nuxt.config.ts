@@ -4,8 +4,8 @@ const baseUrl = "/";
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiUrl: "http://localhost:8000/api/v1",
-      imageUrl: "",
+      apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "http://localhost:8000/api/v1",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "http://localhost:8000",
       googleMapsApiKey: "",
       twilioAccountSid: "",
       twilioAuthToken: "",

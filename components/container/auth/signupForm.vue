@@ -13,7 +13,7 @@
           <InputText
             id="firstName"
             v-model="firstName"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorFirstame && 'border-red-300'"
             @blur="handleChangeFirstname"
           >
@@ -31,7 +31,7 @@
           <InputText
             id="lastName"
             v-model="lastName"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorLastname && 'border-red-300'"
             @blur="handleChangeLastname"
           >
@@ -49,7 +49,7 @@
           <InputText
             id="email"
             v-model="email"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorEmail && 'border-red-300'"
             @blur="handleChangeEmail"
           >
@@ -68,7 +68,7 @@
             id="password"
             type="password"
             v-model="password"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorPassword && 'border-red-300'"
             @blur="handleChangePassword"
           >
@@ -87,7 +87,7 @@
             id="confirmedPassword"
             type="password"
             v-model="confirmPassword"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorPassword && 'border-red-300'"
             @blur="handleChangePasswordMatching"
           >
@@ -232,7 +232,9 @@ async function registerUser() {
         password_confirmation: confirmPassword.value,
         role: 4,
       };
+      console.log(userPayload);
       const res = await store.register(userPayload);
+      console.log(res);
       if (res?.errorMessage) {
         toast.add({
           severity: "error",
@@ -240,16 +242,6 @@ async function registerUser() {
           detail: "User registration failed",
           life: 3000,
         });
-
-        this.$router.push(
-          {
-            path: "/signup",
-            force: true,
-          },
-          () => {
-            this.$router.app.refresh();
-          }
-        );
       } else {
         await customerStore.fetchCustomers();
         await alertStore.fetchAlerts();
@@ -270,7 +262,7 @@ async function registerUser() {
           detail: "User registration succeeded",
           life: 3000,
         });
-        await router.push("/alerts");
+        router.push("/alerts");
       }
     } catch (error) {
       console.log(error);

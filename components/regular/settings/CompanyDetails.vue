@@ -107,20 +107,56 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-64"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64 sm:justify-between"
     >
-      <div class="flex flex-col gap-3 sm:gap-4">
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
         <h2 class="min-w-max heading__h3">Company Name</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company name
         </span>
       </div>
-      <div class="card justify-content-center flex sm:w-[30rem]">
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
         <InputText
           type="text"
           v-model="companyName"
           class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
           :placeholder="'SMART SPLAH360'"
+        ></InputText>
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
+        <h2 class="min-w-max heading__h3">Company Website</h2>
+        <span class="min-w-max span__element span__element-light"
+          >Update company website
+        </span>
+      </div>
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
+        <InputText
+          type="text"
+          v-model="companyWebsite"
+          class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
+          :placeholder="''"
+        ></InputText>
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
+        <h2 class="min-w-max heading__h3">Company contact number</h2>
+        <span class="min-w-max span__element span__element-light"
+          >Update company contact number
+        </span>
+      </div>
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
+        <InputText
+          type="text"
+          v-model="companyNumber"
+          class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
+          :placeholder="''"
         ></InputText>
       </div>
     </div>
@@ -221,6 +257,8 @@ const tenantStore = useTenantStore();
 
 const toast = useToast();
 const companyName = ref();
+const companyWebsite = ref();
+const companyNumber = ref();
 const zipCode = ref();
 const currentLogo = ref();
 const files = ref([]);
@@ -267,6 +305,8 @@ const updatecompanyDetails = async () => {
       logo: files.value,
       name: companyName.value,
       address: `${selectedCity.value} - ${selectedState.value.name} - ${zipCode.value}`,
+      website: companyWebsite.value,
+      phone_number: companyNumber.value,
     });
   } catch (error) {
     console.log(error.message);

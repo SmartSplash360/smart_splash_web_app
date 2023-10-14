@@ -7,7 +7,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
 
 export const useQuoteStore = defineStore("quote", {
     persist: {
@@ -39,7 +48,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchQuotes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes` : `${apiUrl}/quotes`
+            let url = `${apiUrl}/quotes`
             try {
                 const res = await axios.get(url);
                 this.quotes = res.data.data.data;
@@ -50,7 +59,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchTechnicianQuotes(technicianId: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byTechnician/${technicianId}` : `${apiUrl}/quotes/byTechnician/${technicianId}`
+            let url = `${apiUrl}/quotes/byTechnician/${technicianId}`
             try {
                 const res = await axios.get(url);
                 this.technicianQuotes = res.data.data;
@@ -62,7 +71,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchCustomerQuotes(customerId: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byCustomer/${customerId}` : `${apiUrl}/quotes/byCustomer/${customerId}`
+            let url = `${apiUrl}/quotes/byCustomer/${customerId}`
             try {
                 const res = await axios.get(url);
                 this.customerQuotes = res.data.data;
@@ -75,7 +84,7 @@ export const useQuoteStore = defineStore("quote", {
         async createQuote(quotePayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes` : `${apiUrl}/quotes`
+            let url = `${apiUrl}/quotes`
             try {
                 const res = await axios.post(url, quotePayload);
 

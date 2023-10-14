@@ -10,9 +10,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+const requestUrl = config.public.apiUrl;
 
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
 
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
 export const useAlertStore = defineStore("alert", {
     persist: {
         storage: persistedState.localStorage,
@@ -29,7 +36,7 @@ export const useAlertStore = defineStore("alert", {
         async fetchAlerts() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts` : `${apiUrl}/alerts`
+            let url = `${apiUrl}/alerts`
             
             try {
                 const res = await axios.get(url);
@@ -42,7 +49,7 @@ export const useAlertStore = defineStore("alert", {
         async fetchAlert(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${id}` : `${apiUrl}/alerts/${id}`
+            let url = `${apiUrl}/alerts/${id}`
             try {
                 const res = await axios.get(url);
                 return res.data.data
@@ -54,7 +61,7 @@ export const useAlertStore = defineStore("alert", {
         async createAlert(alertPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts` : `${apiUrl}/alerts`
+            let url =  `${apiUrl}/alerts`
             try {
                 const res = await axios.post(url, alertPayload);
 
@@ -70,7 +77,7 @@ export const useAlertStore = defineStore("alert", {
         async updateAlert(alertId: number | string, alertPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}` : `${apiUrl}/alerts/${alertId}`
+            let url =`${apiUrl}/alerts/${alertId}`
             try {
                 const res = await axios.post(url, alertPayload);
 
@@ -85,7 +92,7 @@ export const useAlertStore = defineStore("alert", {
         async deleteAlert(alertId: number | string){
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}` : `${apiUrl}/alerts/${alertId}`
+            let url = `${apiUrl}/alerts/${alertId}`
             try {
                 const res = await axios.delete(url);
 

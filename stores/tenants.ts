@@ -6,8 +6,17 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
-// axios.defaults.withCredentials = true;
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
+
 
 export const useTenantStore = defineStore("tenant", {
     persist: {
@@ -38,64 +47,42 @@ export const useTenantStore = defineStore("tenant", {
         },
     },
     actions: {
+        async fetchTenants() {
+            console.log("Fetch Tenants")
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = `${requestUrl}/tenant`
+            console.log("URL",url)
+            try {
+                const res = await axios.get(url);
+                this.tenants = res.data.data.data;
+            } catch (error) {
+                console.log(error);
+                return error
+            }
+        },
         async register(tenantPayload: {}) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
                 this.currentTenant = res.data.data;
-                this.currentTenantDomain = res.data.data.domain
-                // this.registerFirstUser()
-                console.log(res.data)
+                this.currentTenantDomain = res.data.data.domain.domain
 
-                // if(res.data){
-                //     const router = useRouter();
-                //     router.push('/customers');
-                // }
-            } catch (error) {
-                // alert(error)
-                console.log(error)
-            }
-        },
-        async registerFirstUser(){
-            const { email,password,password_confirmation,name,surname } = useUserStore().getFirstUserTenant
-
-            try {
-                const user = {
-                    email,
-                    password,
-                    password_confirmation,
-                    name,
-                    surname,
-                    role_id : 1
-                }
-                const res = await axios.post(`http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/register`, user);
-                useUserStore().currentUser = res.data;
-                
-                if (res.data.success) {
-                    // TODO: store in local storage
-                    
-                    useUserStore().currentUser = res.data.data.user;
-                    useUserStore().setJwt(res.data.data.token);
-                    this.loggedIn = true;
-
-                    // set authorization header
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
-                } else {
-                    throw new Error(res.data.message)
+                if(res.data){
+                    window.location.href = `http://${res.data.data.domain.domain}:3000/customers`;
                 }
             } catch (error) {
-                alert(error)
-                console.log(error)
+               throw new Error("An error")
             }
         },
-        async updateTenant( tenantPayload: any) {
+        async updateTenant(tenantPayload: any) {
+
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            // Get Current Tenant Info
-            let tenant = this.getCurrentTenant
-            console.log("Tenant", tenant)
-            console.log("Payload", tenantPayload)
+            this.fetchTenants()
+            console.log("Payload", tenantPayload);
+            console.log("Current tenant", this.tenants)
 
             // let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `${apiUrl}/customers/${id}`
             // try {

@@ -67,6 +67,9 @@ const props = defineProps({
   campaignType: Number,
 });
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const showEditModal = ref(false);
 const store = useTemplateStore();
 const toast = useToast();
@@ -97,7 +100,7 @@ onMounted(() => {
       "public/images/",
       "storage/images/"
     );
-    templateCover.value = `http://localhost:8000/${cover}`;
+    templateCover.value = `${imageUrl}/${cover}`;
   } else {
     templateCover.value = props.template.cover;
   }

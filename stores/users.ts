@@ -6,7 +6,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiUrl;
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
 
 export const useUserStore = defineStore("user", {
     persist: {
@@ -49,7 +58,7 @@ export const useUserStore = defineStore("user", {
     actions: {
         async login(email: String, password: String) {
             try {
-                let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/login` : `${apiUrl}/auth/login`
+                let url = `${apiUrl}/auth/login`
                 const res = await axios.post( url , {email, password});
                 if (res.data.success) {
                     // TODO: store in local storage
@@ -71,9 +80,8 @@ export const useUserStore = defineStore("user", {
         },
         async register(userPayload: {}) {
             try {
-                const res = await axios.post("${apiUrl}/auth/register", userPayload);
+                const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
                 this.currentUser = res.data;
-                this.firstUserTenant = userPayload;
                 
                 if (res.data.success) {
                     // TODO: store in local storage
@@ -96,7 +104,7 @@ export const useUserStore = defineStore("user", {
          },
         async logout() {
             const router = useRouter();
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/auth/logout` : `${apiUrl}/auth/logout`
+            let url = `${apiUrl}/auth/logout`
             await axios.post(url); 
             this.currentUser = null
             this.jwt = "";

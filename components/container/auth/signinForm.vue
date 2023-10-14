@@ -15,7 +15,7 @@
       <div class="flex flex-col gap-2">
         <InputText
           type="text"
-          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          class="w-full border-gray-300 rounded-md"
           :class="errorEmail && 'border-red-300'"
           placeholder="Full name"
           v-model="email"
@@ -31,7 +31,7 @@
       <div class="flex flex-col gap-2">
         <InputText
           type="password"
-          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          class="w-full border-gray-300 rounded-md"
           :class="errorPassword && 'border-red-300'"
           placeholder="Email Address"
           v-model="password"
