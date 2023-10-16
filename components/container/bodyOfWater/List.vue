@@ -24,17 +24,17 @@
           @click="toggleAddCustomerModal"
           class="rounded-xl bg-[#0291BF] text-white"
         />
-        <ModalsBodiesOfWaterBodyOfWaterListModal
-          v-if="bodyOfWaterListModal"
-          :toggleBodyOfWaterListModal="closeBodyOfWaterModal"
+        <ModalsBodiesOfWaterBodyOfWaterList
+          v-if="BodyOfWaterList"
+          :toggleBodyOfWaterList="closeBodyOfWaterModal"
           :customerId="customerId"
         />
-        <ModalsCustomerCreateCustomerModal
+        <ModalsCustomerCreateCustomer
           v-if="addCustomerModal"
           :toggleAddCustomerModal="closeModal"
           :customer="userProfile"
           :profile="true"
-        ></ModalsCustomerCreateCustomerModal>
+        ></ModalsCustomerCreateCustomer>
       </div>
     </div>
   </section>
@@ -54,7 +54,7 @@ const props = defineProps({
 const userStore = useUserStore();
 const customerStore = useCustomerStore();
 
-const bodyOfWaterListModal = ref(false);
+const BodyOfWaterList = ref(false);
 const addCustomerModal = ref(false);
 
 const user = computed(() => userStore.getCurrentUser);
@@ -62,11 +62,11 @@ const userProfile = computed(() =>
   customerStore.getCustomerById(user.value.id)
 );
 
-const toggleAddBodyOfListModal = () => (bodyOfWaterListModal.value = true);
+const toggleAddBodyOfListModal = () => (BodyOfWaterList.value = true);
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 
 const closeBodyOfWaterModal = ({ add, update, view }) => {
-  bodyOfWaterListModal.value = false;
+  BodyOfWaterList.value = false;
 
   if (add) {
     toggleAddBodyOfWaterModal();

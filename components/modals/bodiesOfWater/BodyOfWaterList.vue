@@ -1,6 +1,6 @@
 <template>
   <div
-    @click="toggleBodyOfWaterListModal({ show: false })"
+    @click="toggleBodyOfWaterList({ show: false })"
     class="flex-center fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-[#000000da]"
   >
     <div
@@ -51,7 +51,7 @@ const bodyOfWaterStore = useBodyOfWaterStore();
 const bodiesOfWater = ref([]);
 
 const props = defineProps({
-  toggleBodyOfWaterListModal: Function,
+  toggleBodyOfWaterList: Function,
   customerId: Number,
 });
 

@@ -21,7 +21,7 @@
         @keyup="(value) => handleSearchQuote(value)"
       ></BaseSearchBar>
     </div>
-    <ModalsJobsCreateQuotationModal
+    <ModalsJobsCreateQuotation
       v-if="showQuotationModal"
       :customerDetails="customerDetails"
       :technician="technician"
@@ -31,7 +31,7 @@
       :newJobPayload="job"
       :readOnly="readOnly"
       :toggleJobQuoteModal="closeModal"
-    ></ModalsJobsCreateQuotationModal>
+    ></ModalsJobsCreateQuotation>
     <div v-if="quoteCount === 0" class="flex">
       <h3 class="heading__h3">No quotes</h3>
     </div>

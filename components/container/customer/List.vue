@@ -13,11 +13,11 @@
           @click="toggleAddCustomerModal"
         ></BaseAddButton>
       </div>
-      <ModalsCustomerCreateCustomerModal
+      <ModalsCustomerCreateCustomer
         v-if="addCustomerModal"
         :toggleAddCustomerModal="closeModal"
         :customer="customer"
-      ></ModalsCustomerCreateCustomerModal>
+      ></ModalsCustomerCreateCustomer>
     </div>
     <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
       <div class="flex-between gap-6">

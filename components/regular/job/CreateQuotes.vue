@@ -4,7 +4,7 @@
       <font-awesome-icon icon="arrow-left" />
       <span class="hidden sm:flex span__element">Back</span>
     </div>
-    <ModalsJobsCreateQuotationModal
+    <ModalsJobsCreateQuotation
       v-if="showQuotationModal"
       :customerDetails="customerDetails"
       :selectedProducts="selectedProducts"
@@ -14,7 +14,7 @@
       :newJobPayload="newJobPayload"
       :toggleJobQuoteModal="toggleJobQuoteModal"
       :createJob="createJob"
-    ></ModalsJobsCreateQuotationModal>
+    ></ModalsJobsCreateQuotation>
     <div class="w-full flex flex-col gap-5 lg:gap-0 py-3 lg:py-5">
       <div
         class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px] border-b dark:border-0 pb-5"

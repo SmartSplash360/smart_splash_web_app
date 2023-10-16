@@ -150,10 +150,12 @@ const { toggleAddCustomerModal, customer, profile } = defineProps([
   "profile",
 ]);
 
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 const store = useCustomerStore();
-
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
 const name = ref("");
 const surname = ref("");
@@ -178,27 +180,37 @@ onMounted(() => {
 });
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
+  errorName.value = useRequired({
+    fieldname: "name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangeSurname = () => {
-  errorSurname.value = surname.value ? "" : "The surname field is required";
+  errorSurname.value = useRequired({
+    fieldname: "surname",
+    field: surname.value,
+    error: errorSurname.value,
+  });
 };
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
 };
 const handleChangePhoneNumber = () => {
-  errorPhoneNumber.value = phoneNumber.value
-    ? !phoneNumber.value.match(phoneNumberRegex)
-      ? "Please provide a valid phone number"
-      : ""
-    : "The phone number field is required";
+  errorPhoneNumber.value = useValidatePhoneNumber({
+    phoneNumber: phoneNumber.value,
+    error: errorPhoneNumber.value,
+  });
 };
 const handleChangePassword = () => {
-  errorPassword.value = !password.value ? "Please provide a password" : "";
+  errorPassword.value = useRequired({
+    fieldname: "password",
+    field: password.value,
+    error: errorPassword.value,
+  });
 };
 const handleChangePasswordMatching = () => {
   errorPassword.value = passwordConfirmation.value

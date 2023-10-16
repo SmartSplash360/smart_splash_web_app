@@ -12,24 +12,6 @@
       </h2>
 
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <!-- <div class="flex w-full flex-col gap-3">
-          <label class="span__element" for="alertType"> Alert Type* </label>
-          <Dropdown
-            v-model="alertTypeId"
-            :options="alertTypes"
-            optionLabel="name"
-            optionValue="id"
-            placeholder="Select an alert type"
-            class="md:w-14rem w-full dark:bg-[#1B2028]"
-            :class="errorAlertTypeId && 'border-red-300'"
-            @change="handleChangeAlertType"
-          />
-          <p class="min-h-[20px]">
-            <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{
-              errorAlertTypeId
-            }}</span>
-          </p>
-        </div> -->
         <div class="flex w-full flex-col gap-3">
           <label class="span__element" for="bodyOfWater">
             Body of Water*
@@ -181,6 +163,8 @@ import { useAlertStore } from "~/stores/alert";
 import { useUserStore } from "~/stores/users";
 import { sub } from "date-fns";
 
+const { useRequired, useValidateTextArea } = useValidation();
+
 const alertTypeStore = useAlertTypeStore();
 const technicianStore = useTechnicianStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
@@ -250,39 +234,41 @@ onMounted(async () => {
     status.value = alert.status;
     priority.value = alert.priority;
     notes.value = alert.notes;
-    // alertTypeId.value = alert.alert_type_id;
     bodyOfWaterId.value = alert.body_of_water_id;
     technicianId.value = alert.technician_id;
     subject.value = alert.subject;
   }
 });
 
-const handleChangeAlertType = () => {
-  // errorAlertTypeId.value = alertTypeId.value ? "" : "Please select alert type";
-};
 const handleChangeBodyOfWater = () => {
-  errorBodyOfWaterId.value = bodyOfWaterId.value
-    ? ""
-    : "Please select body of water";
+  errorBodyOfWaterId.value = useRequired({
+    fieldname: "Body of water",
+    field: bodyOfWaterId.value,
+    error: errorBodyOfWaterId.value,
+  });
 };
 const handleChangeTechnician = () => {
-  errorTechnicianId.value = technicianId.value
-    ? ""
-    : "Please select technician";
+  errorTechnicianId.value = useRequired({
+    fieldname: "Technician",
+    field: technicianId.value,
+    error: errorTechnicianId.value,
+  });
 };
 const handleChangeSubject = () => {
-  errorSubject.value = subject.value ? "" : "Please Add a subject";
+  errorSubject.value = useRequired({
+    fieldname: "Subject",
+    field: subject.value,
+    error: errorSubject.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "Please add a note";
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
 };
 
 const validateForm = () => {
-  // handleChangeAlertType();
   handleChangeBodyOfWater();
   handleChangeTechnician();
   handleChangeNote();
@@ -307,7 +293,6 @@ const createAlert = async () => {
           .slice(0, 19)
           .replace("T", " "),
         notes: notes.value,
-        // alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
         subject: subject.value,
@@ -340,7 +325,6 @@ const updateAlert = async () => {
         status: status.value,
         priority: priority.value,
         notes: notes.value,
-        // alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
         subject: subject.value,

@@ -96,7 +96,7 @@
             }}</span>
           </p>
         </div>
-        <!-- <div class="hidden w-full flex-col gap-2">
+        <div class="hidden w-full flex-col gap-2">
           <label class="text-sm" for="lat"> End Time* </label>
           <Calendar
             id="calendar-timeonly"
@@ -112,7 +112,7 @@
               errorEndTime
             }}</span>
           </p>
-        </div> -->
+        </div>
       </div>
       <div class="flex flex-col justify-between items-center gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
@@ -217,6 +217,8 @@ const props = defineProps({
   technicianId: String | Number,
 });
 
+const { useRequired, useValidateTextArea } = useValidation();
+
 const poolId = ref();
 const customerId = ref();
 const startTime = ref();
@@ -289,7 +291,12 @@ onMounted(async () => {
 });
 
 const handleChangeCustomer = () => {
-  errorCustomer.value = customerId.value ? "" : "Please select a customer";
+  errorCustomer.value = useRequired({
+    fieldname: "Customer",
+    field: customerId.value,
+    error: errorCustomer.value,
+  });
+
   if (customerId.value) {
     let customer = customerStore.getCustomerById(customerId.value);
     bodiesOfWater.value = customer.bodies_of_water;
@@ -297,10 +304,18 @@ const handleChangeCustomer = () => {
   }
 };
 const handleChangePool = () => {
-  errorPool.value = poolId.value ? "" : "Please select a body of water";
+  errorPool.value = useRequired({
+    fieldname: "Body of Water",
+    field: poolId.value,
+    error: errorPool.value,
+  });
 };
 const handleChangeStartDate = () => {
-  errorStartDate.value = dateTime.value ? "" : "Please enter a starting date";
+  errorStartDate.value = useRequired({
+    fieldname: "Starting Date",
+    field: dateTime.value,
+    error: errorStartDate.value,
+  });
 };
 const handleChangeStartTime = () => {
   if (startTime.value) {
@@ -327,52 +342,54 @@ const handleChangeStartTime = () => {
   }
   errorStartTime.value = startTime.value ? "" : "Please enter a starting time";
 };
-// const handleChangeEndTime = () => {
-//   if (endTime.value) {
-//     const dateObject = new Date(endTime.value);
-//     const hours = dateObject.getHours();
-//     const minutes = dateObject.getMinutes();
+const handleChangeEndTime = () => {
+  if (endTime.value) {
+    const dateObject = new Date(endTime.value);
+    const hours = dateObject.getHours();
+    const minutes = dateObject.getMinutes();
 
-//     endingTimeComputed.value = `${hours
-//       .toString()
-//       .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+    endingTimeComputed.value = `${hours
+      .toString()
+      .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 
-//     // respect the G.I format four trailing 0
-//     const parts = endingTimeComputed.value.split(":");
-//     if (parts.length === 2) {
-//       const hour = parseInt(parts[0], 10);
-//       const minute = parseInt(parts[1], 10);
+    // respect the G.I format four trailing 0
+    const parts = endingTimeComputed.value.split(":");
+    if (parts.length === 2) {
+      const hour = parseInt(parts[0], 10);
+      const minute = parseInt(parts[1], 10);
 
-//       const formattedHour = hour.toString();
-//       const formattedMinute = minute.toString().padStart(2, "0");
+      const formattedHour = hour.toString();
+      const formattedMinute = minute.toString().padStart(2, "0");
 
-//       endingTimeComputed.value = `${formattedHour}:${formattedMinute}`;
-//     }
-//   } else {
-//     errorEndTime.value = endTime.value ? "" : "Please enter an ending time";
-//     return;
-//   }
+      endingTimeComputed.value = `${formattedHour}:${formattedMinute}`;
+    }
+  } else {
+    errorEndTime.value = endTime.value ? "" : "Please enter an ending time";
+    return;
+  }
 
-//   // errorEndTime.value = compareTimes(startTime.value, endTime.value)
-//   //   ? ""
-//   //   : "the end time must be greater than start time";
-// };
+  // errorEndTime.value = compareTimes(startTime.value, endTime.value)
+  //   ? ""
+  //   : "the end time must be greater than start time";
+};
 const handleChangeStatus = () => {
-  errorStatus.value = status.value ? "" : "Please enter a ending date";
+  errorStatus.value = useRequired({
+    fieldname: "Status",
+    field: status.value,
+    error: errorStatus.value,
+  });
 };
 const handleChangeDescription = () => {
-  errorDescription.value = description.value
-    ? description.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "Please add a description";
+  errorDescription.value = useValidateTextArea({
+    field: description.value,
+    error: errorDescription.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = technical_notes.value
-    ? technical_notes.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "Please add a note";
+  errorNotes.value = useValidateTextArea({
+    field: technical_notes.value,
+    error: errorNotes.value,
+  });
 };
 
 // function compareTimes(time1, time2) {
@@ -415,17 +432,6 @@ const updateJob = async () => {
         pool_id: poolId.value,
         technician_id: props.technicianId,
         customer_id: customerId.value,
-        // start_time: startingTimeComputed.value,
-        // end_date: endTime.value,
-        // start_date: `${dateTime.value
-        //   ?.getDate()
-        //   .toString()
-        //   .padStart(2, "0")}-${(dateTime.value.getMonth() + 1)
-        //   .toString()
-        //   .padStart(2, "0")}-${dateTime.value
-        //   .getDate()
-        //   .toString()
-        //   .padStart(2, "0")}`,
         status: status.value,
         description: description.value,
         technical_notes: technical_notes.value,
