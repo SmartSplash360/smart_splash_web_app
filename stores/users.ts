@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {useTenantStore} from "~/stores/tenants";
+
 import axios from "axios";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';

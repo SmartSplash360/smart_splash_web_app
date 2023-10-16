@@ -48,11 +48,10 @@ export const useTenantStore = defineStore("tenant", {
     },
     actions: {
         async fetchTenants() {
-            console.log("Fetch Tenants")
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = `${requestUrl}/tenant`
-            console.log("URL",url)
+
             try {
                 const res = await axios.get(url);
                 this.tenants = res.data.data.data;
@@ -81,8 +80,6 @@ export const useTenantStore = defineStore("tenant", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             this.fetchTenants()
-            console.log("Payload", tenantPayload);
-            console.log("Current tenant", this.tenants)
 
             // let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `${apiUrl}/customers/${id}`
             // try {

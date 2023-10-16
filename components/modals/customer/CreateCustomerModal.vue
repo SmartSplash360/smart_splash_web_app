@@ -252,7 +252,6 @@ const updateCustomer = async () => {
         email: email.value,
         phone_number: phoneNumber.value,
       };
-      console.log(data);
 
       await store.updateCustomer(customer?.id, data);
       await store.fetchCustomers();

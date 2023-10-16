@@ -1,7 +1,6 @@
 import axios from "axios";
 import {defineStore} from "pinia";
 import {useUserStore} from "~/stores/users";
-import {useTenantStore} from "~/stores/tenants";
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -71,7 +70,7 @@ export const useJobStore = defineStore("job", {
                 return error
             }
         },
-        async fetScheduledJobsByDate(date: string) {
+        async fetchScheduledJobsByDate(date: string) {
           const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
             let url = `${apiUrl}/jobs/getScheduledJobsByDate/${date}`
@@ -117,6 +116,21 @@ export const useJobStore = defineStore("job", {
             let url = `${apiUrl}/jobActivities`
             try {
                 const res = await axios.post(url, {...payload, job_id : this.newJobId});
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        },
+        async createJobProduct(payload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = `${apiUrl}/jobProducts`
+            try {
+                const res = await axios.post(url, {...payload, job_id : this.newJobId,});
 
                 if (!res.data.success) {
                     throw new Error(res.data.message);

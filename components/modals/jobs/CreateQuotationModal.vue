@@ -246,6 +246,7 @@ const props = defineProps({
   totalPriceServices: String | Number,
   totalPriceProducts: String | Number,
   totalPriceChems: String | Number,
+  selectedProducts: Array,
   customerDetails: String | Number,
   readOnly: {
     type: Boolean,
@@ -306,7 +307,7 @@ const handleSendQuote = () => {
         life: 5000,
       });
       setTimeout(() => {
-        props.createJob(totalPrice.value, email.value);
+        props.createJob(totalPrice.value, email.value, props.selectedProducts);
       }, 3000);
     },
     reject: () => {},

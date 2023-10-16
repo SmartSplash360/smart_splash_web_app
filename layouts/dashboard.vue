@@ -26,7 +26,7 @@
 
 <script setup>
 import { useUserStore } from "~/stores/users";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+// import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import messaging from "@/plugins/firebase";
 
 const toggleSide = ref(false);

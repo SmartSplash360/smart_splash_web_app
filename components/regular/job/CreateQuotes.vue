@@ -7,6 +7,7 @@
     <ModalsJobsCreateQuotationModal
       v-if="showQuotationModal"
       :customerDetails="customerDetails"
+      :selectedProducts="selectedProducts"
       :totalPriceServices="totalPriceServices"
       :totalPriceProducts="totalPriceProducts"
       :totalPriceChems="totalPriceChems"

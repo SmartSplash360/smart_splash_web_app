@@ -232,9 +232,7 @@ async function registerUser() {
         password_confirmation: confirmPassword.value,
         role: 4,
       };
-      console.log(userPayload);
       const res = await store.register(userPayload);
-      console.log(res);
       if (res?.errorMessage) {
         toast.add({
           severity: "error",

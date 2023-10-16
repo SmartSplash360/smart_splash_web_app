@@ -63,14 +63,20 @@ const handlePreviousStep = () => {
   currentStep.value = currentStep.value - 1;
 };
 
-const createJob = async (totalPrice, quoteRecipient) => {
+const createJob = async (totalPrice, quoteRecipient, selectedProducts) => {
   try {
     const createdJob = await jobStore.createJob(newJobPayload.value);
-    selectedServices.value.forEach(async (service) => {
+    selectedServices.value?.forEach(async (service) => {
       await jobStore.createJobActivity({
         service_id: service.id,
         date: newJobPayload.value.start_date,
         description: service.description,
+      });
+    });
+    selectedProducts?.forEach(async (product) => {
+      await jobStore.createJobProduct({
+        quantity: 1,
+        product_id: product.id,
       });
     });
 

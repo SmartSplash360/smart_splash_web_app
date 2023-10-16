@@ -286,7 +286,6 @@ onMounted(async () => {
 });
 
 const onSelectedFiles = (event) => {
-  console.log(event.files[0]);
   files.value = event.files[0];
 };
 
