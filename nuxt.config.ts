@@ -50,7 +50,10 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/color-mode",
   ],
-  plugins: ["~/plugins/ckEditor", "~/plugins/firebase"],
+  plugins: [
+    "~/plugins/ckEditor",
+    // "~/plugins/firebase"
+  ],
   colorMode: {
     classSuffix: "",
   },

@@ -281,14 +281,14 @@
                     </p>
                   </div>
                 </div>
-                <div
-                  class="flex flex-col gap-4 mt-4"
-                  v-if="service.is_available === 1 && subservices.length > 0"
-                >
+                <div class="flex flex-col gap-4 mt-4">
                   <span class="span__element text-gray-500 pl-5">
                     List of subservices
                   </span>
-                  <div class="flex flex-wrap gap-3">
+                  <div
+                    v-if="service.is_available === 1 && subservices?.length > 0"
+                    class="flex flex-wrap gap-3"
+                  >
                     <div
                       v-for="subservice in subservices"
                       :key="subservice.id"

@@ -40,25 +40,24 @@ const setColorTheme = (newTheme) => {
   location.reload();
 };
 
-const activate = async () => {
-  const token = await getToken(messaging, {
-    vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q",
-  });
+// const activate = async () => {
+//   const token = await getToken(messaging, {
+//     vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q",
+//   });
 
-  if (token) {
-    // console.log(token);
-  } else {
-    // request
-  }
-};
+//   if (token) {
+// console.log(token);
+//   } else {
+// request
+//   }
+// };
 
-onMounted(() => {
-  const messaging = getMessaging();
-
-  onMessage(messaging, (payload) => {
-    // console.log("Message on Client", payload);
-  });
-});
+// onMounted(() => {
+// const messaging = getMessaging();
+// onMessage(messaging, (payload) => {
+//   // console.log("Message on Client", payload);
+// });
+// });
 </script>
 <style>
 .page-enter-active,
