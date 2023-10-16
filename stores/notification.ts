@@ -1,7 +1,6 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
-import { useTenantStore } from "~/stores/tenants";
 import soundUrl from '~/assets/sound/notification.wav'
 
 const play = (frequency = 300, duration = 1e3) => {
