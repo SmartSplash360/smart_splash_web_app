@@ -150,12 +150,12 @@ const { toggleAddCustomerModal, customer, profile } = defineProps([
   "profile",
 ]);
 
+const store = useCustomerStore();
 const {
   useRequired,
   useValidateEmail,
   useValidatePhoneNumber,
 } = useValidation();
-const store = useCustomerStore();
 
 const name = ref("");
 const surname = ref("");

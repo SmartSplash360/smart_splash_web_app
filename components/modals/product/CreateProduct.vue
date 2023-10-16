@@ -131,6 +131,16 @@ const errorNotes = ref("");
 const errorDescription = ref("");
 const errorPrice = ref("");
 
+onMounted(() => {
+  if (product) {
+    isAvailable.value = product.is_available === 1;
+    notes.value = product.notes;
+    name.value = product.name;
+    description.value = product.description;
+    price.value = product.price;
+  }
+});
+
 const handleChangeName = () => {
   errorName.value = useRequired({
     fieldname: "Name",
@@ -157,16 +167,6 @@ const handleChangeNote = () => {
     error: errorNotes.value,
   });
 };
-
-onMounted(() => {
-  if (product) {
-    isAvailable.value = product.is_available === 1;
-    notes.value = product.notes;
-    name.value = product.name;
-    description.value = product.description;
-    price.value = product.price;
-  }
-});
 
 const validateForm = () => {
   handleChangeName();

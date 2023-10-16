@@ -114,6 +114,12 @@ const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
+
 const customerId = route.query.customerId;
 
 const name = ref("");
@@ -137,24 +143,30 @@ onMounted(async () => {
 });
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
+  errorName.value = useRequired({
+    fieldname: "name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangeSurname = () => {
-  errorSurname.value = surname.value ? "" : "The surname field is required";
+  errorSurname.value = useRequired({
+    fieldname: "surname",
+    field: surname.value,
+    error: errorSurname.value,
+  });
 };
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
 };
 const handleChangePhoneNumber = () => {
-  errorPhoneNumber.value = phoneNumber.value
-    ? !phoneNumber.value.match(phoneNumberRegex)
-      ? "Please provide a valid phone number"
-      : ""
-    : "The phone number field is required";
+  errorPhoneNumber.value = useValidatePhoneNumber({
+    phoneNumber: phoneNumber.value,
+    error: errorPhoneNumber.value,
+  });
 };
 const validateForm = () => {
   handleChangeName();

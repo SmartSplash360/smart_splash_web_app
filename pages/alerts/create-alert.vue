@@ -12,29 +12,6 @@
       <div class="flex w-full flex-col gap-3">
         <label
           class="span__element text-gray-600 dark:text-gray-200"
-          for="alertType"
-        >
-          Alert Type*
-        </label>
-        <Dropdown
-          v-model="alertTypeId"
-          :options="alertTypes"
-          optionLabel="name"
-          optionValue="id"
-          placeholder="Select an alert type"
-          class="md:w-14rem w-full dark:bg-[#1B2028]"
-          :class="errorAlertTypeId && 'border-red-300'"
-          @change="handleChangeAlertType"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{
-            errorAlertTypeId
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
           for="bodyOfWater"
         >
           Body of Water*
@@ -211,6 +188,8 @@ definePageMeta({
   middleware: ["auth", "auto-theme"],
 });
 
+const { useRequired, useValidateTextArea } = useValidation();
+
 const alertTypeStore = useAlertTypeStore();
 const technicianStore = useTechnicianStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
@@ -269,32 +248,35 @@ onMounted(async () => {
   await alertTypeStore.fetchAlertTypes();
 });
 
-const handleChangeAlertType = () => {
-  errorAlertTypeId.value = alertTypeId.value ? "" : "Please select alert type";
-};
 const handleChangeBodyOfWater = () => {
-  errorBodyOfWaterId.value = bodyOfWaterId.value
-    ? ""
-    : "Please select body of water";
+  errorBodyOfWaterId.value = useRequired({
+    fieldname: "Body of water",
+    field: bodyOfWaterId.value,
+    error: errorBodyOfWaterId.value,
+  });
 };
 const handleChangeTechnician = () => {
-  errorTechnicianId.value = technicianId.value
-    ? ""
-    : "Please select technician";
+  errorTechnicianId.value = useRequired({
+    fieldname: "Technician",
+    field: technicianId.value,
+    error: errorTechnicianId.value,
+  });
 };
 const handleChangeSubject = () => {
-  errorSubject.value = subject.value ? "" : "Please Add a subject";
+  errorSubject.value = useRequired({
+    fieldname: "Subject",
+    field: subject.value,
+    error: errorSubject.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "Please add a note";
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
 };
 
 const validateForm = () => {
-  handleChangeAlertType();
   handleChangeBodyOfWater();
   handleChangeTechnician();
   handleChangeNote();

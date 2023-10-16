@@ -86,10 +86,12 @@ definePageMeta({
   middleware: ["auth", "auto-theme"],
 });
 
-const serviceStore = useServiceStore();
 const router = useRouter();
 const route = useRoute();
 const toast = useToast();
+const serviceStore = useServiceStore();
+const { useRequired, useValidateTextArea } = useValidation();
+
 const serviceId = route.query.serviceId;
 
 const isAvailable = ref(true);
@@ -115,24 +117,30 @@ onMounted(async () => {
 });
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
-};
-const handleChangeDescription = () => {
-  errorDescription.value = description.value
-    ? description.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "The description field is required";
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangePrice = () => {
-  errorPrice.value = price.value ? "" : "The price field is required";
+  errorPrice.value = useRequired({
+    fieldname: "Price",
+    field: price.value,
+    error: errorPrice.value,
+  });
+};
+const handleChangeDescription = () => {
+  errorDescription.value = useValidateTextArea({
+    field: description.value,
+    error: errorDescription.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please provide between 10 and 300 characters for notes"
-      : ""
-    : "The note field is required";
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
 };
 const validateForm = () => {
   handleChangeName();

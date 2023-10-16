@@ -158,6 +158,7 @@ const { toggleAddServiceModal, service } = defineProps([
 ]);
 
 const serviceStore = useServiceStore();
+const { useRequired, useValidateTextArea } = useValidation();
 
 const isAvailable = ref(true);
 const notes = ref("");
@@ -185,29 +186,37 @@ onMounted(() => {
 });
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
-};
-const handleChangeDescription = () => {
-  errorDescription.value = description.value
-    ? description.value.length > 200
-      ? "Please enter between 10 and 200 characters"
-      : ""
-    : "The description field is required";
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangePrice = () => {
-  errorPrice.value = price.value ? "" : "The price field is required";
+  errorPrice.value = useRequired({
+    fieldname: "Price",
+    field: price.value,
+    error: errorPrice.value,
+  });
+};
+const handleChangeDescription = () => {
+  errorDescription.value = useValidateTextArea({
+    field: description.value,
+    error: errorDescription.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 200
-      ? "Please provide between 10 and 200 characters for notes"
-      : ""
-    : "The note field is required";
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
 };
 const handleChangeSubservice = () => {
-  errorSubservice.value = subservice.value
-    ? ""
-    : "The subservice name field is required";
+  errorSubservice.value = useRequired({
+    fieldname: "Subservices",
+    field: subservice.value,
+    error: errorSubservice.value,
+  });
 };
 
 const validateForm = () => {
@@ -241,7 +250,6 @@ const createService = async () => {
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
-        // quantity: "1",
       });
 
       subservices.value?.forEach(async (subservice) => {
@@ -254,7 +262,7 @@ const createService = async () => {
         location.reload();
       }, 2000);
     } catch (e) {
-      // toggleAddServiceModal({ error: e });
+      toggleAddServiceModal({ error: e });
     }
   }
 };

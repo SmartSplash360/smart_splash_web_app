@@ -125,20 +125,23 @@ const props = defineProps({
   user: Object,
 });
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
 const toast = useToast();
 const router = useRouter();
 
 const store = useTenantStore();
-const customerStore = useCustomerStore();
-const alertStore = useAlertStore();
 const leadStore = useLeadStore();
-const technicianStore = useTechnicianStore();
-const productStore = useProductStore();
+const alertStore = useAlertStore();
 const serviceStore = useServiceStore();
+const productStore = useProductStore();
+const customerStore = useCustomerStore();
 const templateStore = useTemplateStore();
+const technicianStore = useTechnicianStore();
+
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 
 const email = ref("");
 const name = ref("");
@@ -153,27 +156,38 @@ const errorAddress = ref("");
 const errorWebsite = ref("");
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangeAddress = () => {
-  errorAddress.value = address.value ? "" : "The address field is required";
-};
-const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
-};
-const handleChangePhoneNumber = () => {
-  errorPhoneNumber.value = phone.value
-    ? !phone.value.match(phoneNumberRegex)
-      ? "Please provide a valid phone number"
-      : ""
-    : "The phone number field is required";
+  errorAddress.value = useRequired({
+    fieldname: "Address",
+    field: address.value,
+    error: errorAddress.value,
+  });
 };
 const handleChangeWebsite = () => {
-  errorWebsite.value = website.value ? "" : "The webiste field is required";
+  errorWebsite.value = useRequired({
+    fieldname: "Website",
+    field: website.value,
+    error: errorWebsite.value,
+  });
+};
+
+const handleChangeEmail = () => {
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
+};
+const handleChangePhoneNumber = () => {
+  errorPhoneNumber.value = useValidatePhoneNumber({
+    phoneNumber: phone.value,
+    error: errorPhoneNumber,
+  });
 };
 
 const validateForm = () => {
@@ -233,7 +247,6 @@ async function registerTenant() {
         detail: "Tenant registration failed",
         life: 3000,
       });
-      throw new Error(error.message);
     }
   }
 }

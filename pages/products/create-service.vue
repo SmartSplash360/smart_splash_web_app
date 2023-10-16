@@ -83,6 +83,46 @@
       <label class="span__element" for="notes"> Is Available? </label>
       <InputSwitch v-model="isAvailable" />
     </div>
+    <div class="mt-10 flex flex-col gap-2 max-h-[150px] overflow-y-auto">
+      <h4 class="heading__h4 text-gray-600">List of subservices</h4>
+      <ul class="flex flex-wrap gap-2">
+        <li
+          class="max-w-fit flex gap-3 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm"
+          v-for="suServ in subservices"
+          :key="suServ"
+        >
+          <font-awesome-icon icon="toolbox" class="text-gray-500" />
+          <span class="span__element">
+            {{ suServ }}
+          </span>
+          <font-awesome-icon
+            icon="circle-xmark"
+            class="span__element cursor-pointer text-red-500"
+            @click="handleRemoveSubservice(suServ)"
+          />
+        </li>
+      </ul>
+    </div>
+    <div
+      class="flex gap-3 items-center cursor-pointer"
+      @click="showSubserviceInput = !showSubserviceInput"
+    >
+      <font-awesome-icon
+        icon="circle-plus"
+        class="text-2xl text-[#0291BF] hover:scale-110 duration-150"
+      />
+      <span class="span__element text-sm">Add subservice</span>
+    </div>
+    <div v-if="showSubserviceInput" class="flex flex-col gap-1">
+      <InputText
+        type="text"
+        v-model="subservice"
+        class="w-full dark:bg-[#1B2028] border-0 border-b border-gray-300 px-0 dark:text-white focus:outline-0"
+        @blur="handleChangeSubservice"
+        @keyup.enter="handleAddSubservice"
+      >
+      </InputText>
+    </div>
     <div class="flex justify-end gap-5">
       <Button
         label="Cancel"
@@ -108,40 +148,58 @@ definePageMeta({
   middleware: ["auth", "auto-theme"],
 });
 
-const serviceStore = useServiceStore();
 const router = useRouter();
 const toast = useToast();
+const serviceStore = useServiceStore();
+const { useRequired, useValidateTextArea } = useValidation();
 
 const isAvailable = ref(true);
 const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.0);
+const subservice = ref("");
+const subservices = ref([]);
+const showSubserviceInput = ref(false);
 
 const errorName = ref("");
 const errorNotes = ref("");
 const errorDescription = ref("");
 const errorPrice = ref("");
+const errorSubservice = ref("");
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
-};
-const handleChangeDescription = () => {
-  errorDescription.value = description.value
-    ? description.value.length > 300
-      ? "Please enter between 10 and 300 characters"
-      : ""
-    : "The description field is required";
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangePrice = () => {
-  errorPrice.value = price.value ? "" : "The price field is required";
+  errorPrice.value = useRequired({
+    fieldname: "Price",
+    field: price.value,
+    error: errorPrice.value,
+  });
+};
+const handleChangeDescription = () => {
+  errorDescription.value = useValidateTextArea({
+    field: description.value,
+    error: errorDescription.value,
+  });
 };
 const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 300
-      ? "Please provide between 10 and 300 characters for notes"
-      : ""
-    : "The note field is required";
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
+};
+const handleChangeSubservice = () => {
+  errorSubservice.value = useRequired({
+    fieldname: "Subservices",
+    field: subservice.value,
+    error: errorSubservice.value,
+  });
 };
 const validateForm = () => {
   handleChangeName();
