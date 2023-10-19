@@ -1,6 +1,3 @@
-
-
-
 import {defineStore} from "pinia";
 import axios from "axios";
 import {useUserStore} from "~/stores/users";
