@@ -25,11 +25,15 @@ export const useTenantStore = defineStore("tenant", {
     state: () => ({
         loggedIn: false,
         currentTenant: null,
+        currentTenantId : null,
         jwt: "",
     }),
     getters: {
         getCurrentTenant(state) {
             return state.currentTenant;
+        },
+        getCurrentTenantId(state) {
+            return state.currentTenantId
         },
         getLoggedIn(state) {
             return state.loggedIn;
@@ -43,6 +47,7 @@ export const useTenantStore = defineStore("tenant", {
             try {
                 const res = await axios.get(url);
                 this.currentTenant = res.data.data;
+                this.currentTenantId = res.data.data.id
                 if (!res.data.success) {
                     throw new Error(res.data.message);
                 }
@@ -69,9 +74,7 @@ export const useTenantStore = defineStore("tenant", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
 
-            const tenant = this.currentTenant;
-
-            let url = `${requestUrl}/tenant/${tenant.id}`
+            let url = `${requestUrl}/tenant/${this.currentTenantId}`
             try {
                 const res = await axios.post(url, tenantPayload);
                 console.log(res)
