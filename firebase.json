@@ -1,0 +1,13 @@
+{
+  "functions": { "source": ".output/server" },
+  "hosting": [
+    {
+      "site": "smart-splash-360-391911",
+      "public": ".output/public",
+      "cleanUrls": true,
+      "rewrites": [{ "source": "**", "function": "server" }]
+    }
+  ]
+}
+
+ 

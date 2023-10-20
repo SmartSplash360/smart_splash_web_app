@@ -2,6 +2,8 @@ import {defineStore} from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
 
+const apiUrl = 'http://smartsplash360.henocknkoy.site'
+
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 // axios.defaults.withCredentials = true;
@@ -39,7 +41,7 @@ export const useTenantStore = defineStore("tenant", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/tenant", tenantPayload);
+                const res = await axios.post(`${apiUrl}/api/v1/tenant`, tenantPayload);
                 this.currentTenant = res.data;
                 this.currentTenantDomain = res.data.data.domain
                 this.registerFirstUser()

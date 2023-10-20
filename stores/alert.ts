@@ -1,99 +1,111 @@
-
-
-
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 import axios from "axios";
-import {useUserStore} from "~/stores/users";
-import {useTenantStore} from "~/stores/tenants";
+import { useUserStore } from "~/stores/users";
+import { useTenantStore } from "~/stores/tenants";
 
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['Accept'] = 'application/json';
-
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Accept"] = "application/json";
 
 export const useAlertStore = defineStore("alert", {
-    persist: {
-        storage: persistedState.localStorage,
+  persist: {
+    storage: persistedState.localStorage,
+  },
+  state: () => ({
+    alerts: [],
+  }),
+  getters: {
+    getAlerts(state) {
+      return state.alerts;
     },
-    state: () => ({
-        alerts: [],
-    }),
-    getters: {
-        getAlerts(state) {
-            return state.alerts;
-        }
+  },
+  actions: {
+    async fetchAlerts() {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      let url = useTenantStore().getCurrentTenantDomain
+        ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`
+        : `http://smartsplash360.henocknkoy.site/api/v1/alerts`;
+
+      try {
+        const res = await axios.get(url);
+        this.alerts = res.data.data.data;
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
     },
-    actions: {
-        async fetchAlerts() {
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts` : `http://localhost:8000/api/v1/alerts`
-            
-            try {
-                const res = await axios.get(url);
-                this.alerts = res.data.data.data;
-            } catch (error) {
-                console.log(error);
-                return error
-            }
-        },
-        async fetchAlert(id: number | string) {
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${id}` : `http://localhost:8000/api/v1/alerts/${id}`
-            try {
-                const res = await axios.get(url);
-                return res.data.data
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        },
-        async createAlert(alertPayload: any) {
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts` : `http://localhost:8000/api/v1/alerts`
-            try {
-                const res = await axios.post(url, alertPayload);
+    async fetchAlert(id: number | string) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      let url = useTenantStore().getCurrentTenantDomain
+        ? `http://${
+            useTenantStore().getCurrentTenantDomain
+          }:8000/api/v1/alerts/${id}`
+        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${id}`;
+      try {
+        const res = await axios.get(url);
+        return res.data.data;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+    async createAlert(alertPayload: any) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      let url = useTenantStore().getCurrentTenantDomain
+        ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`
+        : `http://smartsplash360.henocknkoy.site/api/v1/alerts`;
+      try {
+        const res = await axios.post(url, alertPayload);
 
-                if (!res.data.success) {
-                    throw new Error(res.data.message);
-                }
-            } catch (error) {
-                console.log(error)
-                throw error
-            }
-        },
-        async updateAlert(alertId: number | string, alertPayload: any) {
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}` : `http://localhost:8000/api/v1/alerts/${alertId}`
-            try {
-                const res = await axios.post(url, alertPayload);
-
-                if (!res.data.success) {
-                    throw new Error(res.data.message);
-                }
-            } catch (error) {
-                console.log(error)
-                throw error
-            }
-        },
-        async deleteAlert(alertId: number | string){
-            const jwt = useUserStore().getJwt;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts/${alertId}` : `http://localhost:8000/api/v1/alerts/${alertId}`
-            try {
-                const res = await axios.delete(url);
-
-                if (!res.data.success) {
-                    throw new Error(res.data.message);
-                }
-
-                return res.data
-            } catch (error) {
-                console.log(error)
-                throw error
-            }
+        if (!res.data.success) {
+          throw new Error(res.data.message);
         }
-    }
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+    async updateAlert(alertId: number | string, alertPayload: any) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      let url = useTenantStore().getCurrentTenantDomain
+        ? `http://${
+            useTenantStore().getCurrentTenantDomain
+          }:8000/api/v1/alerts/${alertId}`
+        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${alertId}`;
+      try {
+        const res = await axios.post(url, alertPayload);
+
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+    async deleteAlert(alertId: number | string) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      let url = useTenantStore().getCurrentTenantDomain
+        ? `http://${
+            useTenantStore().getCurrentTenantDomain
+          }:8000/api/v1/alerts/${alertId}`
+        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${alertId}`;
+      try {
+        const res = await axios.delete(url);
+
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+  },
 });

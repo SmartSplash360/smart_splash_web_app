@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: "page", mode: "out-in" },
     baseURL: baseUrl,
     head: {
       link: [
@@ -34,8 +34,8 @@ export default defineNuxtConfig({
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
     "@vueup/vue-quill/dist/vue-quill.snow.css",
-    '@/assets/css/ckeditor-custom.css',
-    '@/assets/css/quil-custom.css',
+    "@/assets/css/ckeditor-custom.css",
+    "@/assets/css/quil-custom.css",
   ],
   modules: [
     "@nuxtjs/tailwindcss",
@@ -59,4 +59,7 @@ export default defineNuxtConfig({
     transpile: ["primevue", "@vuepic/vue-datepicker"],
   },
   ssr: false,
+  nitro: {
+    serveStatic: true,
+  },
 });

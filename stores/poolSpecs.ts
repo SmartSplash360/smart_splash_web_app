@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
-import {useTenantStore} from "~/stores/tenants";
+import { useTenantStore } from "~/stores/tenants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -14,7 +14,11 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs` : `http://localhost:8000/api/v1/poolSpecs`
+        let url = useTenantStore().getCurrentTenantDomain
+          ? `http://${
+              useTenantStore().getCurrentTenantDomain
+            }:8000/api/v1/poolSpecs`
+          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs`;
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -26,7 +30,11 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
+        let url = useTenantStore().getCurrentTenantDomain
+          ? `http://${
+              useTenantStore().getCurrentTenantDomain
+            }:8000/api/v1/poolSpecs/${id}`
+          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -38,7 +46,11 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs` : `http://localhost:8000/api/v1/poolSpecs`
+        let url = useTenantStore().getCurrentTenantDomain
+          ? `http://${
+              useTenantStore().getCurrentTenantDomain
+            }:8000/api/v1/poolSpecs`
+          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs`;
         const res = await axios.post(url, poolSpecsPayload);
 
         if (!res.data.success) {
@@ -52,8 +64,12 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
-        const res = await axios.post(url ,  poolSpecsPayload);
+        let url = useTenantStore().getCurrentTenantDomain
+          ? `http://${
+              useTenantStore().getCurrentTenantDomain
+            }:8000/api/v1/poolSpecs/${id}`
+          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
+        const res = await axios.post(url, poolSpecsPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -66,7 +82,11 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/poolSpecs/${id}` : `http://localhost:8000/api/v1/poolSpecs/${id}`
+        let url = useTenantStore().getCurrentTenantDomain
+          ? `http://${
+              useTenantStore().getCurrentTenantDomain
+            }:8000/api/v1/poolSpecs/${id}`
+          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
         const res = await axios.delete(url);
 
         if (!res.data.success) {
