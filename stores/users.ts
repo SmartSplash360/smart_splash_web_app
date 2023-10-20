@@ -27,13 +27,6 @@ export const useUserStore = defineStore("user", {
         jwt: "",
         users: [],
         userDefinedTheme: true,
-        firstUserTenant : {
-            email: '',
-            password: '',
-            password_confirmation: '',
-            name: '',
-            surname: '',
-        }
     }),
     getters: {
         getUsers(state) {
@@ -41,9 +34,6 @@ export const useUserStore = defineStore("user", {
         },
         getCurrentUser(state) {
             return state.currentUser;
-        },
-        getFirstUserTenant(state) {
-            return state.firstUserTenant;
         },
         getJwt(state) {
             return state.jwt;

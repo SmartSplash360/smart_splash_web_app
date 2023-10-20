@@ -88,6 +88,7 @@ import { useServiceStore } from "~/stores/services";
 import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
+import { useTenantStore } from "~/stores/tenants";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
@@ -99,6 +100,7 @@ const serviceStore = useServiceStore();
 const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
+const tenantStore = useTenantStore();
 
 const router = useRouter();
 
@@ -131,6 +133,7 @@ async function login() {
 
   try {
     const user = await store.login(email.value, password.value);
+    await tenantStore.fetchCurrentTenant();
     await customerStore.fetchCustomers();
     await alertStore.fetchAlerts();
     await leadStore.fetchLeads();

@@ -31,20 +31,32 @@ export const useTenantStore = defineStore("tenant", {
         getCurrentTenant(state) {
             return state.currentTenant;
         },
-        getJwt(state) {
-            return state.jwt;
-        },
         getLoggedIn(state) {
             return state.loggedIn;
         },
     },
     actions: {
+        async fetchCurrentTenant() {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = `${apiUrl}/tenant/getCurrent`;
+            try {
+                const res = await axios.get(url);
+                this.currentTenant = res.data.data;
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+                return this.currentTenant;
+
+            } catch (error) {
+               throw new Error("An error")
+            }
+        },
         async register(tenantPayload: {}) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
-                this.currentTenant = res.data.data;
 
                 if(res.data){
                     window.location.href = `http://${res.data.data.domain.domain}:3000/customers`;
@@ -53,12 +65,13 @@ export const useTenantStore = defineStore("tenant", {
                throw new Error("An error")
             }
         },
-        async updateTenant(id : string | number,tenantPayload: any) {
-
+        async updateTenant( tenantPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
 
-            let url = `${requestUrl}/tenant/${id}`
+            const tenant = this.currentTenant;
+
+            let url = `${requestUrl}/tenant/${tenant.id}`
             try {
                 const res = await axios.post(url, tenantPayload);
                 console.log(res)
