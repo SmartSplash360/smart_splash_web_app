@@ -31,7 +31,7 @@ export const useTechnicianStore = defineStore("technician", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/technicians`
-        : `http://smartsplash360.henocknkoy.site/api/v1/technicians`;
+        : `https://smartsplash.co/api/v1/technicians`;
       try {
         const res = await axios.get(url);
         this.technicians = res.data.data.data;
@@ -47,7 +47,7 @@ export const useTechnicianStore = defineStore("technician", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/technicians/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/technicians/${id}`;
+        : `https://smartsplash.co/api/v1/technicians/${id}`;
 
       try {
         const res = await axios.get(url);
@@ -64,7 +64,7 @@ export const useTechnicianStore = defineStore("technician", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/technicians`
-        : `http://smartsplash360.henocknkoy.site/api/v1/technicians`;
+        : `https://smartsplash.co/api/v1/technicians`;
       try {
         const res = await axios.post(url, technicianPayload);
 
@@ -83,7 +83,7 @@ export const useTechnicianStore = defineStore("technician", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/technicians/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/technicians/${id}`;
+        : `https://smartsplash.co/api/v1/technicians/${id}`;
       try {
         const res = await axios.post(url, technicianPayload);
         if (!res.data.success) {
@@ -101,7 +101,7 @@ export const useTechnicianStore = defineStore("technician", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/technicians/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/technicians/${id}`;
+        : `https://smartsplash.co/api/v1/technicians/${id}`;
 
       try {
         const res = await axios.delete(url);

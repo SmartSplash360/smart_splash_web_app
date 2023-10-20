@@ -30,7 +30,7 @@ export const useServiceStore = defineStore("service", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/services`
-        : `http://smartsplash360.henocknkoy.site/api/v1/services`;
+        : `https://smartsplash.co/api/v1/services`;
       try {
         const res = await axios.get(url);
         this.services = res.data.data.data;
@@ -46,7 +46,7 @@ export const useServiceStore = defineStore("service", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/services/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/services/${id}`;
+          : `https://smartsplash.co/api/v1/services/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -61,7 +61,7 @@ export const useServiceStore = defineStore("service", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/services`
-          : `http://smartsplash360.henocknkoy.site/api/v1/services`;
+          : `https://smartsplash.co/api/v1/services`;
         const res = await axios.post(url, servicePayload);
         this.createdServiceId = res.data.data.id;
 
@@ -80,7 +80,7 @@ export const useServiceStore = defineStore("service", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/services/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/services/${id}`;
+          : `https://smartsplash.co/api/v1/services/${id}`;
         const res = await axios.post(url, servicePayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -99,7 +99,7 @@ export const useServiceStore = defineStore("service", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/services/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/services/${id}`;
+          : `https://smartsplash.co/api/v1/services/${id}`;
 
         const res = await axios.delete(url);
         return res.data.data;
@@ -115,7 +115,7 @@ export const useServiceStore = defineStore("service", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/subServices/getByService/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/subServices/getByService/${id}`;
+        : `https://smartsplash.co/api/v1/subServices/getByService/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -131,7 +131,7 @@ export const useServiceStore = defineStore("service", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/subServices`
-          : `http://smartsplash360.henocknkoy.site/api/v1/subServices`;
+          : `https://smartsplash.co/api/v1/subServices`;
         const res = await axios.post(url, {
           service_id: this.createdServiceId,
           name: subServicePayload,

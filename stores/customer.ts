@@ -43,7 +43,7 @@ export const useCustomerStore = defineStore("customer", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/customers`
-        : `http://smartsplash360.henocknkoy.site/api/v1/customers`;
+        : `https://smartsplash.co/api/v1/customers`;
       try {
         const res = await axios.get(url);
         this.customers = res.data.data.data;
@@ -59,7 +59,7 @@ export const useCustomerStore = defineStore("customer", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/customers/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/customers/${id}`;
+        : `https://smartsplash.co/api/v1/customers/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -75,7 +75,7 @@ export const useCustomerStore = defineStore("customer", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/customers`
-        : `http://smartsplash360.henocknkoy.site/api/v1/customers`;
+        : `https://smartsplash.co/api/v1/customers`;
       try {
         const res = await axios.post(url, customerPayload);
 
@@ -94,7 +94,7 @@ export const useCustomerStore = defineStore("customer", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/customers/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/customers/${id}`;
+        : `https://smartsplash.co/api/v1/customers/${id}`;
       try {
         const res = await axios.post(url, customerPayload);
         if (!res.data.success) {
@@ -112,7 +112,7 @@ export const useCustomerStore = defineStore("customer", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/customers/${customerId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/customers/${customerId}`;
+        : `https://smartsplash.co/api/v1/customers/${customerId}`;
       try {
         const res = await axios.delete(url);
 

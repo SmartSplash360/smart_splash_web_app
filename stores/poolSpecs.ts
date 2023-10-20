@@ -18,7 +18,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/poolSpecs`
-          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs`;
+          : `https://smartsplash.co/api/v1/poolSpecs`;
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -34,7 +34,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/poolSpecs/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
+          : `https://smartsplash.co/api/v1/poolSpecs/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -50,7 +50,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/poolSpecs`
-          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs`;
+          : `https://smartsplash.co/api/v1/poolSpecs`;
         const res = await axios.post(url, poolSpecsPayload);
 
         if (!res.data.success) {
@@ -68,7 +68,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/poolSpecs/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
+          : `https://smartsplash.co/api/v1/poolSpecs/${id}`;
         const res = await axios.post(url, poolSpecsPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -86,7 +86,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/poolSpecs/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/poolSpecs/${id}`;
+          : `https://smartsplash.co/api/v1/poolSpecs/${id}`;
         const res = await axios.delete(url);
 
         if (!res.data.success) {

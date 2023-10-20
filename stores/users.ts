@@ -51,7 +51,7 @@ export const useUserStore = defineStore("user", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/auth/login`
-          : `http://smartsplash360.henocknkoy.site/api/v1/auth/login`;
+          : `https://smartsplash.co/api/v1/auth/login`;
         const res = await axios.post(url, { email, password });
         if (res.data.success) {
           // TODO: store in local storage
@@ -73,7 +73,7 @@ export const useUserStore = defineStore("user", {
     async register(userPayload: {}) {
       try {
         const res = await axios.post(
-          "http://smartsplash360.henocknkoy.site/api/v1/auth/register",
+          "https://smartsplash.co/api/v1/auth/register",
           userPayload
         );
         this.currentUser = res.data;
@@ -106,7 +106,7 @@ export const useUserStore = defineStore("user", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/auth/logout`
-        : `http://smartsplash360.henocknkoy.site/api/v1/auth/logout`;
+        : `https://smartsplash.co/api/v1/auth/logout`;
       await axios.post(url);
       this.currentUser = null;
       this.jwt = "";

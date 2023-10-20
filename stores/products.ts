@@ -27,7 +27,7 @@ export const useProductStore = defineStore("product", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/products`
-          : `http://smartsplash360.henocknkoy.site/api/v1/products`;
+          : `https://smartsplash.co/api/v1/products`;
         const res = await axios.get(url);
         this.products = res.data.data.data;
       } catch (error) {
@@ -42,7 +42,7 @@ export const useProductStore = defineStore("product", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/products/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/products/${id}`;
+          : `https://smartsplash.co/api/v1/products/${id}`;
 
         const res = await axios.get(url);
         return res.data.data;
@@ -58,7 +58,7 @@ export const useProductStore = defineStore("product", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/products`
-          : `http://smartsplash360.henocknkoy.site/api/v1/products`;
+          : `https://smartsplash.co/api/v1/products`;
 
         const res = await axios.post(url, productPayload);
 
@@ -77,7 +77,7 @@ export const useProductStore = defineStore("product", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/products/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/products/${id}`;
+          : `https://smartsplash.co/api/v1/products/${id}`;
 
         const res = await axios.post(url, productPayload);
         if (!res.data.success) {
@@ -96,7 +96,7 @@ export const useProductStore = defineStore("product", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/products/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/products/${id}`;
+          : `https://smartsplash.co/api/v1/products/${id}`;
 
         const res = await axios.delete(url);
 

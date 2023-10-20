@@ -51,7 +51,7 @@ export const useTemplateStore = defineStore("template", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/templates`
-        : `http://smartsplash360.henocknkoy.site/api/v1/templates`;
+        : `https://smartsplash.co/api/v1/templates`;
       try {
         const res = await axios.get(url);
         this.templates = res.data.data.data;
@@ -67,7 +67,7 @@ export const useTemplateStore = defineStore("template", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/templates/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/templates/${id}`;
+        : `https://smartsplash.co/api/v1/templates/${id}`;
 
       try {
         const res = await axios.get(url);
@@ -84,7 +84,7 @@ export const useTemplateStore = defineStore("template", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/templates`
-        : `http://smartsplash360.henocknkoy.site/api/v1/templates`;
+        : `https://smartsplash.co/api/v1/templates`;
       try {
         const res = await axios.post(url, templatePayload);
         console.log(res);
@@ -104,7 +104,7 @@ export const useTemplateStore = defineStore("template", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/templates/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/templates/${id}`;
+        : `https://smartsplash.co/api/v1/templates/${id}`;
 
       try {
         const res = await axios.post(url, templatePayload);
@@ -123,7 +123,7 @@ export const useTemplateStore = defineStore("template", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/templates/${templateId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/templates/${templateId}`;
+        : `https://smartsplash.co/api/v1/templates/${templateId}`;
 
       try {
         const res = await axios.delete(url);

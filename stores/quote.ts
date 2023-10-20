@@ -38,7 +38,7 @@ export const useQuoteStore = defineStore("quote", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes`
-        : `http://smartsplash360.henocknkoy.site/api/v1/quotes`;
+        : `https://smartsplash.co/api/v1/quotes`;
       try {
         const res = await axios.get(url);
         this.quotes = res.data.data.data;
@@ -49,7 +49,7 @@ export const useQuoteStore = defineStore("quote", {
     // async fetchQuotesByJob(jobId: any) {
     //     const jwt = useUserStore().getJwt;
     //     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-    //     let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byJob/${jobId}` : `http://smartsplash360.henocknkoy.site/api/v1/quotes/byJob/${jobId}`
+    //     let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes/byJob/${jobId}` : `https://smartsplash.co/api/v1/quotes/byJob/${jobId}`
     //     try {
     //         const res = await axios.get(url);
     //         this.quotes = res.data.data.data;
@@ -64,7 +64,7 @@ export const useQuoteStore = defineStore("quote", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/quotes/byTechnician/${technicianId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/quotes/byTechnician/${technicianId}`;
+        : `https://smartsplash.co/api/v1/quotes/byTechnician/${technicianId}`;
       try {
         const res = await axios.get(url);
         this.technicianQuotes = res.data.data;
@@ -80,7 +80,7 @@ export const useQuoteStore = defineStore("quote", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/quotes/byCustomer/${customerId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/quotes/byCustomer/${customerId}`;
+        : `https://smartsplash.co/api/v1/quotes/byCustomer/${customerId}`;
       try {
         const res = await axios.get(url);
         this.customerQuotes = res.data.data;
@@ -95,7 +95,7 @@ export const useQuoteStore = defineStore("quote", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/quotes`
-        : `http://smartsplash360.henocknkoy.site/api/v1/quotes`;
+        : `https://smartsplash.co/api/v1/quotes`;
       try {
         const res = await axios.post(url, quotePayload);
 

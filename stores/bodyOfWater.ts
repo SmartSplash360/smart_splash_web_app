@@ -27,7 +27,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/bodyOfWater`
-        : `http://smartsplash360.henocknkoy.site/api/v1/bodyOfWater`;
+        : `https://smartsplash.co/api/v1/bodyOfWater`;
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data.data;
@@ -42,7 +42,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/bodyOfWater/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/bodyOfWater/${id}`;
+        : `https://smartsplash.co/api/v1/bodyOfWater/${id}`;
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data;
@@ -76,7 +76,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
             ? `http://${
                 useTenantStore().getCurrentTenantDomain
               }:8000/api/v1/galleries`
-            : `http://smartsplash360.henocknkoy.site/api/v1/galleries`;
+            : `https://smartsplash.co/api/v1/galleries`;
 
           const res = await axios.post(url, formData, {
             headers,
@@ -98,7 +98,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/bodyOfWater`
-          : `http://smartsplash360.henocknkoy.site/api/v1/bodyOfWater`;
+          : `https://smartsplash.co/api/v1/bodyOfWater`;
         const res = await axios.post(url2, payload);
 
         if (!res.data.success) {
@@ -127,7 +127,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/bodyOfWater/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/bodyOfWater/${id}`;
+        : `https://smartsplash.co/api/v1/bodyOfWater/${id}`;
       try {
         const res = await axios.post(url, payload);
         if (!res.data.success) {
@@ -151,7 +151,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/bodyOfWater/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/bodyOfWater/${id}`;
+        : `https://smartsplash.co/api/v1/bodyOfWater/${id}`;
       try {
         const res = await axios.delete(url);
 

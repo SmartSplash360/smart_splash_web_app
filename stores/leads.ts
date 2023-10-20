@@ -41,7 +41,7 @@ export const useLeadStore = defineStore("lead", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads`;
+        : `https://smartsplash.co/api/v1/leads`;
       try {
         const res = await axios.get(url);
         this.leads = res.data.data.data;
@@ -57,7 +57,7 @@ export const useLeadStore = defineStore("lead", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/leads/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads/${id}`;
+        : `https://smartsplash.co/api/v1/leads/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -71,7 +71,7 @@ export const useLeadStore = defineStore("lead", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/leads`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads`;
+        : `https://smartsplash.co/api/v1/leads`;
       try {
         const res = await axios.post(url, leadPayload);
 
@@ -90,7 +90,7 @@ export const useLeadStore = defineStore("lead", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/leads/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads/${id}`;
+        : `https://smartsplash.co/api/v1/leads/${id}`;
       try {
         const res = await axios.post(url, leadPayload);
         if (!res.data.success) {
@@ -108,7 +108,7 @@ export const useLeadStore = defineStore("lead", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/leads/${leadId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads/${leadId}`;
+        : `https://smartsplash.co/api/v1/leads/${leadId}`;
       try {
         const res = await axios.delete(url);
 
@@ -129,7 +129,7 @@ export const useLeadStore = defineStore("lead", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/leads/imports`
-        : `http://smartsplash360.henocknkoy.site/api/v1/leads/imports`;
+        : `https://smartsplash.co/api/v1/leads/imports`;
       try {
         const formData = new FormData();
         formData.append(

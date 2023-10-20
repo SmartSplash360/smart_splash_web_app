@@ -29,7 +29,7 @@ export const useJobStore = defineStore("job", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs`;
+        : `https://smartsplash.co/api/v1/jobs`;
       try {
         const res = await axios.get(url);
         this.jobs = res.data.data.data;
@@ -44,7 +44,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/technician/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs/technician/${id}`;
+        : `https://smartsplash.co/api/v1/jobs/technician/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -60,7 +60,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/customer/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs/customer/${id}`;
+        : `https://smartsplash.co/api/v1/jobs/customer/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -76,7 +76,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/getScheduledJobsByDate/${date}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs/getScheduledJobsByDate/${date}`;
+        : `https://smartsplash.co/api/v1/jobs/getScheduledJobsByDate/${date}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -92,7 +92,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/getAllCompleted`
-        : `http://smartsplash360.henocknkoy.site/api/v1/job/getAllCompleted`;
+        : `https://smartsplash.co/api/v1/job/getAllCompleted`;
       try {
         const res = await axios.get(url);
         this.completedJobs = res.data.data.data.length;
@@ -105,7 +105,7 @@ export const useJobStore = defineStore("job", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/jobs`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs`;
+        : `https://smartsplash.co/api/v1/jobs`;
       try {
         const res = await axios.post(url, payload);
         this.newJobId = res.data.data.id;
@@ -126,7 +126,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobActivities`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobActivities`;
+        : `https://smartsplash.co/api/v1/jobActivities`;
       try {
         const res = await axios.post(url, {
           ...payload,
@@ -148,7 +148,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs/${id}`;
+        : `https://smartsplash.co/api/v1/jobs/${id}`;
       try {
         const res = await axios.post(url, payload);
         if (!res.data.success) {
@@ -166,7 +166,7 @@ export const useJobStore = defineStore("job", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/jobs/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/jobs/${id}`;
+        : `https://smartsplash.co/api/v1/jobs/${id}`;
       try {
         const res = await axios.delete(url);
 

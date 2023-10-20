@@ -22,7 +22,7 @@ export const useCommunicationStore = defineStore("communication", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/twilo/call`
-        : `http://smartsplash360.henocknkoy.site/api/v1/twilo/call`;
+        : `https://smartsplash.co/api/v1/twilo/call`;
       try {
         const res = await axios.post(url, {
           receiver_number: number,

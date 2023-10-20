@@ -24,7 +24,7 @@ export const useAlertStore = defineStore("alert", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alerts`;
+        : `https://smartsplash.co/api/v1/alerts`;
 
       try {
         const res = await axios.get(url);
@@ -41,7 +41,7 @@ export const useAlertStore = defineStore("alert", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alerts/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${id}`;
+        : `https://smartsplash.co/api/v1/alerts/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -55,7 +55,7 @@ export const useAlertStore = defineStore("alert", {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       let url = useTenantStore().getCurrentTenantDomain
         ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/alerts`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alerts`;
+        : `https://smartsplash.co/api/v1/alerts`;
       try {
         const res = await axios.post(url, alertPayload);
 
@@ -74,7 +74,7 @@ export const useAlertStore = defineStore("alert", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alerts/${alertId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${alertId}`;
+        : `https://smartsplash.co/api/v1/alerts/${alertId}`;
       try {
         const res = await axios.post(url, alertPayload);
 
@@ -93,7 +93,7 @@ export const useAlertStore = defineStore("alert", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alerts/${alertId}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alerts/${alertId}`;
+        : `https://smartsplash.co/api/v1/alerts/${alertId}`;
       try {
         const res = await axios.delete(url);
 

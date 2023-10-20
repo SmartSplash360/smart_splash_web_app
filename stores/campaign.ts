@@ -31,7 +31,7 @@ export const useCampaignStore = defineStore("camapign", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/campaigns`
-        : `http://smartsplash360.henocknkoy.site/api/v1/campaigns`;
+        : `https://smartsplash.co/api/v1/campaigns`;
       try {
         const res = await axios.post(url, campaignPayload);
         if (!res.data.success) {
@@ -48,7 +48,7 @@ export const useCampaignStore = defineStore("camapign", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/campaigns/sms`
-        : `http://smartsplash360.henocknkoy.site/api/v1/campaigns/sms`;
+        : `https://smartsplash.co/api/v1/campaigns/sms`;
       try {
         const res = await axios.post(url, campaignPayload);
 

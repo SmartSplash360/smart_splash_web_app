@@ -18,7 +18,7 @@ export const useGalleryStore = defineStore("gallery", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/galleries`
-          : `http://smartsplash360.henocknkoy.site/api/v1/galleries`;
+          : `https://smartsplash.co/api/v1/galleries`;
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -34,7 +34,7 @@ export const useGalleryStore = defineStore("gallery", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/galleries/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/galleries/${id}`;
+          : `https://smartsplash.co/api/v1/galleries/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -50,7 +50,7 @@ export const useGalleryStore = defineStore("gallery", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/galleries`
-          : `http://smartsplash360.henocknkoy.site/api/v1/galleries`;
+          : `https://smartsplash.co/api/v1/galleries`;
 
         const formData = new FormData();
         formData.append("name", galleryPayload.name);
@@ -73,7 +73,7 @@ export const useGalleryStore = defineStore("gallery", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/galleries/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/galleries/${id}`;
+          : `https://smartsplash.co/api/v1/galleries/${id}`;
         const res = await axios.post(url, galleryPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -91,7 +91,7 @@ export const useGalleryStore = defineStore("gallery", {
           ? `http://${
               useTenantStore().getCurrentTenantDomain
             }:8000/api/v1/galleries/${id}`
-          : `http://smartsplash360.henocknkoy.site/api/v1/galleries/${id}`;
+          : `https://smartsplash.co/api/v1/galleries/${id}`;
         const res = await axios.delete(url);
 
         if (!res.data.success) {

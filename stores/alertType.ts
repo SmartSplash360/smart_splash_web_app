@@ -26,7 +26,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alertTypes`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alertTypes`;
+        : `https://smartsplash.co/api/v1/alertTypes`;
       try {
         const res = await axios.get(url);
         this.alertTypes = res.data.data.data;
@@ -42,7 +42,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alertTypes/${id}`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alertTypes/${id}`;
+        : `https://smartsplash.co/api/v1/alertTypes/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
@@ -58,7 +58,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         ? `http://${
             useTenantStore().getCurrentTenantDomain
           }:8000/api/v1/alertTypes`
-        : `http://smartsplash360.henocknkoy.site/api/v1/alertTypes`;
+        : `https://smartsplash.co/api/v1/alertTypes`;
       try {
         await axios.post(url, payload);
       } catch (error) {
