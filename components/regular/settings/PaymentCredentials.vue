@@ -47,12 +47,6 @@
             :handleEdit="editCardMethod"
           ></BasePaymentMethodCard>
         </div>
-        <ModalsPaymentEditCreditCard
-          v-if="showEditPaymentModal"
-          :payment="card"
-          :toggleEditCreditCardModal="closeModal"
-        >
-        </ModalsPaymentEditCreditCard>
 
         <div
           class="mt-5 flex items-center gap-3 px-6 cursor-pointer"

@@ -300,8 +300,8 @@ const onTemplatedUpload = () => {
 
 const updatecompanyDetails = async () => {
   try {
-    await tenantStore.updateTenant({
-      logo: files.value,
+    await tenantStore.updateTenant(2, {
+      cover: files.value,
       name: companyName.value,
       address: `${selectedCity.value} - ${selectedState.value.name} - ${zipCode.value}`,
       website: companyWebsite.value,
