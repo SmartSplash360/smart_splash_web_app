@@ -300,6 +300,7 @@ const onTemplatedUpload = () => {
 
 const updatecompanyDetails = async () => {
   try {
+    // Get the current tenant ID
     await tenantStore.updateTenant(2, {
       cover: files.value,
       name: companyName.value,

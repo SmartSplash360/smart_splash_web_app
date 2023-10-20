@@ -58,9 +58,8 @@ export const useTenantStore = defineStore("tenant", {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
 
-            let url = `${requestUrl}/tenant/${2}`
+            let url = `${requestUrl}/tenant/${id}`
             try {
-                console.log(tenantPayload)
                 const res = await axios.post(url, tenantPayload);
                 console.log(res)
                 if (!res.data.success) {
