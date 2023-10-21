@@ -166,7 +166,7 @@
       <div class="flex flex-col gap-4">
         <h2 class="min-w-max heading__h3">
           Company Address :
-          <span class="ml-10 font-medium italic"> {{ tenant.address }}</span>
+          <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
         </h2>
         <span class="min-w-max span__element span__element-light"
           >Update company address
@@ -264,6 +264,7 @@ const tenant = computed(() => tenantStore.getCurrentTenant);
 const companyName = ref();
 const companyWebsite = ref();
 const companyNumber = ref();
+const companyAddress = ref();
 const currentLogo = ref();
 const zipCode = ref();
 const files = ref([]);
@@ -274,10 +275,14 @@ const states = ref(stateList);
 
 onMounted(async () => {
   await tenantStore.fetchCurrentTenant();
-  companyName.value = tenant.value?.name;
-  companyWebsite.value = tenant.value?.website;
-  companyNumber.value = tenant.value?.phone_number;
-  currentLogo.value = tenant.value?.cover;
+
+  if (tenant.value) {
+    companyName.value = tenant.value?.name;
+    companyWebsite.value = tenant.value?.website;
+    companyNumber.value = tenant.value?.phone_number;
+    currentLogo.value = tenant.value?.cover;
+    companyAddress.value = tenant.value.address;
+  }
 });
 
 const onSelectedFiles = (event) => {

@@ -1,7 +1,7 @@
-// import { initializeApp } from "firebase/app";
-// import { getMessaging, getToken } from "firebase/messaging";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
-// export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin(nuxtApp => {
 
 //   const firebaseApp = initializeApp({
 //     apiKey: "AIzaSyCAHxXRoWZfrKnbi0Ly6g2AlNTrD_Z47iM",
@@ -18,5 +18,5 @@
 //   getToken(messaging, { vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q" });
 
 
-// })
+})
 
