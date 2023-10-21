@@ -35,14 +35,14 @@
         <div v-if="files.length < 1" class="flex-center">
           <img
             :src="currentLogo"
-            alt="Smart-Splash-Logo"
+            :alt="companyName + ' Logo'"
             class="h-52 w-52 object-contain"
           />
         </div>
         <div v-else class="max-h-[80px] max-w-[225px]">
           <img
             :src="files?.objectURL"
-            alt="Smart-Splash-Logo"
+            :alt="companyName + ' Logo'"
             class="h-40 w-40 rounded-full object-contain"
           />
         </div>
@@ -120,7 +120,7 @@
           type="text"
           v-model="companyName"
           class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
-          :placeholder="'SMART SPLAH360'"
+          :placeholder="companyName"
         ></InputText>
       </div>
     </div>
@@ -164,7 +164,10 @@
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h3">Company Address</h2>
+        <h2 class="min-w-max heading__h3">
+          Company Address :
+          <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
+        </h2>
         <span class="min-w-max span__element span__element-light"
           >Update company address
         </span>
@@ -256,11 +259,14 @@ import { useTenantStore } from "@/stores/tenants";
 const tenantStore = useTenantStore();
 
 const toast = useToast();
+const tenant = computed(() => tenantStore.getCurrentTenant);
+
 const companyName = ref();
 const companyWebsite = ref();
 const companyNumber = ref();
-const zipCode = ref();
+const companyAddress = ref();
 const currentLogo = ref();
+const zipCode = ref();
 const files = ref([]);
 
 const selectedCity = ref();
@@ -268,21 +274,15 @@ const selectedState = ref();
 const states = ref(stateList);
 
 onMounted(async () => {
-  //fetch company Details
-  (companyName.value = "Smart Splash"),
-    (selectedState.value = {
-      name: "Alabama",
-      cities: [
-        "Birmingham",
-        "Montgomery",
-        "Mobile",
-        "Huntsville",
-        "Tuscaloosa",
-      ],
-    });
-  selectedCity.value = "Birmingham";
-  zipCode.value = "7744";
-  currentLogo.value = SmartPlashLogo;
+  await tenantStore.fetchCurrentTenant();
+
+  if (tenant.value) {
+    companyName.value = tenant.value?.name;
+    companyWebsite.value = tenant.value?.website;
+    companyNumber.value = tenant.value?.phone_number;
+    currentLogo.value = tenant.value?.cover;
+    companyAddress.value = tenant.value.address;
+  }
 });
 
 const onSelectedFiles = (event) => {
@@ -301,16 +301,30 @@ const onTemplatedUpload = () => {
 const updatecompanyDetails = async () => {
   try {
     await tenantStore.updateTenant({
-      logo: files.value,
+      cover: files.value,
       name: companyName.value,
-      address: `${selectedCity.value} - ${selectedState.value.name} - ${zipCode.value}`,
+      address: `${selectedCity.value} - ${selectedState.value?.name} - ${zipCode.value}`,
       website: companyWebsite.value,
       phone_number: companyNumber.value,
     });
+
+    toast.add({
+      severity: "success",
+      summary: "Tenant Details",
+      detail: "You updated the tenant info successfully",
+      life: 5000,
+    });
+
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
   } catch (error) {
-    console.log(error.message);
+    toast.add({
+      severity: "error",
+      summary: "Tenant Details Error",
+      detail: `Tenant updated Failed. An error has occurred: ${error?.response?.data?.message}`,
+      life: 5000,
+    });
   }
 };
 </script>
-
-<style lang="scss" scoped></style>

@@ -8,11 +8,11 @@
         @click="toggleAddProductModal"
         class="hover:shadow-xl"
       ></BaseAddButton>
-      <ModalsProductCreateProductModal
+      <ModalsProductCreateProduct
         v-if="addProductModal"
         :toggleAddProductModal="closeModal"
         :product="product"
-      ></ModalsProductCreateProductModal>
+      ></ModalsProductCreateProduct>
     </div>
     <div
       class="card products-table"

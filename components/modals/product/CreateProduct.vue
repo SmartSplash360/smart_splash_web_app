@@ -50,7 +50,7 @@
       </div>
       <div class="card justify-content-center flex flex-col gap-3">
         <label class="span__element" for="description">
-          Description (10 to 200 characters)
+          Description (10 to 300 characters)
         </label>
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -69,7 +69,7 @@
       </div>
       <div class="card justify-content-center flex flex-col gap-3">
         <label class="span__element" for="notes">
-          Notes (10 to 200 characters)</label
+          Notes (10 to 300 characters)</label
         >
         <Textarea
           class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
@@ -118,9 +118,9 @@ const { toggleAddProductModal, product } = defineProps([
 ]);
 
 const productStore = useProductStore();
+const { useRequired, useValidateTextArea } = useValidation();
 
 const isAvailable = ref(true);
-
 const notes = ref("");
 const name = ref("");
 const description = ref("");
@@ -131,27 +131,6 @@ const errorNotes = ref("");
 const errorDescription = ref("");
 const errorPrice = ref("");
 
-const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
-};
-const handleChangeDescription = () => {
-  errorDescription.value = description.value
-    ? description.value.length > 200
-      ? "Please enter between 10 and 200 characters"
-      : ""
-    : "The description field is required";
-};
-const handleChangePrice = () => {
-  errorPrice.value = price.value ? "" : "The price field is required";
-};
-const handleChangeNote = () => {
-  errorNotes.value = notes.value
-    ? notes.value.length > 200
-      ? "Please provide between 10 and 200 characters for notes"
-      : ""
-    : "The note field is required";
-};
-
 onMounted(() => {
   if (product) {
     isAvailable.value = product.is_available === 1;
@@ -161,6 +140,33 @@ onMounted(() => {
     price.value = product.price;
   }
 });
+
+const handleChangeName = () => {
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
+};
+const handleChangePrice = () => {
+  errorPrice.value = useRequired({
+    fieldname: "Price",
+    field: price.value,
+    error: errorPrice.value,
+  });
+};
+const handleChangeDescription = () => {
+  errorDescription.value = useValidateTextArea({
+    field: description.value,
+    error: errorDescription.value,
+  });
+};
+const handleChangeNote = () => {
+  errorNotes.value = useValidateTextArea({
+    field: notes.value,
+    error: errorNotes.value,
+  });
+};
 
 const validateForm = () => {
   handleChangeName();
@@ -174,7 +180,6 @@ const validateForm = () => {
     !errorNotes.value
   );
 };
-
 const createProduct = async () => {
   if (validateForm()) {
     try {
@@ -191,11 +196,10 @@ const createProduct = async () => {
         location.reload();
       }, 3000);
     } catch (e) {
-      // toggleAddProductModal({ error: e });
+      toggleAddProductModal({ error: e });
     }
   }
 };
-
 const updateProduct = async () => {
   if (validateForm()) {
     try {

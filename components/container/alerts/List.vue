@@ -41,17 +41,17 @@
           @click="createAlert"
         ></BaseAddButton>
       </div>
-      <CreateAlertModal
+      <ModalsAlertCreateAlert
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
         :alert="alert"
-      ></CreateAlertModal>
-      <ModalsAlertInfoModal
-        v-if="alertInfoModal"
+      ></ModalsAlertCreateAlert>
+      <ModalsAlertInfo
+        v-if="AlertInfo"
         :alert="alert"
         :toggleShowAlertInfo="closeModal"
       >
-      </ModalsAlertInfoModal>
+      </ModalsAlertInfo>
       <RegularAlertTable
         :alerts="alerts"
         :viewItem="viewItem"
@@ -63,7 +63,6 @@
 </template>
 
 <script setup>
-import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useAlertStore } from "~/stores/alert";
@@ -80,7 +79,7 @@ const userStore = useUserStore();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
-const alertInfoModal = ref(false);
+const AlertInfo = ref(false);
 const alerts = ref([]);
 const alertList = ref([]);
 const alert = ref();
@@ -154,11 +153,11 @@ const toggleAddAlertModal = () => {
   addAlertModal.value = true;
 };
 const toggleShowAlertInfo = () => {
-  alertInfoModal.value = true;
+  AlertInfo.value = true;
 };
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false;
-  alertInfoModal.value = false;
+  AlertInfo.value = false;
   alert.value = null;
 
   if (success) {

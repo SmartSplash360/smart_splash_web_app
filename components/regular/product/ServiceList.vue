@@ -8,11 +8,11 @@
         @click="toggleAddServiceModal"
         class="hover:shadow-xl"
       ></BaseAddButton>
-      <ModalsProductCreateServiceModal
+      <ModalsProductCreateService
         v-if="addServiceModal"
         :toggleAddServiceModal="closeModal"
         :service="service"
-      ></ModalsProductCreateServiceModal>
+      ></ModalsProductCreateService>
     </div>
     <div
       class="card services-table"

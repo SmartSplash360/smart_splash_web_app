@@ -18,10 +18,10 @@
           >Invoices</span
         >
       </nuxt-link>
-      <ModalsReportInvoicesModal
+      <ModalsReportInvoices
         v-if="invoiceModal"
         :toggleInvoiceModal="toggleInvoiceModal"
-      ></ModalsReportInvoicesModal>
+      ></ModalsReportInvoices>
 
       <span
         @click="loadReviews"

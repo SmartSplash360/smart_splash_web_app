@@ -3,13 +3,13 @@
     <SkeletonDetailPage></SkeletonDetailPage>
   </section>
   <section v-else class="flex flex-col gap-10">
-    <ModalsJobsCreateJobModal
+    <ModalsJobsEditJob
       v-if="addJobModal"
       :toggleAddJobModal="closeModal"
       :job="job"
       :readOnly="readOnly"
       :technicianId="technician?.id"
-    ></ModalsJobsCreateJobModal>
+    ></ModalsJobsEditJob>
     <div class="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6">
       <div class="flex items-center gap-2 sm:gap-5">
         <div class="h-[70px] w-[70px] rounded-full sm:h-[120px] sm:w-[120px]">
@@ -42,7 +42,7 @@
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>
-    <ModalsJobsCreateQuotationModal
+    <ModalsJobsCreateQuotation
       v-if="showQuotationModal"
       :customerDetails="customer"
       :totalPriceServices="totalPriceServices"
@@ -51,7 +51,7 @@
       :newJobPayload="job"
       :readOnly="true"
       :toggleJobQuoteModal="closeModal"
-    ></ModalsJobsCreateQuotationModal>
+    ></ModalsJobsCreateQuotation>
     <div class="flex flex-col gap-4">
       <RegularTechnicianDetailsTab
         @select-tab="switchTabs"

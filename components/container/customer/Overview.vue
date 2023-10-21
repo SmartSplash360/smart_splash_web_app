@@ -35,14 +35,14 @@
         </div>
       </div>
       <!-- <Divider class="p-0 m-0" /> -->
-      <ModalsJobsCreateJobModal
+      <ModalsJobsEditJob
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"
         :job="job"
         :readOnly="readOnly"
         :technicianId="job.technician_id"
-      ></ModalsJobsCreateJobModal>
-      <ModalsJobsCreateQuotationModal
+      ></ModalsJobsEditJob>
+      <ModalsJobsCreateQuotation
         v-if="showQuotationModal"
         :customerDetails="customer"
         :totalPriceServices="totalPriceServices"
@@ -51,7 +51,7 @@
         :newJobPayload="job"
         :readOnly="true"
         :toggleJobQuoteModal="closeModal"
-      ></ModalsJobsCreateQuotationModal>
+      ></ModalsJobsCreateQuotation>
       <div class="flex flex-col gap-10">
         <div
           class="flex justify-between rounded-xl bg-[#d4ecf4] dark:bg-[#1B2028] xl:w-1/2"

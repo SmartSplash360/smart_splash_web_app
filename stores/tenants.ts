@@ -25,39 +25,36 @@ export const useTenantStore = defineStore("tenant", {
     state: () => ({
         loggedIn: false,
         currentTenant: null,
-        currentTenantDomain : null,
+        currentTenantId : null,
         jwt: "",
-        tenants: [],
     }),
     getters: {
-        getTenants(state) {
-            return state.tenants;
-        },
         getCurrentTenant(state) {
             return state.currentTenant;
         },
-        getCurrentTenantDomain(state) {
-            return state.currentTenantDomain;
-        },
-        getJwt(state) {
-            return state.jwt;
+        getCurrentTenantId(state) {
+            return state.currentTenantId
         },
         getLoggedIn(state) {
             return state.loggedIn;
         },
     },
     actions: {
-        async fetchTenants() {
+        async fetchCurrentTenant() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            let url = `${requestUrl}/tenant`
-
+            let url = `${apiUrl}/tenant/getCurrent`;
             try {
                 const res = await axios.get(url);
-                this.tenants = res.data.data.data;
+                this.currentTenant = res.data.data;
+                this.currentTenantId = res.data.data.id
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+                return this.currentTenant;
+
             } catch (error) {
-                console.log(error);
-                return error
+               throw new Error("An error")
             }
         },
         async register(tenantPayload: {}) {
@@ -65,8 +62,6 @@ export const useTenantStore = defineStore("tenant", {
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             try {
                 const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
-                this.currentTenant = res.data.data;
-                this.currentTenantDomain = res.data.data.domain.domain
 
                 if(res.data){
                     window.location.href = `http://${res.data.data.domain.domain}:3000/customers`;
@@ -75,22 +70,21 @@ export const useTenantStore = defineStore("tenant", {
                throw new Error("An error")
             }
         },
-        async updateTenant(tenantPayload: any) {
-
+        async updateTenant( tenantPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            this.fetchTenants()
 
-            // let url = useTenantStore().getCurrentTenantDomain ? `http://${useTenantStore().getCurrentTenantDomain}:8000/api/v1/customers/${id}` : `${apiUrl}/customers/${id}`
-            // try {
-            //     const res = await axios.post(url, customerPayload);
-            //     if (!res.data.success) {
-            //         throw new Error(res.data.message);
-            //     }
-            // } catch (error) {
-            //     console.log(error);
-            //     throw error
-            // }
+            let url = `${requestUrl}/tenant/${this.currentTenantId}`
+            try {
+                const res = await axios.post(url, tenantPayload);
+                console.log(res)
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                console.log(error);
+                throw error
+            }
         },
     },
 });

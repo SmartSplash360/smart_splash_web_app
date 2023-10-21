@@ -46,10 +46,10 @@
             />
           </svg>
         </button>
-        <ModalsNotificationViewNotificationModal
+        <ModalsNotificationViewNotification
           v-if="showNotificationModal"
           :toggleNotificationModal="toggleNotificationModal"
-        ></ModalsNotificationViewNotificationModal>
+        ></ModalsNotificationViewNotification>
         <span
           class="relative flex-between cursor-pointer"
           @click="handleNotification"
