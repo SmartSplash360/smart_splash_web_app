@@ -38,7 +38,11 @@
           </div>
         </div>
       </template>
-      <template #empty> No bodies Of Water found.</template>
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No body of water found.</h3>
+        </div>
+      </template>
       <template #loading> Loading bodies Of Water data. Please wait.</template>
       <Column
         field="id"

@@ -7,8 +7,12 @@
         class="flex-between w-full flex-col gap-4 items-center lg:justify-start xl:flex-row"
       >
         <img
-          :src="customerInfo.photo ?? ''"
-          alt="user-profile"
+          :src="
+            customerInfo.photo
+              ? customerInfo.photo
+              : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fuser-profile&psig=AOvVaw0tfzkKYSuOP1iYQZelyp5B&ust=1696411955000000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCKC7_prJ2YEDFQAAAAAdAAAAABAI'
+          "
+          alt=""
           class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
         />
         <div class="flex flex-col gap-3">
@@ -37,7 +41,7 @@
         /></span>
         <span class="span__element">{{ customerInfo?.email }}</span>
       </div>
-      <div class="flex items-center gap-3">
+      <div v-if="customerInfo?.phone_number" class="flex items-center gap-3">
         <font-awesome-icon icon="phone" class="text-lg" />
         <span class="min-w-max span__element">{{
           customerInfo?.phone_number
@@ -45,7 +49,8 @@
       </div>
     </div>
     <div
-      class="w-full flex lg:min-w-[150px] lg:max-w-[300px] flex items-start sm:justify-center gap-3 overflow-hidden text-ellipsis xl:h-[75px] xl:gap-3"
+      v-if="fullAddress !== 'N/A'"
+      class="w-full flex lg:min-w-[150px] lg:max-w-[300px] items-start sm:justify-center gap-3 overflow-hidden text-ellipsis xl:h-[75px] xl:gap-3"
     >
       <font-awesome-icon icon="location-dot" class="text-lg" />
       <span class="span__element">{{ fullAddress }}</span>

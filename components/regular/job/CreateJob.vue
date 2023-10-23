@@ -281,26 +281,29 @@
                     </p>
                   </div>
                 </div>
-                <div
-                  class="flex flex-col gap-2 mt-4"
-                  v-if="service.is_available === 1 && subservices.length > 0"
-                >
+                <div class="flex flex-col gap-4 mt-4">
                   <span class="span__element text-gray-500 pl-5">
-                    Select subservices
+                    List of subservices
                   </span>
-                  <div class="lg:grid grid-cols-4 gap-2">
+                  <div
+                    v-if="service.is_available === 1 && subservices?.length > 0"
+                    class="flex flex-wrap gap-3"
+                  >
                     <div
                       v-for="subservice in subservices"
                       :key="subservice.id"
-                      class="flex flex-col lg:flex-row gap-5 pl-5"
+                      class="flex gap-5 pl-5"
                     >
-                      <div class="flex items-center gap-4">
-                        <Checkbox
-                          v-model="selectedSubservices"
-                          :name="subservice.name"
-                          :value="subservice"
+                      <div
+                        class="flex gap-2 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm"
+                      >
+                        <font-awesome-icon
+                          icon="toolbox"
+                          class="text-gray-500"
                         />
-                        <span class="span__element">{{ subservice.name }}</span>
+                        <span class="span__element">
+                          {{ subservice.name }}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -340,11 +343,13 @@ import { useCustomerStore } from "~/stores/customer";
 import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useServiceStore } from "~/stores/services";
 import { useTechnicianStore } from "~/stores/technician";
+import { useUserStore } from "~/stores/users";
 
 const serviceStore = useServiceStore();
 const customerStore = useCustomerStore();
 const bodyOfWaterStore = useBodyOfWaterStore();
 const technicianStore = useTechnicianStore();
+const useStore = useUserStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -368,7 +373,6 @@ const status = ref("");
 const description = ref("");
 const technical_notes = ref("");
 
-const technicians = ref(null);
 const selectedTechnician = ref();
 
 const dateTime = ref(null);
@@ -415,13 +419,14 @@ const subservices = ref([]);
 const selectedSubservices = ref([]);
 const bodiesOfWater = ref([]);
 
+const user = computed(() => useStore.getCurrentUser);
 const customers = computed(() => customerStore.getCustomers);
+const technicians = computed(() => technicianStore.getTechnicians);
 
 onMounted(async () => {
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
   services.value = await serviceStore.getServices;
-  technicians.value = await technicianStore.getTechnicians;
 
   if (props.job) {
     let customer = customerStore.getCustomerById(props.job.customer_id);
@@ -438,6 +443,9 @@ onMounted(async () => {
   const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
 
   if (technicianIdAlert && customerIdAlert && poolIdAlert) {
+    const resutl = technicians.value.find(
+      (tech) => tech.id === parseInt(technicianIdAlert)
+    );
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);
 
@@ -446,7 +454,6 @@ onMounted(async () => {
       bodiesOfWater.value = customer?.bodies_of_water;
       disablePoolSelect.value = false;
     }
-
     poolId.value = parseInt(poolIdAlert);
   }
 });

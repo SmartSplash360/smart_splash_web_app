@@ -14,7 +14,7 @@
       selectionMode="single"
       sortMode="multiple"
       :rows="10"
-      :globalFilterFields="['name', 'id']"
+      :globalFilterFields="['name', 'id', 'email']"
     >
       <template #header>
         <div class="flex-between dark:border-0 mb-5">
@@ -38,7 +38,11 @@
           </div>
         </div>
       </template>
-      <template #empty> No customers found.</template>
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">Nocustomers found.</h3>
+        </div>
+      </template>
       <template #loading> Loading customers data. Please wait.</template>
       <Column
         field="id"
@@ -66,7 +70,6 @@
           </nuxt-link>
         </template>
       </Column>
-      <Column field="address" header="Address"></Column>
       <Column field="phone_number" header="Cell number"></Column>
       <Column field="email" header="Email address"></Column>
       <Column field="status" header="Status">
@@ -99,7 +102,7 @@
               raised
               rounded
               class="p-button-danger"
-              @click="deleteItem(slotProps?.data?.id)"
+              @click="deleteItem({ id: slotProps.data.id })"
             />
           </div>
         </template>
@@ -136,8 +139,8 @@
                 >{{ customer.id }}</span
               >
             </div>
-            <span class="flex-1 paragraph__p">{{ customer.name }}</span>
-            <span class="flex-1 paragraph__p">{{ customer.email }}</span>
+            <span class="flex-1 span__element">{{ customer.name }}</span>
+            <span class="flex-1 span__element">{{ customer.email }}</span>
             <span class="ml-2">
               <font-awesome-icon icon="ellipsis-vertical"
             /></span>
@@ -150,8 +153,8 @@
             <span class="text-[#025E7C] dark:text-white span__element flex-1"
               >Physical Address</span
             >
-            <span class="text-xs flex-1 flex justify-start">{{
-              customer.address_line1
+            <span class="text-[10px] flex-1 flex justify-start">{{
+              customer?.bodies_of_water[0]?.address
             }}</span>
           </div>
           <div class="flex-between px-4 py-2">
@@ -162,14 +165,7 @@
               customer?.phone_number
             }}</span>
           </div>
-          <div class="flex-between px-4 py-2">
-            <span class="text-[#025E7C] dark:text-white span__element flex-1"
-              >Cell Number</span
-            >
-            <span class="text-xs flex-1 flex justify-start">{{
-              customer?.phone_number
-            }}</span>
-          </div>
+
           <div class="flex justify-end px-4 py-2 gap-2">
             <Button
               icon="pi pi-eye"
@@ -226,7 +222,6 @@ const props = defineProps({
 });
 
 const reloadKey = ref(0);
-const customers = ref([]);
 const loading = ref(false);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -234,12 +229,9 @@ const filters = ref({
   representative: { value: null, matchMode: FilterMatchMode.IN },
 });
 
-const customercount = computed(() => props.customerMobiles.lenght);
+const customercount = computed(() => props.customerMobiles.length);
+const customers = computed(() => store.getCustomers);
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
-
-onMounted(() => {
-  customers.value = store.getCustomers;
-});
 
 const createCustomer = () => router.push("/customers/create-customer");
 const viewCustomer = (id) => router.push(`/customers/${id}`);

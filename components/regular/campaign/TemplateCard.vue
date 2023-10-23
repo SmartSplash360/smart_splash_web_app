@@ -4,17 +4,17 @@
       class="min-w-full shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
     >
       <template #header>
-        <div class="flex-center px-3 py-5 pb-5 text-[#025E7C]">
-          <img :src="template.cover" alt="template-icon" />
+        <div class="flex-center pb-5 text-[#025E7C] lg:h-[400px]">
+          <img :src="templateCover" alt="template-icon" class="w-full h-full" />
         </div>
       </template>
       <template #title>
         <div class="flex items-start justify-between">
           <div class="relative flex flex-col items-start">
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 overflow-hidden">
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
               <p
-                class="paragraph__p text-gray-400"
+                class="paragraph__p text-gray-400 h-[100px]"
                 v-html="template.description"
               ></p>
             </div>
@@ -67,21 +67,51 @@ const props = defineProps({
   campaignType: Number,
 });
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const showEditModal = ref(false);
 const store = useTemplateStore();
 const toast = useToast();
 const confirm = useConfirm();
 
 const router = useRouter();
+const menu = ref();
+const items = ref([
+  {
+    label: "View Template",
+    icon: "pi pi-eye",
+    command: () => viewTemplate(),
+  },
+  {
+    label: "Delete Template",
+    icon: "pi pi-trash",
+    command: () => deleteTemplate(props.template.id),
+  },
+]);
+const templateCover = ref();
+const toggle = (event) => {
+  menu.value.toggle(event);
+};
+
+onMounted(() => {
+  if (props.template.cover.includes("public/images/")) {
+    let cover = props.template.cover.replace(
+      "public/images/",
+      "storage/images/"
+    );
+    templateCover.value = `${imageUrl}/${cover}`;
+  } else {
+    templateCover.value = props.template.cover;
+  }
+});
 
 const toggleEditTemplateModal = () => (showEditModal.value = false);
-
+const editTemplate = () => (showEditModal.value = !showEditModal.value);
 const viewTemplate = () =>
   router.push(
     `/campaigns/${props.template.id}?campaignType=${props.campaignType}&templateId=${props.template.id}`
   );
-const editTemplate = () => (showEditModal.value = !showEditModal.value);
-
 const deleteTemplate = async (id) => {
   try {
     confirm.require({
@@ -97,7 +127,7 @@ const deleteTemplate = async (id) => {
           detail: res?.message,
           life: 5000,
         });
-        router.replace("/campaigns");
+        location.reload(true);
       },
       reject: () => {},
     });
@@ -109,27 +139,5 @@ const deleteTemplate = async (id) => {
       life: 5000,
     });
   }
-};
-
-const menu = ref();
-const items = ref([
-  {
-    label: "View Template",
-    icon: "pi pi-eye",
-    command: () => viewTemplate(),
-  },
-  {
-    label: "Edit Template",
-    icon: "pi pi-pencil",
-    command: () => editTemplate(),
-  },
-  {
-    label: "Delete Template",
-    icon: "pi pi-trash",
-    command: () => deleteTemplate(props.template.id),
-  },
-]);
-const toggle = (event) => {
-  menu.value.toggle(event);
 };
 </script>

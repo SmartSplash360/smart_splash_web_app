@@ -81,6 +81,15 @@
           </p>
         </div>
       </div>
+      <div class="flex w-1/2 flex-col gap-2">
+        <label class="span__element font-bold" for="status">
+          Status :
+          <span :class="status ? 'text-green-400' : 'text-red-500'">{{
+            status ? "Active" : "Inactive"
+          }}</span>
+        </label>
+        <InputSwitch v-model="status" />
+      </div>
       <div
         v-if="!technician"
         class="flex flex-col justify-between gap-5 sm:flex-row"
@@ -149,8 +158,11 @@ const { toggleAddTechnicianModal, technician } = defineProps([
   "technician",
 ]);
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const phoneNumberRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 
 const name = ref("");
 const surname = ref("");
@@ -159,6 +171,7 @@ const phoneNumber = ref("");
 const password = ref("");
 const passwordConfirmation = ref("");
 const company = ref("1");
+const status = ref(true);
 
 const errorName = ref("");
 const errorSurname = ref("");
@@ -167,27 +180,37 @@ const errorPhoneNumber = ref("");
 const errorPassword = ref("");
 
 const handleChangeName = () => {
-  errorName.value = name.value ? "" : "The name field is required";
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
 };
 const handleChangeSurname = () => {
-  errorSurname.value = surname.value ? "" : "The surname field is required";
+  errorSurname.value = useRequired({
+    fieldname: "Surname",
+    field: surname.value,
+    error: errorSurname.value,
+  });
 };
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
 };
 const handleChangePhoneNumber = () => {
-  errorPhoneNumber.value = phoneNumber.value
-    ? !phoneNumber.value.match(phoneNumberRegex)
-      ? "Please provide a valid phone number"
-      : ""
-    : "The phone number field is required";
+  errorPhoneNumber.value = useValidatePhoneNumber({
+    phoneNumber: phoneNumber.value,
+    error: errorPhoneNumber,
+  });
 };
 const handleChangePassword = () => {
-  errorPassword.value = !password.value ? "Please provide a password" : "";
+  errorPassword.value = useRequired({
+    fieldname: "Password",
+    field: password.value,
+    error: errorPassword.value,
+  });
 };
 const handleChangePasswordMatching = () => {
   errorPassword.value = passwordConfirmation.value
@@ -203,6 +226,7 @@ onMounted(() => {
     surname.value = technician.surname;
     email.value = technician.email;
     phoneNumber.value = technician.phone_number;
+    status.value = technician.status ? true : false;
   }
 });
 
@@ -234,6 +258,9 @@ const createTechnician = async () => {
         company: company.value,
       });
       toggleAddTechnicianModal({ success: "Technician created successfully" });
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     } catch (e) {
       toggleAddTechnicianModal({ error: "Opps, something went wrong!" });
     }
@@ -247,6 +274,7 @@ const updateTechnician = async () => {
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
+      status: status.value ? 1 : 0,
     };
     await store.updateTechnician(technician?.id, data);
     await store.fetchTechnicians();
@@ -254,6 +282,9 @@ const updateTechnician = async () => {
     toggleAddTechnicianModal({
       success: `Technician ${technician?.id} updated successfully`,
     });
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   } catch (e) {
     toggleAddTechnicianModal({ error: e });
   }

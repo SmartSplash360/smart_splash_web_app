@@ -15,8 +15,8 @@
       :globalFilterFields="['name', 'id', 'technician']"
     >
       <template #empty>
-        <div class="flex-center">
-          <h3 class="heading__h3">No alerts found.</h3>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No alerts found.</h3>
         </div>
       </template>
       <template #header>
@@ -53,11 +53,11 @@
           }}
         </template>
       </Column>
-      <Column field="alert_type_id" header="Alert type" sortable>
+      <!-- <Column field="alert_type_id" header="Alert type" sortable>
         <template #body="slotProps">
           {{ slotProps.data?.alert_type?.name }}
         </template>
-      </Column>
+      </Column> -->
       <Column field="priority" header="Prority" sortable>
         <template #body="slotProps">
           <Tag
@@ -102,6 +102,7 @@
               @click="viewAlert(slotProps.data)"
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-pencil"
               text
               raised
@@ -109,6 +110,7 @@
               @click="editAlert(slotProps.data)"
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -185,6 +187,7 @@
             />
             <Button
               icon="pi pi-pencil"
+              v-if="user.role_id === 1"
               text
               raised
               rounded
@@ -194,6 +197,7 @@
               "
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -211,6 +215,7 @@
 <script setup>
 import Tag from "primevue/tag";
 import { FilterMatchMode } from "primevue/api";
+import { useUserStore } from "~/stores/users";
 
 const props = defineProps({
   alerts: {
@@ -222,20 +227,22 @@ const props = defineProps({
   viewItem: Function,
 });
 
+const userStore = useUserStore();
+
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   customer: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   technician: { value: null, matchMode: FilterMatchMode.IN },
 });
+const loading = ref(true);
+
+const user = computed(() => userStore.getCurrentUser);
+const alertCount = computed(() => props.alerts.length);
 
 onMounted(async () => {
   loading.value = false;
 });
-
-const loading = ref(true);
-
-const alertCount = computed(() => props.alerts.length);
-const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 
 const viewAlert = (alert) => {
   props.viewItem({ id: alert.id, item: { ...alert } });

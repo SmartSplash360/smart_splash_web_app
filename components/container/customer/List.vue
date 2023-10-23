@@ -13,11 +13,11 @@
           @click="toggleAddCustomerModal"
         ></BaseAddButton>
       </div>
-      <ModalsCustomerCreateCustomerModal
+      <ModalsCustomerCreateCustomer
         v-if="addCustomerModal"
         :toggleAddCustomerModal="closeModal"
         :customer="customer"
-      ></ModalsCustomerCreateCustomerModal>
+      ></ModalsCustomerCreateCustomer>
     </div>
     <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
       <div class="flex-between gap-6">
@@ -59,17 +59,17 @@ defineProps({
   loading: Boolean,
 });
 const toast = useToast();
+const router = useRouter();
 const confirm = useConfirm();
 const customerStore = useCustomerStore();
-const router = useRouter();
 
 const addCustomerModal = ref(false);
 const customer = ref();
 const customerMobiles = ref();
-const routes = reactive({
-  activeRoute: 131,
-  activeNoRoute: 41,
-  inactive: 56,
+const routes = ref({
+  activeRoute: 0,
+  activeNoRoute: 0,
+  inactive: 0,
   leads: 0,
 });
 
@@ -77,20 +77,22 @@ const toggleActiveRoute = ref(false);
 
 customerMobiles.value = customerStore.getCustomers;
 
+onMounted(() => {
+  routes.value.activeRoute = customerStore.getActiveCustomers;
+  routes.value.inactive = customerStore.getInactiveCustomers;
+});
+
 const handleSearch = (value) => {
   customerStore.searchQuery = value;
   customerMobiles.value = customerStore.filterCustomers(value);
 };
-
 const handleSort = () => {
   customerMobiles.value = customerStore.sortCustomers();
 };
 const showActiveRoute = () => {
   toggleActiveRoute.value = !toggleActiveRoute.value;
 };
-
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
-
 const closeModal = ({ success, error }) => {
   addCustomerModal.value = false;
   customer.value = null;
@@ -113,7 +115,6 @@ const closeModal = ({ success, error }) => {
     });
   }
 };
-
 const editItem = ({ id, item, mobileEdit = false }) => {
   customer.value = item;
   if (mobileEdit) {
@@ -125,7 +126,6 @@ const editItem = ({ id, item, mobileEdit = false }) => {
   }
   toggleAddCustomerModal();
 };
-
 const deleteItem = async ({ id }) => {
   confirm.require({
     message: "Are you sure you want to proceed?",
@@ -141,6 +141,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        window.location.reload();
       } catch (e) {
         toast.add({
           severity: "error",

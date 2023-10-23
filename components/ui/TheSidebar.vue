@@ -22,14 +22,20 @@
 
     <div class="flex-1 xl:-mt-14">
       <ul class="flex flex-col gap-5 text-white">
-        <li v-for="link in sideBarLinks" :key="link.name">
+        <li v-for="link in menu" :key="link.name">
           <nuxt-link
-            :to="link.to"
-            :class="[$colorMode.value == 'dark' && 'dark-router-link-active']"
+            :to="link.url"
+            :class="[
+              $colorMode.value == 'dark'
+                ? 'dark-router-link-active'
+                : toggleSide
+                ? 'flex-center '
+                : null,
+            ]"
             class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3 nav-link-item hover:bg-[#025E7C] dark:text-[#FFFFFF] dark:hover:bg-[#0291BF] dark:hover:text-white"
           >
             <span
-              class="flex-center h-[16px] w-[16px] nav-link-item"
+              class="flex-center nav-link-item"
               :class="toggleSide && 'text-xl'"
             >
               <font-awesome-icon
@@ -49,11 +55,19 @@
 
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-import { sideBarLinks } from "~/utils/sidebarLinks";
+import { useMenuStore } from "~/stores/menu";
 
 defineProps({
   toggleSide: Boolean,
   handleToggleSide: Function,
+});
+
+const router = useRouter();
+const menuStore = useMenuStore();
+const menu = ref();
+
+onMounted(async () => {
+  menu.value = menuStore.getMenu;
 });
 </script>
 

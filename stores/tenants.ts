@@ -1,99 +1,90 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
 
-const apiUrl = "https://smartsplash.co";
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
-axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["Accept"] = "application/json";
-// axios.defaults.withCredentials = true;
+const config = useRuntimeConfig();
+const requestUrl = config.public.apiUrl;
+
+const currentUrl = window.location.href;
+const hostname = new URL(currentUrl).hostname;
+
+let apiUrl = requestUrl;
+
+if (hostname.includes('.')) {
+    apiUrl = `http://${hostname}:8000/api/v1`
+}
+
 
 export const useTenantStore = defineStore("tenant", {
-  persist: {
-    storage: persistedState.localStorage,
-  },
-  state: () => ({
-    loggedIn: false,
-    currentTenant: null,
-    currentTenantDomain: null,
-    jwt: "",
-    tenants: [],
-  }),
-  getters: {
-    getTenants(state) {
-      return state.tenants;
+    persist: {
+        storage: persistedState.localStorage,
     },
-    getCurrentTenant(state) {
-      return state.currentTenant;
+    state: () => ({
+        loggedIn: false,
+        currentTenant: null,
+        currentTenantId : null,
+        jwt: "",
+    }),
+    getters: {
+        getCurrentTenant(state) {
+            return state.currentTenant;
+        },
+        getCurrentTenantId(state) {
+            return state.currentTenantId
+        },
+        getLoggedIn(state) {
+            return state.loggedIn;
+        },
     },
-    getCurrentTenantDomain(state) {
-      return state.currentTenantDomain;
-    },
-    getJwt(state) {
-      return state.jwt;
-    },
-    getLoggedIn(state) {
-      return state.loggedIn;
-    },
-  },
-  actions: {
-    async register(tenantPayload: {}) {
-      const jwt = useUserStore().getJwt;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      try {
-        const res = await axios.post(`${apiUrl}/api/v1/tenant`, tenantPayload);
-        this.currentTenant = res.data;
-        this.currentTenantDomain = res.data.data.domain;
-        this.registerFirstUser();
+    actions: {
+        async fetchCurrentTenant() {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            let url = `${apiUrl}/tenant/getCurrent`;
+            try {
+                const res = await axios.get(url);
+                this.currentTenant = res.data.data;
+                this.currentTenantId = res.data.data.id
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+                return this.currentTenant;
 
-        if (res.data) {
-          const router = useRouter();
-          router.push("/customers");
-        }
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      }
+            } catch (error) {
+               throw new Error("An error")
+            }
+        },
+        async register(tenantPayload: {}) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+            try {
+                const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
+
+                if(res.data){
+                    window.location.href = `http://${res.data.data.domain.domain}:3000/customers`;
+                }
+            } catch (error) {
+               throw new Error("An error")
+            }
+        },
+        async updateTenant( tenantPayload: any) {
+            const jwt = useUserStore().getJwt;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+
+            let url = `${requestUrl}/tenant/${this.currentTenantId}`
+            try {
+                const res = await axios.post(url, tenantPayload);
+                console.log(res)
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+            } catch (error) {
+                console.log(error);
+                throw error
+            }
+        },
     },
-    async registerFirstUser() {
-      const { email, password, password_confirmation, name, surname } =
-        useUserStore().getFirstUserTenant;
-
-      try {
-        const user = {
-          email,
-          password,
-          password_confirmation,
-          name,
-          surname,
-          role_id: 1,
-        };
-        const res = await axios.post(
-          `http://${
-            useTenantStore().getCurrentTenantDomain
-          }:8000/api/v1/auth/register`,
-          user
-        );
-        useUserStore().currentUser = res.data;
-
-        if (res.data.success) {
-          // TODO: store in local storage
-
-          useUserStore().currentUser = res.data.data.user;
-          useUserStore().setJwt(res.data.data.token);
-          this.loggedIn = true;
-
-          // set authorization header
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${res.data.data.token}`;
-        } else {
-          throw new Error(res.data.message);
-        }
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      }
-    },
-  },
 });

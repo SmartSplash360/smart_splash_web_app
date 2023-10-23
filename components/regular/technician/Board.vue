@@ -36,12 +36,17 @@
 <script setup>
 import { useTechnicianStore } from "~/stores/technician";
 
-const statuses = ref([{ state: "Active" }, { state: "Inactive" }]);
 const router = useRouter();
 const technicianStore = useTechnicianStore();
+
+const statuses = ref([
+  { state: "All", option: "all" },
+  { state: "Active", option: "active" },
+  { state: "Inactive", option: "inactive" },
+]);
+const status = ref();
+
 const techniciansCount = computed(() => technicianStore.technicians.length);
 
 const addTechnician = () => router.push("/technicians/create-technician");
-
-const status = ref();
 </script>

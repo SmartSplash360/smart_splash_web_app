@@ -286,7 +286,7 @@ const initMap = async () => {
   // get jobs from current date
   let data = null;
   try {
-    data = await jobStore.fetScheduledJobsByDate(
+    data = await jobStore.fetchScheduledJobsByDate(
       date.value.toISOString().split("T")[0]
     );
   } catch (e) {

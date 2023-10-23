@@ -20,54 +20,80 @@
           }}</span>
         </div>
         <p>
-          <span class="span__element text-gray-600">Status : </span>
+          <span class="span__element text-gray-600 dark:text-gray-200"
+            >Status :
+          </span>
           <span class="span__element text-gray-400"> {{ alert.status }}</span>
         </p>
         <p>
-          <span class="span__element text-gray-600">Priority : </span>
+          <span class="span__element text-gray-600 dark:text-gray-200"
+            >Priority :
+          </span>
           <span class="span__element text-gray-400"> {{ alert.priority }}</span>
         </p>
         <p>
-          <span class="span__element text-gray-600">Created at : </span>
+          <span class="span__element text-gray-600 dark:text-gray-200"
+            >Created at :
+          </span>
           <span class="span__element text-gray-400">
             {{ alert.created_at }}</span
           >
         </p>
         <div class="flex flex-col gap-2 my-2">
-          <span class="span__element text-gray-600 font-bold"
+          <span class="span__element text-gray-600 dark:text-gray-200 font-bold"
             >Technician info
           </span>
           <p>
-            <span class="span__element text-xs text-gray-600"> Name : </span>
+            <span
+              class="span__element text-xs text-gray-600 dark:text-gray-200"
+            >
+              Name :
+            </span>
             <span class="span__element text-xs text-gray-400">
               {{ technician?.name }}</span
             >
           </p>
           <p>
-            <span class="span__element text-xs text-gray-600"> Email : </span>
+            <span
+              class="span__element text-xs text-gray-600 dark:text-gray-200"
+            >
+              Email :
+            </span>
             <span class="span__element text-xs text-gray-400">
               {{ technician?.email }}</span
             >
           </p>
           <p>
-            <span class="span__element text-xs text-gray-600"> Phone : </span>
+            <span
+              class="span__element text-xs text-gray-600 dark:text-gray-200"
+            >
+              Phone :
+            </span>
             <span class="span__element text-xs text-gray-400">
               {{ technician?.phone_number }}</span
             >
           </p>
         </div>
         <div class="flex flex-col gap-2 my-2">
-          <span class="span__element text-gray-600 font-bold"
+          <span class="span__element text-gray-600 dark:text-gray-200 font-bold"
             >Customer info
           </span>
           <p>
-            <span class="span__element text-xs text-gray-600"> Name : </span>
+            <span
+              class="span__element text-xs text-gray-600 dark:text-gray-200"
+            >
+              Name :
+            </span>
             <span class="span__element text-xs text-gray-400">
               {{ customer?.name }}</span
             >
           </p>
           <p>
-            <span class="span__element text-xs text-gray-600"> Email : </span>
+            <span
+              class="span__element text-xs text-gray-600 dark:text-gray-200"
+            >
+              Email :
+            </span>
             <span class="span__element text-xs text-gray-400">
               {{ customer?.email }}</span
             >

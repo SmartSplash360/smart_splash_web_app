@@ -10,37 +10,86 @@
         <div class="flex-1 md:hidden">
           <BaseSearchBar></BaseSearchBar>
         </div>
+
         <Button
           icon="pi pi-map-marker"
           label="View Bodies Of Water"
           @click="toggleAddBodyOfListModal"
           class="rounded-xl bg-[#0291BF] text-white"
         />
-        <ModalsBodiesOfWaterBodyOfWaterListModal
-          v-if="bodyOfWaterListModal"
-          :toggleBodyOfWaterListModal="closeBodyOfWaterModal"
-          :customerId="props.customerId"
+        <Button
+          v-if="user.role_id === 3"
+          icon="pi pi-user"
+          label="Update My profile"
+          @click="toggleAddCustomerModal"
+          class="rounded-xl bg-[#0291BF] text-white"
         />
+        <ModalsBodiesOfWaterBodyOfWaterList
+          v-if="BodyOfWaterList"
+          :toggleBodyOfWaterList="closeBodyOfWaterModal"
+          :customerId="customerId"
+        />
+        <ModalsCustomerCreateCustomer
+          v-if="addCustomerModal"
+          :toggleAddCustomerModal="closeModal"
+          :customer="userProfile"
+          :profile="true"
+        ></ModalsCustomerCreateCustomer>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import { useToast } from "primevue/usetoast";
+import { useUserStore } from "~/stores/users";
+import { useConfirm } from "primevue/useconfirm";
+import { useCustomerStore } from "~/stores/customer";
+
 const props = defineProps({
   loading: Boolean,
   customerId: Number,
 });
 
-const bodyOfWaterListModal = ref(false);
+const userStore = useUserStore();
+const customerStore = useCustomerStore();
 
-const toggleAddBodyOfListModal = () => (bodyOfWaterListModal.value = true);
+const BodyOfWaterList = ref(false);
+const addCustomerModal = ref(false);
+
+const user = computed(() => userStore.getCurrentUser);
+const userProfile = computed(() =>
+  customerStore.getCustomerById(user.value.id)
+);
+
+const toggleAddBodyOfListModal = () => (BodyOfWaterList.value = true);
+const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 
 const closeBodyOfWaterModal = ({ add, update, view }) => {
-  bodyOfWaterListModal.value = false;
+  BodyOfWaterList.value = false;
 
   if (add) {
     toggleAddBodyOfWaterModal();
+  }
+};
+const closeModal = ({ success, error }) => {
+  addCustomerModal.value = false;
+  if (success) {
+    toast.add({
+      severity: "success",
+      summary: "Profile",
+      detail: success,
+      life: 5000,
+    });
+  }
+
+  if (error) {
+    toast.add({
+      severity: "error",
+      summary: "Profile",
+      detail: `An error has occurred: ${error}`,
+      life: 5000,
+    });
   }
 };
 </script>

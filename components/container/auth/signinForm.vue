@@ -15,7 +15,7 @@
       <div class="flex flex-col gap-2">
         <InputText
           type="text"
-          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          class="w-full border-gray-300 rounded-md"
           :class="errorEmail && 'border-red-300'"
           placeholder="Full name"
           v-model="email"
@@ -31,7 +31,7 @@
       <div class="flex flex-col gap-2">
         <InputText
           type="password"
-          class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+          class="w-full border-gray-300 rounded-md"
           :class="errorPassword && 'border-red-300'"
           placeholder="Email Address"
           v-model="password"
@@ -87,6 +87,8 @@ import { useProductStore } from "~/stores/products";
 import { useServiceStore } from "~/stores/services";
 import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
+import { useMenuStore } from "~/stores/menu";
+import { useTenantStore } from "~/stores/tenants";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
@@ -97,6 +99,8 @@ const productStore = useProductStore();
 const serviceStore = useServiceStore();
 const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
+const menuStore = useMenuStore();
+const tenantStore = useTenantStore();
 
 const router = useRouter();
 
@@ -128,7 +132,8 @@ async function login() {
   }
 
   try {
-    await store.login(email.value, password.value);
+    const user = await store.login(email.value, password.value);
+    await tenantStore.fetchCurrentTenant();
     await customerStore.fetchCustomers();
     await alertStore.fetchAlerts();
     await leadStore.fetchLeads();
@@ -137,6 +142,11 @@ async function login() {
     await serviceStore.fetchServices();
     await templateStore.fetchTemplates();
     await quoteStore.fetchQuotes();
+
+    if (user) {
+      await menuStore.fetchMenuByRole(user.role_id);
+    }
+
     await router.push("/customers");
     toast.add({
       severity: "success",

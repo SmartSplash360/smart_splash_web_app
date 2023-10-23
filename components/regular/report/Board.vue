@@ -1,17 +1,6 @@
 <template>
   <div class="relative flex flex-col gap-14">
     <div class="hidden gap-5 rounded-xl lg:flex">
-      <div
-        @click="toggleJobModal"
-        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] hover:bg-[#025E7C] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
-      >
-        <img :src="WorkCaseIcon" alt="work-case-icon" />
-        <span class="min-w-max text-center span__element-large">Jobs</span>
-      </div>
-      <ModalsReportJobModal
-        v-if="jobModal"
-        :toggleJobModal="toggleJobModal"
-      ></ModalsReportJobModal>
       <nuxt-link
         to="/reports/quotes"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
@@ -29,36 +18,18 @@
           >Invoices</span
         >
       </nuxt-link>
-      <ModalsReportInvoicesModal
+      <ModalsReportInvoices
         v-if="invoiceModal"
         :toggleInvoiceModal="toggleInvoiceModal"
-      ></ModalsReportInvoicesModal>
-      <div
-        @click="toggleChemCostModal"
-        class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
-      >
-        <img :src="ChemicalIcon" alt="chemical-tank-icon" />
-        <span class="lg:text-md min-w-max text-center span__element-large"
-          >Chemical Cost</span
-        >
-      </div>
-      <ModalsReportChemicalSpentModal
-        v-if="chemCostModal"
-        :toggleChemCostModal="toggleChemCostModal"
-      ></ModalsReportChemicalSpentModal>
-      <div
-        class="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0291BF] hover:bg-[#025E7C] px-4 py-3 text-white hover:shadow-xl xl:gap-3 xl:px-6"
-      >
-        <img :src="CardIcon" alt="card-icon" />
-        <span class="min-w-max text-center span__element-large">Payments</span>
-      </div>
-      <nuxt-link
-        to="/reports/reviews"
+      ></ModalsReportInvoices>
+
+      <span
+        @click="loadReviews"
         class="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 bg-[#0291BF] hover:bg-[#025E7C] text-white hover:shadow-xl sm:px-6"
       >
         <img :src="QuotesIconcon" alt="quotes-icon" />
-        <span class="min-w-max text-center span__element-large">Reviews</span>
-      </nuxt-link>
+        <span class="min-w-max text-center span__element-large">Reviews </span>
+      </span>
     </div>
     <div
       class="report-board flex flex-wrap justify-between lg:flex-nowrap lg:rounded-lg lg:border dark:lg:bg-[#1B2028] dark:border-gray-600"
@@ -68,7 +39,9 @@
           class="flex items-center gap-4 p-2 lg:flex-col lg:items-start lg:p-5"
         >
           <h4 class="lg:heading__h4 text-gray-500">Active Customer</h4>
-          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">156</h2>
+          <h2 class="lg:heading__h2 text-[#015D7B] !font-[600]">
+            {{ activeCustomers }}
+          </h2>
         </div>
       </div>
       <div class="lg:flex-1 lg:border-r dark:border-r-gray-600">
@@ -111,13 +84,17 @@ import InvoiceIcon from "@/assets/icons/invoice-icon.svg";
 import ChemicalIcon from "@/assets/icons/chemical-tank-icon.svg";
 import CardIcon from "@/assets/icons/payment-icon.svg";
 import { useJobStore } from "~/stores/jobs";
+import { useCustomerStore } from "~/stores/customer";
 
 const jobStore = useJobStore();
+const customerStore = useCustomerStore();
 
 const days = ref();
 const jobModal = ref(false);
 const quoteModal = ref();
 const invoiceModal = ref();
+const activeCustomers = computed(() => customerStore.getActiveCustomers);
+
 const chemCostModal = ref();
 const numberOfDays = ref([
   {
@@ -135,6 +112,11 @@ const numberOfDays = ref([
 ]);
 
 const completedJobs = computed(() => jobStore.getAllCompletedJobs);
+
+const loadReviews = () => {
+  window.location.href = "/reports/reviews";
+};
+
 const toggleJobModal = () => (jobModal.value = !jobModal.value);
 const toggleQuoteModal = () => (quoteModal.value = !quoteModal.value);
 const toggleInvoiceModal = () => (invoiceModal.value = !invoiceModal.value);

@@ -2,16 +2,17 @@
   <div class="hidden lg:flex flex-col gap-10">
     <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
+        v-if="user.role_id === 1"
         :buttonId="'add-product-button'"
         :btnText="' Product'"
         @click="toggleAddProductModal"
         class="hover:shadow-xl"
       ></BaseAddButton>
-      <ModalsProductCreateProductModal
+      <ModalsProductCreateProduct
         v-if="addProductModal"
         :toggleAddProductModal="closeModal"
         :product="product"
-      ></ModalsProductCreateProductModal>
+      ></ModalsProductCreateProduct>
     </div>
     <div
       class="card products-table"
@@ -42,12 +43,16 @@
             </div>
           </div>
         </template>
-        <template #empty> No products found. </template>
+        <template #empty>
+          <div class="flex-center my-5">
+            <h3 class="heading__h3 text-gray-600">No Products found.</h3>
+          </div>
+        </template>
         <Column
           field="created_at"
           header="Created Date"
           sortable
-          class="w-[1%] lg:w-[20%]"
+          class="w-[1%] lg:w-[15%]"
         >
           <template #body="slotProps">
             <div class="flex items-center gap-5">
@@ -56,20 +61,30 @@
             </div>
           </template>
         </Column>
-        <Column
-          field="name"
-          header="Name"
-          class="w-[5%] lg:w-[20%]"
-          sortable
-        ></Column>
-        <Column
-          field="description"
-          header="Description"
-          class="w-[5%] lg:w-[20%]"
-        ></Column>
-        <Column field="status" header="Status" class="w-[5%] lg:w-[12.5%]">
-          <template>
-            <Tag value="Active" severity="success" />
+        <Column field="name" header="Name" sortable>
+          <template #body="slotProps">
+            <div class="flex items-center gap-5">
+              <span class="span__element">{{ slotProps.data.name }}</span>
+            </div>
+          </template></Column
+        >
+        <Column field="description" header="Description">
+          <template #body="slotProps">
+            <div class="flex items-center gap-5">
+              <span class="span__element">{{
+                slotProps.data.description
+              }}</span>
+            </div>
+          </template></Column
+        >
+        <Column field="status" header="Status" class="w-[5%] lg:w-[10%]">
+          <template #body="slotProps">
+            <span v-if="slotProps.data?.is_available === 1">
+              <Tag value="Available" class="w-full" severity="success" />
+            </span>
+            <span v-else>
+              <Tag value="Unavailable" class="w-full" severity="danger"
+            /></span>
           </template>
         </Column>
         <Column field="price" header="Price" class="w-[5%] lg:w-[10%]">
@@ -81,7 +96,7 @@
           field="modified_at"
           header="Modified Date"
           sortable
-          class="w-[5%] lg:w-[25%]"
+          class="w-[5%] lg:w-[15%]"
         >
           <template #body="slotProps">
             <div class="flex items-center gap-5">
@@ -92,7 +107,7 @@
             </div>
           </template>
         </Column>
-        <Column>
+        <Column v-if="user.role_id === 1">
           <template #body="slotProps">
             <div class="flex flex-row gap-2">
               <Button
@@ -117,13 +132,12 @@
         </Column>
       </DataTable>
     </div>
-    <Toast />
     <ConfirmDialog></ConfirmDialog>
   </div>
-
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
     <div class="flex flex-col">
       <BaseAddButton
+        v-if="user.role_id === 1"
         :btnText="'Product'"
         @click="addProduct"
         class="-translate-y-[7rem] w-[110px] justify-end self-end hover:shadow-xl"
@@ -189,6 +203,7 @@
           </div>
           <div class="flex justify-end px-4 py-2 gap-2">
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-pencil"
               text
               raised
@@ -197,6 +212,7 @@
               @click="editItem(product.id, { ...product }, true)"
             />
             <Button
+              v-if="user.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -212,28 +228,30 @@
 </template>
 
 <script setup>
-import { FilterMatchMode } from "primevue/api";
-import { useProductStore } from "~/stores/products";
-import BoxIcon from "@/assets/icons/box-icon.svg";
 import Tag from "primevue/tag";
 import { format } from "date-fns";
+import { FilterMatchMode } from "primevue/api";
+import BoxIcon from "@/assets/icons/box-icon.svg";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
+import { useUserStore } from "~/stores/users";
+import { useProductStore } from "~/stores/products";
 
-const productStore = useProductStore();
 const toast = useToast();
 const confirm = useConfirm();
 const router = useRouter();
-
-onMounted(() => {
-  loading.value = false;
-});
+const userStore = useUserStore();
+const productStore = useProductStore();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
+const product = ref();
+const addProductModal = ref(false);
+const loading = ref(true);
+const selectedProduct = ref();
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
+
 const products = computed(() =>
   productStore.getProducts.map((product) => {
     return {
@@ -243,13 +261,12 @@ const products = computed(() =>
     };
   })
 );
-
-const product = ref();
-const addProductModal = ref(false);
-const loading = ref(true);
-const selectedProduct = ref();
-
+const user = computed(() => userStore.getCurrentUser);
 const productCount = computed(() => products.length);
+
+onMounted(() => {
+  loading.value = false;
+});
 
 const toggleAddProductModal = () => (addProductModal.value = true);
 
@@ -275,7 +292,6 @@ const closeModal = ({ success, error }) => {
     });
   }
 };
-
 const editItem = (id, item, mobileEdit = false) => {
   product.value = item;
   if (mobileEdit) {
@@ -287,7 +303,6 @@ const editItem = (id, item, mobileEdit = false) => {
   }
   toggleAddProductModal();
 };
-
 const deleteItem = async (id) => {
   confirm.require({
     message: "Are you sure you want to proceed?",
@@ -304,6 +319,7 @@ const deleteItem = async (id) => {
           detail: res?.message,
           life: 5000,
         });
+        location.reload();
       } catch (e) {
         toast.add({
           severity: "error",
@@ -316,6 +332,5 @@ const deleteItem = async (id) => {
     reject: () => {},
   });
 };
-
 const addProduct = () => router.push("/products/create-product");
 </script>

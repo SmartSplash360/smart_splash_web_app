@@ -3,9 +3,9 @@
     <section v-if="loading">
       <SkeletonCustomerDetail></SkeletonCustomerDetail>
     </section>
-    <section v-else class="sn:gap-20 flex flex-col gap-3 lg:gap-10">
+    <section v-else class="flex flex-col gap-3 lg:gap-10">
       <RegularCustomerInfo :customerInfo="customer"></RegularCustomerInfo>
-      <p class="hidden lg:block text-2xl">Bodies of Water</p>
+      <p class="hidden lg:block text-2xl mt-10">Bodies of Water</p>
       <ContainerBodyOfWaterList
         :loading="loading"
         :customerId="customer?.id"
@@ -13,7 +13,7 @@
       ></ContainerBodyOfWaterList>
       <Divider class="p-0 m-0" />
       <div
-        class="sm:min-:w-[30rem] flex-center self-center text-[#025E7C] sm:gap-20"
+        class="hidden sm:min-:w-[30rem] flex-center self-center text-[#025E7C] sm:gap-20"
       >
         <div class="card flex justify-center">
           <Dropdown
@@ -34,15 +34,15 @@
           />
         </div>
       </div>
-      <Divider class="p-0 m-0" />
-      <ModalsJobsCreateJobModal
+      <!-- <Divider class="p-0 m-0" /> -->
+      <ModalsJobsEditJob
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"
         :job="job"
         :readOnly="readOnly"
         :technicianId="job.technician_id"
-      ></ModalsJobsCreateJobModal>
-      <ModalsJobsCreateQuotationModal
+      ></ModalsJobsEditJob>
+      <ModalsJobsCreateQuotation
         v-if="showQuotationModal"
         :customerDetails="customer"
         :totalPriceServices="totalPriceServices"
@@ -51,7 +51,7 @@
         :newJobPayload="job"
         :readOnly="true"
         :toggleJobQuoteModal="closeModal"
-      ></ModalsJobsCreateQuotationModal>
+      ></ModalsJobsCreateQuotation>
       <div class="flex flex-col gap-10">
         <div
           class="flex justify-between rounded-xl bg-[#d4ecf4] dark:bg-[#1B2028] xl:w-1/2"

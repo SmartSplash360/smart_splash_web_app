@@ -46,12 +46,21 @@
             />
           </svg>
         </button>
-        <ModalsNotificationViewNotificationModal
+        <ModalsNotificationViewNotification
           v-if="showNotificationModal"
           :toggleNotificationModal="toggleNotificationModal"
-        ></ModalsNotificationViewNotificationModal>
-        <span class="flex-center cursor-pointer" @click="handleNotification">
-          <font-awesome-icon icon="fa-regular fa-bell" class="text-2xl" />
+        ></ModalsNotificationViewNotification>
+        <span
+          class="relative flex-between cursor-pointer"
+          @click="handleNotification"
+        >
+          <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
+          <span
+            v-if="notificationCount"
+            class="bg-red-500 rounded-full text-white p-1 w-[1.25rem] h-[1.25rem] flex-center absolute right-0 top-0 text-sm"
+          >
+            {{ notificationCount }}</span
+          >
         </span>
         <span class="span__element font-light"
           >{{ user?.name }} {{ user?.surname || "" }}</span
@@ -148,12 +157,12 @@
     <div v-if="sideBarVisible">
       <ul class="flex flex-col gap-2 text-white">
         <li
-          v-for="link in sideBarLinks"
+          v-for="link in menuListItem"
           @click="toggleSideBar"
           :key="link.name"
         >
           <nuxt-link
-            :to="link?.to"
+            :to="link?.url"
             class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
           >
             <span class="flex-center h-[16px] w-[16px] span__element">
@@ -178,10 +187,18 @@
 <script setup>
 import userProfile from "@/assets/images/profile_user.jpg";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
-import { sideBarLinks } from "@/utils/sidebarLinks";
+import {
+  menuListAdmin,
+  menuListCustomer,
+  menuListTechnicina,
+} from "@/utils/navbarLinks";
 import { useUserStore } from "~/stores/users";
+import { useMenuStore } from "~/stores/menu";
+import { useNotificationStore } from "~/stores/notification";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useConfirm } from "primevue/useconfirm";
+
+const menuStore = useMenuStore();
 
 defineProps({
   setColorTheme: Function,
@@ -189,13 +206,26 @@ defineProps({
 
 const route = useRoute();
 const confirm = useConfirm();
-const userStore = useUserStore();
 const router = useRouter();
+const userStore = useUserStore();
+const notificationStore = useNotificationStore();
 
 const sideBarVisible = ref(false);
 const showNotificationModal = ref(false);
+const notificationCount = computed(
+  () => notificationStore.getNotificationCount
+);
 const menu = ref();
+const menuListItem = menuStore.getMenu;
+
 const items = ref([
+  {
+    label: "My Profile",
+    icon: "pi pi-user",
+    command: () => {
+      router.push("/customers/my-profile");
+    },
+  },
   {
     label: "Logout",
     icon: "pi pi-sign-out",
@@ -203,84 +233,7 @@ const items = ref([
   },
 ]);
 
-const menuList = [
-  {
-    label: "Alert",
-    icon: "pi pi-exclamation-triangle",
-    command: () => {
-      router.push("/alerts");
-      setTimeout(() => {
-        document.getElementById("add-alert-button").click();
-      }, 2000);
-    },
-  },
-  {
-    label: "Customer",
-    icon: "pi pi-user",
-    command: () => {
-      router.push("/customers");
-      setTimeout(() => {
-        document.getElementById("add-customer-button").click();
-      }, 2000);
-    },
-  },
-  {
-    label: "Technician",
-    icon: "pi pi-briefcase",
-    command: () => {
-      router.push("/technicians");
-      setTimeout(() => {
-        document.getElementById("add-technician-button").click();
-      }, 2000);
-    },
-  },
-  {
-    label: "Product",
-    icon: "pi pi-box",
-    command: () => {
-      router.push("/products");
-      setTimeout(() => {
-        document.getElementById("add-product-button").click();
-      }, 2000);
-    },
-  },
-  {
-    label: "Service",
-    icon: "pi pi-wrench",
-    command: () => {
-      router.push("/products");
-      setTimeout(() => {
-        let serviceTab = document.querySelectorAll(".p-tabview-header")[1];
-        let tabEl = serviceTab.querySelector(
-          ":scope > #pv_id_12_1_header_action"
-        );
-        // serviceTab.click()
-        document.getElementById("add-service-button").click();
-      }, 2000);
-    },
-  },
-  {
-    label: "Job",
-    icon: "pi pi-user",
-    command: () => {
-      router.push("/jobs/create-technician-job");
-    },
-  },
-  {
-    label: "Quotes",
-    icon: "pi pi-file-pdf",
-    command: () => {
-      router.push("/reports/quotes");
-    },
-  },
-  {
-    label: "Invoices",
-    icon: "pi pi-file",
-    command: () => {
-      router.push("/reports/invoices");
-    },
-  },
-];
+const menuList = ref();
 
 const user = computed(() => userStore.getCurrentUser);
 const pageName = computed(() => {
@@ -290,10 +243,18 @@ const pageName = computed(() => {
 });
 const pageIcon = computed(() => {
   let name = route.name;
-  let sideBarLink = sideBarLinks.find(
-    (sideBarLink) => sideBarLink.name.toLowerCase() == name
-  );
-  return sideBarLink?.icon ?? "user-lock";
+  let link = menuListItem.find((link) => link.name.toLowerCase() == name);
+  return link?.icon ?? "user-lock";
+});
+
+onMounted(async () => {
+  if (user.value.role_id === 1) {
+    menuList.value = menuListAdmin;
+  } else if (user.value.role_id === 2 || user.value.role_id === 3) {
+    menuList.value = menuListCustomer;
+  } else if (user.value.role_id === 4) {
+    menuList.value = menuListTechnicina;
+  }
 });
 
 const onImageRightClick = (event) => {

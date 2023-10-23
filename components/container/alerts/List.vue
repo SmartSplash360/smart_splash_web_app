@@ -3,24 +3,22 @@
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
       <div class="w-full gap-5 flex flex-col lg:flex-row justify-between">
-        <div class="flex flex-col gap-2 lg:gap-5 lg:min-w-[350px]">
-          <div class="flex gap-2 items-center lg:gap-5">
-            <h2 class="text-3xl font-bold text-[#025E7C]">
-              {{ priority }} Alerts
-            </h2>
-            <span class="span__element font-bold text-gray-500"
-              >({{
-                priority == "high"
-                  ? countHighAlert
-                  : priority == "medium"
-                  ? countMediumAlert
-                  : priority == "low"
-                  ? countLowAlert
-                  : alerts.length
-              }}
-              Results)</span
-            >
-          </div>
+        <div class="flex gap-2 items-center lg:gap-5 lg:min-w-[350px]">
+          <h2 class="text-3xl font-bold text-[#025E7C]">
+            {{ priority }} Alerts
+          </h2>
+          <span class="span__element font-bold text-gray-500"
+            >({{
+              priority == "high"
+                ? countHighAlert
+                : priority == "medium"
+                ? countMediumAlert
+                : priority == "low"
+                ? countLowAlert
+                : alerts.length
+            }}
+            Results)</span
+          >
         </div>
         <Dropdown
           v-model="priority"
@@ -30,28 +28,30 @@
           @change="handleChangePriority"
         />
         <BaseAddButton
+          v-if="user.role_id !== 3"
           class="hidden lg:flex"
           :btnText="'Add Alert'"
           :buttonId="'add-alert-button'"
           @click="toggleAddAlertModal"
         ></BaseAddButton>
         <BaseAddButton
+          v-if="user.role_id !== 3"
           class="lg:hidden w-fit self-end"
           :btnText="'Add Alert'"
           @click="createAlert"
         ></BaseAddButton>
       </div>
-      <CreateAlertModal
+      <ModalsAlertCreateAlert
         v-if="addAlertModal"
         :toggleAddAlertModal="closeModal"
         :alert="alert"
-      ></CreateAlertModal>
-      <ModalsAlertInfoModal
-        v-if="alertInfoModal"
+      ></ModalsAlertCreateAlert>
+      <ModalsAlertInfo
+        v-if="AlertInfo"
         :alert="alert"
         :toggleShowAlertInfo="closeModal"
       >
-      </ModalsAlertInfoModal>
+      </ModalsAlertInfo>
       <RegularAlertTable
         :alerts="alerts"
         :viewItem="viewItem"
@@ -63,10 +63,10 @@
 </template>
 
 <script setup>
-import CreateAlertModal from "~/components/modals/alert/CreateAlertModal.vue";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useAlertStore } from "~/stores/alert";
+import { useUserStore } from "~/stores/users";
 
 defineProps({
   loading: Boolean,
@@ -75,10 +75,11 @@ defineProps({
 const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
+const userStore = useUserStore();
 const alertStore = useAlertStore();
 
 const addAlertModal = ref(false);
-const alertInfoModal = ref(false);
+const AlertInfo = ref(false);
 const alerts = ref([]);
 const alertList = ref([]);
 const alert = ref();
@@ -94,10 +95,28 @@ const priority = ref("All");
 const priorities = ref(["All alerts", "Low", "Medium", "High"]);
 
 onMounted(async () => {
-  alerts.value = alertStore.getAlerts;
-  alertList.value = alertStore.getAlerts;
+  const list = alertStore.getAlerts;
+  if (user.value.role_id == 1) {
+    alerts.value = list;
+    alertList.value = list;
+  }
+  if (user.value.role_id == 3) {
+    const items = list.filter((alert) => {
+      return alert.body_of_water.customer_id == user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+  }
+  if (user.value.role_id == 4) {
+    const items = list.filter((alert) => {
+      return alert.technician_id === user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+  }
 });
 
+const user = computed(() => userStore.getCurrentUser);
 const highAlerts = computed(() => {
   const list = alerts.value.filter((alert) => alert?.priority === "high");
   countHighAlert.value = list.length;
@@ -134,11 +153,11 @@ const toggleAddAlertModal = () => {
   addAlertModal.value = true;
 };
 const toggleShowAlertInfo = () => {
-  alertInfoModal.value = true;
+  AlertInfo.value = true;
 };
 const closeModal = ({ success, error }) => {
   addAlertModal.value = false;
-  alertInfoModal.value = false;
+  AlertInfo.value = false;
   alert.value = null;
 
   if (success) {
@@ -199,6 +218,8 @@ const deleteItem = async ({ id }) => {
         detail: res?.message,
         life: 5000,
       });
+
+      location.reload(true);
     },
     reject: () => {},
   });

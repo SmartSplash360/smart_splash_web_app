@@ -11,18 +11,6 @@
             @handleSearch="(value) => handleSearch(value)"
           />
         </div>
-        <span
-          @click="showActiveRoute"
-          class="flex-center h-[30px] w-[30px] cursor-pointer text-white"
-          ><font-awesome-icon
-            icon="bars"
-            class="text-2xl"
-            :class="[toggleActiveRoute && 'rotate-90']"
-        /></span>
-      </div>
-      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes">
-        </RegularCustomerActivityCard>
       </div>
     </div>
     <div class="flex flex-col gap-5">
@@ -36,8 +24,6 @@
       >
       </RegularLeadTable>
     </div>
-    <!-- <Toast /> -->
-    <!-- <ConfirmDialog></ConfirmDialog> -->
     <ModalsLeadEditLeadModal
       v-if="editLeadModal"
       :toggleEditLeadModal="closeModal"
@@ -57,6 +43,8 @@
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useLeadStore } from "~/stores/leads";
+import { useUserStore } from "~/stores/users";
+import { useNotificationStore } from "~/stores/notification";
 
 defineProps({
   loading: Boolean,
@@ -65,11 +53,15 @@ defineProps({
 const toast = useToast();
 const confirm = useConfirm();
 const leadStore = useLeadStore();
+const notificationStore = useNotificationStore();
+
 const router = useRouter();
+
 const editLeadModal = ref(false);
 const voiceCallModal = ref(false);
 const lead = ref();
 const leadsMobiles = ref();
+const toggleActiveRoute = ref(false);
 
 const routes = reactive({
   activeRoute: 131,
@@ -78,7 +70,7 @@ const routes = reactive({
   leads: 0,
 });
 
-const toggleActiveRoute = ref(false);
+const user = computed(() => userStore.getCurrentUser);
 
 leadsMobiles.value = leadStore.getLeads;
 const handleSearch = (value) => {
@@ -141,6 +133,14 @@ const convertToCustomer = ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        await notificationStore.createNotification({
+          subject: "NEW CUSTOMER",
+          description: `A Lead has been converted into a customer`,
+          user_id: user.id,
+          alert_id: "",
+          type: "Customer",
+        });
+        router.push("/customers");
       } catch (e) {
         toast.add({
           severity: "error",
@@ -186,6 +186,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        location.reload();
       } catch (e) {
         toast.add({
           severity: "error",

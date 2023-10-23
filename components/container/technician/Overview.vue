@@ -3,13 +3,13 @@
     <SkeletonDetailPage></SkeletonDetailPage>
   </section>
   <section v-else class="flex flex-col gap-10">
-    <ModalsJobsCreateJobModal
+    <ModalsJobsEditJob
       v-if="addJobModal"
       :toggleAddJobModal="closeModal"
       :job="job"
       :readOnly="readOnly"
       :technicianId="technician?.id"
-    ></ModalsJobsCreateJobModal>
+    ></ModalsJobsEditJob>
     <div class="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6">
       <div class="flex items-center gap-2 sm:gap-5">
         <div class="h-[70px] w-[70px] rounded-full sm:h-[120px] sm:w-[120px]">
@@ -34,6 +34,7 @@
         ></BaseAddButton>
         <nuxt-link href="/reports">
           <Button
+            v-if="user.role_id === 1"
             label="View Reports"
             class="w-full text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm hover:shadow-xl"
           />
@@ -41,7 +42,7 @@
       </div>
     </div>
     <RegularTechnicianStats></RegularTechnicianStats>
-    <ModalsJobsCreateQuotationModal
+    <ModalsJobsCreateQuotation
       v-if="showQuotationModal"
       :customerDetails="customer"
       :totalPriceServices="totalPriceServices"
@@ -50,7 +51,7 @@
       :newJobPayload="job"
       :readOnly="true"
       :toggleJobQuoteModal="closeModal"
-    ></ModalsJobsCreateQuotationModal>
+    ></ModalsJobsCreateQuotation>
     <div class="flex flex-col gap-4">
       <RegularTechnicianDetailsTab
         @select-tab="switchTabs"
@@ -62,7 +63,7 @@
         :viewQuote="viewQuote"
       ></RegularTechnicianQuotes>
       <RegularTechnicianFeedbacks
-        v-else-if="currentTab === 'FEEDDBACK'"
+        v-else-if="currentTab === 'FEEDBACK'"
       ></RegularTechnicianFeedbacks>
       <RegularTechnicianJobs
         v-else
@@ -83,11 +84,13 @@ import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
+import { useUserStore } from "~/stores/users";
 
 const toast = useToast();
 const confirm = useConfirm();
 
 const jobStore = useJobStore();
+const userStore = useUserStore();
 const quoteStore = useQuoteStore();
 const customerStore = useCustomerStore();
 const technicianStore = useTechnicianStore();
@@ -120,6 +123,7 @@ const customer = ref();
 const profileImage = computed(() => {
   return technician.value?.photo ?? "";
 });
+const user = computed(() => userStore.getCurrentUser);
 
 onMounted(async () => {
   loading.value = true;
@@ -140,6 +144,7 @@ const toggleAddJobModal = () => (addJobModal.value = true);
 
 const closeModal = ({ success, error }) => {
   addJobModal.value = false;
+  showQuotationModal.value = false;
   job.value = null;
   readOnly.value = false;
 
@@ -192,6 +197,9 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 3000);
       } catch (e) {
         toast.add({
           severity: "error",

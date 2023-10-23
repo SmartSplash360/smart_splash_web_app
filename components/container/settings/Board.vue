@@ -20,14 +20,6 @@
         </template>
         <RegularSettingsPaymentCredentials></RegularSettingsPaymentCredentials>
       </TabPanel>
-      <TabPanel>
-        <template #header>
-          <div class="flex-center min-w-max">
-            <span class="span__element">User Settings</span>
-          </div>
-        </template>
-        <RegularSettingsUserSetting></RegularSettingsUserSetting>
-      </TabPanel>
     </TabView>
   </section>
 </template>

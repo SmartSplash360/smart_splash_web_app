@@ -14,7 +14,7 @@
       selectionMode="single"
       sortMode="multiple"
       :rows="10"
-      :globalFilterFields="['name', 'id']"
+      :globalFilterFields="['name', 'id', 'email']"
     >
       <template #header>
         <div class="flex items-center justify-between dark:border-0 mb-5">
@@ -39,7 +39,11 @@
           </div>
         </div>
       </template>
-      <template #empty> No Leads found.</template>
+      <template #empty>
+        <div class="flex-center my-5">
+          <h3 class="heading__h3 text-gray-600">No leads found.</h3>
+        </div>
+      </template>
       <template #loading> Loading Leads data. Please wait.</template>
       <Column
         field="id"
@@ -52,14 +56,7 @@
           {{ slotProps.data?.name }} {{ slotProps.data?.surname }}
         </template>
       </Column>
-      <Column field="email" header="Email address"> </Column>
-      <Column field="note" header="Notes">
-        <template #body="slotProps">
-          <div class="px-4 py-2 leading-normal">
-            {{ slotProps.data?.notes || "N/A" }}
-          </div>
-        </template>
-      </Column>
+      <Column field="email" header="Email address" sortable> </Column>
       <Column field="status" header="Status">
         <template #body="slotProps">
           <div
@@ -176,16 +173,8 @@
           </div>
         </template>
         <div
-          class="flex flex-col dark:text-white bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
+          class="flex flex-col bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
         >
-          <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
-            <span class="text-[#025E7C] dark:text-white span__element flex-1"
-              >Physical Address</span
-            >
-            <span class="text-xs flex-1 flex justify-start">{{
-              lead.address_line1
-            }}</span>
-          </div>
           <div class="flex-between px-4 py-2">
             <span class="text-[#025E7C] dark:text-white span__element flex-1"
               >Cell Number</span
@@ -260,7 +249,7 @@ const dt = ref();
 const createLead = () => router.push("/leads/create-lead");
 // const viewLead = (id) => router.push(`/leads/${id}`);
 
-const leadCount = computed(() => leads.lenght);
+const leadCount = computed(() => leads.length);
 const exportCSV = (event) => {
   dt.value.exportCSV();
 };

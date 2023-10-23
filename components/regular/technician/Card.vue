@@ -97,14 +97,18 @@
                       icon="thumbs-up"
                       class="text-2xl text-[#009F10]"
                     />
-                    <span class="text-sm font-semibold">64</span>
+                    <span class="text-sm font-semibold">{{
+                      technician.like_reaction_count
+                    }}</span>
                   </div>
                   <div class="flex items-center gap-3">
                     <font-awesome-icon
                       icon="thumbs-down"
                       class="text-2xl text-[#D4382E]"
                     />
-                    <span class="span__element">10</span>
+                    <span class="span__element">{{
+                      technician.dislike_reaction_count
+                    }}</span>
                   </div>
                 </div>
               </div>

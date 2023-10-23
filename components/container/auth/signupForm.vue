@@ -13,7 +13,7 @@
           <InputText
             id="firstName"
             v-model="firstName"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorFirstame && 'border-red-300'"
             @blur="handleChangeFirstname"
           >
@@ -31,7 +31,7 @@
           <InputText
             id="lastName"
             v-model="lastName"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorLastname && 'border-red-300'"
             @blur="handleChangeLastname"
           >
@@ -49,7 +49,7 @@
           <InputText
             id="email"
             v-model="email"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorEmail && 'border-red-300'"
             @blur="handleChangeEmail"
           >
@@ -66,8 +66,9 @@
         <span class="p-float-label">
           <InputText
             id="password"
+            type="password"
             v-model="password"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorPassword && 'border-red-300'"
             @blur="handleChangePassword"
           >
@@ -84,8 +85,9 @@
         <span class="p-float-label">
           <InputText
             id="confirmedPassword"
+            type="password"
             v-model="confirmPassword"
-            class="w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            class="w-full border-gray-300 rounded-md"
             :class="errorPassword && 'border-red-300'"
             @blur="handleChangePasswordMatching"
           >
@@ -132,11 +134,33 @@
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
-import { useUserStore } from "~/stores/users";
 import { useToast } from "primevue/usetoast";
+import { useUserStore } from "~/stores/users";
+import { useCustomerStore } from "~/stores/customer";
+import { useLeadStore } from "~/stores/leads";
+import { useAlertStore } from "~/stores/alert";
+import { useTechnicianStore } from "~/stores/technician";
+import { useProductStore } from "~/stores/products";
+import { useServiceStore } from "~/stores/services";
+import { useTemplateStore } from "~/stores/templates";
+import { useQuoteStore } from "~/stores/quote";
+import { useMenuStore } from "~/stores/menu";
+
+const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const toast = useToast();
+const router = useRouter();
+
 const store = useUserStore();
+const customerStore = useCustomerStore();
+const alertStore = useAlertStore();
+const leadStore = useLeadStore();
+const technicianStore = useTechnicianStore();
+const productStore = useProductStore();
+const serviceStore = useServiceStore();
+const templateStore = useTemplateStore();
+const quoteStore = useQuoteStore();
+const menuStore = useMenuStore();
 
 const firstName = ref("");
 const firstNameError = ref(false);
@@ -152,32 +176,6 @@ const passwordError = ref("");
 
 const confirmPassword = ref("");
 const confirmPasswordError = ref("");
-
-watch(firstName, (newValue, oldValue) => {
-  if (newValue === "") {
-    firstNameError.value = true;
-  }
-});
-watch(lastName, (newValue, oldValue) => {
-  if (lastName.value === "") {
-    lastNameError.value = true;
-  }
-});
-watch(email, (newValue, oldValue) => {
-  if (email.value === "") {
-    emailError.value = true;
-  }
-});
-watch(password, (newValue, oldValue) => {
-  if (password.value === "") {
-    passwordError.value = true;
-  }
-});
-watch(confirmPassword, (newValue, oldValue) => {
-  if (confirmPassword.value === "") {
-    confirmPasswordError.value = true;
-  }
-});
 
 const errorFirstame = ref("");
 const errorLastname = ref("");
@@ -203,8 +201,8 @@ const handleChangePassword = () => {
   errorPassword.value = !password.value ? "Please provide a password" : "";
 };
 const handleChangePasswordMatching = () => {
-  errorPassword.value = passwordConfirmation.value
-    ? password.value !== passwordConfirmation.value
+  errorPassword.value = confirmPassword.value
+    ? password.value !== confirmPassword.value
       ? "Please provide matching password"
       : ""
     : "The password fields are required";
@@ -219,7 +217,7 @@ const validateForm = () => {
     !errorFirstame.value &&
     !errorLastname.value &&
     !errorEmail.value &&
-    errorPassword.value
+    !errorPassword.value
   );
 };
 
@@ -231,26 +229,38 @@ async function registerUser() {
         surname: lastName.value,
         email: email.value,
         password: password.value,
-        confirmPassword: confirmPassword.value,
-        role: "Admin",
+        password_confirmation: confirmPassword.value,
+        role: 4,
       };
       const res = await store.register(userPayload);
-
-      if (res.errorMessage) {
+      if (res?.errorMessage) {
         toast.add({
           severity: "error",
           summary: "Register user error",
           detail: "User registration failed",
           life: 3000,
         });
-        await router.push("/customers");
       } else {
+        await customerStore.fetchCustomers();
+        await alertStore.fetchAlerts();
+        await leadStore.fetchLeads();
+        await technicianStore.fetchTechnicians();
+        await productStore.fetchProducts();
+        await serviceStore.fetchServices();
+        await templateStore.fetchTemplates();
+        await quoteStore.fetchQuotes();
+
+        if (store.getCurrentUser) {
+          await menuStore.fetchMenuByRole(store.getCurrentUser.role_id);
+        }
+
         toast.add({
           severity: "success",
           summary: "Register user success",
           detail: "User registration succeeded",
           life: 3000,
         });
+        router.push("/alerts");
       }
     } catch (error) {
       console.log(error);

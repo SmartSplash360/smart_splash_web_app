@@ -4,14 +4,21 @@ const baseUrl = "/";
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiUrl: "",
-      imageUrl: "",
+      apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "http://localhost:8000",
       googleMapsApiKey: "",
       twilioAccountSid: "",
       twilioAuthToken: "",
       twilioNumber: "",
       twilioApiKeySid: "",
       twilioApiKeySecret: "",
+    },
+    pwa: {
+      workbox: {
+        importScripts: [
+          'firebase-messaging-sw.js'
+        ],
+      },
     },
   },
   app: {
@@ -43,7 +50,10 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/color-mode",
   ],
-  plugins: ["~/plugins/ckEditor"],
+  plugins: [
+    "~/plugins/ckEditor",
+    // "~/plugins/firebase"
+  ],
   colorMode: {
     classSuffix: "",
   },
@@ -58,6 +68,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue", "@vuepic/vue-datepicker"],
   },
+
   ssr: false,
   nitro: {
     serveStatic: true,
