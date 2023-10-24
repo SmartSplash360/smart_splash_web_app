@@ -39,7 +39,7 @@ export const useCampaignStore = defineStore("camapign", {
         async createCampaignEmail(campaignPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url =  `${apiUrl}/campaigns`
             try {
                 const res = await axios.post(url, campaignPayload);
@@ -53,7 +53,7 @@ export const useCampaignStore = defineStore("camapign", {
         async createCampaignSMS(campaignPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/campaigns/sms`
             try {
                 const res = await axios.post(url, campaignPayload);

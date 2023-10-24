@@ -57,7 +57,7 @@ export const useCustomerStore = defineStore("customer", {
         async fetchCustomers() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/customers`
             try {
                 const res = await axios.get(url);
@@ -70,7 +70,7 @@ export const useCustomerStore = defineStore("customer", {
         async fetchCustomer(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/customers/${id}`
             try {
                 const res = await axios.get(url);
@@ -83,7 +83,7 @@ export const useCustomerStore = defineStore("customer", {
         async createCustomer(customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/customers`
             try {
                 const res = await axios.post(url, customerPayload);
@@ -99,7 +99,7 @@ export const useCustomerStore = defineStore("customer", {
         async updateCustomer(id: number | string, customerPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/customers/${id}`
             try {
                 const res = await axios.post(url, customerPayload);
@@ -114,7 +114,7 @@ export const useCustomerStore = defineStore("customer", {
         async deleteCustomer(customerId: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/customers/${customerId}`
             try {
                 const res = await axios.delete(url);

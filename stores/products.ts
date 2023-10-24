@@ -35,7 +35,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 let url = `${apiUrl}/products`
                 const res = await axios.get(url);
                 this.products = res.data.data.data
@@ -47,7 +47,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 let url = `${apiUrl}/products/${id}`
                 
                 const res = await axios.get(url);
@@ -60,7 +60,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 let url = `${apiUrl}/products`
 
                 const res = await axios.post(url, productPayload);
@@ -76,7 +76,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 let url = `${apiUrl}/products/${id}`
 
                 const res = await axios.post(url, productPayload);
@@ -92,7 +92,7 @@ export const useProductStore = defineStore("product", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-                axios.defaults.headers.post['Content-Type'] = 'application/json';                
+                    
                 let url = `${apiUrl}/products/${id}`
 
                 const res = await axios.delete(url);

@@ -38,7 +38,7 @@ export const useJobStore = defineStore("job", {
         async fetchJobs() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs`
             try {
                 const res = await axios.get(url);
@@ -50,7 +50,7 @@ export const useJobStore = defineStore("job", {
         async fetchTechnicianJobs(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs/technician/${id}`
             try {
                 const res = await axios.get(url)
@@ -63,7 +63,7 @@ export const useJobStore = defineStore("job", {
         async fetchCustomerJobs(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs/customer/${id}`
             try {
                 const res = await axios.get(url);
@@ -76,7 +76,7 @@ export const useJobStore = defineStore("job", {
         async fetchScheduledJobsByDate(date: string) {
           const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs/getScheduledJobsByDate/${date}`
             try {
                 const res = await axios.get(url);
@@ -89,7 +89,7 @@ export const useJobStore = defineStore("job", {
         async fetchAllCompletedJob(){
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/job/getAllCompleted`
             try {
                 const res = await axios.get(url);
@@ -101,7 +101,7 @@ export const useJobStore = defineStore("job", {
         async createJob(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs`
             try {
                 const res = await axios.post(url, payload);
@@ -119,7 +119,7 @@ export const useJobStore = defineStore("job", {
         async createJobActivity(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobActivities`
             try {
                 const res = await axios.post(url, {...payload, job_id : this.newJobId});
@@ -135,7 +135,7 @@ export const useJobStore = defineStore("job", {
         async createJobProduct(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobProducts`
             try {
                 const res = await axios.post(url, {...payload, job_id : this.newJobId,});
@@ -151,7 +151,7 @@ export const useJobStore = defineStore("job", {
         async updateJob(id: number | string, payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs/${id}`
             try {
                 const res = await axios.post(url, payload);
@@ -166,7 +166,7 @@ export const useJobStore = defineStore("job", {
         async deleteJob(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/jobs/${id}`
             try {
                 const res = await axios.delete(url);

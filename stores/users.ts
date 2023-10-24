@@ -49,7 +49,7 @@ export const useUserStore = defineStore("user", {
         async login(email: String, password: String) {
             try {
 
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 let url = `${apiUrl}/auth/login`
                 const res = await axios.post( url , {email, password});
                 if (res.data.success) {
@@ -73,7 +73,7 @@ export const useUserStore = defineStore("user", {
         async register(userPayload: {}) {
             try {
 
-                axios.defaults.headers.post['Content-Type'] = 'application/json';
+    
                 const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
                 this.currentUser = res.data;
                 
@@ -98,7 +98,7 @@ export const useUserStore = defineStore("user", {
          },
         async logout() {
 
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             const router = useRouter();
             let url = `${apiUrl}/auth/logout`
             await axios.post(url); 

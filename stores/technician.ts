@@ -38,7 +38,7 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnicians() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/technicians`
             try {
                 const res = await axios.get(url);
@@ -51,7 +51,7 @@ export const useTechnicianStore = defineStore("technician", {
         async fetchTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/technicians/${id}`
 
             try {
@@ -65,7 +65,7 @@ export const useTechnicianStore = defineStore("technician", {
         async createTechnician(technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/technicians`
             try {
                 const res = await axios.post(url, technicianPayload);
@@ -81,7 +81,7 @@ export const useTechnicianStore = defineStore("technician", {
         async updateTechnician(id: number | string, technicianPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/technicians/${id}`
             try {
                 const res = await axios.post(url, technicianPayload);
@@ -96,7 +96,7 @@ export const useTechnicianStore = defineStore("technician", {
         async deleteTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/technicians/${id}`
 
             try {

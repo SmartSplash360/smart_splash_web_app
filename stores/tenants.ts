@@ -43,7 +43,7 @@ export const useTenantStore = defineStore("tenant", {
         async fetchCurrentTenant() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/tenant/getCurrent`;
             try {
                 const res = await axios.get(url);
@@ -74,7 +74,7 @@ export const useTenantStore = defineStore("tenant", {
         async updateTenant( tenantPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
             let url = `${requestUrl}/tenant/${this.currentTenantId}`
             try {

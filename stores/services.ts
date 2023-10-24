@@ -38,7 +38,7 @@ export const useServiceStore = defineStore("service", {
         async fetchServices() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/services`
             try {
                 const res = await axios.get(url);
@@ -51,7 +51,7 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
                 let url = `${apiUrl}/services/${id}`
                 const res = await axios.get(url);
                 return res.data.data
@@ -63,7 +63,7 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
                 let url = `${apiUrl}/services`
                 const res = await axios.post(url, servicePayload);
                 this.createdServiceId = res.data.data.id
@@ -79,7 +79,7 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
                 let url = `${apiUrl}/services/${id}`
                 const res = await axios.post(url, servicePayload);
                 if (!res.data.success) {
@@ -95,7 +95,7 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
                 let url = `${apiUrl}/services/${id}`
 
                 const res = await axios.delete(url);
@@ -108,7 +108,7 @@ export const useServiceStore = defineStore("service", {
         async fechSubservicesByServiceId(id : string | number) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/subServices/getByService/${id}`
             try {
                 const res = await axios.get(url);
@@ -121,7 +121,7 @@ export const useServiceStore = defineStore("service", {
             try {
                 const jwt = useUserStore().getJwt;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
                 let url = `${apiUrl}/subServices`
                 const res = await axios.post(url, {
                     service_id : this.createdServiceId,

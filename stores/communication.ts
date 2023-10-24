@@ -30,7 +30,7 @@ export const useCommunicationStore = defineStore("communication", {
         async startVoiceCall(number: string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url =  `${apiUrl}/twilo/call`
             try {
                 const res = await axios.post(url, {

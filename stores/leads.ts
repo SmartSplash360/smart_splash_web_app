@@ -49,7 +49,7 @@ export const useLeadStore = defineStore("lead", {
         async fetchLeads() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads`
             try {
                 const res = await axios.get(url);
@@ -62,7 +62,7 @@ export const useLeadStore = defineStore("lead", {
         async fetchLead(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads/${id}`
             try {
                 const res = await axios.get(url);
@@ -75,7 +75,7 @@ export const useLeadStore = defineStore("lead", {
         async createLead(leadPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads`
             try {
                 const res = await axios.post(url, leadPayload);
@@ -91,7 +91,7 @@ export const useLeadStore = defineStore("lead", {
         async updateLead(id: number | string, leadPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads/${id}`
             try {
                 const res = await axios.post(url, leadPayload);
@@ -106,7 +106,7 @@ export const useLeadStore = defineStore("lead", {
         async deleteLead(leadId: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads/${leadId}`
             try {
                 const res = await axios.delete(url);
@@ -125,7 +125,7 @@ export const useLeadStore = defineStore("lead", {
 
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
+
             let url = `${apiUrl}/leads/imports`
             try {
                 const formData = new FormData();
