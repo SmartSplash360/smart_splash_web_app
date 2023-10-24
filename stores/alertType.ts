@@ -33,6 +33,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertTypes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alertTypes`
             try {
                 const res = await axios.get(url);
@@ -45,6 +46,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async fetchAlertType(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alertTypes/${id}`
             try {
                 const res = await axios.get(url);
@@ -57,6 +59,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         async createAlertType(payload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alertTypes`
             try {
                 await axios.post(url, payload);

@@ -32,6 +32,7 @@ export const useAlertStore = defineStore("alert", {
         async fetchAlerts() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alerts`
             
             try {
@@ -45,6 +46,7 @@ export const useAlertStore = defineStore("alert", {
         async fetchAlert(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alerts/${id}`
             try {
                 const res = await axios.get(url);
@@ -57,6 +59,7 @@ export const useAlertStore = defineStore("alert", {
         async createAlert(alertPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url =  `${apiUrl}/alerts`
             try {
                 const res = await axios.post(url, alertPayload);
@@ -73,6 +76,7 @@ export const useAlertStore = defineStore("alert", {
         async updateAlert(alertId: number | string, alertPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+                        axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url =`${apiUrl}/alerts/${alertId}`
             try {
                 const res = await axios.post(url, alertPayload);
@@ -88,6 +92,7 @@ export const useAlertStore = defineStore("alert", {
         async deleteAlert(alertId: number | string){
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+                        axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/alerts/${alertId}`
             try {
                 const res = await axios.delete(url);

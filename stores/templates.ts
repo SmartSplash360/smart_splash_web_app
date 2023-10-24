@@ -58,6 +58,7 @@ export const useTemplateStore = defineStore("template", {
     async fetchTemplates() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/templates`
       try {
         const res = await axios.get(url);
@@ -70,6 +71,7 @@ export const useTemplateStore = defineStore("template", {
     async fetchTemplate(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/templates/${id}`
 
       try {
@@ -83,6 +85,7 @@ export const useTemplateStore = defineStore("template", {
     async createTemplate(templatePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/templates`
       try {
         const res = await axios.post(url, templatePayload);
@@ -98,6 +101,7 @@ export const useTemplateStore = defineStore("template", {
     async updateTemplate(id: number | string, templatePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/templates/${id}`
 
       try {
@@ -113,6 +117,7 @@ export const useTemplateStore = defineStore("template", {
     async deleteTemplate(templateId: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/templates/${templateId}`
 
       try {

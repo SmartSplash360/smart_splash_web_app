@@ -50,6 +50,7 @@ export const useNotificationStore = defineStore("notification", {
         async fetchNotifications() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/notifications`
             try {
                 const res = await axios.get(url);
@@ -62,6 +63,7 @@ export const useNotificationStore = defineStore("notification", {
         async fetchNotification(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/notifications/${id}`
             try {
                 const res = await axios.get(url);
@@ -74,6 +76,7 @@ export const useNotificationStore = defineStore("notification", {
         async createNotification(notificationPayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/notifications`
             try {
                 const res = await axios.post(url, notificationPayload);
@@ -91,6 +94,7 @@ export const useNotificationStore = defineStore("notification", {
         async deleteNotification(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/notifications/${id}`
             try {
                 const res = await axios.delete(url);

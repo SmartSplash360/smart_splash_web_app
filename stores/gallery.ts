@@ -50,6 +50,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/galleries`
 
         const formData = new FormData();
@@ -69,6 +70,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/galleries/${id}`
         const res = await axios.post(url , galleryPayload);
         if (!res.data.success) {
@@ -83,6 +85,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/galleries/${id}`
         const res = await axios.delete(url);
 

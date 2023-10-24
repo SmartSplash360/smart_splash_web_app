@@ -26,6 +26,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url =`${apiUrl}/poolSpecs`
         const res = await axios.get(url);
         return res.data.data.data;
@@ -38,6 +39,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/poolSpecs/${id}`
         const res = await axios.get(url);
         return res.data.data;
@@ -50,6 +52,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/poolSpecs`
         const res = await axios.post(url, poolSpecsPayload);
 
@@ -64,6 +67,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/poolSpecs/${id}`
         const res = await axios.post(url ,  poolSpecsPayload);
         if (!res.data.success) {
@@ -78,6 +82,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
         let url = `${apiUrl}/poolSpecs/${id}`
         const res = await axios.delete(url);
 

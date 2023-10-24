@@ -11,5 +11,6 @@ export default defineNuxtRouteMiddleware((to, _from) => {
         // set authorization header
         const jwt = store.getJwt;
         axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
     }
 });

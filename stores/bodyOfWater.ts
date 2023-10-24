@@ -34,6 +34,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodiesOfWaters() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url =  `${apiUrl}/bodyOfWater`
       try {
         const res = await axios.get(url);
@@ -45,6 +46,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url =  `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.get(url);
@@ -61,6 +63,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
 
       try {
         // create gallery
@@ -118,6 +121,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url =  `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.post(url,  payload);
@@ -138,6 +142,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async deleteBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
       let url = `${apiUrl}/bodyOfWater/${id}`
       try {
         const res = await axios.delete(url);

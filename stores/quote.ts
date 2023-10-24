@@ -48,6 +48,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchQuotes() {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/quotes`
             try {
                 const res = await axios.get(url);
@@ -59,6 +60,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchTechnicianQuotes(technicianId: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/quotes/byTechnician/${technicianId}`
             try {
                 const res = await axios.get(url);
@@ -71,6 +73,7 @@ export const useQuoteStore = defineStore("quote", {
         async fetchCustomerQuotes(customerId: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/quotes/byCustomer/${customerId}`
             try {
                 const res = await axios.get(url);
@@ -84,6 +87,7 @@ export const useQuoteStore = defineStore("quote", {
         async createQuote(quotePayload: any) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/quotes`
             try {
                 const res = await axios.post(url, quotePayload);

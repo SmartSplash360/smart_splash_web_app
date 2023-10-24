@@ -38,6 +38,7 @@ export const useReviewStore = defineStore("review", {
         async fetchReviewByTechnician(id: number | string) {
             const jwt = useUserStore().getJwt;
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+            axios.defaults.headers.post['Content-Type'] = 'application/json';
             let url = `${apiUrl}/reviews/byTechnician/${id}`
             try {
                 const res = await axios.get(url);
