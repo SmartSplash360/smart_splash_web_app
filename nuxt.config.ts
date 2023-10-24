@@ -3,15 +3,15 @@ const baseUrl = "/";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
+    googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID,
+    twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN,
+    twilioNumber: process.env.NUXT_PUBLIC_TWILIO_NUMBER,
+    twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID,
+    twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET,
     public: {
       apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co",
-      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "http://localhost:8000",
-      googleMapsApiKey: "",
-      twilioAccountSid: "",
-      twilioAuthToken: "",
-      twilioNumber: "",
-      twilioApiKeySid: "",
-      twilioApiKeySecret: "",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co",
     },
     pwa: {
       workbox: {
