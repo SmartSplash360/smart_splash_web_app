@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
 
-
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
@@ -14,10 +13,6 @@ const hostname = new URL(currentUrl).hostname;
 
 let apiUrl = requestUrl;
 
-if (hostname.includes('.')) {
-    apiUrl = `http://${hostname}:8000/api/v1`
-}
-
 export const usePoolSpecsStore = defineStore("poolSpecs", {
   state: () => ({}),
   getters: {},
@@ -26,8 +21,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url =`${apiUrl}/poolSpecs`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/poolSpecs`;
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -39,8 +34,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/poolSpecs/${id}`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/poolSpecs/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -52,8 +47,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/poolSpecs`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/poolSpecs`;
         const res = await axios.post(url, poolSpecsPayload);
 
         if (!res.data.success) {
@@ -67,9 +62,9 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/poolSpecs/${id}`
-        const res = await axios.post(url ,  poolSpecsPayload);
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/poolSpecs/${id}`;
+        const res = await axios.post(url, poolSpecsPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -82,8 +77,8 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/poolSpecs/${id}`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/poolSpecs/${id}`;
         const res = await axios.delete(url);
 
         if (!res.data.success) {

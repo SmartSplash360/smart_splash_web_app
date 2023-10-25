@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
 
-
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
@@ -14,10 +13,6 @@ const hostname = new URL(currentUrl).hostname;
 
 let apiUrl = requestUrl;
 
-if (hostname.includes('.')) {
-    apiUrl = `http://${hostname}:8000/api/v1`
-}
-
 export const useGalleryStore = defineStore("gallery", {
   state: () => ({}),
   getters: {},
@@ -26,7 +21,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = `${apiUrl}/galleries`
+        let url = `${apiUrl}/galleries`;
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
@@ -38,7 +33,7 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        let url = `${apiUrl}/galleries/${id}`
+        let url = `${apiUrl}/galleries/${id}`;
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
@@ -50,8 +45,8 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/galleries`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/galleries`;
 
         const formData = new FormData();
         formData.append("name", galleryPayload.name);
@@ -70,9 +65,9 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/galleries/${id}`
-        const res = await axios.post(url , galleryPayload);
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/galleries/${id}`;
+        const res = await axios.post(url, galleryPayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -85,8 +80,8 @@ export const useGalleryStore = defineStore("gallery", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        let url = `${apiUrl}/galleries/${id}`
+        axios.defaults.headers.post["Content-Type"] = "application/json";
+        let url = `${apiUrl}/galleries/${id}`;
         const res = await axios.delete(url);
 
         if (!res.data.success) {

@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
 
-
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
@@ -13,11 +12,6 @@ const currentUrl = window.location.href;
 const hostname = new URL(currentUrl).hostname;
 
 let apiUrl = requestUrl;
-
-if (hostname.includes('.')) {
-    apiUrl = `http://${hostname}:8000/api/v1`
-}
-
 
 export const useTemplateStore = defineStore("template", {
   persist: {
@@ -32,7 +26,9 @@ export const useTemplateStore = defineStore("template", {
       return state.templates;
     },
     getTemplateById: (state) => (id: number | string) => {
-      return state.templates.find((template: any) =>  template.id === Number(id));
+      return state.templates.find(
+        (template: any) => template.id === Number(id)
+      );
     },
     filteredTemplates: (state) => () => {
       const search = state.searchQuery.toLocaleLowerCase();
@@ -58,8 +54,8 @@ export const useTemplateStore = defineStore("template", {
     async fetchTemplates() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/templates`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/templates`;
       try {
         const res = await axios.get(url);
         this.templates = res.data.data.data;
@@ -71,8 +67,8 @@ export const useTemplateStore = defineStore("template", {
     async fetchTemplate(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/templates/${id}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/templates/${id}`;
 
       try {
         const res = await axios.get(url);
@@ -85,8 +81,8 @@ export const useTemplateStore = defineStore("template", {
     async createTemplate(templatePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/templates`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/templates`;
       try {
         const res = await axios.post(url, templatePayload);
 
@@ -101,11 +97,11 @@ export const useTemplateStore = defineStore("template", {
     async updateTemplate(id: number | string, templatePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/templates/${id}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/templates/${id}`;
 
       try {
-        const res = await axios.post(url,templatePayload);
+        const res = await axios.post(url, templatePayload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -117,8 +113,8 @@ export const useTemplateStore = defineStore("template", {
     async deleteTemplate(templateId: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/templates/${templateId}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/templates/${templateId}`;
 
       try {
         const res = await axios.delete(url);

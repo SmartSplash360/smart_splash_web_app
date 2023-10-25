@@ -1,4 +1,4 @@
-name: Deploy Nuxt3 to Firebase Hosting
+name: Deploy to Firebase Hosting
 
 on:
   push:
@@ -6,20 +6,27 @@ on:
       - staging
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - run: npm ci
-      - run: npm run build
-
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
-          projectId: smart-splash-360-391911
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run generate
+
+      - name: Deploy to Firebase Hosting
+        uses: w9jds/firebase-action@v1.5.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

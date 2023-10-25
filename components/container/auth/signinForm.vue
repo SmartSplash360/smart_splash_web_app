@@ -7,38 +7,58 @@
         class="h-full w-full"
       />
     </div>
-    <div class="w-full flex-col gap-3 flex mb-8">
+    <div class="mb-8 flex w-full flex-col gap-3">
       <h2 class="heading__h2 text-[30px]">Login</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="w-full flex flex-col gap-6">
+    <div class="flex w-full flex-col gap-6">
       <div class="flex flex-col gap-2">
+        <label for="domain">Domain</label>
         <InputText
           type="text"
-          class="w-full border-gray-300 rounded-md"
+          class="w-full rounded-md border-gray-300"
           :class="errorEmail && 'border-red-300'"
-          placeholder="Full name"
+          placeholder="Domain"
+          v-model="domain"
+          @blur="handleChangeEmail"
+        >
+        </InputText>
+        <p class="min-h-[20px]">
+          <span v-show="errorEmail" class="text-xs text-[#D42F24]">{{
+            errorEmail
+          }}</span>
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="domain">Email Address</label>
+        <InputText
+          type="text"
+          class="w-full rounded-md border-gray-300"
+          :class="errorEmail && 'border-red-300'"
+          placeholder="Email Address"
           v-model="email"
           @blur="handleChangeEmail"
         >
         </InputText>
         <p class="min-h-[20px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
+          <span v-show="errorEmail" class="text-xs text-[#D42F24]">{{
             errorEmail
           }}</span>
         </p>
       </div>
       <div class="flex flex-col gap-2">
+        <label for="domain">Password</label>
         <InputText
           type="password"
-          class="w-full border-gray-300 rounded-md"
+          class="w-full rounded-md border-gray-300"
           :class="errorPassword && 'border-red-300'"
           placeholder="Email Address"
           v-model="password"
-        >
-        </InputText>
+        />
+
         <p class="min-h-[20px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
+          <span v-show="errorPassword" class="text-xs text-[#D42F24]">{{
             errorPassword
           }}</span>
         </p>
@@ -48,7 +68,7 @@
       </p>
     </div>
 
-    <div class="w-full flex flex-col gap-3 mt-5">
+    <div class="mt-5 flex w-full flex-col gap-3">
       <Button
         @click="login()"
         label="Login"
@@ -60,7 +80,7 @@
           <nuxt-link to="/signup" class="text-[#4D6977]">Sign up</nuxt-link>
         </p>
       </div>
-      <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
+      <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
         <!-- <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>         -->
         <Button
           icon="pi pi-google"
@@ -104,10 +124,12 @@ const tenantStore = useTenantStore();
 
 const router = useRouter();
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const email = ref("test@test.com");
 const password = ref("password");
+const domain = ref("bisoconcept");
 
 const errorEmail = ref("");
 const errorPassword = ref("");

@@ -14,10 +14,6 @@ const hostname = new URL(currentUrl).hostname;
 
 let apiUrl = requestUrl;
 
-if (hostname.includes('.')) {
-    apiUrl = `http://${hostname}:8000/api/v1`
-}
-
 export const useBodyOfWaterStore = defineStore("bodyOfWater", {
   persist: {
     storage: persistedState.localStorage,
@@ -34,8 +30,8 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodiesOfWaters() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url =  `${apiUrl}/bodyOfWater`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/bodyOfWater`;
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data.data;
@@ -46,8 +42,8 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url =  `${apiUrl}/bodyOfWater/${id}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data;
@@ -63,12 +59,11 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
+      axios.defaults.headers.post["Content-Type"] = "application/json";
 
       try {
         // create gallery
         if (galleryPayload.length > 0) {
-
           const formData = new FormData();
           formData.append("name", payload?.name);
 
@@ -77,14 +72,13 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           });
 
           const headers = {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           };
-          let url =  `${apiUrl}/galleries`
+          let url = `${apiUrl}/galleries`;
 
-          const res = await axios.post(url, formData,{
-              headers
-            }
-          );
+          const res = await axios.post(url, formData, {
+            headers,
+          });
 
           // add gallery_id to body of water payload
 
@@ -96,7 +90,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         }
 
         // create pool
-        let url2 = `${apiUrl}/bodyOfWater`
+        let url2 = `${apiUrl}/bodyOfWater`;
         const res = await axios.post(url2, payload);
 
         if (!res.data.success) {
@@ -121,10 +115,10 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url =  `${apiUrl}/bodyOfWater/${id}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
-        const res = await axios.post(url,  payload);
+        const res = await axios.post(url, payload);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -142,8 +136,8 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async deleteBodyOfWater(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      let url = `${apiUrl}/bodyOfWater/${id}`
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
         const res = await axios.delete(url);
 
