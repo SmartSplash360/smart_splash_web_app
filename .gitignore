@@ -10,5 +10,4 @@ dist
 .DS_Store
 .fleet
 .idea
-package-lock.json
 yarn.lock
