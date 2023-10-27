@@ -265,7 +265,7 @@ async function registerUser() {
         email: email.value,
         password: password.value,
         password_confirmation: confirmPassword.value,
-        role: 4,
+        role_id: 3,
       };
       const res = await store.register(domain.value, userPayload);
       if (res?.errorMessage) {
@@ -286,6 +286,7 @@ async function registerUser() {
         await quoteStore.fetchQuotes();
 
         if (store.getCurrentUser) {
+          console.log(store.getCurrentUser);
           await menuStore.fetchMenuByRole(store.getCurrentUser.role_id);
         }
 

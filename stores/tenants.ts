@@ -58,13 +58,16 @@ export const useTenantStore = defineStore("tenant", {
     async fetchCurrentTenant() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      const tenantUrl = this.tenantDomain;
+
       if (this.tenantDomain) {
+        
         let url = `${this.tenantDomain}/tenant/getCurrent`;
+
         try {
           const res = await axios.get(url);
           this.currentTenant = res.data.data;
           this.currentTenantId = res.data.data.id;
+
           if (!res.data.success) {
             throw new Error(res.data.message);
           }
@@ -79,11 +82,12 @@ export const useTenantStore = defineStore("tenant", {
     async register(tenantPayload: {}) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
       try {
         const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
 
         if (res.data) {
-          window.location.href = `http://${res.data.data.domain.domain}:3000/customers`;
+          window.location.href = `https://${res.data.data.domain.domain}/signup`;
         }
       } catch (error) {
         throw new Error("An error");

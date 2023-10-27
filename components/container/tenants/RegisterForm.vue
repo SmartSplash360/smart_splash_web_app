@@ -125,7 +125,7 @@ const props = defineProps({
   user: Object,
 });
 
-const appDomain = config.public.appDomain;
+const appDomain = process.env.NUXT_PUBLIC_API_URL ?? "smartsplash.co";
 
 const toast = useToast();
 const router = useRouter();

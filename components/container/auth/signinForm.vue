@@ -84,7 +84,6 @@
         </p>
       </div>
       <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
-        <!-- <Button icon="pi pi-facebook" label="Continue with Facebook" class="w-full"/>         -->
         <Button
           icon="pi pi-google"
           label="Continue with Google"
