@@ -3,15 +3,15 @@ const baseUrl = "/";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
-    googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-    twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID,
-    twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN,
-    twilioNumber: process.env.NUXT_PUBLIC_TWILIO_NUMBER,
-    twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID,
-    twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET,
+    googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88",
+    twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID ?? "ACbc793767ab3f2c03c2866bbaba0c2ac4",
+    twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN ?? "cc68e8fb4f91f0f59778be66be9ce92f",
+    twilioNumber: process.env.NUXT_PUBLIC_TWILIO_NUMBER ?? "+12183355964",
+    twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID ?? "SKa0f5b4355ef1fb189300e7bea675e8be",
+    twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET ?? "hefumzrx5HCszAXLCwhUZUXgfAga8AOs",
     public: {
-      apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co",
-      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co",
+      apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co/api/v1",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage/",
     },
     pwa: {
       workbox: {
