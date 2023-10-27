@@ -7,6 +7,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
+const appDomain = config.public.appDomain;
 
 let apiUrl = requestUrl;
 
@@ -41,7 +42,7 @@ export const useTenantStore = defineStore("tenant", {
   actions: {
     async fetchTenantByWebsite(domain : string) {
       try {
-        const res = await axios.get(`${apiUrl}/tenant/getTenantByWebsite/${domain}.localhost`);
+        const res = await axios.get(`${apiUrl}/tenant/getTenantByWebsite/${domain}.${appDomain}`);
         
         if (!res.data.success) {
             throw new Error(res.data.message);

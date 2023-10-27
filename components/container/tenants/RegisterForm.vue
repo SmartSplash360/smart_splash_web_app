@@ -125,6 +125,8 @@ const props = defineProps({
   user: Object,
 });
 
+const appDomain = config.public.appDomain;
+
 const toast = useToast();
 const router = useRouter();
 
@@ -214,7 +216,8 @@ async function registerTenant() {
           name.value.replace(/\s/g, "") +
           "-smartsplash360" +
           Math.floor(Math.random() * (100 + 1)) +
-          ".localhost",
+          "." +
+          appDomain,
         owner: props.user.id,
         email: email.value,
         phone_number: phone.value,

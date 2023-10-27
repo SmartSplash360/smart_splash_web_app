@@ -7,6 +7,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
+const appDomain = config.public.appDomain
 
 let apiUrl = requestUrl;
 
@@ -58,7 +59,7 @@ export const useUserStore = defineStore("user", {
           ] = `Bearer ${res.data.data.token}`;
           
           if (domain) {
-            window.location.href = `http://${domain}.localhost:3000/customers`
+            window.location.href = `https://${domain}.${appDomain}.co/customers`
           }
           return res.data.data.user;
         } else {
