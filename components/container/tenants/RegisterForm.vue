@@ -212,8 +212,8 @@ async function registerTenant() {
         address: address.value,
         domain:
           name.value.replace(/\s/g, "") +
-          "smartsplash360" +
-          Math.floor(Math.random() * (10000 + 1)) +
+          "-smartsplash360" +
+          Math.floor(Math.random() * (100 + 1)) +
           ".localhost",
         owner: props.user.id,
         email: email.value,

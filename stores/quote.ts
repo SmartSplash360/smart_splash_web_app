@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useTenantStore } from './tenants';
 import { useUserStore } from "~/stores/users";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
@@ -8,8 +9,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -44,6 +44,11 @@ export const useQuoteStore = defineStore("quote", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/quotes`;
       try {
         const res = await axios.get(url);
@@ -55,6 +60,11 @@ export const useQuoteStore = defineStore("quote", {
     async fetchTechnicianQuotes(technicianId: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/quotes/byTechnician/${technicianId}`;
       try {
@@ -68,6 +78,11 @@ export const useQuoteStore = defineStore("quote", {
     async fetchCustomerQuotes(customerId: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/quotes/byCustomer/${customerId}`;
       try {
@@ -82,6 +97,11 @@ export const useQuoteStore = defineStore("quote", {
     async createQuote(quotePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/quotes`;
       try {

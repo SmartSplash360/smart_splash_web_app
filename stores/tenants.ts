@@ -8,10 +8,13 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
-
 let apiUrl = requestUrl;
+
+ function appendSubdomain(url:string, subdomain:string) {
+  const urlObject = new URL(url);
+  urlObject.hostname = `${subdomain}.${urlObject.hostname}`;
+  return urlObject.toString();
+}
 
 export const useTenantStore = defineStore("tenant", {
   persist: {
@@ -21,6 +24,7 @@ export const useTenantStore = defineStore("tenant", {
     loggedIn: false,
     currentTenant: null,
     currentTenantId: null,
+    tenantDomain: '',
     jwt: "",
   }),
   getters: {
@@ -35,21 +39,40 @@ export const useTenantStore = defineStore("tenant", {
     },
   },
   actions: {
+    async fetchTenantByWebsite(domain : string) {
+      try {
+        const res = await axios.get(`${apiUrl}/tenant/getTenantByWebsite/${domain}.localhost`);
+        
+        if (!res.data.success) {
+            throw new Error(res.data.message);
+        } else {
+          const subdomain = domain;          
+          this.tenantDomain =  appendSubdomain(apiUrl, subdomain);;
+        }
+
+      } catch (error) {
+        throw error;
+      }
+    },
     async fetchCurrentTenant() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-
-      let url = `${apiUrl}/tenant/getCurrent`;
-      try {
-        const res = await axios.get(url);
-        this.currentTenant = res.data.data;
-        this.currentTenantId = res.data.data.id;
-        if (!res.data.success) {
-          throw new Error(res.data.message);
+      const tenantUrl = this.tenantDomain;
+      if (this.tenantDomain) {
+        let url = `${this.tenantDomain}/tenant/getCurrent`;
+        try {
+          const res = await axios.get(url);
+          this.currentTenant = res.data.data;
+          this.currentTenantId = res.data.data.id;
+          if (!res.data.success) {
+            throw new Error(res.data.message);
+          }
+          return this.currentTenant;
+        } catch (error) {
+          throw new Error("An error");
         }
-        return this.currentTenant;
-      } catch (error) {
-        throw new Error("An error");
+      } else {
+        return null
       }
     },
     async register(tenantPayload: {}) {

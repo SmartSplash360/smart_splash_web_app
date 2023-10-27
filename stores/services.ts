@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useTenantStore } from './tenants';
 import { useUserStore } from "~/stores/users";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
@@ -8,8 +9,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -34,6 +34,11 @@ export const useServiceStore = defineStore("service", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/services`;
       try {
         const res = await axios.get(url);
@@ -47,6 +52,11 @@ export const useServiceStore = defineStore("service", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
+
         let url = `${apiUrl}/services/${id}`;
         const res = await axios.get(url);
         return res.data.data;
@@ -59,6 +69,11 @@ export const useServiceStore = defineStore("service", {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
+        
         let url = `${apiUrl}/services`;
         const res = await axios.post(url, servicePayload);
         this.createdServiceId = res.data.data.id;
@@ -74,6 +89,11 @@ export const useServiceStore = defineStore("service", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+       
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
 
         let url = `${apiUrl}/services/${id}`;
         const res = await axios.post(url, servicePayload);
@@ -90,7 +110,12 @@ export const useServiceStore = defineStore("service", {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-
+      
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
+        
         let url = `${apiUrl}/services/${id}`;
 
         const res = await axios.delete(url);
@@ -103,19 +128,29 @@ export const useServiceStore = defineStore("service", {
     async fechSubservicesByServiceId(id: string | number) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/subServices/getByService/${id}`;
       try {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+        throw error
       }
     },
     async createSubService(subServicePayload: any) {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
 
         let url = `${apiUrl}/subServices`;
         const res = await axios.post(url, {

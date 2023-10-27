@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useTenantStore } from './tenants';
 import { useUserStore } from "~/stores/users";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
@@ -8,8 +9,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -34,6 +34,11 @@ export const useTechnicianStore = defineStore("technician", {
     async fetchTechnicians() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/technicians`;
       try {
@@ -47,6 +52,11 @@ export const useTechnicianStore = defineStore("technician", {
     async fetchTechnician(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/technicians/${id}`;
 
@@ -61,6 +71,11 @@ export const useTechnicianStore = defineStore("technician", {
     async createTechnician(technicianPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/technicians`;
       try {
@@ -77,6 +92,11 @@ export const useTechnicianStore = defineStore("technician", {
     async updateTechnician(id: number | string, technicianPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/technicians/${id}`;
       try {
@@ -92,6 +112,11 @@ export const useTechnicianStore = defineStore("technician", {
     async deleteTechnician(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/technicians/${id}`;
 

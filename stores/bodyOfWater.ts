@@ -2,6 +2,8 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useUserStore } from "~/stores/users";
 import { usePoolSpecsStore } from "./poolSpecs";
+import { useTenantStore } from './tenants';
+
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -9,8 +11,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -30,7 +31,13 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
     async fetchBodiesOfWaters() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
       axios.defaults.headers.post["Content-Type"] = "application/json";
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/bodyOfWater`;
       try {
         const res = await axios.get(url);
@@ -43,6 +50,13 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+
       let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
         const res = await axios.get(url);
@@ -74,6 +88,11 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           const headers = {
             "Content-Type": "multipart/form-data",
           };
+          const tenantUrl = useTenantStore().tenantDomain;
+          if (tenantUrl) {
+            apiUrl = tenantUrl
+          }
+
           let url = `${apiUrl}/galleries`;
 
           const res = await axios.post(url, formData, {

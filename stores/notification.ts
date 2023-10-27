@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
+import { useTenantStore } from './tenants';
 import soundUrl from "~/assets/sound/notification.wav";
 
 const play = (frequency = 300, duration = 1e3) => {
@@ -20,8 +21,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -47,6 +47,11 @@ export const useNotificationStore = defineStore("notification", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/notifications`;
       try {
         const res = await axios.get(url);
@@ -60,6 +65,11 @@ export const useNotificationStore = defineStore("notification", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/notifications/${id}`;
       try {
         const res = await axios.get(url);
@@ -72,6 +82,11 @@ export const useNotificationStore = defineStore("notification", {
     async createNotification(notificationPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/notifications`;
       try {
@@ -90,6 +105,11 @@ export const useNotificationStore = defineStore("notification", {
     async deleteNotification(id: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/notifications/${id}`;
       try {

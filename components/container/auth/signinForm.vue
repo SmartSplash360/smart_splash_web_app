@@ -13,34 +13,35 @@
     </div>
     <div class="flex w-full flex-col gap-6">
       <div class="flex flex-col gap-2">
-        <label for="domain">Domain</label>
-        <InputText
-          type="text"
-          class="w-full rounded-md border-gray-300"
-          :class="errorEmail && 'border-red-300'"
-          placeholder="Domain"
-          v-model="domain"
-          @blur="handleChangeEmail"
-        >
-        </InputText>
+        <span class="p-float-label">
+          <InputText
+            type="text"
+            class="w-full rounded-md border-gray-300"
+            :class="errorDomain && 'border-red-300'"
+            v-model="domain"
+          >
+          </InputText>
+          <label for="domain">Domain</label>
+        </span>
         <p class="min-h-[20px]">
-          <span v-show="errorEmail" class="text-xs text-[#D42F24]">{{
-            errorEmail
+          <span v-show="errorDomain" class="text-xs text-[#D42F24]">{{
+            errorDomain
           }}</span>
         </p>
       </div>
 
       <div class="flex flex-col gap-2">
-        <label for="domain">Email Address</label>
-        <InputText
-          type="text"
-          class="w-full rounded-md border-gray-300"
-          :class="errorEmail && 'border-red-300'"
-          placeholder="Email Address"
-          v-model="email"
-          @blur="handleChangeEmail"
-        >
-        </InputText>
+        <span class="p-float-label">
+          <InputText
+            type="text"
+            class="w-full rounded-md border-gray-300"
+            :class="errorEmail && 'border-red-300'"
+            v-model="email"
+            @blur="handleChangeEmail"
+          >
+          </InputText>
+          <label for="email">Email Address</label>
+        </span>
         <p class="min-h-[20px]">
           <span v-show="errorEmail" class="text-xs text-[#D42F24]">{{
             errorEmail
@@ -48,14 +49,16 @@
         </p>
       </div>
       <div class="flex flex-col gap-2">
-        <label for="domain">Password</label>
-        <InputText
-          type="password"
-          class="w-full rounded-md border-gray-300"
-          :class="errorPassword && 'border-red-300'"
-          placeholder="Email Address"
-          v-model="password"
-        />
+        <span class="p-float-label">
+          <InputText
+            type="password"
+            class="w-full rounded-md border-gray-300"
+            :class="errorPassword && 'border-red-300'"
+            v-model="password"
+            @blur="handleChangePassword"
+          />
+          <label for="password">Password</label>
+        </span>
 
         <p class="min-h-[20px]">
           <span v-show="errorPassword" class="text-xs text-[#D42F24]">{{
@@ -108,7 +111,6 @@ import { useServiceStore } from "~/stores/services";
 import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
-import { useTenantStore } from "~/stores/tenants";
 
 const store = useUserStore();
 const customerStore = useCustomerStore();
@@ -120,69 +122,84 @@ const serviceStore = useServiceStore();
 const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
-const tenantStore = useTenantStore();
 
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 const router = useRouter();
 
-const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-const email = ref("test@test.com");
-const password = ref("password");
-const domain = ref("bisoconcept");
+const email = ref("");
+const password = ref("");
+const domain = ref("");
 
 const errorEmail = ref("");
+const errorDomain = ref("");
 const errorPassword = ref("");
 
 const toast = useToast();
 
+const handleChangedomain = () => {
+  errorDomain.value = useRequired({
+    fieldname: "website name",
+    field: domain.value,
+    error: errorDomain.value,
+  });
+};
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
+};
+const handleChangePassword = () => {
+  errorPassword.value = useRequired({
+    fieldname: "password",
+    field: password.value,
+    error: errorPassword.value,
+  });
 };
 
+const validateForm = () => {
+  // handleChangedomain();
+  handleChangeEmail();
+  handleChangePassword();
+  return !errorEmail.value && !errorPassword.value;
+};
 async function login() {
-  if (errorEmail.value) {
-    errorEmail.value = "Please provide a valid email";
-    return;
-  } else if (!password.value) {
-    errorPassword.value = "Please provide a password";
-    return;
-  }
+  if (validateForm()) {
+    try {
+      const user = await store.login(domain.value, email.value, password.value);
 
-  try {
-    const user = await store.login(email.value, password.value);
-    await tenantStore.fetchCurrentTenant();
-    await customerStore.fetchCustomers();
-    await alertStore.fetchAlerts();
-    await leadStore.fetchLeads();
-    await technicianStore.fetchTechnicians();
-    await productStore.fetchProducts();
-    await serviceStore.fetchServices();
-    await templateStore.fetchTemplates();
-    await quoteStore.fetchQuotes();
+      await customerStore.fetchCustomers();
+      await alertStore.fetchAlerts();
+      await leadStore.fetchLeads();
+      await technicianStore.fetchTechnicians();
+      await productStore.fetchProducts();
+      await serviceStore.fetchServices();
+      await templateStore.fetchTemplates();
+      await quoteStore.fetchQuotes();
 
-    if (user) {
-      await menuStore.fetchMenuByRole(user.role_id);
+      if (user) {
+        await menuStore.fetchMenuByRole(user.role_id);
+      }
+
+      await router.push("/customers");
+      toast.add({
+        severity: "success",
+        summary: "Login Success",
+        detail: "You have been logged in successfully",
+        life: 5000,
+      });
+    } catch (e) {
+      toast.add({
+        severity: "error",
+        summary: "Login Error",
+        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
+        life: 5000,
+      });
     }
-
-    await router.push("/customers");
-    toast.add({
-      severity: "success",
-      summary: "Login Success",
-      detail: "You have been logged in successfully",
-      life: 5000,
-    });
-  } catch (e) {
-    toast.add({
-      severity: "error",
-      summary: "Login Error",
-      detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-      life: 5000,
-    });
   }
 }
 </script>

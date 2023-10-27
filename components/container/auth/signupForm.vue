@@ -7,7 +7,25 @@
         class="h-full w-full"
       />
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-9">
+    <div class="w-full lg:w-5/6 flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <span class="p-float-label">
+          <InputText
+            type="text"
+            class="w-full rounded-md border-gray-300"
+            :class="errorDomain && 'border-red-300'"
+            v-model="domain"
+          >
+          </InputText>
+          <label for="domain">Domain</label>
+        </span>
+        <p class="min-h-[20px]">
+          <span v-show="errorDomain" class="text-xs text-[#D42F24]">{{
+            errorDomain
+          }}</span>
+        </p>
+      </div>
+
       <div class="flex flex-col gap-1">
         <span class="p-float-label">
           <InputText
@@ -146,8 +164,11 @@ import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 const toast = useToast();
 const router = useRouter();
 
@@ -162,43 +183,57 @@ const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
 
+const domain = ref("");
 const firstName = ref("");
-const firstNameError = ref(false);
-
 const lastName = ref("");
-const lastNameError = ref("");
-
 const email = ref("");
-const emailError = ref("");
-
 const password = ref("");
-const passwordError = ref("");
-
 const confirmPassword = ref("");
-const confirmPasswordError = ref("");
 
+const emailError = ref("");
+const firstNameError = ref(false);
+const lastNameError = ref("");
+const passwordError = ref("");
+const errorDomain = ref("");
 const errorFirstame = ref("");
 const errorLastname = ref("");
 const errorEmail = ref("");
 const errorPassword = ref("");
 
+const handleChangedomain = () => {
+  errorDomain.value = useRequired({
+    fieldname: "website name",
+    field: domain.value,
+    error: errorDomain.value,
+  });
+};
+
 const handleChangeFirstname = () => {
-  errorFirstame.value = firstName.value
-    ? ""
-    : "The first name field is required";
+  errorFirstame.value = useRequired({
+    fieldname: "firstname",
+    field: firstName.value,
+    error: errorFirstame.value,
+  });
 };
 const handleChangeLastname = () => {
-  errorLastname.value = lastName.value ? "" : "The last name field is required";
+  errorLastname.value = useRequired({
+    fieldname: "lastName",
+    field: lastName.value,
+    error: errorLastname.value,
+  });
 };
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
 };
 const handleChangePassword = () => {
-  errorPassword.value = !password.value ? "Please provide a password" : "";
+  errorPassword.value = useRequired({
+    fieldname: "password",
+    field: password.value,
+    error: errorPassword.value,
+  });
 };
 const handleChangePasswordMatching = () => {
   errorPassword.value = confirmPassword.value
@@ -232,7 +267,7 @@ async function registerUser() {
         password_confirmation: confirmPassword.value,
         role: 4,
       };
-      const res = await store.register(userPayload);
+      const res = await store.register(domain.value, userPayload);
       if (res?.errorMessage) {
         toast.add({
           severity: "error",
