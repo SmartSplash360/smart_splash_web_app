@@ -7,11 +7,13 @@
         class="h-full w-full"
       />
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-6">
+    <div class="w-full lg:w-5/6 flex flex-col gap-8">
       <div class="flex flex-col gap-2">
         <div class="flex items-center gap-4">
           <span class="w-1/2 flex flex-col gap-2">
-            <label class="span__element" for="domain">Subdomain</label>
+            <label class="span__element text-[12px] leading-none" for="domain"
+              >Subdomain</label
+            >
             <InputText
               type="text"
               class="w-full rounded-md border-gray-300"
@@ -21,7 +23,8 @@
             </InputText>
           </span>
           <span class="w-1/2 flex flex-col gap-2">
-            <label class="span__element" for="domain">Domain</label
+            <label class="span__element text-[12px] leading-none" for="domain"
+              >Domain</label
             ><InputText
               disabled
               type="text"
@@ -32,15 +35,21 @@
           ></span>
         </div>
         <p class="min-h-[20px]">
-          <span v-show="errorDomain" class="text-xs text-[#D42F24]">{{
-            errorDomain
-          }}</span>
+          <span
+            v-show="errorDomain"
+            class="text-[10px] space-x-8 text-[#D42F24]"
+            >{{ errorDomain }}</span
+          >
         </p>
       </div>
       <div class="flex items-center gap-4 -mt-2">
         <div class="w-full flex flex-col gap-1">
           <span class="w-full flex flex-col gap-2">
-            <label class="span__element" for="firstName">First name</label>
+            <label
+              class="span__element text-[12px] leading-none"
+              for="firstName"
+              >First name</label
+            >
             <InputText
               id="firstName"
               v-model="firstName"
@@ -51,14 +60,18 @@
             </InputText>
           </span>
           <p class="h-[4px]">
-            <span v-show="errorFirstame" class="text-[#D42F24] text-xs">{{
-              errorFirstame
-            }}</span>
+            <span
+              v-show="errorFirstame"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorFirstame }}</span
+            >
           </p>
         </div>
         <div class="w-full flex flex-col gap-1">
           <span class="w-full flex flex-col gap-2">
-            <label class="span__element" for="lastName">Last name</label>
+            <label class="span__element text-[12px] leading-none" for="lastName"
+              >Last name</label
+            >
             <InputText
               id="lastName"
               v-model="lastName"
@@ -69,15 +82,19 @@
             </InputText>
           </span>
           <p class="h-[4px]">
-            <span v-show="errorLastname" class="text-[#D42F24] text-xs">{{
-              errorLastname
-            }}</span>
+            <span
+              v-show="errorLastname"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorLastname }}</span
+            >
           </p>
         </div>
       </div>
       <div class="w-full flex flex-col gap-1">
         <span class="w-full flex flex-col gap-2">
-          <label class="span__element" for="email">Email</label>
+          <label class="span__element text-[12px] leading-none" for="email"
+            >Email</label
+          >
           <InputText
             id="email"
             v-model="email"
@@ -88,14 +105,18 @@
           </InputText>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
-            errorEmail
-          }}</span>
+          <span
+            v-show="errorEmail"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorEmail }}</span
+          >
         </p>
       </div>
       <div class="w-full flex flex-col gap-1">
         <span class="w-full flex flex-col gap-2">
-          <label class="span__element" for="password">Password</label>
+          <label class="span__element text-[12px] leading-none" for="password"
+            >Password</label
+          >
           <InputText
             id="password"
             type="password"
@@ -107,14 +128,18 @@
           </InputText>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
+          <span
+            v-show="errorPassword"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorPassword }}</span
+          >
         </p>
       </div>
       <div class="w-full flex flex-col gap-1">
         <span class="w-full flex flex-col gap-2">
-          <label class="span__element" for="confirmedPassword"
+          <label
+            class="span__element text-[12px] leading-none"
+            for="confirmedPassword"
             >Confirm Password</label
           >
           <InputText
@@ -128,9 +153,11 @@
           </InputText>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
+          <span
+            v-show="errorPassword"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorPassword }}</span
+          >
         </p>
       </div>
     </div>
@@ -146,13 +173,13 @@
           <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
         </p>
       </div>
-      <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
+      <!-- <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
         <Button
           icon="pi pi-google"
           label="Continue with Google"
           class="w-full"
         />
-      </div>
+      </div> -->
     </div>
     <Toast />
   </form>
