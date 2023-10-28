@@ -37,16 +37,9 @@
             </InputText
           ></span>
         </div>
-        <p class="min-h-[20px]">
-          <span
-            v-show="errorDomain"
-            class="text-[#D42F24] text-[10px] space-x-8"
-            >{{ errorDomain }}</span
-          >
-        </p>
       </div>
 
-      <div class="flex flex-col gap-2 -mt-3">
+      <div class="flex flex-col gap-2">
         <span class="flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="email"
             >Email Address</label
@@ -107,13 +100,13 @@
           <nuxt-link to="/signup" class="text-[#4D6977]">Sign up</nuxt-link>
         </p>
       </div>
-      <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
+      <!-- <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
         <Button
           icon="pi pi-google"
           label="Continue with Google"
           class="w-full"
         />
-      </div>
+      </div> -->
       <Toast />
     </div>
   </form>

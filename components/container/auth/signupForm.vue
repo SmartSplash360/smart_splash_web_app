@@ -17,7 +17,6 @@
             <InputText
               type="text"
               class="w-full rounded-md border-gray-300"
-              :class="errorDomain && 'border-red-300'"
               v-model="domain"
             >
             </InputText>
@@ -34,15 +33,8 @@
             </InputText
           ></span>
         </div>
-        <p class="min-h-[20px]">
-          <span
-            v-show="errorDomain"
-            class="text-[10px] space-x-8 text-[#D42F24]"
-            >{{ errorDomain }}</span
-          >
-        </p>
       </div>
-      <div class="flex items-center gap-4 -mt-2">
+      <div class="flex flex-col lg:flex-row gap-8 items-center lg:gap-4 -mt-2">
         <div class="w-full flex flex-col gap-1">
           <span class="w-full flex flex-col gap-2">
             <label
@@ -231,19 +223,10 @@ const emailError = ref("");
 const firstNameError = ref(false);
 const lastNameError = ref("");
 const passwordError = ref("");
-const errorDomain = ref("");
 const errorFirstame = ref("");
 const errorLastname = ref("");
 const errorEmail = ref("");
 const errorPassword = ref("");
-
-const handleChangedomain = () => {
-  errorDomain.value = useRequired({
-    fieldname: "website name",
-    field: domain.value,
-    error: errorDomain.value,
-  });
-};
 
 const handleChangeFirstname = () => {
   errorFirstame.value = useRequired({
@@ -323,7 +306,6 @@ async function registerUser() {
         await quoteStore.fetchQuotes();
 
         if (store.getCurrentUser) {
-          console.log(store.getCurrentUser);
           await menuStore.fetchMenuByRole(store.getCurrentUser.role_id);
         }
 
