@@ -13,30 +13,25 @@
     </div>
     <div class="flex w-full flex-col gap-4">
       <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-4">
-          <span class="w-1/2 flex flex-col gap-2">
-            <label class="span__element text-[12px] leading-none" for="domain"
-              >Subdomain</label
-            >
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="domain"
+            >Domain</label
+          >
+          <div class="flex">
             <InputText
               type="text"
-              class="w-full rounded-md border-gray-300"
+              class="w-full rounded-tl-md rounded-bl-md border-gray-300"
               v-model="domain"
             >
-            </InputText>
-          </span>
-          <span class="w-1/2 flex flex-col gap-2">
-            <label class="span__element text-[12px] leading-none" for="domain"
-              >Domain</label
-            ><InputText
+            </InputText
+            ><input
               disabled
               type="text"
-              class="rounded-md border-gray-300"
-              placeholder="smartsplash.co"
-            >
-            </InputText
-          ></span>
-        </div>
+              class="w-fit rounded-tr-md rounded-br-md border-gray-300 bg-gray-100 border-l-0"
+              placeholder=".smartsplash.co"
+            />
+          </div>
+        </span>
       </div>
 
       <div class="flex flex-col gap-2">
