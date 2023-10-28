@@ -9,61 +9,75 @@
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-6">
       <div class="flex flex-col gap-2">
-        <span class="p-float-label">
-          <InputText
-            type="text"
-            class="w-full rounded-md border-gray-300"
-            :class="errorDomain && 'border-red-300'"
-            v-model="domain"
-          >
-          </InputText>
-          <label for="domain">Domain</label>
-        </span>
+        <div class="flex items-center gap-4">
+          <span class="w-1/2 flex flex-col gap-2">
+            <label class="span__element" for="domain">Subdomain</label>
+            <InputText
+              type="text"
+              class="w-full rounded-md border-gray-300"
+              :class="errorDomain && 'border-red-300'"
+              v-model="domain"
+            >
+            </InputText>
+          </span>
+          <span class="w-1/2 flex flex-col gap-2">
+            <label class="span__element" for="domain">Domain</label
+            ><InputText
+              disabled
+              type="text"
+              class="rounded-md border-gray-300"
+              placeholder="smartsplash.co"
+            >
+            </InputText
+          ></span>
+        </div>
         <p class="min-h-[20px]">
           <span v-show="errorDomain" class="text-xs text-[#D42F24]">{{
             errorDomain
           }}</span>
         </p>
       </div>
-
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
-          <InputText
-            id="firstName"
-            v-model="firstName"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorFirstame && 'border-red-300'"
-            @blur="handleChangeFirstname"
-          >
-          </InputText>
-          <label for="firstName">First name</label>
-        </span>
-        <p class="h-[4px]">
-          <span v-show="errorFirstame" class="text-[#D42F24] text-xs">{{
-            errorFirstame
-          }}</span>
-        </p>
+      <div class="flex items-center gap-4 -mt-2">
+        <div class="w-full flex flex-col gap-1">
+          <span class="w-full flex flex-col gap-2">
+            <label class="span__element" for="firstName">First name</label>
+            <InputText
+              id="firstName"
+              v-model="firstName"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorFirstame && 'border-red-300'"
+              @blur="handleChangeFirstname"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span v-show="errorFirstame" class="text-[#D42F24] text-xs">{{
+              errorFirstame
+            }}</span>
+          </p>
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <span class="w-full flex flex-col gap-2">
+            <label class="span__element" for="lastName">Last name</label>
+            <InputText
+              id="lastName"
+              v-model="lastName"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorLastname && 'border-red-300'"
+              @blur="handleChangeLastname"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span v-show="errorLastname" class="text-[#D42F24] text-xs">{{
+              errorLastname
+            }}</span>
+          </p>
+        </div>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
-          <InputText
-            id="lastName"
-            v-model="lastName"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorLastname && 'border-red-300'"
-            @blur="handleChangeLastname"
-          >
-          </InputText>
-          <label for="lastName">Last name</label>
-        </span>
-        <p class="h-[4px]">
-          <span v-show="errorLastname" class="text-[#D42F24] text-xs">{{
-            errorLastname
-          }}</span>
-        </p>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element" for="email">Email</label>
           <InputText
             id="email"
             v-model="email"
@@ -72,7 +86,6 @@
             @blur="handleChangeEmail"
           >
           </InputText>
-          <label for="email">Email</label>
         </span>
         <p class="h-[4px]">
           <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
@@ -80,8 +93,9 @@
           }}</span>
         </p>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element" for="password">Password</label>
           <InputText
             id="password"
             type="password"
@@ -91,7 +105,6 @@
             @blur="handleChangePassword"
           >
           </InputText>
-          <label for="password">Password</label>
         </span>
         <p class="h-[4px]">
           <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
@@ -99,8 +112,11 @@
           }}</span>
         </p>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element" for="confirmedPassword"
+            >Confirm Password</label
+          >
           <InputText
             id="confirmedPassword"
             type="password"
@@ -110,7 +126,6 @@
             @blur="handleChangePasswordMatching"
           >
           </InputText>
-          <label for="confirmedPassword">Confirm Password</label>
         </span>
         <p class="h-[4px]">
           <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
@@ -132,11 +147,6 @@
         </p>
       </div>
       <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
-        <Button
-          icon="pi pi-facebook"
-          label="Continue with Facebook"
-          class="w-full bg-[#3B5998] text-white"
-        />
         <Button
           icon="pi pi-google"
           label="Continue with Google"

@@ -11,18 +11,30 @@
       <h2 class="heading__h2 text-[30px]">Login</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="flex w-full flex-col gap-6">
+    <div class="flex w-full flex-col gap-4">
       <div class="flex flex-col gap-2">
-        <span class="p-float-label">
-          <InputText
-            type="text"
-            class="w-full rounded-md border-gray-300"
-            :class="errorDomain && 'border-red-300'"
-            v-model="domain"
-          >
-          </InputText>
-          <label for="domain">Domain</label>
-        </span>
+        <div class="flex items-center gap-4">
+          <span class="w-1/2 flex flex-col gap-2">
+            <label class="span__element" for="domain">Subdomain</label>
+            <InputText
+              type="text"
+              class="w-full rounded-md border-gray-300"
+              :class="errorDomain && 'border-red-300'"
+              v-model="domain"
+            >
+            </InputText>
+          </span>
+          <span class="w-1/2 flex flex-col gap-2">
+            <label class="span__element" for="domain">Domain</label
+            ><InputText
+              disabled
+              type="text"
+              class="rounded-md border-gray-300"
+              placeholder="smartsplash.co"
+            >
+            </InputText
+          ></span>
+        </div>
         <p class="min-h-[20px]">
           <span v-show="errorDomain" class="text-xs text-[#D42F24]">{{
             errorDomain
@@ -30,8 +42,9 @@
         </p>
       </div>
 
-      <div class="flex flex-col gap-2">
-        <span class="p-float-label">
+      <div class="flex flex-col gap-2 -mt-3">
+        <span class="flex flex-col gap-2">
+          <label class="span__element" for="email">Email Address</label>
           <InputText
             type="text"
             class="w-full rounded-md border-gray-300"
@@ -40,7 +53,6 @@
             @blur="handleChangeEmail"
           >
           </InputText>
-          <label for="email">Email Address</label>
         </span>
         <p class="min-h-[20px]">
           <span v-show="errorEmail" class="text-xs text-[#D42F24]">{{
@@ -49,7 +61,8 @@
         </p>
       </div>
       <div class="flex flex-col gap-2">
-        <span class="p-float-label">
+        <span class="flex flex-col gap-2">
+          <label class="span__element" for="password">Password</label>
           <InputText
             type="password"
             class="w-full rounded-md border-gray-300"
@@ -57,7 +70,6 @@
             v-model="password"
             @blur="handleChangePassword"
           />
-          <label for="password">Password</label>
         </span>
 
         <p class="min-h-[20px]">

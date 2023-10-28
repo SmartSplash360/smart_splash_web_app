@@ -41,6 +41,7 @@ export const useUserStore = defineStore("user", {
   },
   actions: {
     async login(domain: string, email: string, password: string) {
+      console.log(domain, appDomain)
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
@@ -58,7 +59,7 @@ export const useUserStore = defineStore("user", {
             "Authorization"
           ] = `Bearer ${res.data.data.token}`;
           
-          if (domain) {
+          if (domain && domain !== appDomain) {
             window.location.href = `https://${domain}.${appDomain}/customers`
           }
           return res.data.data.user;
@@ -70,7 +71,7 @@ export const useUserStore = defineStore("user", {
       }
     },
     async register(domain: string, userPayload: {}) {
-      if (domain) {
+      if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
       }
