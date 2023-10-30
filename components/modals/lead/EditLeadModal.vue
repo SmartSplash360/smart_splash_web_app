@@ -67,7 +67,7 @@
             <option value="3">Stage 3</option>
           </select>
         </div>
-        <div class="hidden flex-col gap-2">
+        <div class="flex-col gap-2">
           <label class="span__element text-sm" for="cell number">
             Notes
           </label>
