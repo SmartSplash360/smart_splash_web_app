@@ -80,14 +80,15 @@ export const useTenantStore = defineStore("tenant", {
       }
     },
     async register(tenantPayload: {}) {
+      console.log(tenantPayload)
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
       try {
         const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
 
-        if (res.data) {
-          window.location.href = `https://${res.data.data.domain.domain}/signup`;
+        if (!res.data.success) {
+          throw new Error()
         }
       } catch (error) {
         throw new Error("An error");

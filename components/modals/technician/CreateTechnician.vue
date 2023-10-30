@@ -90,45 +90,7 @@
         </label>
         <InputSwitch v-model="status" />
       </div>
-      <div
-        v-if="!technician"
-        class="flex flex-col justify-between gap-5 sm:flex-row"
-      >
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element" for="name"> Password* </label>
-          <InputText
-            type="password"
-            v-model="password"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-            :class="errorPassword && 'border-red-300'"
-            @blur="handleChangePassword"
-          >
-          </InputText>
-          <p class="min-h-[20px]">
-            <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-              errorPassword
-            }}</span>
-          </p>
-        </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="span__element" for="name">
-            Password Confirmation*
-          </label>
-          <InputText
-            type="password"
-            v-model="passwordConfirmation"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-            :class="errorPassword && 'border-red-300'"
-            @blur="handleChangePasswordMatching"
-          >
-          </InputText>
-          <p class="min-h-[20px]">
-            <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-              errorPassword
-            }}</span>
-          </p>
-        </div>
-      </div>
+
       <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
         <Button
           label="Cancel"
@@ -168,8 +130,6 @@ const name = ref("");
 const surname = ref("");
 const email = ref("");
 const phoneNumber = ref("");
-const password = ref("");
-const passwordConfirmation = ref("");
 const company = ref("1");
 const status = ref(true);
 
@@ -177,7 +137,6 @@ const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
 const errorPhoneNumber = ref("");
-const errorPassword = ref("");
 
 const handleChangeName = () => {
   errorName.value = useRequired({
@@ -205,20 +164,6 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber,
   });
 };
-const handleChangePassword = () => {
-  errorPassword.value = useRequired({
-    fieldname: "Password",
-    field: password.value,
-    error: errorPassword.value,
-  });
-};
-const handleChangePasswordMatching = () => {
-  errorPassword.value = passwordConfirmation.value
-    ? password.value !== passwordConfirmation.value
-      ? "Please provide matching password"
-      : ""
-    : "The password fields are required";
-};
 
 onMounted(() => {
   if (technician) {
@@ -235,14 +180,11 @@ const validateForm = () => {
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
-  handleChangePassword();
-  handleChangePasswordMatching();
   return (
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value &&
-    errorPassword
+    !errorPhoneNumber.value
   );
 };
 const createTechnician = async () => {
@@ -253,8 +195,6 @@ const createTechnician = async () => {
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-        password: password.value,
-        password_confirmation: passwordConfirmation.value,
         company: company.value,
       });
       toggleAddTechnicianModal({ success: "Technician created successfully" });

@@ -55,7 +55,7 @@
           :toggleNotificationModal="toggleNotificationModal"
         ></ModalsNotificationViewNotification>
         <span
-          class="relative flex-between cursor-pointer"
+          class="hidden relative flex-between cursor-pointer"
           @click="handleNotification"
         >
           <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
@@ -90,7 +90,6 @@
               />
             </span>
             <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-            <!-- <Toast /> -->
             <ContextMenu ref="menu" :model="items" />
           </div>
         </div>
@@ -224,13 +223,6 @@ const menuListItem = menuStore.getMenu;
 
 const items = ref([
   {
-    label: "My Profile",
-    icon: "pi pi-user",
-    command: () => {
-      router.push("/customers/my-profile");
-    },
-  },
-  {
     label: "Logout",
     icon: "pi pi-sign-out",
     command: () => signout(),
@@ -256,8 +248,22 @@ onMounted(async () => {
     menuList.value = menuListAdmin;
   } else if (user.value.role_id === 2 || user.value.role_id === 3) {
     menuList.value = menuListCustomer;
+    items.value.push({
+      label: "My Profile",
+      icon: "pi pi-user",
+      command: () => {
+        router.push("/customers/my-profile");
+      },
+    });
   } else if (user.value.role_id === 4) {
     menuList.value = menuListTechnicina;
+    items.value.push({
+      label: "My Profile",
+      icon: "pi pi-user",
+      command: () => {
+        router.push("/technicians/my-profile");
+      },
+    });
   }
 });
 

@@ -1,7 +1,5 @@
 <template>
-  <form
-    class="flex flex-col items-center gap-6 py-5 lg:py-10 sm:gap-4 xl:px-20"
-  >
+  <form class="flex flex-col items-center gap-6 py-5 sm:gap-4 xl:px-20">
     <div class="w-[250px] h-[99px] lg:h-[125px] lg:w-[300px]">
       <img
         :src="SmartPlashLogo"
@@ -12,7 +10,10 @@
     <div class="w-full lg:w-5/6 flex flex-col gap-6">
       <h3 class="heading__h3 font-bold py-4">Create a Compagny</h3>
       <div class="flex flex-col gap-2 w-full">
-        <span class="p-float-label">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="email"
+            >Email</label
+          >
           <InputText
             id="email"
             v-model="email"
@@ -20,7 +21,6 @@
             :class="errorEmail && 'border-red-300'"
             @blur="handleChangeEmail"
           />
-          <label for="email">Email</label>
         </span>
         <p class="min-h-[10px]">
           <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
@@ -29,7 +29,10 @@
         </p>
       </div>
       <div class="flex flex-col gap-2 w-full">
-        <span class="p-float-label">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="phone"
+            >Phone</label
+          >
           <InputText
             id="phone"
             v-model="phone"
@@ -37,7 +40,6 @@
             :class="errorPhoneNumber && 'border-red-300'"
             @blur="handleChangePhoneNumber"
           />
-          <label for="phone">Phone</label>
         </span>
         <p class="min-h-[10px]">
           <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
@@ -46,7 +48,10 @@
         </p>
       </div>
       <div class="flex flex-col gap-2 w-full">
-        <span class="p-float-label">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="phone"
+            >Address</label
+          >
           <InputText
             id="address"
             v-model="address"
@@ -54,7 +59,6 @@
             :class="errorAddress && 'border-red-300'"
             @blur="handleChangeAddress"
           />
-          <label for="phone">Address</label>
         </span>
         <p class="min-h-[10px]">
           <span v-show="errorAddress" class="text-[#D42F24] text-xs">{{
@@ -63,7 +67,10 @@
         </p>
       </div>
       <div class="flex flex-col gap-2 w-full">
-        <span class="p-float-label">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="name"
+            >Name</label
+          >
           <InputText
             id="name"
             v-model="name"
@@ -71,7 +78,6 @@
             :class="errorName && 'border-red-300'"
             @blur="handleChangeName"
           />
-          <label for="name">Name</label>
         </span>
         <p class="min-h-[10px]">
           <span v-show="errorName" class="text-[#D42F24] text-xs">{{
@@ -80,16 +86,18 @@
         </p>
       </div>
       <div class="flex flex-col gap-2 w-full">
-        <span class="p-float-label">
-          <InputText
-            id="website"
-            v-model="website"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorWebsite && 'border-red-300'"
-            @blur="handleChangeWebsite"
-          />
-          <label for="website">Website</label>
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="website"
+            >Website</label
+          >
         </span>
+        <InputText
+          id="website"
+          v-model="website"
+          class="w-full border-gray-300 rounded-md"
+          :class="errorWebsite && 'border-red-300'"
+          @blur="handleChangeWebsite"
+        />
         <p class="min-h-[10px]">
           <span v-show="errorWebsite" class="text-[#D42F24] text-xs">{{
             errorWebsite
@@ -112,13 +120,6 @@ import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import { useTenantStore } from "~/stores/tenants";
-import { useCustomerStore } from "~/stores/customer";
-import { useLeadStore } from "~/stores/leads";
-import { useAlertStore } from "~/stores/alert";
-import { useTechnicianStore } from "~/stores/technician";
-import { useProductStore } from "~/stores/products";
-import { useServiceStore } from "~/stores/services";
-import { useTemplateStore } from "~/stores/templates";
 import { useToast } from "primevue/usetoast";
 
 const props = defineProps({
@@ -131,13 +132,6 @@ const toast = useToast();
 const router = useRouter();
 
 const store = useTenantStore();
-const leadStore = useLeadStore();
-const alertStore = useAlertStore();
-const serviceStore = useServiceStore();
-const productStore = useProductStore();
-const customerStore = useCustomerStore();
-const templateStore = useTemplateStore();
-const technicianStore = useTechnicianStore();
 
 const {
   useRequired,
@@ -212,12 +206,7 @@ async function registerTenant() {
       // TODO: add validation
       const tenantPayload = {
         address: address.value,
-        domain:
-          name.value.replace(/\s/g, "") +
-          "-smartsplash360" +
-          Math.floor(Math.random() * (100 + 1)) +
-          "." +
-          appDomain,
+        domain: name.value.replace(/\s/g, "") + "." + appDomain,
         owner: props.user.id,
         email: email.value,
         phone_number: phone.value,
@@ -227,19 +216,13 @@ async function registerTenant() {
       };
 
       await store.register(tenantPayload);
-      await customerStore.fetchCustomers();
-      await alertStore.fetchAlerts();
-      await leadStore.fetchLeads();
-      await technicianStore.fetchTechnicians();
-      await productStore.fetchProducts();
-      await serviceStore.fetchServices();
-      await templateStore.fetchTemplates();
 
       toast.add({
         severity: "success",
         summary: "Register Tenant success",
-        detail: "Tenant registration succeeded",
-        life: 3000,
+        detail:
+          "Tenant registration succeeded, you can register in your domain",
+        life: 6000,
       });
 
       router.push("/");

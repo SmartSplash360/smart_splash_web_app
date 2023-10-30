@@ -69,9 +69,9 @@ const handleSearch = (value) => {
 }
 @media (min-width: 1444px) {
   .card-container {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    row-gap: 80px;
-    column-gap: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    row-gap: 50px;
+    column-gap: 30px;
   }
 }
 </style>

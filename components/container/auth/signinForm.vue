@@ -7,7 +7,7 @@
         class="h-full w-full"
       />
     </div>
-    <div class="mb-8 flex w-full flex-col gap-3">
+    <div class="mb-5 flex w-full flex-col gap-3">
       <h2 class="heading__h2 text-[30px]">Login</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
@@ -117,10 +117,6 @@ import { useCustomerStore } from "~/stores/customer";
 import { useLeadStore } from "~/stores/leads";
 import { useAlertStore } from "~/stores/alert";
 import { useTechnicianStore } from "~/stores/technician";
-import { useProductStore } from "~/stores/products";
-import { useServiceStore } from "~/stores/services";
-import { useTemplateStore } from "~/stores/templates";
-import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
 
 const store = useUserStore();
@@ -128,10 +124,6 @@ const customerStore = useCustomerStore();
 const alertStore = useAlertStore();
 const leadStore = useLeadStore();
 const technicianStore = useTechnicianStore();
-const productStore = useProductStore();
-const serviceStore = useServiceStore();
-const templateStore = useTemplateStore();
-const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
 
 const {
@@ -178,16 +170,12 @@ async function login() {
       await alertStore.fetchAlerts();
       await leadStore.fetchLeads();
       await technicianStore.fetchTechnicians();
-      await productStore.fetchProducts();
-      await serviceStore.fetchServices();
-      await templateStore.fetchTemplates();
-      await quoteStore.fetchQuotes();
 
       if (user) {
         await menuStore.fetchMenuByRole(user.role_id);
       }
 
-      await router.push("/customers");
+      await router.push("/alerts");
       toast.add({
         severity: "success",
         summary: "Login Success",

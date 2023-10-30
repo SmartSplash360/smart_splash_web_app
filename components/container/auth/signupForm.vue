@@ -184,10 +184,6 @@ import { useCustomerStore } from "~/stores/customer";
 import { useLeadStore } from "~/stores/leads";
 import { useAlertStore } from "~/stores/alert";
 import { useTechnicianStore } from "~/stores/technician";
-import { useProductStore } from "~/stores/products";
-import { useServiceStore } from "~/stores/services";
-import { useTemplateStore } from "~/stores/templates";
-import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
 
 const {
@@ -203,10 +199,6 @@ const customerStore = useCustomerStore();
 const alertStore = useAlertStore();
 const leadStore = useLeadStore();
 const technicianStore = useTechnicianStore();
-const productStore = useProductStore();
-const serviceStore = useServiceStore();
-const templateStore = useTemplateStore();
-const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
 
 const domain = ref("");
@@ -297,10 +289,6 @@ async function registerUser() {
         await alertStore.fetchAlerts();
         await leadStore.fetchLeads();
         await technicianStore.fetchTechnicians();
-        await productStore.fetchProducts();
-        await serviceStore.fetchServices();
-        await templateStore.fetchTemplates();
-        await quoteStore.fetchQuotes();
 
         if (store.getCurrentUser) {
           await menuStore.fetchMenuByRole(store.getCurrentUser.role_id);

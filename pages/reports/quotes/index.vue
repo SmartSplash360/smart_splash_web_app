@@ -3,10 +3,17 @@
 </template>
 
 <script setup>
+import { useQuoteStore } from "@/stores/quote";
+
+const store = useQuoteStore();
+const loading = ref(false);
+
+onMounted(async () => {
+  await store.fetchQuotes();
+});
+
 definePageMeta({
   layout: "dashboard",
   middleware: ["auth", "auto-theme"],
 });
-
-const loading = ref(false);
 </script>

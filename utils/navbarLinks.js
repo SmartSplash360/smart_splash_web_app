@@ -6,7 +6,7 @@ export const menuListAdmin = [
     command: () => {
       router.push("/alerts");
       setTimeout(() => {
-        document.getElementById("add-alert-button").click();
+        document.getElementById("add-alert-button")?.click();
       }, 2000);
     },
   },
@@ -16,7 +16,7 @@ export const menuListAdmin = [
     command: () => {
       router.push("/customers");
       setTimeout(() => {
-        document.getElementById("add-customer-button").click();
+        document.getElementById("add-customer-button")?.click();
       }, 2000);
     },
   },
@@ -26,7 +26,7 @@ export const menuListAdmin = [
     command: () => {
       router.push("/technicians");
       setTimeout(() => {
-        document.getElementById("add-technician-button").click();
+        document.getElementById("add-technician-button")?.click();
       }, 2000);
     },
   },
@@ -36,7 +36,7 @@ export const menuListAdmin = [
     command: () => {
       router.push("/products");
       setTimeout(() => {
-        document.getElementById("add-product-button").click();
+        document.getElementById("add-product-button")?.click();
       }, 2000);
     },
   },
@@ -50,7 +50,7 @@ export const menuListAdmin = [
         let tabEl = serviceTab.querySelector(
           ":scope > #pv_id_12_1_header_action"
         );
-        document.getElementById("add-service-button").click();
+        document.getElementById("add-service-button")?.click();
       }, 2000);
     },
   },
@@ -84,7 +84,7 @@ export const menuListCustomer = [
     command: () => {
       router.push("/alerts");
       setTimeout(() => {
-        document.getElementById("add-alert-button").click();
+        document.getElementById("add-alert-button")?.click();
       }, 2000);
     },
   },
@@ -94,7 +94,7 @@ export const menuListCustomer = [
     command: () => {
       router.push("/products");
       setTimeout(() => {
-        document.getElementById("add-product-button").click();
+        document.getElementById("add-product-button")?.click();
       }, 2000);
     },
   },
@@ -108,7 +108,7 @@ export const menuListCustomer = [
         let tabEl = serviceTab.querySelector(
           ":scope > #pv_id_12_1_header_action"
         );
-        document.getElementById("add-service-button").click();
+        document.getElementById("add-service-button")?.click();
       }, 2000);
     },
   },
@@ -135,7 +135,7 @@ export const menuListTechnicina = [
     command: () => {
       router.push("/alerts");
       setTimeout(() => {
-        document.getElementById("add-alert-button").click();
+        document.getElementById("add-alert-button")?.click();
       }, 2000);
     },
   },
@@ -145,7 +145,7 @@ export const menuListTechnicina = [
     command: () => {
       router.push("/products");
       setTimeout(() => {
-        document.getElementById("add-product-button").click();
+        document.getElementById("add-product-button")?.click();
       }, 2000);
     },
   },
@@ -159,7 +159,7 @@ export const menuListTechnicina = [
         let tabEl = serviceTab.querySelector(
           ":scope > #pv_id_12_1_header_action"
         );
-        document.getElementById("add-service-button").click();
+        document.getElementById("add-service-button")?.click();
       }, 2000);
     },
   },
