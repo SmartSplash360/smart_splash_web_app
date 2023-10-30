@@ -83,6 +83,16 @@
       <Column>
         <template #body="slotProps">
           <div class="flex flex-row gap-2">
+            <nuxt-link :to="`/customers/${slotProps.data?.id}`">
+              <Button
+                icon="pi pi-eye"
+                text
+                raised
+                rounded
+                class="!bg-white dark:!bg-[#31353F]"
+                @click="viewEdit(slotProps.data)"
+              />
+            </nuxt-link>
             <Button
               icon="pi pi-pencil"
               text

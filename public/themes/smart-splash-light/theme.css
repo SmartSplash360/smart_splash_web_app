@@ -1103,11 +1103,13 @@
 .p-input-icon-right > svg:last-of-type,
 .p-input-icon-right > i:last-of-type {
     right: 0.75rem;
+    top : 30% !important;
     color: #646c73;
 }
 .p-input-icon-right > .p-inputtext {
     padding-right: 2.5rem;
 }
+/* .p-input-icon-right */
 ::-webkit-input-placeholder {
     color: #646c73;
 }

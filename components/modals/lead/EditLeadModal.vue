@@ -52,7 +52,22 @@
             ></InputText>
           </div>
         </div>
-        <div class="hidden flex-col gap-2">
+        <div class="flex w-full flex-col gap-3">
+          <label class="span__element" for="stage"> Select stage </label>
+
+          <select
+            name="stage"
+            id="stage"
+            v-model="stage"
+            class="w-full lg:w-1/2 rounded-md border-gray-300"
+          >
+            <option disabled selected value="">Stage stage</option>
+            <option value="1">Stage 1</option>
+            <option value="2">Stage 2</option>
+            <option value="3">Stage 3</option>
+          </select>
+        </div>
+        <div class="flex-col gap-2">
           <label class="span__element text-sm" for="cell number">
             Notes
           </label>
@@ -101,6 +116,7 @@ const props = defineProps({
 const name = ref("");
 const surname = ref("");
 const email = ref("");
+const stage = ref();
 const phoneNumber = ref("");
 const password = ref("password");
 const passwordConfirmation = ref("password");
@@ -111,12 +127,11 @@ onMounted(() => {
     surname.value = props.lead.surname;
     email.value = props.lead.email;
     phoneNumber.value = props.lead.phone_number;
+    stage.value = props.lead.status;
   }
 });
 
 const createLead = async () => {
-  // TODO: add validation
-
   try {
     await store.createLead({
       name: name.value,
@@ -139,6 +154,7 @@ const updateLead = async () => {
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
+      status: stage.value,
     };
 
     await store.updateLead(props.lead?.id, data);
@@ -147,7 +163,6 @@ const updateLead = async () => {
     props.toggleEditLeadModal({
       success: `Lead ${props.lead?.id} updated successfully`,
     });
-    // window.location.reload();
   } catch (e) {
     props.toggleEditLeadModal({ error: e });
   }

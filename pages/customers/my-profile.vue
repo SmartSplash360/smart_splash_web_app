@@ -14,5 +14,5 @@ definePageMeta({
 
 const userStore = useUserStore();
 const user = computed(() => userStore.getCurrentUser);
-const customerId = user.value.id;
+const customerId = user.value.id.toString();
 </script>

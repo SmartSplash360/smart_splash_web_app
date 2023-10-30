@@ -4,7 +4,7 @@
       class="min-w-full shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
     >
       <template #header>
-        <div class="flex-center pb-5 text-[#025E7C] lg:h-[400px]">
+        <div class="flex-center pb-5 text-[#025E7C] lg:h-[270px]">
           <img :src="templateCover" alt="template-icon" class="w-full h-full" />
         </div>
       </template>
@@ -14,7 +14,7 @@
             <div class="flex flex-col gap-4 overflow-hidden">
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
               <p
-                class="paragraph__p text-gray-400 h-[100px]"
+                class="paragraph__p text-gray-400 h-[100px] overflow-hidden text-ellipsis"
                 v-html="template.description"
               ></p>
             </div>

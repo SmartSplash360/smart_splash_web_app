@@ -62,19 +62,23 @@
           <div
             class="flex justify-center align-middle min-w-max px-4 py-2 rounded-lg border"
             :class="
-              slotProps.data?.status === 'stage 1'
+              slotProps.data?.status === 1
                 ? 'text-[#D42F24] border-[#D42F24] bg-[#f9e4e3]'
-                : slotProps.data?.status === 'stage 2'
+                : slotProps.data?.status === 2
                 ? 'text-[#DE5307] border-[#DE5307] bg-[#fbe9df]'
-                : 'text-[#32A431] border-[#32A431] bg-[#e4f3e4]'
+                : slotProps.data?.status === 3
+                ? 'text-[#32A431] border-[#32A431] bg-[#e4f3e4]'
+                : null
             "
           >
             {{
-              slotProps.data?.status === "stage 1"
+              slotProps.data?.status === 1
                 ? "Stage 1"
-                : slotProps.data?.status === "stage 2"
+                : slotProps.data?.status === 2
                 ? "Stage 2"
-                : "Stage 3"
+                : slotProps.data?.status === 3
+                ? "Stage 3"
+                : null
             }}
           </div>
         </template>
@@ -102,31 +106,31 @@
               <Button
                 icon="pi pi-sync"
                 label="Convert to Customer"
-                class="w-full border-none self-start"
+                class="w-full border-none self-start hover:bg-[#d4ecf4]"
                 @click="convertToCustomer(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-comments"
                 label="Message"
-                class="w-full border-none self-start"
+                class="w-full border-none self-start hover:bg-[#d4ecf4]"
                 @click="sendMessage(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-phone"
                 label="Call"
-                class="w-full border-none self-start"
+                class="w-full border-none self-start hover:bg-[#d4ecf4]"
                 @click="callLead(slotProps.data)"
               />
               <Button
                 icon="pi pi-pencil"
                 label="Edit"
-                class="w-full border-none self-start"
+                class="w-full border-none self-start hover:bg-[#d4ecf4]"
                 @click="editLead({ ...slotProps.data })"
               />
               <Button
                 icon="pi pi-trash"
                 label="Delete"
-                class="w-full border-none self-start font-thin"
+                class="w-full border-none self-start hover:bg-[#d4ecf4] font-thin"
                 @click="deleteLead(slotProps.data.id)"
               />
             </div>
@@ -186,27 +190,27 @@
           <div class="flex justify-end">
             <Button
               icon="pi pi-sync"
-              class="w-full border-none self-start"
+              class="w-full border-none self-start hover:bg-[#d4ecf4]"
               @click="convertToCustomer(slotProps.data.id)"
             />
             <Button
               icon="pi pi-comments"
-              class="w-full border-none self-start"
+              class="w-full border-none self-start hover:bg-[#d4ecf4]"
               @click="sendMessage(slotProps.data.id)"
             />
             <Button
               icon="pi pi-phone"
-              class="w-full border-none self-start"
+              class="w-full border-none self-start hover:bg-[#d4ecf4]"
               @click="callLead(slotProps.data)"
             />
             <Button
               icon="pi pi-pencil"
-              class="w-full border-none self-start"
+              class="w-full border-none self-start hover:bg-[#d4ecf4]"
               @click="editLead({ ...slotProps.data })"
             />
             <Button
               icon="pi pi-trash"
-              class="w-full border-none self-start font-thin"
+              class="w-full border-none self-start hover:bg-[#d4ecf4] font-thin"
               @click="deleteLead(slotProps.data.id)"
             />
           </div>

@@ -7,7 +7,7 @@
         class="h-full w-full"
       />
     </div>
-    <div class="mb-8 flex w-full flex-col gap-3">
+    <div class="mb-5 flex w-full flex-col gap-3">
       <h2 class="heading__h2 text-[30px]">Login</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
@@ -85,10 +85,14 @@
 
     <div class="mt-5 flex w-full flex-col gap-3">
       <Button
+        :disabled="loading"
         @click="login()"
         label="Login"
         class="w-full bg-[#0291BF] text-white"
       />
+      <div v-if="loading" class="card self-center flex-center w-10">
+        <ProgressSpinner strokeWidth="8" />
+      </div>
       <div class="py-3 text-center">
         <p class="paragraph__p">
           Don't have an account ?
@@ -117,10 +121,6 @@ import { useCustomerStore } from "~/stores/customer";
 import { useLeadStore } from "~/stores/leads";
 import { useAlertStore } from "~/stores/alert";
 import { useTechnicianStore } from "~/stores/technician";
-import { useProductStore } from "~/stores/products";
-import { useServiceStore } from "~/stores/services";
-import { useTemplateStore } from "~/stores/templates";
-import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
 
 const store = useUserStore();
@@ -128,10 +128,6 @@ const customerStore = useCustomerStore();
 const alertStore = useAlertStore();
 const leadStore = useLeadStore();
 const technicianStore = useTechnicianStore();
-const productStore = useProductStore();
-const serviceStore = useServiceStore();
-const templateStore = useTemplateStore();
-const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
 
 const {
@@ -144,6 +140,7 @@ const router = useRouter();
 const email = ref("");
 const password = ref("");
 const domain = ref("");
+const loading = ref(false);
 
 const errorEmail = ref("");
 const errorPassword = ref("");
@@ -172,22 +169,20 @@ const validateForm = () => {
 async function login() {
   if (validateForm()) {
     try {
+      loading.value = true;
       const user = await store.login(domain.value, email.value, password.value);
 
       await customerStore.fetchCustomers();
       await alertStore.fetchAlerts();
       await leadStore.fetchLeads();
       await technicianStore.fetchTechnicians();
-      await productStore.fetchProducts();
-      await serviceStore.fetchServices();
-      await templateStore.fetchTemplates();
-      await quoteStore.fetchQuotes();
 
       if (user) {
         await menuStore.fetchMenuByRole(user.role_id);
       }
 
-      await router.push("/customers");
+      loading.value = false;
+      await router.push("/alerts");
       toast.add({
         severity: "success",
         summary: "Login Success",

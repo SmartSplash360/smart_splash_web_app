@@ -101,7 +101,7 @@
       <Button
         v-if="!edit"
         label="Save"
-        class="hidden !bg-[#0291BF] text-white"
+        class="!bg-[#0291BF] text-white"
         @click="createTemplate"
       />
       <Button

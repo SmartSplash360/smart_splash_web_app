@@ -85,9 +85,8 @@ export const useTenantStore = defineStore("tenant", {
 
       try {
         const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
-
-        if (res.data) {
-          window.location.href = `https://${res.data.data.domain.domain}/signup`;
+        if (!res.data.success) {
+          throw new Error()
         }
       } catch (error) {
         throw new Error("An error");
@@ -100,7 +99,6 @@ export const useTenantStore = defineStore("tenant", {
       let url = `${requestUrl}/tenant/${this.currentTenantId}`;
       try {
         const res = await axios.post(url, tenantPayload);
-        console.log(res);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }

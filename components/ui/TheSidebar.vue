@@ -32,7 +32,7 @@
                 ? 'flex-center '
                 : null,
             ]"
-            class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3 nav-link-item hover:bg-[#025E7C] dark:text-[#FFFFFF] dark:hover:bg-[#0291BF] dark:hover:text-white"
+            class="flex cursor-pointer items-center gap-5 rounded-lg px-5 py-3 nav-link-item hover:bg-[#d4ecf4] hover:text-black dark:text-[#FFFFFF] dark:hover:bg-[#0291BF] dark:hover:text-white"
           >
             <span
               class="flex-center nav-link-item"

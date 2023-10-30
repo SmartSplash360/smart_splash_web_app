@@ -57,10 +57,7 @@ export const useUserStore = defineStore("user", {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.data.data.token}`;
-          
-          if (domain && domain !== appDomain) {
-            window.location.href = `https://${domain}.${appDomain}/customers`
-          }
+        
           return res.data.data.user;
         } else {
           throw new Error(res.data.message);
