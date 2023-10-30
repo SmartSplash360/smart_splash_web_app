@@ -152,11 +152,15 @@
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
       <Button
+        :disabled="loading"
         @click="registerUser()"
         label="Create Account"
         class="w-full bg-[#0291BF] text-white"
       />
-      <div class="py-3 text-center">
+      <div v-if="loading" class="card self-center flex-center w-10">
+        <ProgressSpinner strokeWidth="8" />
+      </div>
+      <div class="pb-3 text-center">
         <p class="paragraph__p">
           Already have an account ?
           <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
@@ -202,14 +206,15 @@ const technicianStore = useTechnicianStore();
 const menuStore = useMenuStore();
 
 const domain = ref("");
-const firstName = ref("");
-const lastName = ref("");
 const email = ref("");
+const lastName = ref("");
 const password = ref("");
+const firstName = ref("");
+const loading = ref(false);
 const confirmPassword = ref("");
 
 const emailError = ref("");
-const firstNameError = ref(false);
+const firstNameError = ref("");
 const lastNameError = ref("");
 const passwordError = ref("");
 const errorFirstame = ref("");
@@ -268,6 +273,7 @@ const validateForm = () => {
 async function registerUser() {
   if (validateForm()) {
     try {
+      loading.value = true;
       const userPayload = {
         name: firstName.value,
         surname: lastName.value,
@@ -300,6 +306,8 @@ async function registerUser() {
           detail: "User registration succeeded",
           life: 3000,
         });
+
+        loading.value = false;
         router.push("/alerts");
       }
     } catch (error) {
