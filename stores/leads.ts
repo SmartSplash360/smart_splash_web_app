@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useUserStore } from "~/stores/users";
+import { useTenantStore } from './tenants';
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
@@ -8,8 +9,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
+
 
 let apiUrl = requestUrl;
 
@@ -47,6 +47,10 @@ export const useLeadStore = defineStore("lead", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
       let url = `${apiUrl}/leads`;
       try {
         const res = await axios.get(url);
@@ -60,6 +64,11 @@ export const useLeadStore = defineStore("lead", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/leads/${id}`;
       try {
         const res = await axios.get(url);
@@ -72,6 +81,11 @@ export const useLeadStore = defineStore("lead", {
     async createLead(leadPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/leads`;
       try {
@@ -89,6 +103,11 @@ export const useLeadStore = defineStore("lead", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/leads/${id}`;
       try {
         const res = await axios.post(url, leadPayload);
@@ -103,6 +122,11 @@ export const useLeadStore = defineStore("lead", {
     async deleteLead(leadId: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/leads/${leadId}`;
       try {
@@ -121,6 +145,11 @@ export const useLeadStore = defineStore("lead", {
     async importLeads(payload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/leads/imports`;
       try {

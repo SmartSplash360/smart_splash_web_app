@@ -1,17 +1,13 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useTenantStore } from './tenants';
 import { useUserStore } from "~/stores/users";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 const config = useRuntimeConfig();
-const requestUrl = config.public.apiUrl;
-
-const currentUrl = window.location.href;
-const hostname = new URL(currentUrl).hostname;
-
-let apiUrl = requestUrl;
+let apiUrl = config.public.apiUrl;
 
 export const useAlertStore = defineStore("alert", {
   persist: {
@@ -30,6 +26,11 @@ export const useAlertStore = defineStore("alert", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/alerts`;
 
       try {
@@ -44,6 +45,11 @@ export const useAlertStore = defineStore("alert", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/alerts/${id}`;
       try {
         const res = await axios.get(url);
@@ -56,6 +62,11 @@ export const useAlertStore = defineStore("alert", {
     async createAlert(alertPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/alerts`;
       try {
@@ -74,6 +85,11 @@ export const useAlertStore = defineStore("alert", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
       let url = `${apiUrl}/alerts/${alertId}`;
       try {
         const res = await axios.post(url, alertPayload);
@@ -89,6 +105,11 @@ export const useAlertStore = defineStore("alert", {
     async deleteAlert(alertId: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       let url = `${apiUrl}/alerts/${alertId}`;
       try {

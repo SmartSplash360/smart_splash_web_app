@@ -125,6 +125,8 @@ const props = defineProps({
   user: Object,
 });
 
+const appDomain = process.env.NUXT_PUBLIC_API_URL ?? "smartsplash.co";
+
 const toast = useToast();
 const router = useRouter();
 
@@ -212,9 +214,10 @@ async function registerTenant() {
         address: address.value,
         domain:
           name.value.replace(/\s/g, "") +
-          "smartsplash360" +
-          Math.floor(Math.random() * (10000 + 1)) +
-          ".localhost",
+          "-smartsplash360" +
+          Math.floor(Math.random() * (100 + 1)) +
+          "." +
+          appDomain,
         owner: props.user.id,
         email: email.value,
         phone_number: phone.value,

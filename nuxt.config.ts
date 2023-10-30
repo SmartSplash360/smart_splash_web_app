@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID,
     twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET,
     public: {
+      appDomain : process.env.NUXT_PUBLIC_APP_DOMAIN ?? "smartsplash.co",
       apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co/api/v1",
       imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage/",
     },

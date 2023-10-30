@@ -7,45 +7,83 @@
         class="h-full w-full"
       />
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-9">
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
-          <InputText
-            id="firstName"
-            v-model="firstName"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorFirstame && 'border-red-300'"
-            @blur="handleChangeFirstname"
-          >
-          </InputText>
-          <label for="firstName">First name</label>
-        </span>
-        <p class="h-[4px]">
-          <span v-show="errorFirstame" class="text-[#D42F24] text-xs">{{
-            errorFirstame
-          }}</span>
-        </p>
+    <div class="w-full lg:w-5/6 flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
+          <span class="w-full flex flex-col gap-2">
+            <label class="span__element text-[12px] leading-none" for="domain"
+              >Domain</label
+            >
+            <div class="flex">
+              <InputText
+                type="text"
+                class="w-full rounded-tl-md rounded-bl-md border-gray-300"
+                v-model="domain"
+              >
+              </InputText
+              ><input
+                disabled
+                type="text"
+                class="w-fit rounded-tr-md rounded-br-md border-gray-300 bg-gray-100 border-l-0"
+                placeholder=".smartsplash.co"
+              />
+            </div>
+          </span>
+        </div>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
-          <InputText
-            id="lastName"
-            v-model="lastName"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorLastname && 'border-red-300'"
-            @blur="handleChangeLastname"
-          >
-          </InputText>
-          <label for="lastName">Last name</label>
-        </span>
-        <p class="h-[4px]">
-          <span v-show="errorLastname" class="text-[#D42F24] text-xs">{{
-            errorLastname
-          }}</span>
-        </p>
+      <div class="flex flex-col lg:flex-row gap-8 items-center lg:gap-4 -mt-2">
+        <div class="w-full flex flex-col gap-1">
+          <span class="w-full flex flex-col gap-2">
+            <label
+              class="span__element text-[12px] leading-none"
+              for="firstName"
+              >First name</label
+            >
+            <InputText
+              id="firstName"
+              v-model="firstName"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorFirstame && 'border-red-300'"
+              @blur="handleChangeFirstname"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span
+              v-show="errorFirstame"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorFirstame }}</span
+            >
+          </p>
+        </div>
+        <div class="w-full flex flex-col gap-1">
+          <span class="w-full flex flex-col gap-2">
+            <label class="span__element text-[12px] leading-none" for="lastName"
+              >Last name</label
+            >
+            <InputText
+              id="lastName"
+              v-model="lastName"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorLastname && 'border-red-300'"
+              @blur="handleChangeLastname"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span
+              v-show="errorLastname"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorLastname }}</span
+            >
+          </p>
+        </div>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="email"
+            >Email</label
+          >
           <InputText
             id="email"
             v-model="email"
@@ -54,16 +92,20 @@
             @blur="handleChangeEmail"
           >
           </InputText>
-          <label for="email">Email</label>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
-            errorEmail
-          }}</span>
+          <span
+            v-show="errorEmail"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorEmail }}</span
+          >
         </p>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="password"
+            >Password</label
+          >
           <InputText
             id="password"
             type="password"
@@ -73,16 +115,22 @@
             @blur="handleChangePassword"
           >
           </InputText>
-          <label for="password">Password</label>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
+          <span
+            v-show="errorPassword"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorPassword }}</span
+          >
         </p>
       </div>
-      <div class="flex flex-col gap-1">
-        <span class="p-float-label">
+      <div class="w-full flex flex-col gap-1">
+        <span class="w-full flex flex-col gap-2">
+          <label
+            class="span__element text-[12px] leading-none"
+            for="confirmedPassword"
+            >Confirm Password</label
+          >
           <InputText
             id="confirmedPassword"
             type="password"
@@ -92,12 +140,13 @@
             @blur="handleChangePasswordMatching"
           >
           </InputText>
-          <label for="confirmedPassword">Confirm Password</label>
         </span>
         <p class="h-[4px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
+          <span
+            v-show="errorPassword"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorPassword }}</span
+          >
         </p>
       </div>
     </div>
@@ -113,18 +162,13 @@
           <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
         </p>
       </div>
-      <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
-        <Button
-          icon="pi pi-facebook"
-          label="Continue with Facebook"
-          class="w-full bg-[#3B5998] text-white"
-        />
+      <!-- <div class="w-full lg:w-4/5 flex flex-col gap-4 items-center self-center">
         <Button
           icon="pi pi-google"
           label="Continue with Google"
           class="w-full"
         />
-      </div>
+      </div> -->
     </div>
     <Toast />
   </form>
@@ -146,8 +190,11 @@ import { useTemplateStore } from "~/stores/templates";
 import { useQuoteStore } from "~/stores/quote";
 import { useMenuStore } from "~/stores/menu";
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
 const toast = useToast();
 const router = useRouter();
 
@@ -162,43 +209,48 @@ const templateStore = useTemplateStore();
 const quoteStore = useQuoteStore();
 const menuStore = useMenuStore();
 
+const domain = ref("");
 const firstName = ref("");
-const firstNameError = ref(false);
-
 const lastName = ref("");
-const lastNameError = ref("");
-
 const email = ref("");
-const emailError = ref("");
-
 const password = ref("");
-const passwordError = ref("");
-
 const confirmPassword = ref("");
-const confirmPasswordError = ref("");
 
+const emailError = ref("");
+const firstNameError = ref(false);
+const lastNameError = ref("");
+const passwordError = ref("");
 const errorFirstame = ref("");
 const errorLastname = ref("");
 const errorEmail = ref("");
 const errorPassword = ref("");
 
 const handleChangeFirstname = () => {
-  errorFirstame.value = firstName.value
-    ? ""
-    : "The first name field is required";
+  errorFirstame.value = useRequired({
+    fieldname: "firstname",
+    field: firstName.value,
+    error: errorFirstame.value,
+  });
 };
 const handleChangeLastname = () => {
-  errorLastname.value = lastName.value ? "" : "The last name field is required";
+  errorLastname.value = useRequired({
+    fieldname: "lastName",
+    field: lastName.value,
+    error: errorLastname.value,
+  });
 };
 const handleChangeEmail = () => {
-  errorEmail.value = email.value
-    ? !email.value.match(emailRegex)
-      ? "Please provide a valid email"
-      : ""
-    : "The email field is required";
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
 };
 const handleChangePassword = () => {
-  errorPassword.value = !password.value ? "Please provide a password" : "";
+  errorPassword.value = useRequired({
+    fieldname: "password",
+    field: password.value,
+    error: errorPassword.value,
+  });
 };
 const handleChangePasswordMatching = () => {
   errorPassword.value = confirmPassword.value
@@ -230,9 +282,9 @@ async function registerUser() {
         email: email.value,
         password: password.value,
         password_confirmation: confirmPassword.value,
-        role: 4,
+        role_id: 3,
       };
-      const res = await store.register(userPayload);
+      const res = await store.register(domain.value, userPayload);
       if (res?.errorMessage) {
         toast.add({
           severity: "error",

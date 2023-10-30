@@ -11,7 +11,11 @@
         <div
           class="bg-[#0291BF] text-white rounded-md dark:bg-[#1B2028] dark:border-[#1B2028]"
         >
-          <SplitButton icon="pi pi-plus" :model="menuList" />
+          <SplitButton
+            v-if="user.role_id === 1"
+            icon="pi pi-plus"
+            :model="menuList"
+          />
         </div>
         <button
           v-tooltip.top="
