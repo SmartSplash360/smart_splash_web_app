@@ -19,6 +19,7 @@ export const useTechnicianStore = defineStore("technician", {
   },
   state: () => ({
     technicians: [],
+    searchQuery: "",
   }),
   getters: {
     getTechnicians(state) {
@@ -27,6 +28,12 @@ export const useTechnicianStore = defineStore("technician", {
     getTechnicianById: (state) => (id: number | string) => {
       return state.technicians.find(
         (technician: Technician) => technician?.id === id
+      );
+    },
+    filteredTechnicians: (state) => () => {
+      const search = state.searchQuery.toLocaleLowerCase();
+      return state.technicians.filter((technician: any) =>
+        technician.name.toLocaleLowerCase().includes(search)
       );
     },
   },

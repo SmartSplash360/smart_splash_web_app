@@ -93,7 +93,7 @@
       <div v-if="loading" class="card self-center flex-center w-10">
         <ProgressSpinner strokeWidth="8" />
       </div>
-      <div class="py-3 text-center">
+      <div v-else class="py-3 text-center">
         <p class="paragraph__p">
           Don't have an account ?
           <nuxt-link to="/signup" class="text-[#4D6977]">Sign up</nuxt-link>
@@ -196,6 +196,7 @@ async function login() {
         detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
         life: 5000,
       });
+      loading.value = false;
     }
   }
 }

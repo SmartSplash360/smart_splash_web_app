@@ -160,7 +160,7 @@
       <div v-if="loading" class="card self-center flex-center w-10">
         <ProgressSpinner strokeWidth="8" />
       </div>
-      <div class="pb-3 text-center">
+      <div v-else class="pb-3 text-center">
         <p class="paragraph__p">
           Already have an account ?
           <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
@@ -311,7 +311,13 @@ async function registerUser() {
         router.push("/alerts");
       }
     } catch (error) {
-      console.log(error);
+      toast.add({
+        severity: "error",
+        summary: "Login Error",
+        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
+        life: 5000,
+      });
+      loading.value = false;
     }
   }
 }
