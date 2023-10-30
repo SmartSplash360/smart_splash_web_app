@@ -80,13 +80,11 @@ export const useTenantStore = defineStore("tenant", {
       }
     },
     async register(tenantPayload: {}) {
-      console.log(tenantPayload)
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
       try {
         const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
-
         if (!res.data.success) {
           throw new Error()
         }
@@ -101,7 +99,6 @@ export const useTenantStore = defineStore("tenant", {
       let url = `${requestUrl}/tenant/${this.currentTenantId}`;
       try {
         const res = await axios.post(url, tenantPayload);
-        console.log(res);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
