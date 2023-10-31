@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonReportPage></SkeletonReportPage>
+    <SkeletonQuotesPage></SkeletonQuotesPage>
   </section>
   <section v-else class="flex flex-col gap-8">
     <div

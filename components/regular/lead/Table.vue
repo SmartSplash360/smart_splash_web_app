@@ -65,7 +65,7 @@
               slotProps.data?.status === 1
                 ? 'text-[#D42F24] border-[#D42F24] bg-[#f9e4e3]'
                 : slotProps.data?.status === 2
-                ? 'text-[#DE5307] border-[#DE5307] bg-[#fbe9df]'
+                ? 'text-[#fa6819] border-[#fa6819] bg-[#fbe9df]'
                 : slotProps.data?.status === 3
                 ? 'text-[#32A431] border-[#32A431] bg-[#e4f3e4]'
                 : null
@@ -104,6 +104,7 @@
 
             <div class="flex flex-col p-2 w-[280px]">
               <Button
+                v-if="slotProps.data.status === 3"
                 icon="pi pi-sync"
                 label="Convert to Customer"
                 class="w-full border-none self-start hover:bg-[#d4ecf4]"
@@ -189,29 +190,30 @@
           </div>
           <div class="flex justify-end">
             <Button
+              v-if="lead.status === 3"
               icon="pi pi-sync"
               class="w-full border-none self-start hover:bg-[#d4ecf4]"
-              @click="convertToCustomer(slotProps.data.id)"
+              @click="convertToCustomer(lead.id)"
             />
             <Button
               icon="pi pi-comments"
               class="w-full border-none self-start hover:bg-[#d4ecf4]"
-              @click="sendMessage(slotProps.data.id)"
+              @click="sendMessage(lead.id)"
             />
             <Button
               icon="pi pi-phone"
               class="w-full border-none self-start hover:bg-[#d4ecf4]"
-              @click="callLead(slotProps.data)"
+              @click="callLead(lead)"
             />
             <Button
               icon="pi pi-pencil"
               class="w-full border-none self-start hover:bg-[#d4ecf4]"
-              @click="editLead({ ...slotProps.data })"
+              @click="editLead({ ...lead })"
             />
             <Button
               icon="pi pi-trash"
               class="w-full border-none self-start hover:bg-[#d4ecf4] font-thin"
-              @click="deleteLead(slotProps.data.id)"
+              @click="deleteLead(lead.id)"
             />
           </div>
         </div>

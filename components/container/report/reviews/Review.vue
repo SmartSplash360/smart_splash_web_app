@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonReportPage></SkeletonReportPage>
+    <SkeletonReviewPage></SkeletonReviewPage>
   </section>
   <section v-else class="flex flex-col gap-8">
     <nuxt-link
@@ -27,10 +27,7 @@
 <script setup>
 import { useTechnicianStore } from "~/stores/technician";
 
-defineProps({
-  loading: Boolean,
-});
-
+const loading = ref(false);
 const totalLikes = ref(0);
 const totalDislikes = ref(0);
 const data = ref({
@@ -54,10 +51,13 @@ const technicians = computed(() => store.getTechnicians);
 const technicianCount = computed(() => technicians.value.length);
 
 onMounted(() => {
+  loading.value = true;
   const technicians = store.getTechnicians;
   technicians.forEach((tech) => {
     totalLikes.value += tech.like_reaction_count;
     totalDislikes.value += tech.dislike_reaction_count;
   });
+
+  loading.value = false;
 });
 </script>

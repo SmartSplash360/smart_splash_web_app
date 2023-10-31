@@ -43,7 +43,7 @@
 <script setup>
 import { useTechnicianStore } from "~/stores/technician";
 
-const emit = defineEmits(["search-technician"]);
+const emit = defineEmits(["search-technician", "selectStatus", "open-modal"]);
 
 const router = useRouter();
 const technicianStore = useTechnicianStore();

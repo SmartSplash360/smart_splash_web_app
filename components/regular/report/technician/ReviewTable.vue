@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:w-3/4 customer-table laptop+ card hidden lg:block">
+  <div class="customer-table laptop+ card hidden lg:block">
     <DataTable
       v-model:filters="filters"
       :value="reviews"

@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonReportPage></SkeletonReportPage>
+    <SkeletonQuotesPage></SkeletonQuotesPage>
   </section>
   <section v-else class="flex flex-col gap-8">
     <div
@@ -131,10 +131,6 @@ import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
 import { useUserStore } from "~/stores/users";
 
-defineProps({
-  loading: Boolean,
-});
-
 const jobStore = useJobStore();
 const userStore = useUserStore();
 const quoteStore = useQuoteStore();
@@ -152,12 +148,14 @@ const jobs = ref();
 const job = ref();
 const readOnly = ref(false);
 const quoteCountSearch = ref();
+const loading = ref(false);
 
 const user = computed(() => userStore.getCurrentUser);
 const quoteList = computed(() => quoteStore.getQuotes);
 const quoteCount = ref();
 
 onMounted(async () => {
+  loading.value = true;
   await quoteStore.fetchQuotes();
   await jobStore.fetchJobs();
   jobs.value = jobStore.getJobs;
@@ -165,19 +163,23 @@ onMounted(async () => {
   if (user.value.role_id == 1) {
     quotes.value = quoteStore.getQuotes;
     quoteCount.value = quotes.value.length;
+    loading.value = false;
   }
   if (user.value.role_id == 3) {
     quotes.value = quoteList.value.filter(
       (quote) => quote.customer_id === user.value.id
     );
     quoteCount.value = quotes.value.length;
+    loading.value = false;
   }
   if (user.value.role_id == 4) {
     quotes.value = quoteList.value.filter((quote) => {
       return quote.technician_id === user.value.id;
     });
     quoteCount.value = quotes.value.length;
+    loading.value = false;
   }
+  loading.value = false;
 });
 
 const handleSearchQuote = (event) => {

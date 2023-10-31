@@ -317,6 +317,7 @@ async function registerUser() {
         detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
         life: 5000,
       });
+      location.reload();
       loading.value = false;
     }
   }
