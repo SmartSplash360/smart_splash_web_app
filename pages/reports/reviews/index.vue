@@ -1,6 +1,5 @@
 <template>
-  <ContainerReportReviewsReviewDetail :loading="loading">
-  </ContainerReportReviewsReviewDetail>
+  <ContainerReportReviewsReview> </ContainerReportReviewsReview>
 </template>
 
 <script setup>
@@ -8,6 +7,4 @@ definePageMeta({
   layout: "dashboard",
   middleware: ["auth", "auto-theme"],
 });
-
-const loading = ref(false);
 </script>

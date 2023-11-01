@@ -107,10 +107,14 @@
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
       <Button
+        :disabled="loading"
         @click="registerTenant()"
         label="Create a Tenant Account"
         class="w-full bg-[#0291BF] text-white"
       />
+      <div v-if="loading" class="card self-center flex-center w-10">
+        <ProgressSpinner strokeWidth="8" />
+      </div>
     </div>
   </form>
 </template>
@@ -144,6 +148,7 @@ const name = ref("");
 const phone = ref("");
 const address = ref("");
 const website = ref("");
+const loading = ref(false);
 
 const errorEmail = ref("");
 const errorName = ref("");
@@ -172,7 +177,6 @@ const handleChangeWebsite = () => {
     error: errorWebsite.value,
   });
 };
-
 const handleChangeEmail = () => {
   errorEmail.value = useValidateEmail({
     email: email.value,
@@ -203,7 +207,7 @@ const validateForm = () => {
 async function registerTenant() {
   if (validateForm()) {
     try {
-      // TODO: add validation
+      loading.value = true;
       const tenantPayload = {
         address: address.value,
         domain: name.value.replace(/\s/g, "") + "." + appDomain,
@@ -224,8 +228,8 @@ async function registerTenant() {
           "Tenant registration succeeded, you can register in your domain",
         life: 6000,
       });
-
-      router.push("/");
+      router.push("/signup");
+      loading.value = true;
     } catch (error) {
       toast.add({
         severity: "danger",

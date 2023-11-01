@@ -1,12 +1,11 @@
 <template>
-  <ContainerReportQuotes :loading="loading"> </ContainerReportQuotes>
+  <ContainerReportQuotes> </ContainerReportQuotes>
 </template>
 
 <script setup>
 import { useQuoteStore } from "@/stores/quote";
 
 const store = useQuoteStore();
-const loading = ref(false);
 
 onMounted(async () => {
   await store.fetchQuotes();

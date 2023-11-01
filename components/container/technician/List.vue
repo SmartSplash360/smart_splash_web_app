@@ -4,9 +4,11 @@
   </section>
   <section v-else class="sm:gap-13 flex flex-col gap-16">
     <RegularTechnicianBoard
+      @search-technician="(query) => handleSearch(query)"
       @open-modal="toggleAddTechnicianModal"
       @selectStatus="(status) => handleStatus(status)"
     ></RegularTechnicianBoard>
+
     <ModalsTechnicianCreateTechnician
       v-if="addTechnicianModal"
       :toggleAddTechnicianModal="closeModal"
@@ -55,6 +57,11 @@ onMounted(() => {
 });
 
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
+
+const handleSearch = (query) => {
+  store.searchQuery = query;
+  technicians.value = store.filteredTechnicians(query);
+};
 
 const closeModal = ({ success, error }) => {
   addTechnicianModal.value = false;

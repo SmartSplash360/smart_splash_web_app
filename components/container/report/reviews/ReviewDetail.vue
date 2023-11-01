@@ -1,6 +1,6 @@
 <template>
   <section v-if="loading">
-    <SkeletonReportPage></SkeletonReportPage>
+    <SkeletonCustomer></SkeletonCustomer>
   </section>
   <section v-else class="flex flex-col gap-10">
     <div
@@ -21,7 +21,7 @@
     <div v-if="reviewCount == 0">
       <h3 class="heading__h3 text-[#025E7C] mt-10">No reviews found</h3>
     </div>
-    <div v-else class="flex flex-col lg:flex-row gap-20">
+    <div v-else class="w-full flex flex-col gap-20">
       <ModalsReportJobComments
         v-if="showComments"
         :handleToggleShowComment="closeModal"
@@ -41,10 +41,6 @@ import { useTechnicianStore } from "~/stores/technician";
 import { useCustomerStore } from "~/stores/customer";
 import { useReviewStore } from "~/stores/reviews";
 
-defineProps({
-  loading: Boolean,
-});
-
 const technicianStore = useTechnicianStore();
 const customerStore = useCustomerStore();
 const reviewStore = useReviewStore();
@@ -52,6 +48,7 @@ const reviewStore = useReviewStore();
 const route = useRoute();
 const technicianId = route.params.technicianId;
 
+const loading = ref(false);
 const technicians = ref([]);
 const technician = ref();
 const jobDetails = ref();
@@ -65,12 +62,14 @@ const options = ref({
 });
 
 onMounted(async () => {
+  loading.value = true;
   technicians.value = technicianStore.getTechnicians;
   technician.value = technicians.value.filter(
     (tech) => tech.id === parseInt(technicianId)
   )[0];
   reviews.value = await reviewStore.fetchReviewByTechnician(technicianId);
   reviewCount.value = reviews.value.length;
+  loading.value = false;
 });
 
 const handleToggleShowComment = (data, customerProfile, customerName) => {

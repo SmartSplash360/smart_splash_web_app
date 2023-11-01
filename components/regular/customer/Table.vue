@@ -90,7 +90,6 @@
                 raised
                 rounded
                 class="!bg-white dark:!bg-[#31353F]"
-                @click="viewEdit(slotProps.data)"
               />
             </nuxt-link>
             <Button
