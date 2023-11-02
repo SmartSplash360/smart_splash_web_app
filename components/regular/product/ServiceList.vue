@@ -140,6 +140,12 @@
         @click="addService"
         class="-translate-y-[7rem] w-[110px] justify-end self-end hover:shadow-xl"
       ></BaseAddButton>
+      <div class="w-full flex mb-4 lg:hidden">
+        <BaseSearchBar
+          class="w-full"
+          @handleSearch="(value) => handleSearch(value)"
+        />
+      </div>
       <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
         <h5 class="heading__h5 flex-1">Name</h5>
         <h5 class="heading__h5 flex-1 flex justify-start">Status</h5>
@@ -151,7 +157,7 @@
       </h5>
     </div>
     <Accordion v-else :activeIndex="0">
-      <AccordionTab v-for="service in services" :key="service.id">
+      <AccordionTab v-for="service in servicesMobile" :key="service.id">
         <template #header>
           <div class="flex-between w-full dark:text-white">
             <img :src="BoxIcon" alt="box-icon" class="w-[25px] h-[25px] mr-3" />
@@ -244,27 +250,12 @@ const serviceStore = useServiceStore();
 const service = ref();
 const addServiceModal = ref(false);
 const loading = ref(true);
-
-const menu = ref();
-const items = ref([
-  {
-    label: "View Alert",
-    icon: "pi pi-eye",
-    command: () => viewAlert(),
-  },
-  {
-    label: "Delete Template",
-    icon: "pi pi-trash",
-    command: () => {
-      deleteAlert(props.template.id);
-      router.push("/alerts");
-    },
-  },
-]);
+const servicesMobile = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
+
 const serviceCount = computed(() => services.length);
 const user = computed(() => userStore.getCurrentUser);
 const services = computed(() =>
@@ -279,7 +270,13 @@ const services = computed(() =>
 
 onMounted(() => {
   loading.value = false;
+  servicesMobile.value = services.value;
 });
+
+const handleSearch = (value) => {
+  serviceStore.searchQuery = value;
+  servicesMobile.value = serviceStore.filterServices(value);
+};
 
 const toggleAddServiceModal = () => (addServiceModal.value = true);
 
@@ -344,9 +341,6 @@ const deleteItem = async (id) => {
     },
     reject: () => {},
   });
-};
-const toggle = (event) => {
-  menu.value.toggle(event);
 };
 const addService = () => router.push("/products/create-service");
 </script>

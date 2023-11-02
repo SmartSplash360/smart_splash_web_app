@@ -19,10 +19,17 @@ export const useProductStore = defineStore("product", {
   },
   state: () => ({
     products: [],
+    searchQuery: "",
   }),
   getters: {
     getProducts(state) {
       return state.products;
+    },
+    filterProducts: (state) => () => {
+      const search = state.searchQuery.toLocaleLowerCase();
+      return state.products.filter((product: Product) =>
+        product.name.toLocaleLowerCase().includes(search)
+      );
     },
   },
   actions: {

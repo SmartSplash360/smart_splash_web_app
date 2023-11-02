@@ -15,10 +15,17 @@ export const useAlertStore = defineStore("alert", {
   },
   state: () => ({
     alerts: [],
+    searchQuery: "",
   }),
   getters: {
     getAlerts(state) {
       return state.alerts;
+    },
+    filterAlerts: (state) => () => {
+      const search = state.searchQuery.toLocaleLowerCase();
+      return state.alerts.filter((alert: any) =>
+        alert.subject.toLocaleLowerCase().includes(search)
+      );
     },
   },
   actions: {

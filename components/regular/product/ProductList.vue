@@ -142,6 +142,12 @@
         @click="addProduct"
         class="-translate-y-[7rem] w-[110px] justify-end self-end hover:shadow-xl"
       ></BaseAddButton>
+      <div class="w-full flex mb-4 lg:hidden">
+        <BaseSearchBar
+          class="w-full"
+          @handleSearch="(value) => handleSearch(value)"
+        />
+      </div>
       <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
         <h5 class="heading__h5 flex-1">Name</h5>
         <h5 class="heading__h5 flex-1 flex justify-start">Status</h5>
@@ -153,7 +159,7 @@
       </h5>
     </div>
     <Accordion v-else :activeIndex="0">
-      <AccordionTab v-for="product in products" :key="product.id">
+      <AccordionTab v-for="product in productsMobile" :key="product.id">
         <template #header>
           <div class="flex-between w-full dark:text-white">
             <img :src="BoxIcon" alt="box-icon" class="w-[25px] h-[25px] mr-3" />
@@ -243,6 +249,7 @@ const router = useRouter();
 const userStore = useUserStore();
 const productStore = useProductStore();
 
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -250,8 +257,7 @@ const product = ref();
 const addProductModal = ref(false);
 const loading = ref(true);
 const selectedProduct = ref();
-const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
-
+const productsMobile = ref();
 const products = computed(() =>
   productStore.getProducts.map((product) => {
     return {
@@ -266,7 +272,13 @@ const productCount = computed(() => products.length);
 
 onMounted(() => {
   loading.value = false;
+  productsMobile.value = products.value;
 });
+
+const handleSearch = (value) => {
+  productStore.searchQuery = value;
+  productsMobile.value = productStore.filterProducts(value);
+};
 
 const toggleAddProductModal = () => (addProductModal.value = true);
 
