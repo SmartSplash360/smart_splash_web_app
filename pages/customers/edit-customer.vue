@@ -173,14 +173,11 @@ const validateForm = () => {
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
-  handleChangePassword();
-  handleChangePasswordMatching();
   return (
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value &&
-    errorPassword.value
+    !errorPhoneNumber.value
   );
 };
 
@@ -202,7 +199,7 @@ const updateCustomer = async () => {
         detail: "Customer created successfully",
         life: 5000,
       });
-      router.push("/alerts");
+      router.push("/customers");
     } catch (error) {
       toast.add({
         severity: "error",

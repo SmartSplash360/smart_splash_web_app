@@ -1,5 +1,8 @@
 <template>
-  <div class="customer-table laptop+ card hidden lg:block">
+  <div
+    class="customer-table laptop+ card hidden lg:block"
+    :class="[currentMode == 'dark' ? 'dark-mode' : '']"
+  >
     <DataTable
       v-model:filters="filters"
       :value="reviews"
@@ -183,6 +186,7 @@ const props = defineProps({
 
 const loading = ref(false);
 const dt = ref();
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },

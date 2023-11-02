@@ -89,8 +89,8 @@
   </div>
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
     <div class="flex-between bg-[#025E7C] py-5 px-5 text-white">
-      <h5 class="heading__h5 flex-1">Customer</h5>
-      <h5 class="heading__h5 flex-1 flex justify-start">Status</h5>
+      <h5 class="heading__h5">Customer</h5>
+      <h5 class="heading__h5 mr-10">Status</h5>
     </div>
     <div v-if="jobs.length == 0" class="flex-center">
       <h5 class="heading__h5">
@@ -167,7 +167,7 @@
               rounded
               class="!w-[35px] !h-[35px] !bg-white dark:!bg-[#31353F]"
               @click="
-                props.editItem({
+                editItem({
                   id: job.id,
                   item: { ...job },
                   mobileEdit: true,
@@ -203,7 +203,8 @@ const viewItem = (job) => {
   props.viewItem({ ...job });
 };
 const editItem = (job) => {
-  props.editItem({ id: job.id, item: { ...job } });
+  console.log(job);
+  props.editItem({ id: job.id, item: { ...job }, mobileEdit: job.mobileEdit });
 };
 
 const deleteItem = async (id) => {

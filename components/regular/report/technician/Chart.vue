@@ -1,6 +1,8 @@
 <template>
-  <div class="lg:w-2/5 flex flex-col items-center gap-10">
-    <h4 class="heading__h4 text-gray-700 font-medium">Summary</h4>
+  <div class="w-full lg:w-2/5 flex flex-col items-center gap-10">
+    <h4 class="heading__h4 text-gray-700 font-medium dark:text-white">
+      Summary
+    </h4>
     <div class="card flex flex-col justify-between items-center gap-10">
       <div class="h-[30vh] min-w-[100%]">
         <Doughnut :data="chartData" :options="chartOptions" />

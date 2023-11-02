@@ -1,6 +1,6 @@
 <template>
   <div
-    class="customer-table laptop+ card hidden sm:block"
+    class="customer-table laptop+ card hidden lg:block"
     :class="[currentMode === 'dark' && 'dark-mode']"
   >
     <DataTable
@@ -85,22 +85,42 @@
       </Column>
     </DataTable>
   </div>
-  <div class="mobile- flex flex-col gap-2 sm:hidden">
-    <div class="card border border-b-0 border-t-0">
-      <DataTable
-        v-model:filters="filters"
-        :value="bodiesOfWater"
-        paginator
-        :rows="10"
-        tableStyle="width : 100%; overflow : hidden"
-        :loading="loading"
-        :globalFilterFields="['bodyOfWater', 'representative.name']"
-      >
-        <Column field="id" header="No" sortable></Column>
-        <Column field="name" header="Body Of Water" sortable></Column>
-        <Column field="representative.name" header="Email"></Column>
-      </DataTable>
+  <div
+    class="alert-accordion card flex flex-col lg:hidden bg-white dark:bg-[#1B2028] rounded-t-xl border"
+  >
+    <div class="flex-between py-5 px-5 border-b">
+      <h5 class="heading__h5 flex justify-start flex-1">Name</h5>
+      <h5 class="heading__h5 flex justify-start flex-1">Type</h5>
+      <h5 class="heading__h5 flex justify-start flex-1">Size</h5>
     </div>
+    <div v-if="bodiesOfWater?.length == 0" class="flex-center">
+      <h5 class="heading__h5">
+        There is no body of water
+      </h5>
+    </div>
+    <Accordion v-else :activeIndex="0">
+      <AccordionTab v-for="bodyOfWater in bodiesOfWater" :key="bodyOfWater.id">
+        <template #header>
+          <div class="flex-between w-full dark:text-white">
+            <span class="flex-1 span__element">{{ bodyOfWater.name }}</span>
+            <span class="flex-1 span__element">{{ bodyOfWater.type }}</span>
+            <span class="flex-1 span__element">{{ bodyOfWater.size }}</span>
+          </div>
+        </template>
+        <div
+          class="flex flex-col bg-[#d4ecf4] dark:bg-[#1B2028] dark:text-white"
+        >
+          <div class="flex-between dark:bg-[#1B2028] px-4 py-2">
+            <span class="text-[#025E7C] dark:text-white span__element flex-1"
+              >Address:</span
+            >
+            <span class="text-xs flex-1 flex justify-start">{{
+              bodyOfWater.address
+            }}</span>
+          </div>
+        </div>
+      </AccordionTab>
+    </Accordion>
   </div>
 </template>
 
@@ -138,7 +158,6 @@ const viewItem = (bodyOfWater) => {
 const editItem = (bodyOfWater) => {
   props.editItem({ id: bodyOfWater.id, item: { ...bodyOfWater } });
 };
-
 const deleteItem = async (id) => {
   props.deleteItem({ id });
 };

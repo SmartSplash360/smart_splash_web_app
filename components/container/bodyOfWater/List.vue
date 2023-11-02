@@ -3,19 +3,21 @@
     <SkeletonBodyOfWater />
   </section>
   <section v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
-    <div class="hidden md:flex flex-col gap-5">
+    <div class="w-full flex flex-col gap-5">
       <div
-        class="-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
+        class="lg:-mt-12 flex w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
       >
-        <div class="flex-1 md:hidden">
-          <BaseSearchBar></BaseSearchBar>
-        </div>
-
+        <Button
+          icon="pi pi-map-marker"
+          label="View Bodies Of Water"
+          @click="handleViewBodyOfWaterList"
+          class="lg:hidden rounded-xl bg-[#0291BF] text-white"
+        />
         <Button
           icon="pi pi-map-marker"
           label="View Bodies Of Water"
           @click="toggleAddBodyOfListModal"
-          class="rounded-xl bg-[#0291BF] text-white"
+          class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
         />
         <Button
           v-if="user.role_id === 3"
@@ -29,12 +31,6 @@
           :toggleBodyOfWaterList="closeBodyOfWaterModal"
           :customerId="customerId"
         />
-        <ModalsCustomerCreateCustomer
-          v-if="addCustomerModal"
-          :toggleAddCustomerModal="closeModal"
-          :customer="userProfile"
-          :profile="true"
-        ></ModalsCustomerCreateCustomer>
       </div>
     </div>
   </section>
@@ -51,6 +47,7 @@ const props = defineProps({
   customerId: Number,
 });
 
+const router = useRouter();
 const userStore = useUserStore();
 const customerStore = useCustomerStore();
 
@@ -59,9 +56,18 @@ const addCustomerModal = ref(false);
 
 const user = computed(() => userStore.getCurrentUser);
 const userProfile = computed(() =>
-  customerStore.getCustomerById(user.value.id)
+  customerStore.getCustomerById(props.customerId)
 );
 
+const handleViewBodyOfWaterList = () => {
+  router.push({
+    path: `/customers/body-of-water`,
+    query: {
+      customerId: props.customerId,
+      userProfile: userProfile.value.name,
+    },
+  });
+};
 const toggleAddBodyOfListModal = () => (BodyOfWaterList.value = true);
 const toggleAddCustomerModal = () => (addCustomerModal.value = true);
 

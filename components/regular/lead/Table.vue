@@ -188,6 +188,35 @@
               lead?.phone_number
             }}</span>
           </div>
+          <div class="flex-between px-4 py-2">
+            <span class="text-[#025E7C] dark:text-white span__element flex-1"
+              >Stage</span
+            >
+            <span class="text-xs flex-1 flex justify-start">
+              <div
+                class="flex justify-center align-middle min-w-max px-2 py-1 rounded-lg border"
+                :class="
+                  lead.status === 1
+                    ? 'text-[#D42F24] border-[#D42F24] bg-[#f9e4e3]'
+                    : lead.status === 2
+                    ? 'text-[#fa6819] border-[#fa6819] bg-[#fbe9df]'
+                    : lead.status === 3
+                    ? 'text-[#32A431] border-[#32A431] bg-[#e4f3e4]'
+                    : null
+                "
+              >
+                {{
+                  lead.status === 1
+                    ? "Stage 1"
+                    : lead.status === 2
+                    ? "Stage 2"
+                    : lead.status === 3
+                    ? "Stage 3"
+                    : null
+                }}
+              </div></span
+            >
+          </div>
           <div class="flex justify-end">
             <Button
               v-if="lead.status === 3"
@@ -208,7 +237,7 @@
             <Button
               icon="pi pi-pencil"
               class="w-full border-none self-start hover:bg-[#d4ecf4]"
-              @click="editLead({ ...lead })"
+              @click="editItem({ id: lead.id, item, mobileEdit: true })"
             />
             <Button
               icon="pi pi-trash"
@@ -253,7 +282,6 @@ const loading = ref(false);
 const dt = ref();
 
 const createLead = () => router.push("/leads/create-lead");
-// const viewLead = (id) => router.push(`/leads/${id}`);
 
 const leadCount = computed(() => leads.length);
 const exportCSV = (event) => {

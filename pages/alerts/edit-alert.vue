@@ -11,7 +11,7 @@
       <h2 class="heading__h2 font-bold">Edit Alert {{ alertId }}</h2>
     </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-3">
+      <div class="hidden w-full flex-col gap-3">
         <label
           class="span__element text-gray-600 dark:text-gray-200"
           for="alertType"
@@ -125,7 +125,7 @@
       </div>
     </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-3">
+      <div class="hidden w-full flex-col gap-3">
         <label
           class="span__element text-gray-600 dark:text-gray-200"
           for="date"
@@ -316,34 +316,26 @@ const handleChangeNote = () => {
       : ""
     : "Please add a note";
 };
-
 const handleChangeDate = () => {
   errorDate.value = dateTime.value ? "" : "Please enter a date";
 };
 
 const validateForm = () => {
-  handleChangeAlertType();
+  // handleChangeAlertType();
   handleChangeBodyOfWater();
   handleChangeTechnician();
   handleChangeNote();
   return (
-    !errorAlertTypeId.value &&
-    !errorBodyOfWaterId.value &&
-    !errorTechnicianId.value &&
-    !errorNotes.value
+    !errorBodyOfWaterId.value && !errorTechnicianId.value && !errorNotes.value
   );
 };
 
 const updateAlert = async () => {
   if (validateForm()) {
     try {
-      await alertStore.updateAlert(props.alert?.id, {
+      await alertStore.updateAlert(alertId, {
         status: status.value,
         priority: priority.value,
-        date_time: new Date(dateTime.value)
-          .toISOString()
-          .slice(0, 19)
-          .replace("T", " "),
         notes: notes.value,
         alert_type_id: alertTypeId.value,
         body_of_water_id: bodyOfWaterId.value,
@@ -355,7 +347,7 @@ const updateAlert = async () => {
       toast.add({
         severity: "success",
         summary: "Alerts",
-        "Alert updated successfully": success,
+        detail: "Alert updated successfully",
         life: 5000,
       });
       router.push("/alerts");

@@ -20,18 +20,24 @@
       <div
         class="flex flex-col justify-between gap-5 bg-[#d4ecf4] dark:bg-[#1B2028] p-6 rounded-md"
       >
-        <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="type"> Customer's Email </label>
+        <div class="flex lg:hidden justify-between items-center">
+          <span class="lg:hidden text-sm"> {{ email }} </span>
+        </div>
+        <div class="hidden lg:flex w-full flex-col gap-2">
+          <label class="text-sm" for="email"> Customer's Email </label>
           <InputText
             :disabled="readOnly"
             type="text"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-gray-400"
+            class="hidden lg:block dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-gray-400"
             v-model="email"
           >
           </InputText>
         </div>
-        <div class="flex w-full flex-col gap-2">
-          <label class="text-sm" for="type"> Customer's Address </label>
+        <div class="flex lg:hidden justify-between items-center">
+          <span class="lg:hidden text-sm"> {{ address }} </span>
+        </div>
+        <div class="hidden lg:flex w-full flex-col gap-2">
+          <label class="text-sm" for="address"> Customer's Address </label>
           <InputText
             :disabled="readOnly"
             type="text"
@@ -40,8 +46,11 @@
           >
           </InputText>
         </div>
-        <div class="flex w-1/2 flex-col gap-2">
-          <label class="text-sm" for="type"> Body of water </label>
+        <div class="flex lg:hidden justify-between items-center">
+          <span class="lg:hidden text-sm"> {{ bodyOfWater }} </span>
+        </div>
+        <div class="hidden lg:flex w-1/2 flex-col gap-2">
+          <label class="text-sm" for="bodyOfWater"> Body of water </label>
           <InputText
             :disabled="readOnly"
             type="text"
@@ -52,17 +61,25 @@
         </div>
       </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
+        <div class="flex lg:hidden justify-between items-center">
+          <span class="lg:hidden text-sm">
+            Issued on : {{ issueDateFormat }}
+          </span>
+        </div>
+        <div class="hidden lg:flex w-full flex-col gap-2">
           <label class="text-sm" for="date"> Issued on</label>
           <InputText
             :disabled="readOnly"
             type="text"
             class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-gray-400"
-            v-model="issuedDate"
+            v-model="issueDateFormat"
           >
           </InputText>
         </div>
-        <div class="flex w-full flex-col gap-2">
+        <div class="flex lg:hidden justify-between items-center">
+          <span class="lg:hidden text-sm"> Due on : {{ dueDate }} </span>
+        </div>
+        <div class="hidden lg:flex w-full flex-col gap-2">
           <label class="text-sm" for="lng"> Due on </label>
           <InputText
             :disabled="readOnly"
@@ -73,7 +90,7 @@
           </InputText>
         </div>
       </div>
-      <div v-if="!readOnly" class="flex gap-3 items-center -mt-4 mb-4">
+      <div v-if="!readOnly" class="flex gap-3 items-center lg:-mt-4 mb-4">
         <Checkbox v-model="recurringInvoice" name="invoice" value="invoice" />
         <label class="span__element dark:text-gray-400"
           >This is a recurring invoice (Monthly)</label
@@ -198,7 +215,7 @@
       </ul>
       <div
         v-if="!readOnly"
-        class="mt-5 flex flex-col justify-end gap-5 sm:flex-row"
+        class="mt-5 flex lg:flex-col justify-end gap-5 sm:flex-row"
       >
         <Button
           label="Cancel"
@@ -222,6 +239,21 @@
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useServiceStore } from "~/stores/services";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -267,6 +299,14 @@ const chemicalReadings = ref();
 
 const active = ref();
 
+const issueDateFormat = computed(
+  () =>
+    issuedDate.value.getDate() +
+    " " +
+    months[issuedDate.value.getMonth()] +
+    " " +
+    issuedDate.value.getFullYear()
+);
 const totalPrice = computed(() =>
   (
     props.totalPriceServices +

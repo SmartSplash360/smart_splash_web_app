@@ -53,20 +53,6 @@
                 <span class="min-w-max span__element"> Edit Technician</span>
               </div>
               <div
-                @click="
-                  editItem({
-                    id: technician.id,
-                    item: technician,
-                    mobileEdit: true,
-                  })
-                "
-                class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200 lg:hidden"
-              >
-                <i class="pi pi-pencil"></i>
-
-                <span class="min-w-max span__element"> Edit Technician</span>
-              </div>
-              <div
                 @click="deleteTechnician"
                 class="flex w-full cursor-pointer items-center gap-2 rounded-md rounded-t-none px-3 py-2 hover:bg-gray-200"
               >

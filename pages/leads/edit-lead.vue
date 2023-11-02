@@ -12,9 +12,9 @@
         Edit Lead {{ leadId }}
       </h2>
     </div>
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-col justify-between gap-5 sm:flex-row">
-        <div class="flex w-full flex-col gap-2">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col justify-between gap-6 sm:flex-row">
+        <div class="flex w-full flex-col gap-3">
           <label class="span__element text-sm" for="name"> Name* </label>
           <InputText
             type="text"
@@ -22,7 +22,7 @@
             v-model="name"
           ></InputText>
         </div>
-        <div class="flex w-full flex-col gap-2">
+        <div class="flex w-full flex-col gap-3">
           <label class="span__element text-sm" for="name"> Surname* </label>
           <InputText
             type="text"
@@ -31,8 +31,8 @@
           ></InputText>
         </div>
       </div>
-      <div class="flex flex-col justify-between gap-5">
-        <div class="flex w-full flex-col gap-2">
+      <div class="flex flex-col justify-between gap-6">
+        <div class="flex w-full flex-col gap-3">
           <label class="span__element text-sm" for="email address">
             Email address*
           </label>
@@ -42,7 +42,7 @@
             v-model="email"
           ></InputText>
         </div>
-        <div class="flex w-full flex-col gap-2">
+        <div class="flex w-full flex-col gap-3">
           <label class="span__element text-sm" for="cell number">
             Cell number
           </label>
@@ -54,13 +54,27 @@
         </div>
       </div>
     </div>
+    <div class="flex w-full flex-col gap-3">
+      <label class="span__element" for="stage"> Select stage </label>
 
-    <div class="flex flex-col gap-2">
+      <select
+        name="stage"
+        id="stage"
+        v-model="stage"
+        class="w-full lg:w-1/2 rounded-md border-gray-300"
+      >
+        <option disabled selected value="">Stage stage</option>
+        <option value="1">Stage 1</option>
+        <option value="2">Stage 2</option>
+        <option value="3">Stage 3</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-4">
       <label class="span__element text-sm" for="cell number"> Notes </label>
-      <Textarea class="w-full" cols="50" rows="8" />
+      <Textarea class="w-full" cols="30" rows="8" />
     </div>
 
-    <div class="mt-5 flex justify-end gap-5">
+    <div class="flex justify-end gap-5">
       <Button
         label="Cancel"
         severity="secondary"
@@ -79,7 +93,6 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
 import { useLeadStore } from "~/stores/leads";
 
 definePageMeta({
@@ -93,6 +106,7 @@ const router = useRouter();
 const leadId = route.query.leadId;
 
 const name = ref("");
+const stage = ref();
 const surname = ref("");
 const email = ref("");
 const phoneNumber = ref("");
@@ -104,6 +118,7 @@ onMounted(async () => {
   surname.value = lead.surname;
   email.value = lead.email;
   phoneNumber.value = lead.phone_number;
+  stage.value = lead.status;
   loading.value = false;
 });
 
@@ -114,10 +129,13 @@ const updateLead = async () => {
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
+      status: stage.value,
     };
 
     await store.updateLead(leadId, data);
     await store.fetchLeads();
+
+    router.push("/leads");
   } catch (e) {}
 };
 
