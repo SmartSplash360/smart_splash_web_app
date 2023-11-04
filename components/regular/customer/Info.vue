@@ -34,7 +34,6 @@
       <div class="flex items-center gap-3 border-b border-gray-300 py-2">
         <span class="flex h-[25px] w-[25px] place-items-center"
           ><Avatar
-            v-badge.danger="3"
             class="p-overlay-badge h-4 w-4 lg:h-[20px] lg:w-[20px]"
             :image="EmailIcon"
             size="medium"

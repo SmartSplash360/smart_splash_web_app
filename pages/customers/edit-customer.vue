@@ -199,7 +199,7 @@ const updateCustomer = async () => {
         detail: "Customer created successfully",
         life: 5000,
       });
-      router.push("/customers");
+      router.back();
     } catch (error) {
       toast.add({
         severity: "error",
@@ -212,6 +212,6 @@ const updateCustomer = async () => {
 };
 
 const cancel = () => {
-  router.push("/customers");
+  router.back();
 };
 </script>

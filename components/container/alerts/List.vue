@@ -30,7 +30,7 @@
           v-model="priority"
           :options="priorities"
           placeholder="Select alert by priority"
-          class="w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
+          class="w-1/2 lg:w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
           @change="handleChangePriority"
         />
         <BaseAddButton
