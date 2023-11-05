@@ -34,7 +34,6 @@
           />
         </div>
       </div>
-      <!-- <Divider class="p-0 m-0" /> -->
       <ModalsJobsEditJob
         v-if="addJobModal"
         :toggleAddJobModal="closeModal"

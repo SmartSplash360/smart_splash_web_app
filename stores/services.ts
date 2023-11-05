@@ -20,6 +20,7 @@ export const useServiceStore = defineStore("service", {
   state: () => ({
     services: [],
     createdServiceId: null,
+    searchQuery: "",
   }),
   getters: {
     getServices(state) {
@@ -27,6 +28,12 @@ export const useServiceStore = defineStore("service", {
     },
     getServiceId: (state) => (id: number | string) => {
       return state.services.find((service: Service) => service.id === id);
+    },
+    filterServices: (state) => () => {
+      const search = state.searchQuery.toLocaleLowerCase();
+      return state.services.filter((service: Service) =>
+        service.name.toLocaleLowerCase().includes(search)
+      );
     },
   },
   actions: {

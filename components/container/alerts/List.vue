@@ -3,10 +3,11 @@
     <SkeletonTableListing v-if="loading"></SkeletonTableListing>
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
       <div class="w-full gap-5 flex flex-col lg:flex-row justify-between">
-        <div class="flex gap-2 items-center lg:gap-5 lg:min-w-[350px]">
+        <div class="w-full flex gap-2 items-center lg:gap-5 lg:min-w-[350px]">
           <h2 class="text-3xl font-bold text-[#025E7C]">
             {{ priority }} Alerts
           </h2>
+
           <span class="span__element font-bold text-gray-500"
             >({{
               priority == "high"
@@ -19,26 +20,25 @@
             }}
             Results)</span
           >
+          <BaseAddButton
+            v-if="user.role_id !== 3"
+            class="lg:hidden w-fit ml-auto"
+            @click="createAlert"
+          ></BaseAddButton>
         </div>
         <Dropdown
           v-model="priority"
           :options="priorities"
           placeholder="Select alert by priority"
-          class="w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
+          class="w-1/2 lg:w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
           @change="handleChangePriority"
         />
         <BaseAddButton
           v-if="user.role_id !== 3"
-          class="hidden lg:flex"
+          class="hidden lg:flex xl:w-fit"
           :btnText="'Add Alert'"
           :buttonId="'add-alert-button'"
           @click="toggleAddAlertModal"
-        ></BaseAddButton>
-        <BaseAddButton
-          v-if="user.role_id !== 3"
-          class="lg:hidden w-fit self-end"
-          :btnText="'Add Alert'"
-          @click="createAlert"
         ></BaseAddButton>
       </div>
       <ModalsAlertCreateAlert
@@ -52,8 +52,15 @@
         :toggleShowAlertInfo="closeModal"
       >
       </ModalsAlertInfo>
+      <div class="w-full flex mb-4 lg:hidden">
+        <BaseSearchBar
+          class="w-full"
+          @handleSearch="(value) => handleSearch(value)"
+        />
+      </div>
       <RegularAlertTable
         :alerts="alerts"
+        :alertsMobile="alertsMobile"
         :viewItem="viewItem"
         :editItem="editItem"
         :deleteItem="deleteItem"
@@ -81,6 +88,7 @@ const alertStore = useAlertStore();
 const addAlertModal = ref(false);
 const AlertInfo = ref(false);
 const alerts = ref([]);
+const alertsMobile = ref([]);
 const alertList = ref([]);
 const alert = ref();
 
@@ -93,28 +101,6 @@ const active = ref(0);
 
 const priority = ref("All");
 const priorities = ref(["All alerts", "Low", "Medium", "High"]);
-
-onMounted(async () => {
-  const list = alertStore.getAlerts;
-  if (user.value.role_id == 1) {
-    alerts.value = list;
-    alertList.value = list;
-  }
-  if (user.value.role_id == 3) {
-    const items = list.filter((alert) => {
-      return alert.body_of_water.customer_id == user.value.id;
-    });
-    alerts.value = items;
-    alertList.value = items;
-  }
-  if (user.value.role_id == 4) {
-    const items = list.filter((alert) => {
-      return alert.technician_id === user.value.id;
-    });
-    alerts.value = items;
-    alertList.value = items;
-  }
-});
 
 const user = computed(() => userStore.getCurrentUser);
 const highAlerts = computed(() => {
@@ -132,6 +118,36 @@ const lowAlerts = computed(() => {
   countLowAlert.value = list.length;
   return list;
 });
+
+onMounted(async () => {
+  const list = alertStore.getAlerts;
+  if (user.value.role_id == 1) {
+    alerts.value = list;
+    alertsMobile.value = list;
+    alertList.value = list;
+  }
+  if (user.value.role_id == 3) {
+    const items = list.filter((alert) => {
+      return alert.body_of_water.customer_id == user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+    alertsMobile.value = items;
+  }
+  if (user.value.role_id == 4) {
+    const items = list.filter((alert) => {
+      return alert.technician_id === user.value.id;
+    });
+    alerts.value = items;
+    alertList.value = items;
+    alertsMobile.value = items;
+  }
+});
+
+const handleSearch = (value) => {
+  alertStore.searchQuery = value;
+  alertsMobile.value = alertStore.filterAlerts(value);
+};
 
 const handleChangePriority = () => {
   if (

@@ -1,5 +1,8 @@
 <template>
-  <div class="lg:w-full customer-table laptop+ card hidden lg:block">
+  <div
+    class="lg:w-full customer-table laptop+ card hidden lg:block"
+    :class="[currentMode == 'dark' ? 'dark-mode' : '']"
+  >
     <DataTable
       v-model:filters="filters"
       :value="technicians"
@@ -134,6 +137,8 @@ const props = defineProps({
 });
 
 const router = useRouter();
+
+const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const reloadKey = ref(0);
 const loading = ref(false);
 const filters = ref({

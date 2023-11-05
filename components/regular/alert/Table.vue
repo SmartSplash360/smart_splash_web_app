@@ -134,7 +134,7 @@
       </h5>
     </div>
     <Accordion v-else :activeIndex="0">
-      <AccordionTab v-for="alert in alerts" :key="alert.id">
+      <AccordionTab v-for="alert in alertsMobile" :key="alert.id">
         <template #header>
           <div class="flex-between w-full dark:text-white">
             <span class="flex-1 paragraph__p">{{ alert.subject }}</span>
@@ -222,6 +222,7 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  alertsMobile: Array,
   editItem: Function,
   deleteItem: Function,
   viewItem: Function,

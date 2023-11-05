@@ -70,6 +70,7 @@ export const useUserStore = defineStore("user", {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
+        console.log(apiUrl)
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);

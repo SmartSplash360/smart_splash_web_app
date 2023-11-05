@@ -22,10 +22,11 @@
       >
         <div class="flex w-full flex-col gap-2">
           <label class="text-sm" for="type"> Customer's Email </label>
+          <label class="lg:hidden text-sm" for="type"> {{ email }} </label>
           <InputText
             :disabled="readOnly"
             type="text"
-            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-gray-400"
+            class="hidden lg:block dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-gray-400"
             v-model="email"
           >
           </InputText>

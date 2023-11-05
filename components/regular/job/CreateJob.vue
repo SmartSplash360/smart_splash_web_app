@@ -239,11 +239,13 @@
               <AccordionTab v-for="service in services" :key="service.id">
                 <template #header>
                   <div
-                    class="flex justify-between items-center w-full"
+                    class="w-full flex justify-between items-center"
                     @click="getSubservices(service.id)"
                   >
-                    <div class="flex gap-5 text-gray-600 dark:text-gray-200">
-                      <span class="flex">
+                    <div
+                      class="flex gap-5 text-gray-600 dark:text-gray-200 items-center"
+                    >
+                      <span class="hidden lg:flex">
                         <i class="pi pi-ellipsis-v ml-2"></i>
                         <i class="pi pi-ellipsis-v -ml-2"></i>
                       </span>
@@ -258,16 +260,26 @@
                           ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
                           : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
                       "
-                      class="w-[100px] rounded-md px-5 span__element shadow-md flex justify-center items-center"
+                      class="hidden w-[100px] rounded-md px-5 span__element shadow-md sm:flex justify-center items-center"
                     >
                       {{
                         service.is_available === 1 ? "Available" : "Unavailable"
                       }}
                     </span>
+                    <span
+                      :class="
+                        service.is_available === 1
+                          ? 'text-[#07C56E] bg-[#e5f9f1] border border-[#07C56E] dark:bg-[#1f504a] dark:text-[#27C498]'
+                          : 'text-[#D4382E] bg-[#fbebea] border border-[#D4382E] dark:bg-[#D4382E] dark:text-white'
+                      "
+                      class="lg:hidden w-fit rounded-md px-2 span__element shadow-md flex justify-center items-center"
+                    >
+                      {{ service.is_available === 1 ? "A" : "U" }}
+                    </span>
                   </div>
                 </template>
                 <div
-                  class="flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center pl-5"
+                  class="flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center lg:pl-5"
                 >
                   <div class="flex items-center gap-4">
                     <Checkbox
@@ -281,18 +293,18 @@
                     </p>
                   </div>
                 </div>
-                <div class="flex flex-col gap-4 mt-4">
-                  <span class="span__element text-gray-500 pl-5">
+                <div
+                  v-if="service.is_available === 1 && subservices?.length > 0"
+                  class="flex flex-col gap-4 mt-4"
+                >
+                  <span class="span__element text-gray-500 lg:pl-5">
                     List of subservices
                   </span>
-                  <div
-                    v-if="service.is_available === 1 && subservices?.length > 0"
-                    class="flex flex-wrap gap-3"
-                  >
+                  <div class="flex flex-wrap gap-2 lg:gap-3">
                     <div
                       v-for="subservice in subservices"
                       :key="subservice.id"
-                      class="flex gap-5 pl-5"
+                      class="flex gap-5 lg:pl-5"
                     >
                       <div
                         class="flex gap-2 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm"

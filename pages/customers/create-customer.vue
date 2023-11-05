@@ -81,42 +81,7 @@
         </p>
       </div>
     </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Password* </label>
-        <InputText
-          type="password"
-          v-model="password"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorPassword && 'border-red-300'"
-          @blur="handleChangePassword"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name">
-          Password Confirmation*
-        </label>
-        <InputText
-          type="password"
-          v-model="passwordConfirmation"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorPassword && 'border-red-300'"
-          @blur="handleChangePasswordMatching"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorPassword" class="text-[#D42F24] text-xs">{{
-            errorPassword
-          }}</span>
-        </p>
-      </div>
-    </div>
+
     <div class="mt-0 lg:mt-20 flex justify-end gap-5">
       <Button
         label="Cancel"
@@ -158,14 +123,11 @@ const name = ref("");
 const surname = ref("");
 const email = ref("");
 const phoneNumber = ref("");
-const password = ref("");
-const passwordConfirmation = ref("");
 
 const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
 const errorPhoneNumber = ref("");
-const errorPassword = ref("");
 
 const handleChangeName = () => {
   errorName.value = useRequired({
@@ -193,34 +155,17 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber.value,
   });
 };
-const handleChangePassword = () => {
-  errorPassword.value = useRequired({
-    fieldname: "password",
-    field: password.value,
-    error: errorPassword.value,
-  });
-};
-const handleChangePasswordMatching = () => {
-  errorPassword.value = passwordConfirmation.value
-    ? password.value !== passwordConfirmation.value
-      ? "Please provide matching password"
-      : ""
-    : "The password fields are required";
-};
 
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
-  handleChangePassword();
-  handleChangePasswordMatching();
   return (
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value &&
-    errorPassword.value
+    !errorPhoneNumber.value
   );
 };
 
@@ -232,8 +177,6 @@ const createCustomer = async () => {
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-        password: password.value,
-        password_confirmation: passwordConfirmation.value,
       });
       toast.add({
         severity: "success",
@@ -241,7 +184,7 @@ const createCustomer = async () => {
         detail: "Customer created successfully",
         life: 5000,
       });
-      router.push("/alerts");
+      router.push("/customers");
     } catch (error) {
       toast.add({
         severity: "error",

@@ -315,7 +315,7 @@ async function registerUser() {
         severity: "error",
         summary: "Login Error",
         detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-        life: 5000,
+        life: 10000,
       });
       location.reload();
       loading.value = false;

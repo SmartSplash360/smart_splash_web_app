@@ -11,10 +11,8 @@ const appDomain = config.public.appDomain;
 
 let apiUrl = requestUrl;
 
- function appendSubdomain(url:string, subdomain:string) {
-  const urlObject = new URL(url);
-  urlObject.hostname = `${subdomain}.${urlObject.hostname}`;
-  return urlObject.toString();
+function appendSubdomain(url: string, tenantId: number) {
+  return url.replace("/api/", `/api/${tenantId}/`)
 }
 
 export const useTenantStore = defineStore("tenant", {
@@ -47,8 +45,8 @@ export const useTenantStore = defineStore("tenant", {
         if (!res.data.success) {
             throw new Error(res.data.message);
         } else {
-          const subdomain = domain;          
-          this.tenantDomain =  appendSubdomain(apiUrl, subdomain);;
+          const tenantId = res.data.data.id;          
+          this.tenantDomain =  appendSubdomain(apiUrl, tenantId);;
         }
 
       } catch (error) {
