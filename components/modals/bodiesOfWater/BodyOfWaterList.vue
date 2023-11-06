@@ -13,7 +13,7 @@
         </h3>
 
         <BaseAddButton
-          v-if="user.role_id === 1"
+          v-if="user?.role_id === 1"
           :btnText="'Add Body Of Water'"
           @click="toggleAddBodyOfWaterModal"
         ></BaseAddButton>

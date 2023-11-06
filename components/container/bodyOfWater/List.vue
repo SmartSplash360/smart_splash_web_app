@@ -20,14 +20,14 @@
           class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
         />
         <Button
-          v-if="user.role_id === 3"
+          v-if="user?.role_id === 3"
           icon="pi pi-user"
           label="Update My profile"
           @click="updateProfileUser"
           class="flex lg:hidden rounded-xl bg-[#0291BF] text-white"
         />
         <Button
-          v-if="user.role_id === 3"
+          v-if="user?.role_id === 3"
           icon="pi pi-user"
           label="Update My profile"
           @click="toggleAddCustomerModal"

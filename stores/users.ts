@@ -59,9 +59,7 @@ export const useUserStore = defineStore("user", {
           ] = `Bearer ${res.data.data.token}`;
         
           return res.data.data.user;
-        } else {
-          throw new Error(res.data.message);
-        }
+        } 
       } catch (error) {
         throw error;
       }
@@ -70,7 +68,6 @@ export const useUserStore = defineStore("user", {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
-        console.log(apiUrl)
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
@@ -85,9 +82,7 @@ export const useUserStore = defineStore("user", {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.data.data.token}`;
-        } else {
-          throw new Error(res.data.message);
-        }
+        } 
       } catch (error) {
         return { errorMessage: error };
       }

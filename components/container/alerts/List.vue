@@ -21,7 +21,7 @@
             Results)</span
           >
           <BaseAddButton
-            v-if="user.role_id !== 3"
+            v-if="user?.role_id !== 3"
             class="lg:hidden w-fit ml-auto"
             @click="createAlert"
           ></BaseAddButton>
@@ -34,7 +34,7 @@
           @change="handleChangePriority"
         />
         <BaseAddButton
-          v-if="user.role_id !== 3"
+          v-if="user?.role_id !== 3"
           class="hidden lg:flex xl:w-fit"
           :btnText="'Add Alert'"
           :buttonId="'add-alert-button'"

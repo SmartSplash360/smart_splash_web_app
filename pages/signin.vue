@@ -16,5 +16,6 @@
 <script>
 definePageMeta({
   layout: "",
+  middleware: ["auth-redirect"],
 });
 </script>

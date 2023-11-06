@@ -2,7 +2,7 @@
   <div class="hidden lg:flex flex-col gap-10">
     <div class="w-full justify-end gap-5 flex">
       <BaseAddButton
-        v-if="user.role_id === 1"
+        v-if="user?.role_id === 1"
         :buttonId="'add-service-button'"
         :btnText="' Service'"
         @click="toggleAddServiceModal"
@@ -106,7 +106,7 @@
             </div>
           </template>
         </Column>
-        <Column v-if="user.role_id === 1">
+        <Column v-if="user?.role_id === 1">
           <template #body="slotProps">
             <div class="flex flex-row gap-2">
               <Button
@@ -135,7 +135,7 @@
   <div class="alert-accordion card flex flex-col gap-5 lg:hidden">
     <div class="flex flex-col">
       <BaseAddButton
-        v-if="user.role_id === 1"
+        v-if="user?.role_id === 1"
         :btnText="'Service'"
         @click="addService"
         class="-translate-y-[7rem] w-[110px] justify-end self-end hover:shadow-xl"
@@ -207,7 +207,7 @@
           </div>
           <div class="flex justify-end px-4 py-2 gap-2">
             <Button
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               icon="pi pi-pencil"
               text
               raised
@@ -216,7 +216,7 @@
               @click="editItem(service.id, { ...service }, true)"
             />
             <Button
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               icon="pi pi-trash"
               text
               raised

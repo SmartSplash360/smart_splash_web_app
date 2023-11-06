@@ -178,17 +178,17 @@ async function login() {
       await technicianStore.fetchTechnicians();
 
       if (user) {
-        await menuStore.fetchMenuByRole(user.role_id);
+        await menuStore.fetchMenuByRole(user?.role_id);
       }
 
-      loading.value = false;
-      await router.push("/alerts");
       toast.add({
         severity: "success",
         summary: "Login Success",
         detail: "You have been logged in successfully",
-        life: 5000,
+        life: 10000,
       });
+      loading.value = false;
+      await router.push("/alerts");
     } catch (e) {
       toast.add({
         severity: "error",

@@ -297,7 +297,7 @@ async function registerUser() {
         await technicianStore.fetchTechnicians();
 
         if (store.getCurrentUser) {
-          await menuStore.fetchMenuByRole(store.getCurrentUser.role_id);
+          await menuStore.fetchMenuByRole(store.getCurrentuser?.role_id);
         }
 
         toast.add({
