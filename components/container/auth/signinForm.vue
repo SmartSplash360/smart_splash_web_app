@@ -185,7 +185,7 @@ async function login() {
         severity: "success",
         summary: "Login Success",
         detail: "You have been logged in successfully",
-        life: 10000,
+        life: 5000,
       });
       loading.value = false;
       await router.push("/alerts");
@@ -194,7 +194,7 @@ async function login() {
         severity: "error",
         summary: "Login Error",
         detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-        life: 10000,
+        life: 5000,
       });
       // location.reload();
       loading.value = false;
