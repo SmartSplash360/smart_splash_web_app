@@ -24,7 +24,7 @@ export const useAlertStore = defineStore("alert", {
     filterAlerts: (state) => () => {
       const search = state.searchQuery.toLocaleLowerCase();
       return state.alerts.filter((alert: any) =>
-        alert.subject.toLocaleLowerCase().includes(search)
+        alert?.subject.toLocaleLowerCase().includes(search)
       );
     },
   },

@@ -105,9 +105,8 @@
         @click="createTemplate"
       />
       <Button
-        v-if="edit"
         :label="campaignType == 2 ? 'Send Email Campagin' : 'Send SMS Campaign'"
-        class="hidden !bg-[#0291BF] text-white"
+        class="!bg-[#0291BF] text-white"
         @click="sendCampaign"
       />
     </div>

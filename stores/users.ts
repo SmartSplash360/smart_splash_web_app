@@ -106,7 +106,48 @@ export const useUserStore = defineStore("user", {
       this.userDefinedTheme = false;
       await router.push("/");
     },
-    async forgotPassword() {},
+    async forgotPassword(email:string) {
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/forgot_password`;
+      try {
+        const res = await axios.post(url, { email });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
+
+    },
+    async resetPassword(email : string, password : string, password_confirmation : string) {
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/reset_password`;
+      try {
+        const res = await axios.post(url, {
+          email, password, password_confirmation,token : ""
+        });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
+
+    },
     async fetchUsers() {
       try {
         const data = await axios.get(
