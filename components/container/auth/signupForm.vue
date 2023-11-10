@@ -296,8 +296,12 @@ async function registerUser() {
         await leadStore.fetchLeads();
         await technicianStore.fetchTechnicians();
 
-        if (store.getCurrentUser) {
+        if (store.getCurrentUser?.role_id) {
+          console.log("first");
+          console.log(store.getCurrentUser?.role_id);
           await menuStore.fetchMenuByRole(store.getCurrentuser?.role_id);
+        } else {
+          return;
         }
 
         toast.add({
@@ -314,7 +318,7 @@ async function registerUser() {
       toast.add({
         severity: "error",
         summary: "Login Error",
-        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
+        detail: `Login Failed. An error has occurred`,
         life: 10000,
       });
       location.reload();

@@ -185,7 +185,7 @@ const createProduct = async () => {
       toast.add({
         severity: "error",
         summary: "Product",
-        detail: `An error has occurred: ${error}`,
+        detail: `An error has occurred.`,
         life: 5000,
       });
     }

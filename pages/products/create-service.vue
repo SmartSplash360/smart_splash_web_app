@@ -235,7 +235,7 @@ const createService = async () => {
       toast.add({
         severity: "error",
         summary: "Service",
-        detail: `An error has occurred: ${error}`,
+        detail: `An error has occurred.`,
         life: 5000,
       });
     }

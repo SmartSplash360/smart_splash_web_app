@@ -12,7 +12,11 @@
       :loading="loading"
       selectionMode="single"
       sortMode="multiple"
-      :globalFilterFields="['name', 'id', 'technician']"
+      :globalFilterFields="[
+        'subject',
+        'body_of_water.customer.name',
+        'technician',
+      ]"
     >
       <template #empty>
         <div class="flex-center my-5">
@@ -36,21 +40,25 @@
       <Column field="id" header="Alert" sortable>
         <template #body="slotProps">
           <span class="span__element">
-            {{ slotProps.data?.id }}
+            {{ slotProps.data?.subject }}
           </span>
         </template></Column
       >
       <Column field="name" header="Customer">
         <template #body="slotProps">
-          {{ slotProps.data?.body_of_water?.customer?.name }}
-          {{ slotProps.data?.body_of_water?.customer?.surname ?? "" }}
+          <span class="span__element">
+            {{ slotProps.data?.body_of_water?.customer?.name }}
+            {{ slotProps.data?.body_of_water?.customer?.surname ?? "" }}</span
+          >
         </template>
       </Column>
       <Column field="address" header="Address">
         <template #body="slotProps">
-          {{
-            slotProps.data?.body_of_water?.customer?.address[0]?.address_line1
-          }}
+          <span class="span__element">
+            {{
+              slotProps.data?.body_of_water?.customer?.address[0]?.address_line1
+            }}
+          </span>
         </template>
       </Column>
       <!-- <Column field="alert_type_id" header="Alert type" sortable>
@@ -75,10 +83,12 @@
       </Column>
       <Column field="technician" header="Technician">
         <template #body="slotProps">
-          {{
-            slotProps.data?.technician?.name ??
-            `Technician ${slotProps.data.technician}`
-          }}
+          <span class="span__element">
+            {{
+              slotProps.data?.technician?.name ??
+              `Technician ${slotProps.data.technician}`
+            }}</span
+          >
         </template>
       </Column>
       <Column field="status" header="Status" sortable>
