@@ -4,11 +4,11 @@
     <div v-else class="card flex flex-col gap-5 lg:gap-14">
       <div class="w-full gap-5 flex flex-col lg:flex-row justify-between">
         <div class="w-full flex gap-2 items-center lg:gap-5 lg:min-w-[350px]">
-          <h2 class="text-3xl font-bold text-[#025E7C]">
+          <h2 class="text-xl lg:text-3xl font-bold text-[#025E7C]">
             {{ priority }} Alerts
           </h2>
 
-          <span class="span__element font-bold text-gray-500"
+          <span class="text-xs lg:span__element font-bold text-gray-500"
             >({{
               priority == "high"
                 ? countHighAlert
@@ -30,7 +30,7 @@
           v-model="priority"
           :options="priorities"
           placeholder="Select alert by priority"
-          class="w-1/2 lg:w-full md:w-80 dark:bg-[#1B2028] text-gray-500"
+          class="w-1/2 lg:w-1/4 md:w-80 dark:bg-[#1B2028] text-gray-500"
           @change="handleChangePriority"
         />
         <BaseAddButton
