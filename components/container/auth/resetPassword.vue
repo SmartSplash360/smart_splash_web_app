@@ -1,17 +1,17 @@
 <template>
-  <form class="flex flex-col gap-6 py-10 sm:gap-10 lg:px-10 xl:px-20">
+  <form class="flex flex-col gap-10 py-10 sm:gap-10 lg:px-10 xl:px-20">
     <div class="mb-5 flex w-full flex-col gap-3">
       <h2 class="heading__h2 text-[30px]">Forgot Password ?</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="flex w-full flex-col gap-4">
+    <div class="flex w-full flex-col gap-8">
       <div class="flex flex-col gap-2">
         <span class="flex flex-col gap-4">
           <label class="span__element text-[12px] leading-none" for="email"
             >Email Address</label
           >
           <InputText
-            type="text"
+            type="email"
             class="w-full rounded-md border-gray-300"
             :class="errorEmail && 'border-red-300'"
             v-model="email"
@@ -27,7 +27,22 @@
           >
         </p>
       </div>
-      <div class="w-full flex flex-col gap-1">
+      <div class="w-full flex flex-col gap-4">
+        <span class="flex flex-col gap-4">
+          <label class="span__element text-[12px] leading-none" for="token"
+            >Token</label
+          >
+          <InputText
+            :disabled="true"
+            type="text"
+            class="w-full rounded-md border-gray-300"
+            v-model="token"
+          >
+          </InputText>
+        </span>
+        <p class="h-[4px]"></p>
+      </div>
+      <div class="w-full flex flex-col gap-4">
         <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="password"
             >Password</label
@@ -50,7 +65,7 @@
           >
         </p>
       </div>
-      <div class="w-full flex flex-col gap-1">
+      <div class="w-full flex flex-col gap-4">
         <span class="w-full flex flex-col gap-2">
           <label
             class="span__element text-[12px] leading-none"
@@ -76,7 +91,6 @@
         </p>
       </div>
     </div>
-
     <div class="mt-5 flex w-full flex-col gap-3">
       <Button
         :disabled="loading"
@@ -113,10 +127,12 @@ const { useRequired, useValidateEmail } = useValidation();
 const router = useRouter();
 
 const store = useUserStore();
+const route = useRoute();
 
 const loading = ref(false);
 
 const email = ref("");
+const token = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
@@ -124,6 +140,10 @@ const errorEmail = ref("");
 const errorPassword = ref("");
 
 const toast = useToast();
+
+onMounted(() => {
+  token.value = route.params.token;
+});
 
 const handleChangeEmail = () => {
   errorEmail.value = useValidateEmail({
@@ -159,7 +179,8 @@ async function resetPassword() {
       const res = await store.resetPassword(
         email.value,
         password.value,
-        confirmPassword.value
+        confirmPassword.value,
+        token.value
       );
 
       toast.add({

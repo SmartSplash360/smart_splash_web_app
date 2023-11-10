@@ -105,6 +105,7 @@
         @click="createTemplate"
       />
       <Button
+        v-if="edit"
         :label="campaignType == 2 ? 'Send Email Campagin' : 'Send SMS Campaign'"
         class="!bg-[#0291BF] text-white"
         @click="sendCampaign"
@@ -240,6 +241,7 @@ const createTemplate = async () => {
     return;
   }
   try {
+    console.log("ccover", selectedFile.value);
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("description", description.value);

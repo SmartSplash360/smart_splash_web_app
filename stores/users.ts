@@ -126,7 +126,7 @@ export const useUserStore = defineStore("user", {
       }
 
     },
-    async resetPassword(email : string, password : string, password_confirmation : string) {
+    async resetPassword(email : string, password : string, password_confirmation : string, token : string) {
       
       const tenantUrl = useTenantStore().tenantDomain;
       if (tenantUrl) {
@@ -136,7 +136,7 @@ export const useUserStore = defineStore("user", {
       let url = `${apiUrl}/auth/reset_password`;
       try {
         const res = await axios.post(url, {
-          email, password, password_confirmation,token : ""
+          email, password, password_confirmation,token 
         });
         if (!res.data.success) {
           throw new Error(res.data.message);
