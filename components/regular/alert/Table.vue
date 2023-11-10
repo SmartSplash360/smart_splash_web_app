@@ -102,7 +102,7 @@
               @click="viewAlert(slotProps.data)"
             />
             <Button
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               icon="pi pi-pencil"
               text
               raised
@@ -110,7 +110,7 @@
               @click="editAlert(slotProps.data)"
             />
             <Button
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               icon="pi pi-trash"
               text
               raised
@@ -187,7 +187,7 @@
             />
             <Button
               icon="pi pi-pencil"
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               text
               raised
               rounded
@@ -197,7 +197,7 @@
               "
             />
             <Button
-              v-if="user.role_id === 1"
+              v-if="user?.role_id === 1"
               icon="pi pi-trash"
               text
               raised

@@ -4,7 +4,7 @@
       class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h3">Payment Method</h2>
+        <h2 class="lg:min-w-max heading__h3">Payment Method</h2>
         <span class="min-w-max span__element span__element-light"
           >Update your billing deatils and address</span
         >
@@ -27,7 +27,7 @@
       class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-10 sm:flex-row xl:gap-64"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h3">Card details</h2>
+        <h2 class="lg:min-w-max heading__h3">Card details</h2>
         <span class="min-w-max span__element span__element-light"
           >Select default payment method
         </span>
@@ -59,7 +59,7 @@
     </div>
     <div class="flex-between py-5">
       <div class="flex flex-col gap-10">
-        <h2 class="min-w-max heading__h3">Integrations</h2>
+        <h2 class="lg:min-w-max heading__h3">Integrations</h2>
         <div class="flex gap-5 px-5">
           <img :src="QuickBookIcon" alt="quick-book-icon" />
           <div class="flex flex-col gap-3">

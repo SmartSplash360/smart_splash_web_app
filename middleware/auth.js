@@ -4,13 +4,13 @@ import axios from "axios";
 export default defineNuxtRouteMiddleware((to, _from) => {
     const store = useUserStore();
     const user = store.getCurrentUser;
-
+    
     if (!user) {
         return navigateTo('/signin');
     } else {
         // set authorization header
         const jwt = store.getJwt;
         axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
     }
 });

@@ -4,7 +4,7 @@
       class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h3">Company Profile</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Profile</h2>
         <span class="min-w-max span__element span__element-light"
           >Update your company logo and details here</span
         >
@@ -24,7 +24,7 @@
       class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-5 sm:flex-row sm:gap-20 sm:py-10"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h3">Company Logo</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Logo</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company logo
         </span>
@@ -110,7 +110,7 @@
       class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64 sm:justify-between"
     >
       <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
-        <h2 class="min-w-max heading__h3">Company Name</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Name</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company name
         </span>
@@ -128,7 +128,7 @@
       class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
     >
       <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
-        <h2 class="min-w-max heading__h3">Company Website</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Website</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company website
         </span>
@@ -146,7 +146,7 @@
       class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
     >
       <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
-        <h2 class="min-w-max heading__h3">Company contact number</h2>
+        <h2 class="lg:min-w-max heading__h3">Company contact number</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company contact number
         </span>
@@ -164,7 +164,7 @@
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h3">
+        <h2 class="lg:min-w-max heading__h3">
           Company Address :
           <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
         </h2>

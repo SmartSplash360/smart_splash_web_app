@@ -34,7 +34,7 @@
         ></BaseAddButton>
         <nuxt-link href="/reports">
           <Button
-            v-if="user.role_id === 1"
+            v-if="user?.role_id === 1"
             label="View Reports"
             class="w-full text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm hover:shadow-xl"
           />

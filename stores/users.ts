@@ -59,9 +59,7 @@ export const useUserStore = defineStore("user", {
           ] = `Bearer ${res.data.data.token}`;
         
           return res.data.data.user;
-        } else {
-          throw new Error(res.data.message);
-        }
+        } 
       } catch (error) {
         throw error;
       }
@@ -70,7 +68,6 @@ export const useUserStore = defineStore("user", {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
-        console.log(apiUrl)
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
@@ -85,9 +82,7 @@ export const useUserStore = defineStore("user", {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.data.data.token}`;
-        } else {
-          throw new Error(res.data.message);
-        }
+        } 
       } catch (error) {
         return { errorMessage: error };
       }
@@ -111,7 +106,48 @@ export const useUserStore = defineStore("user", {
       this.userDefinedTheme = false;
       await router.push("/");
     },
-    async forgotPassword() {},
+    async forgotPassword(email:string) {
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/forgot_password`;
+      try {
+        const res = await axios.post(url, { email });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
+
+    },
+    async resetPassword(email : string, password : string, password_confirmation : string, token : string) {
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/reset_password`;
+      try {
+        const res = await axios.post(url, {
+          email, password, password_confirmation,token 
+        });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
+
+    },
     async fetchUsers() {
       try {
         const data = await axios.get(
