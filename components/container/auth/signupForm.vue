@@ -282,38 +282,25 @@ async function registerUser() {
         password_confirmation: confirmPassword.value,
         role_id: 3,
       };
-      const res = await store.register(domain.value, userPayload);
-      if (res?.errorMessage) {
-        toast.add({
-          severity: "error",
-          summary: "Register user error",
-          detail: "User registration failed",
-          life: 3000,
-        });
-      } else {
-        await customerStore.fetchCustomers();
-        await alertStore.fetchAlerts();
-        await leadStore.fetchLeads();
-        await technicianStore.fetchTechnicians();
+      const user = await store.register(domain.value, userPayload);
 
-        if (store.getCurrentUser?.role_id) {
-          console.log("first");
-          console.log(store.getCurrentUser?.role_id);
-          await menuStore.fetchMenuByRole(store.getCurrentuser?.role_id);
-        } else {
-          return;
-        }
+      await customerStore.fetchCustomers();
+      await alertStore.fetchAlerts();
+      await leadStore.fetchLeads();
+      await technicianStore.fetchTechnicians();
 
-        toast.add({
-          severity: "success",
-          summary: "Register user success",
-          detail: "User registration succeeded",
-          life: 3000,
-        });
-
-        loading.value = false;
-        router.push("/alerts");
+      if (user) {
+        await menuStore.fetchMenuByRole(user?.role_id);
       }
+
+      toast.add({
+        severity: "success",
+        summary: "Login Success",
+        detail: "You have been logged in successfully",
+        life: 5000,
+      });
+      loading.value = false;
+      await router.push("/alerts");
     } catch (error) {
       toast.add({
         severity: "error",
