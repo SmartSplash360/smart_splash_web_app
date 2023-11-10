@@ -22,6 +22,7 @@
         v-model:selection="selectedProduct"
         v-model:filters="filters"
         :value="products"
+        paginator
         selectionMode="single"
         dataKey="id"
         :rows="10"

@@ -21,6 +21,7 @@
       <DataTable
         v-model:filters="filters"
         :value="services"
+        paginator
         selectionMode="single"
         dataKey="id"
         :rows="10"
