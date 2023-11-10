@@ -8,6 +8,11 @@ export const sideBarLinks = [
     icon: "user-group",
     name: "Customers",
     to: "/customers",
+  },  
+  {
+    icon: "user-plus",
+    name: "Leads",
+    to: "/leads",
   },
   {
     icon: "user-lock",
@@ -21,19 +26,19 @@ export const sideBarLinks = [
     to: "/products",
   },
   {
-    icon: "inbox",
-    name: "Inbox",
-    to: "/inbox",
-  },
-  {
     icon: "file-lines",
     name: "Reports",
     to: "/reports",
   },
   {
-    icon: "calendar-days",
-    name: "Calendar",
-    to: "/calendar",
+    icon: "bullhorn",
+    name: "Campaigns",
+    to: "/campaigns",
+  },
+  {
+    icon: "map",
+    name: "Map",
+    to: "/map",
   },
   {
     icon: "gear",

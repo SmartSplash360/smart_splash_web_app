@@ -9,6 +9,7 @@
   ></BaseActivityCard>
   <BaseActivityCard
     :icon="ActiveNoRoute"
+    :iconMobile="ActiveNoRouteMobile"
     :alt="'active-no-route'"
     :status="'Active (no route)'"
     :count="routes.activeNoRoute"
@@ -22,25 +23,21 @@
     :loading="loading"
     :bg="'primary'"
   ></BaseActivityCard>
-  <BaseActivityCard
-    :icon="Leads"
-    :alt="'user-leads-icons'"
-    :status="'Leads'"
-    :count="routes.leads"
-    :loading="loading"
-    :isLead="true"
-  ></BaseActivityCard>
 </template>
 
 <script setup>
 import ActiveRouteIcon from "@/assets/icons/people-switch.svg";
 import ActiveNoRoute from "@/assets/icons/ic_baseline-people.svg";
+import ActiveNoRouteMobile from "@/assets/icons/active-no-route-mobile.svg";
 import InactiveRoute from "@/assets/icons/inactive-users.svg";
-import Leads from "@/assets/icons/users-leads.svg";
 import BaseActivityCard from "~/components/base/BaseActivityCard.vue";
 
 defineProps({
   routes: Object,
   loading: Boolean,
+  showLeads: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>

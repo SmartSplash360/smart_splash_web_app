@@ -16,7 +16,9 @@ import ProgressBar from "primevue/progressbar";
 import TieredMenu from "primevue/tieredmenu";
 import BadgeDirective from "primevue/badgedirective";
 import Badge from "primevue/badge";
-// import Editor from "primevue/editor";
+import ProgressSpinner from 'primevue/progressspinner';
+import SplitButton from 'primevue/splitbutton';
+import Steps from 'primevue/steps';
 import Chart from "primevue/chart";
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
@@ -30,12 +32,18 @@ import Tooltip from 'primevue/tooltip';
 import ToastService from "primevue/toastservice";
 import ConfirmationService from "primevue/confirmationservice";
 import ConfirmDialog from "primevue/confirmdialog";
+import Dialog from 'primevue/dialog';
 import ContextMenu from "primevue/contextmenu";
+import Divider from "primevue/divider";
+import Tag from "primevue/tag";
+import Menu from 'primevue/menu';
+import Image from 'primevue/image';
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true });
   nuxtApp.vueApp.use(ToastService);
   nuxtApp.vueApp.use(ConfirmationService);
+  nuxtApp.vueApp.component("Image", Image);
   nuxtApp.vueApp.component("ContextMenu", ContextMenu);
   nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
   nuxtApp.vueApp.component("Calendar", Calendar);
@@ -55,7 +63,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("Card", Card);
   nuxtApp.vueApp.component("ProgressBar", ProgressBar);
   nuxtApp.vueApp.component("TieredMenu", TieredMenu);
-  // nuxtApp.vueApp.component("Editor", Editor);
+  nuxtApp.vueApp.component("ProgressSpinner", ProgressSpinner);
+  nuxtApp.vueApp.component("SplitButton", SplitButton);
+  nuxtApp.vueApp.component("Dialog", Dialog);
+  nuxtApp.vueApp.component("Steps", Steps);
   nuxtApp.vueApp.component("Chart", Chart);
   nuxtApp.vueApp.component("Accordion", Accordion);
   nuxtApp.vueApp.component("AccordionTab", AccordionTab);
@@ -64,6 +75,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("InputSwitch", InputSwitch);
   nuxtApp.vueApp.component("Checkbox", Checkbox);
   nuxtApp.vueApp.component("Badge", Badge);
+  nuxtApp.vueApp.component("Divider", Divider);
+  nuxtApp.vueApp.component("Tag", Tag);
+  nuxtApp.vueApp.component("Menu", Menu);
 
   nuxtApp.vueApp.directive("badge", BadgeDirective);
   nuxtApp.vueApp.directive('tooltip', Tooltip);

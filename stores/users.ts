@@ -1,90 +1,163 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 import axios from "axios";
-import router from "#app/plugins/router";
+import { useTenantStore } from './tenants'
 
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['Accept'] = 'application/json';
-// axios.defaults.withCredentials = true;
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Accept"] = "application/json";
+
+const config = useRuntimeConfig();
+const requestUrl = config.public.apiUrl;
+const appDomain = config.public.appDomain
+
+let apiUrl = requestUrl;
 
 export const useUserStore = defineStore("user", {
-    persist: {
-        storage: persistedState.localStorage,
+  persist: {
+    storage: persistedState.localStorage,
+  },
+  state: () => ({
+    loggedIn: false,
+    currentUser: null,
+    jwt: "",
+    users: [],
+    userDefinedTheme: true,
+  }),
+  getters: {
+    getUsers(state) {
+      return state.users;
     },
-    state: () => ({
-        loggedIn: false,
-        currentUser: null,
-        jwt: "",
-        users: [],
-    }),
-    getters: {
-        getUsers(state) {
-            return state.users;
-        },
-        getCurrentUser(state) {
-            return state.currentUser;
-        },
-        getJwt(state) {
-            return state.jwt;
-        },
-        getLoggedIn(state) {
-            return state.loggedIn;
+    getCurrentUser(state) {
+      return state.currentUser;
+    },
+    getJwt(state) {
+      return state.jwt;
+    },
+    getLoggedIn(state) {
+      return state.loggedIn;
+    },
+    getUserDefinedTheme(state) {
+      return state.userDefinedTheme;
+    },
+  },
+  actions: {
+    async login(domain: string, email: string, password: string) {
+      if (domain && domain !== appDomain) {
+        await useTenantStore().fetchTenantByWebsite(domain);
+        apiUrl = useTenantStore().tenantDomain;
+      }
+      try {
+        let url = `${apiUrl}/auth/login`;
+        const res = await axios.post(url, { email, password });
+        if (res.data.success) {
+          this.currentUser = res.data.data.user;
+          this.jwt = res.data.data.token;
+          this.loggedIn = true;
+
+          // set authorization header
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${res.data.data.token}`;
+        
+          return res.data.data.user;
+        } 
+      } catch (error) {
+        throw error;
+      }
+    },
+    async register(domain: string, userPayload: {}) {
+      if (domain && domain !== appDomain) {
+        await useTenantStore().fetchTenantByWebsite(domain);
+        apiUrl = useTenantStore().tenantDomain;
+      }
+      try {
+        const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
+        this.currentUser = res.data;
+
+        if (res.data.success) {
+          this.currentUser = res.data.data.user;
+          this.jwt = res.data.data.token;
+          this.loggedIn = true;
+
+          // set authorization header
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${res.data.data.token}`;
+        } 
+      } catch (error) {
+        return { errorMessage: error };
+      }
+    },
+    setJwt(newJwt: any) {
+      this.jwt = newJwt;
+    },
+    async logout() {
+      const router = useRouter();
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/logout`;
+      await axios.post(url);
+      this.currentUser = null;
+      this.jwt = "";
+      this.loggedIn = false;
+      this.userDefinedTheme = false;
+      await router.push("/");
+    },
+    async forgotPassword(email:string) {
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/forgot_password`;
+      try {
+        const res = await axios.post(url, { email });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
         }
+
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
+
     },
-    actions: {
-        async login(email: String, password: String) {
-            try {
-                const res = await axios.post(
-                    "http://localhost:8000/api/v1/auth/login",
-                    {email, password}
-                );
+    async resetPassword(email : string, password : string, password_confirmation : string, token : string) {
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
-                console.log(res.data)
+      let url = `${apiUrl}/auth/reset_password`;
+      try {
+        const res = await axios.post(url, {
+          email, password, password_confirmation,token 
+        });
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
 
-                if (res.data.success) {
-                    // TODO: store in local storage
-                    this.currentUser = res.data.data.user;
-                    this.jwt = res.data.data.token;
-                    this.loggedIn = true;
+        return res.data;
+      } catch (error) {
+        throw error;
+      }
 
-                    // set authorization header
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.token}`;
-                } else {
-                    throw new Error(res.data.message)
-                }
-
-            } catch (error) {
-                throw error
-            }
-        },
-        async register(userPayload: {}) {
-            try {
-                const res = await axios.post("http://localhost:8000/api/v1/auth/register", userPayload);
-                this.currentUser = res.data;
-            } catch (error) {
-                alert(error)
-                console.log(error)
-            }
-        },
-        async logout() {
-            const router = useRouter();
-            const res = await axios.post("http://localhost:8000/api/v1/auth/logout");
-            this.currentUser = null
-            this.jwt = "";
-            this.loggedIn = false;
-            await router.push('/customers');
-        },
-        async forgotPassword() {
-        },
-        async fetchUsers() {
-            try {
-                const data = await axios.get(
-                    "https://jsonplaceholder.typicode.com/users"
-                );
-                this.users = data.data;
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        },
     },
+    async fetchUsers() {
+      try {
+        const data = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        this.users = data.data;
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+  },
 });

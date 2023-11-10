@@ -1,29 +1,20 @@
 <template>
-  <ContainerCustomerList v-if="customerView"></ContainerCustomerList>
-  <ContainerCustomerLeads v-else></ContainerCustomerLeads>
+  <ContainerCustomerList :loading="loading"></ContainerCustomerList>
 </template>
 
 <script setup>
-import { useCustomerStore} from "~/stores/customer";
+import { useCustomerStore } from "~/stores/customer";
 
 const store = useCustomerStore();
-const customerView = ref(true);
+const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchCustomers();
-});
-
-const toggleCustomerView = () => {
-  customerView.value = !customerView.value;
-};
-
-provide("customer-view", {
-  customerView,
-  toggleCustomerView,
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: 'auth',
+  middleware: ["auth", "auto-theme"],
 });
 </script>

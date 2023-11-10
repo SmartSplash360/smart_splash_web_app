@@ -6,7 +6,7 @@
     <TabView v-model:activeIndex="active">
       <TabPanel>
         <template #header>
-          <div class="flex min-w-max items-center justify-center">
+          <div class="flex-center min-w-max">
             <span class="span__element">Company Details</span>
           </div>
         </template>
@@ -14,19 +14,11 @@
       </TabPanel>
       <TabPanel>
         <template #header>
-          <div class="flex min-w-max items-center justify-center">
+          <div class="flex-center min-w-max">
             <span class="span__element">Payment Credentials</span>
           </div>
         </template>
         <RegularSettingsPaymentCredentials></RegularSettingsPaymentCredentials>
-      </TabPanel>
-      <TabPanel>
-        <template #header>
-          <div class="flex min-w-max items-center justify-center">
-            <span class="span__element">User Settings</span>
-          </div>
-        </template>
-        <RegularSettingsUserSetting></RegularSettingsUserSetting>
       </TabPanel>
     </TabView>
   </section>

@@ -4,98 +4,140 @@
   </section>
   <section v-else class="sm:gap-13 flex flex-col gap-16">
     <RegularTechnicianBoard
-        @open-modal="toggleAddTechnicianModal"
+      @search-technician="(query) => handleSearch(query)"
+      @open-modal="toggleAddTechnicianModal"
+      @selectStatus="(status) => handleStatus(status)"
     ></RegularTechnicianBoard>
+
     <ModalsTechnicianCreateTechnician
-        v-if="addTechnicianModal"
-        :toggleAddTechnicianModal="closeModal"
-        :technician="technician"
+      v-if="addTechnicianModal"
+      :toggleAddTechnicianModal="closeModal"
+      :technician="technician"
     ></ModalsTechnicianCreateTechnician>
     <div
-        class="card-container grid items-center justify-between gap-x-5 gap-y-10"
-        v-if="technicians.length > 0"
+      class="card-container grid items-center justify-between gap-x-5 gap-y-10"
+      v-if="technicians?.length > 0"
     >
-      <RegularTechnicianCard v-for="technician in technicians"
+      <RegularTechnicianCard
+        v-for="technician in technicians"
         :key="technician.id"
         :technician="technician"
         :editItem="editItem"
         :deleteItem="deleteItem"
       ></RegularTechnicianCard>
     </div>
-    <div class="flex items-center justify-center" v-else>
+    <div class="flex-center" v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>
-    <Toast/>
-    <ConfirmDialog></ConfirmDialog>
   </section>
 </template>
 
 <script setup>
-import {useTechnicianStore} from "~/stores/technician";
-import {useToast} from "primevue/usetoast";
+import { useTechnicianStore } from "~/stores/technician";
+import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
+
+defineProps({
+  loading: Boolean,
+});
 
 const toast = useToast();
 const confirm = useConfirm();
-const loading = ref();
+const router = useRouter();
+const store = useTechnicianStore();
 
 const addTechnicianModal = ref(false);
+const technicians = ref();
 const technician = ref();
 
-const store = useTechnicianStore();
+const technicianList = computed(() => store.getTechnicians);
+
+onMounted(() => {
+  technicians.value = store.getTechnicians;
+});
 
 const toggleAddTechnicianModal = () => (addTechnicianModal.value = true);
 
-const closeModal = ({success, error}) => {
-  addTechnicianModal.value = false
-  technician.value = null
+const handleSearch = (query) => {
+  store.searchQuery = query;
+  technicians.value = store.filteredTechnicians(query);
+};
+
+const closeModal = ({ success, error }) => {
+  addTechnicianModal.value = false;
+  technician.value = null;
 
   if (success) {
     toast.add({
-      severity: 'success',
-      summary: 'Create Technician Success',
-      detail: 'Technician has been created successfully',
-      life: 3000
+      severity: "success",
+      summary: "Technicians",
+      detail: success,
+      life: 5000,
     });
   }
 
   if (error) {
     toast.add({
-      severity: 'error',
-      summary: 'Create Technician Error',
-      detail: `Failed to create technician, an error has occurred: ${error}`,
-      life: 3000
+      severity: "error",
+      summary: "Technicians",
+      detail: `An error has occurred: ${error}`,
+      life: 5000,
     });
   }
 };
-
-const technicians = computed(() => store.getTechnicians)
-
-const editItem = ({id, item}) => {
-  console.log(id, item)
-  technician.value = item
-  toggleAddTechnicianModal()
-}
-
-const deleteItem = async ({id}) => {
+const handleStatus = ({ option }) => {
+  if (option === "active") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 1
+    );
+  } else if (option === "inactive") {
+    technicians.value = technicianList.value.filter(
+      (technician) => technician.status == 0
+    );
+  } else {
+    technicians.value = technicianList.value;
+  }
+};
+const editItem = ({ id, item, mobileEdit = false }) => {
+  technician.value = item;
+  if (mobileEdit) {
+    router.push({
+      path: "/technicians/edit-technician",
+      query: { technicianId: id },
+    });
+    return;
+  }
+  toggleAddTechnicianModal();
+};
+const deleteItem = async ({ id }) => {
   confirm.require({
-    message: 'Are you sure you want to proceed?',
-    header: 'Delete Technician',
-    icon: 'pi pi-exclamation-triangle',
+    message: "Are you sure you want to proceed?",
+    header: "Delete Technician",
+    icon: "pi pi-exclamation-triangle",
     accept: async () => {
       // delete item
       try {
-        const res = await store.deleteTechnician(id)
-        await store.fetchTechnicians()
-        toast.add({severity: 'info', summary: 'Delete Technician', detail: res?.message, life: 3000});
+        const res = await store.deleteTechnician(id);
+        await store.fetchTechnicians();
+        toast.add({
+          severity: "info",
+          summary: "Delete Technician",
+          detail: res?.message,
+          life: 5000,
+        });
+        location.reload();
       } catch (e) {
-        toast.add({severity: 'error', summary: 'Delete Technician', detail: `an error has occurred: ${e}`, life: 3000});
+        toast.add({
+          severity: "error",
+          summary: "Delete Technician",
+          detail: `an error has occurred: ${e}`,
+          life: 5000,
+        });
       }
     },
-    reject: () => {
-    }
-  })
-}
+    reject: () => {},
+  });
+};
 </script>
 
 <style scoped>

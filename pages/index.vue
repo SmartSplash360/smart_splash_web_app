@@ -1,10 +1,11 @@
 <template>
   <section>
-    <UiTheHeroSection></UiTheHeroSection>
+    <UiTheHeroSection> </UiTheHeroSection>
   </section>
 </template>
 
 <script setup>
 definePageMeta({
+  middleware: "auto-theme",
 });
 </script>

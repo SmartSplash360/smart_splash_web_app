@@ -4,7 +4,7 @@
       class="flex flex-col justify-between gap-8 border-b dark:border-b-gray-600 py-10 sm:flex-row sm:items-center sm:gap-0 sm:py-5"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h3">Company Profile</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Profile</h2>
         <span class="min-w-max span__element span__element-light"
           >Update your company logo and details here</span
         >
@@ -13,143 +13,85 @@
         class="flex flex-col justify-end gap-3 sm:w-full sm:flex-row sm:gap-5"
       >
         <Button label="Cancel" severity="secondary" outlined />
-        <Button label="Save changes" class="!bg-[#0291BF]" />
+        <Button
+          label="Save changes"
+          class="!bg-[#0291BF] text-white"
+          @click="updatecompanyDetails"
+        />
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-5 sm:flex-row sm:gap-20 sm:py-10"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-5 sm:flex-row sm:gap-20 sm:py-10"
     >
       <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h3">Company Logo</h2>
+        <h2 class="lg:min-w-max heading__h3">Company Logo</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company logo
         </span>
       </div>
       <div
-        class="flex flex-col gap-5 sm:flex-1 sm:flex-row sm:items-center sm:justify-center lg:gap-14"
+        class="flex flex-col gap-5 sm:flex-1 sm:flex-row items-center sm:justify-center lg:gap-14"
       >
-        <div class="max-h-[120px] max-w-[225px]">
+        <div v-if="files.length < 1" class="flex-center">
           <img
-            :src="SmartPlashLogo"
-            alt="Smart-Splash-Logo"
-            class="h-full w-full"
+            :src="currentLogo"
+            :alt="companyName + ' Logo'"
+            class="h-52 w-52 object-contain"
           />
         </div>
-        <div class="card min-w-[330px]">
-          <Toast />
+        <div v-else class="max-h-[80px] max-w-[225px]">
+          <img
+            :src="files?.objectURL"
+            :alt="companyName + ' Logo'"
+            class="h-40 w-40 rounded-full object-contain"
+          />
+        </div>
+        <div class="card max-w-[300px]">
           <FileUpload
-            name="demo[]"
-            url="./upload.php"
+            name="CompanyLogo[]"
             @upload="onTemplatedUpload($event)"
-            :multiple="true"
+            :multiple="false"
             accept="image/*"
             :maxFileSize="1000000"
             @select="onSelectedFiles"
             class="bg-yellow-300"
           >
-            <template #header="{ chooseCallback, uploadCallback, files }">
-              <div
-                class="justify-content-between align-items-center flex flex-1 flex-wrap gap-2"
-              >
+            <template #header="{ chooseCallback }">
+              <div class="justify-between items-center flex gap-2">
                 <div class="flex gap-2">
                   <Button
                     @click="chooseCallback()"
-                    icon="pi pi-images"
-                    rounded
-                    outlined
-                  ></Button>
-                  <Button
-                    @click="uploadEvent(uploadCallback)"
                     icon="pi pi-cloud-upload"
                     rounded
                     outlined
-                    severity="success"
-                    :disabled="!files || files.length === 0"
                   ></Button>
                 </div>
-                <ProgressBar
-                  :value="totalSizePercent"
-                  :showValue="false"
-                  :class="[
-                    'md:w-20rem h-1rem w-full md:ml-auto',
-                    { 'exceeded-progress-bar': totalSizePercent > 100 },
-                  ]"
-                  ><span class="white-space-nowrap"
-                    >{{ totalSize }}B / 1Mb</span
-                  ></ProgressBar
-                >
               </div>
             </template>
             <template
               #content="{
-                files,
                 uploadedFiles,
                 removeUploadedFileCallback,
-                removeFileCallback,
               }"
             >
-              <div v-if="files.length > 0">
-                <h5 class="heading__h5">Pending</h5>
-                <div class="flex flex-wrap gap-5 p-0 sm:p-5">
-                  <div
-                    v-for="(file, index) of files"
-                    :key="file.name + file.type + file.size"
-                    class="card flex-column border-1 surface-border align-items-center m-0 flex gap-3 px-6"
-                  >
-                    <div>
-                      <img
-                        role="presentation"
-                        :alt="file.name"
-                        :src="file.objectURL"
-                        width="100"
-                        height="50"
-                        class="shadow-2"
-                      />
-                    </div>
-                    <span class="span__element">{{ file.name }}</span>
-                    <div>{{ formatSize(file.size) }}</div>
-                    <Badge value="Pending" severity="warning" />
-                    <Button
-                      icon="pi pi-times"
-                      @click="
-                        onRemoveTemplatingFile(file, removeFileCallback, index)
-                      "
-                      outlined
-                      rounded
-                      severity="danger"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div v-if="uploadedFiles.length > 0">
-                <h5 class="heading__h5">Completed</h5>
-                <div class="flex flex-wrap gap-5 p-0 sm:p-5">
+                <div class="flex flex-col gap-3 p-0">
+                  <Badge value="Completed" severity="success" />
                   <div
                     v-for="(file, index) of uploadedFiles"
                     :key="file.name + file.type + file.size"
-                    class="card flex-column border-1 surface-border align-items-center m-0 flex gap-3 px-6"
+                    class="card flex-col border-1 surface-border m-0 flex gap-3 px-6"
                   >
-                    <div>
-                      <img
-                        role="presentation"
-                        :alt="file.name"
-                        :src="file.objectURL"
-                        width="100"
-                        height="50"
-                        class="shadow-2"
+                    <div class="flex-between items-start">
+                      <Button
+                        icon="pi pi-times"
+                        @click="removeUploadedFileCallback(index)"
+                        outlined
+                        rounded
+                        severity="danger"
+                        class="!w-6 !h-6"
                       />
                     </div>
-                    <span class="span__element">{{ file.name }}</span>
-                    <div>{{ formatSize(file.size) }}</div>
-                    <Badge value="Completed" class="mt-3" severity="success" />
-                    <Button
-                      icon="pi pi-times"
-                      @click="removeUploadedFileCallback(index)"
-                      outlined
-                      rounded
-                      severity="danger"
-                    />
                   </div>
                 </div>
               </div>
@@ -165,19 +107,56 @@
       </div>
     </div>
     <div
-      class="flex flex-col gap-10 border-b dark:border-b-gray-600  py-10 sm:flex-row sm:items-center sm:gap-64"
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64 sm:justify-between"
     >
-      <div class="flex flex-col gap-3 sm:gap-4">
-        <h2 class="min-w-max heading__h3">Company Name</h2>
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
+        <h2 class="lg:min-w-max heading__h3">Company Name</h2>
         <span class="min-w-max span__element span__element-light"
           >Update company name
         </span>
       </div>
-      <div class="card justify-content-center flex sm:w-[30rem]">
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
         <InputText
           type="text"
+          v-model="companyName"
           class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
-          :placeholder="'SMART SPLAH360'"
+          :placeholder="companyName"
+        ></InputText>
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
+        <h2 class="lg:min-w-max heading__h3">Company Website</h2>
+        <span class="min-w-max span__element span__element-light"
+          >Update company website
+        </span>
+      </div>
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
+        <InputText
+          type="text"
+          v-model="companyWebsite"
+          class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
+          :placeholder="''"
+        ></InputText>
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-10 border-b dark:border-b-gray-600 py-8 sm:flex-row sm:items-center sm:gap-64"
+    >
+      <div class="flex flex-col gap-3 sm:gap-4 lg:w-1/5">
+        <h2 class="lg:min-w-max heading__h3">Company contact number</h2>
+        <span class="min-w-max span__element span__element-light"
+          >Update company contact number
+        </span>
+      </div>
+      <div class="justify-end flex sm:w-[30rem] mr-auto">
+        <InputText
+          type="text"
+          v-model="companyNumber"
+          class="w-full dark:bg-[#1B2028] rounded-lg px-3 border-gray-300"
+          :placeholder="''"
         ></InputText>
       </div>
     </div>
@@ -185,59 +164,22 @@
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
-        <h2 class="min-w-max heading__h3">Company Address</h2>
+        <h2 class="lg:min-w-max heading__h3">
+          Company Address :
+          <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
+        </h2>
         <span class="min-w-max span__element span__element-light"
           >Update company address
         </span>
       </div>
       <div
-        class="flex w-full flex-col items-center justify-between gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
+        class="flex-between w-full flex-col gap-10 sm:flex-row sm:gap-5 xl:w-1/2"
       >
         <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
             <Dropdown
-              v-model="selectedCity"
-              :options="cities"
-              filter
-              showClear
-              optionLabel="name"
-              placeholder="Select a City"
-              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300"
-            >
-              <template #value="slotProps">
-                <div v-if="slotProps.value" class="align-items-center flex">
-                  <img
-                    :alt="slotProps.value.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`flag mr-2 flag-${slotProps.value.code.toLowerCase()}`"
-                    style="width: 18px"
-                  />
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="align-items-center flex">
-                  <img
-                    :alt="slotProps.option.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`flag mr-2 flag-${slotProps.option.code.toLowerCase()}`"
-                    style="width: 18px"
-                  />
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-            <label for="dd-city" class="text-md">Select City</label>
-          </div>
-        </div>
-        <div class="card justify-content-center w-full">
-          <div class="card justify-content-center p-float-label flex">
-            <Dropdown
               v-model="selectedState"
-              :options="cities"
+              :options="states"
               filter
               showClear
               optionLabel="name"
@@ -246,12 +188,6 @@
             >
               <template #value="slotProps">
                 <div v-if="slotProps.value" class="align-items-center flex">
-                  <img
-                    :alt="slotProps.value.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`flag mr-2 flag-${slotProps.value.code.toLowerCase()}`"
-                    style="width: 18px"
-                  />
                   <div>{{ slotProps.value.name }}</div>
                 </div>
                 <span v-else>
@@ -260,12 +196,6 @@
               </template>
               <template #option="slotProps">
                 <div class="align-items-center flex">
-                  <img
-                    :alt="slotProps.option.label"
-                    src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-                    :class="`flag mr-2 flag-${slotProps.option.code.toLowerCase()}`"
-                    style="width: 18px"
-                  />
                   <div>{{ slotProps.option.name }}</div>
                 </div>
               </template>
@@ -276,8 +206,38 @@
         </div>
         <div class="card justify-content-center w-full">
           <div class="card justify-content-center p-float-label flex">
+            <Dropdown
+              v-model="selectedCity"
+              :options="selectedState ? selectedState.cities : []"
+              :disabled="!selectedState?.name"
+              filter
+              showClear
+              optionLabel="name"
+              placeholder="Select a City"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300"
+            >
+              <template #value="slotProps">
+                <div v-if="slotProps.value" class="align-items-center flex">
+                  <div>{{ slotProps.value }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="align-items-center flex">
+                  <div>{{ slotProps.option }}</div>
+                </div>
+              </template>
+            </Dropdown>
+            <label for="dd-city" class="text-md">Select City</label>
+          </div>
+        </div>
+        <div class="card justify-content-center w-full">
+          <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
+              v-model="zipCode"
               class="w-full dark:bg-[#1B2028] border-gray-300 rounded-lg"
               :placeholder="'32211'"
             ></InputText>
@@ -293,50 +253,40 @@
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { useToast } from "primevue/usetoast";
+import { stateList } from "@/utils/usaStateName";
+import { useTenantStore } from "@/stores/tenants";
+
+const tenantStore = useTenantStore();
 
 const toast = useToast();
+const tenant = computed(() => tenantStore.getCurrentTenant);
 
-const totalSize = ref(0);
-const totalSizePercent = ref(0);
+const companyName = ref();
+const companyWebsite = ref();
+const companyNumber = ref();
+const companyAddress = ref();
+const currentLogo = ref();
+const zipCode = ref();
 const files = ref([]);
 
 const selectedCity = ref();
 const selectedState = ref();
-const cities = ref([
-  { name: "Australia", code: "AU" },
-  { name: "Brazil", code: "BR" },
-  { name: "China", code: "CN" },
-  { name: "Egypt", code: "EG" },
-  { name: "France", code: "FR" },
-  { name: "Germany", code: "DE" },
-  { name: "India", code: "IN" },
-  { name: "Japan", code: "JP" },
-  { name: "Spain", code: "ES" },
-  { name: "United States", code: "US" },
-]);
+const states = ref(stateList);
 
-const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
-  removeFileCallback(index);
-  totalSize.value -= parseInt(formatSize(file.size));
-  totalSizePercent.value = totalSize.value / 10;
-};
+onMounted(async () => {
+  await tenantStore.fetchCurrentTenant();
 
-const onClearTemplatingUpload = (clear) => {
-  clear();
-  totalSize.value = 0;
-  totalSizePercent.value = 0;
-};
+  if (tenant.value) {
+    companyName.value = tenant.value?.name;
+    companyWebsite.value = tenant.value?.website;
+    companyNumber.value = tenant.value?.phone_number;
+    currentLogo.value = tenant.value?.cover;
+    companyAddress.value = tenant.value.address;
+  }
+});
 
 const onSelectedFiles = (event) => {
-  files.value = event.files;
-  files.value.forEach((file) => {
-    totalSize.value += parseInt(formatSize(file.size));
-  });
-};
-
-const uploadEvent = (callback) => {
-  totalSizePercent.value = totalSize.value / 10;
-  callback();
+  files.value = event.files[0];
 };
 
 const onTemplatedUpload = () => {
@@ -344,17 +294,37 @@ const onTemplatedUpload = () => {
     severity: "info",
     summary: "Success",
     detail: "File Uploaded",
-    life: 3000,
+    life: 5000,
   });
 };
 
-const formatSize = (bytes) => {
-  if (bytes === 0) return "0 B";
-  const k = 1024;
-  const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+const updatecompanyDetails = async () => {
+  try {
+    await tenantStore.updateTenant({
+      cover: files.value,
+      name: companyName.value,
+      address: `${selectedCity.value} - ${selectedState.value?.name} - ${zipCode.value}`,
+      website: companyWebsite.value,
+      phone_number: companyNumber.value,
+    });
+
+    toast.add({
+      severity: "success",
+      summary: "Tenant Details",
+      detail: "You updated the tenant info successfully",
+      life: 5000,
+    });
+
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
+  } catch (error) {
+    toast.add({
+      severity: "error",
+      summary: "Tenant Details Error",
+      detail: `Tenant updated Failed. An error has occurred: ${error?.response?.data?.message}`,
+      life: 5000,
+    });
+  }
 };
 </script>
-
-<style lang="scss" scoped></style>

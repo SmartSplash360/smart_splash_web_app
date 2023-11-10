@@ -1,22 +1,19 @@
 <template>
-  <main class="flex h-[100vh] items-center">
+  <main class="flex md:h-[100vh] w-full md:items-center py-10 md:py-0">
     <div
-      class="mx-auto flex items-center justify-between gap-0 rounded-md bg-white sm:h-[730px] sm:border sm:shadow-lg sm:hover:shadow-xl md:w-2/3"
+      class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[870px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:[55%]"
     >
-      <signup-form class="h-full w-full lg:w-3/5">
-      </signup-form>
-      <hero-logger class="hidden h-full lg:block lg:w-2/5"></hero-logger>
+      <ContainerAuthSignupForm class="h-full w-full lg:w-3/5">
+      </ContainerAuthSignupForm>
+      <ContainerAuthHeroLogger class="hidden h-full lg:block lg:w-2/5">
+      </ContainerAuthHeroLogger>
     </div>
   </main>
 </template>
 
 <script setup>
-import SignupForm from "~/components/container/auth/signupForm.vue";
-import HeroLogger from "~/components/container/auth/heroLogger.vue";
-
 definePageMeta({
   layout: "",
+  middleware: ["auth-redirect"],
 });
 </script>
-
-<style lang="scss" scoped></style>

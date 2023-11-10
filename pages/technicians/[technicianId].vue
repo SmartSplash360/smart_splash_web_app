@@ -1,17 +1,15 @@
 <template>
   <ContainerTechnicianOverview
-      :technicianId="technicianId"
+    :technicianId="technicianId"
   ></ContainerTechnicianOverview>
 </template>
 
 <script setup>
 definePageMeta({
   layout: "dashboard",
-  middleware: 'auth',
+  middleware: ["auth", "auto-theme"],
 });
 
 const router = useRoute();
 const { technicianId } = router.params;
-
-console.log(technicianId)
 </script>

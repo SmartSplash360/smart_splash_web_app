@@ -1,61 +1,112 @@
 <template>
   <div
     @click="toggleAddTechnicianModal({ show: false })"
-    class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex items-center justify-center bg-[#000000da]"
+    class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex-center bg-[#000000da]"
   >
-      <form
+    <form
       @click.stop
-        class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px]"
-      >
-        <h3 class="heading__h3 text-[#025E7C]">
-          {{ technician ? 'Edit' : 'New' }} Technician {{ technician ? `#${technician?.id}` : '' }}
-        </h3>
-        <div class="flex flex-col justify-between gap-5 sm:flex-row">
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Name* </label>
-            <InputText type="text" v-model="name"></InputText>
-          </div>
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Surname* </label>
-            <InputText type="text" v-model="surname"></InputText>
-          </div>
+      class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
+    >
+      <h2 class="heading__h2 font-bold text-[#025E7C]">
+        {{ technician ? "Edit" : "New" }} Technician
+        {{ technician ? `#${technician?.id}` : "" }}
+      </h2>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element" for="name"> Name* </label>
+          <InputText
+            type="text"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            v-model="name"
+            :class="errorName && 'border-red-300'"
+            @blur="handleChangeName"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+              errorName
+            }}</span>
+          </p>
         </div>
-        <div class="flex flex-col justify-between gap-5">
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="email address"> Email address* </label>
-            <InputText type="email" v-model="email"></InputText>
-          </div>
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="cell number"> Cell number </label>
-            <InputText type="text" v-model="phoneNumber"></InputText>
-          </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element" for="name"> Surname* </label>
+          <InputText
+            type="text"
+            v-model="surname"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorSurname && 'border-red-300'"
+            @blur="handleChangeSurname"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
+              errorSurname
+            }}</span>
+          </p>
         </div>
-        <div v-if="!technician" class="flex flex-col justify-between gap-5 sm:flex-row">
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Password* </label>
-            <InputText type="text" v-model="password"></InputText>
-          </div>
-          <div class="flex w-full flex-col gap-2">
-            <label class="text-sm" for="name"> Password Confirmation* </label>
-            <InputText type="text" v-model="passwordConfirmation"></InputText>
-          </div>
+      </div>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element" for="email address">
+            Email address*
+          </label>
+          <InputText
+            type="email"
+            v-model="email"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorEmail && 'border-red-300'"
+            @blur="handleChangeEmail"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
+              errorEmail
+            }}</span>
+          </p>
         </div>
-        <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
-          <Button
-            label="Cancel"
-            severity="secondary"
-            outlined
-            @click="toggleAddTechnicianModal({ show: false })"
-            class="hover:shadow-xl"
-          />
-          <Button
-              label="Submit"
-              icon="pi pi-check"
-              class="!bg-[#0291BF] hover:shadow-xl"
-              @click="technician ? updateTechnician() : createTechnician()"
-          />
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element" for="cell number"> Cell number* </label>
+          <InputText
+            type="text"
+            v-model="phoneNumber"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorPhoneNumber && 'border-red-300'"
+            @blur="handleChangePhoneNumber"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
+              errorPhoneNumber
+            }}</span>
+          </p>
         </div>
-      </form>
+      </div>
+      <div class="flex w-1/2 flex-col gap-2">
+        <label class="span__element font-bold" for="status">
+          Status :
+          <span :class="status ? 'text-green-400' : 'text-red-500'">{{
+            status ? "Active" : "Inactive"
+          }}</span>
+        </label>
+        <InputSwitch v-model="status" />
+      </div>
+
+      <div class="mt-5 flex flex-col justify-end gap-5 sm:flex-row">
+        <Button
+          label="Cancel"
+          severity="secondary"
+          outlined
+          @click="toggleAddTechnicianModal({ show: false })"
+          class="hover:shadow-xl"
+        />
+        <Button
+          label="Submit"
+          icon="pi pi-check"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
+          @click="technician ? updateTechnician() : createTechnician()"
+        />
+      </div>
+    </form>
   </div>
 </template>
 
@@ -64,75 +115,118 @@ import { useTechnicianStore } from "~/stores/technician";
 
 const store = useTechnicianStore();
 
-const props = defineProps({
-  toggleAddTechnicianModal: {
-    type: Function,
-    default: () => {},
-    required: true
-  },
-  technician: {
-    type: Object,
-    default: () => null,
-    required: false
+const { toggleAddTechnicianModal, technician } = defineProps([
+  "toggleAddTechnicianModal",
+  "technician",
+]);
+
+const {
+  useRequired,
+  useValidateEmail,
+  useValidatePhoneNumber,
+} = useValidation();
+
+const name = ref("");
+const surname = ref("");
+const email = ref("");
+const phoneNumber = ref("");
+const company = ref("1");
+const status = ref(true);
+
+const errorName = ref("");
+const errorSurname = ref("");
+const errorEmail = ref("");
+const errorPhoneNumber = ref("");
+
+const handleChangeName = () => {
+  errorName.value = useRequired({
+    fieldname: "Name",
+    field: name.value,
+    error: errorName.value,
+  });
+};
+const handleChangeSurname = () => {
+  errorSurname.value = useRequired({
+    fieldname: "Surname",
+    field: surname.value,
+    error: errorSurname.value,
+  });
+};
+const handleChangeEmail = () => {
+  errorEmail.value = useValidateEmail({
+    email: email.value,
+    error: errorEmail.value,
+  });
+};
+const handleChangePhoneNumber = () => {
+  errorPhoneNumber.value = useValidatePhoneNumber({
+    phoneNumber: phoneNumber.value,
+    error: errorPhoneNumber,
+  });
+};
+
+onMounted(() => {
+  if (technician) {
+    name.value = technician.name;
+    surname.value = technician.surname;
+    email.value = technician.email;
+    phoneNumber.value = technician.phone_number;
+    status.value = technician.status ? true : false;
   }
 });
 
-const name = ref('')
-const surname = ref('')
-const email = ref('')
-const phoneNumber = ref('')
-const password = ref('')
-const passwordConfirmation = ref('')
-const company = ref('1')
-
-onMounted(() => {
-  if (props.technician) {
-    name.value = props.technician.name
-    surname.value = props.technician.surname
-    email.value = props.technician.email
-    phoneNumber.value = props.technician.phone_number
-  }
-})
-
-
+const validateForm = () => {
+  handleChangeName();
+  handleChangeSurname();
+  handleChangeEmail();
+  handleChangePhoneNumber();
+  return (
+    !errorName.value &&
+    !errorSurname.value &&
+    !errorEmail.value &&
+    !errorPhoneNumber.value
+  );
+};
 const createTechnician = async () => {
-  // TODO: add validation
-
-  try {
-    await store.createTechnician({
-      name: name.value,
-      surname: surname.value,
-      email: email.value,
-      phone_number: phoneNumber.value,
-      password: password.value,
-      password_confirmation: passwordConfirmation.value,
-      company: company.value
-    });
-    props.toggleAddTechnicianModal({success: "Customer created successfully"});
-  } catch (e) {
-    props.toggleAddTechnicianModal({error: e});
+  if (validateForm()) {
+    try {
+      await store.createTechnician({
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        phone_number: phoneNumber.value,
+        company: company.value,
+      });
+      toggleAddTechnicianModal({ success: "Technician created successfully" });
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    } catch (e) {
+      toggleAddTechnicianModal({ error: "Opps, something went wrong!" });
+    }
   }
-}
-
+};
 const updateTechnician = async () => {
-  // TODO: add validation
-
   try {
     const data = {
-      id: props.technician.id,
+      id: technician.id,
       name: name.value,
       surname: surname.value,
       email: email.value,
       phone_number: phoneNumber.value,
-    }
-    await store.updateTechnician(props.technician?.id, data);
-    await store.fetchTechnicians()
+      status: status.value ? 1 : 0,
+    };
+    await store.updateTechnician(technician?.id, data);
+    await store.fetchTechnicians();
 
-    props.toggleAddTechnicianModal({success: `Technician ${props.technician?.id} updated successfully`});
+    toggleAddTechnicianModal({
+      success: `Technician ${technician?.id} updated successfully`,
+    });
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   } catch (e) {
-    props.toggleAddTechnicianModal({error: e});
+    toggleAddTechnicianModal({ error: e });
   }
-}
+};
 </script>
-
-<style lang="scss" scoped></style>

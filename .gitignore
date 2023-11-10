@@ -5,9 +5,9 @@ node_modules
 .cache
 .output
 .env
+.env.local
 dist
 .DS_Store
 .fleet
 .idea
-.package-lock.json
-.yarn.lock
+yarn.lock

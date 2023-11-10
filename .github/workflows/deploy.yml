@@ -1,0 +1,40 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run generate
+
+      - name: Deploy to Firebase Hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          NUXT_PUBLIC_API_URL: ${{ secrets.NUXT_PUBLIC_API_URL }}
+          NUXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+          NUXT_PUBLIC_IMAGE_URL: ${{ secrets.NUXT_PUBLIC_IMAGE_URL }}
+          NUXT_PUBLIC_TWILIO_ACCOUNT_SID: ${{ secrets.NUXT_PUBLIC_TWILIO_ACCOUNT_SID }}
+          NUXT_PUBLIC_TWILIO_API_KEY_SECRET: ${{ secrets.NUXT_PUBLIC_TWILIO_API_KEY_SECRET }}
+          NUXT_PUBLIC_TWILIO_API_KEY_SID: ${{ secrets.NUXT_PUBLIC_TWILIO_API_KEY_SID }}
+          NUXT_PUBLIC_TWILIO_AUTH_TOKEN: ${{ secrets.NUXT_PUBLIC_TWILIO_AUTH_TOKEN }}
+          NUXT_PUBLIC_TWILIO_NUMBER: ${{ secrets.NUXT_PUBLIC_TWILIO_NUMBER }}

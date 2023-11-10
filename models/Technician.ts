@@ -10,5 +10,5 @@ interface Technician {
     phone_number: String
     created_at: String | null | undefined
     updated_at: String | null | undefined
-    status: String
+    status: number
 }

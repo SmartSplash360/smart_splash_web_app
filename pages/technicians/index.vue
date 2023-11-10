@@ -1,17 +1,19 @@
 <template>
-  <ContainerTechnicianList></ContainerTechnicianList>
+  <ContainerTechnicianList :loading="loading"></ContainerTechnicianList>
 </template>
 
 <script setup>
-import { useTechnicianStore } from '~/stores/technician';
+import { useTechnicianStore } from "~/stores/technician";
 const store = useTechnicianStore();
+const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchTechnicians();
+  loading.value = false;
 });
 
 definePageMeta({
   layout: "dashboard",
-  middleware: 'auth',
+  middleware: ["auth", "auto-theme"],
 });
 </script>

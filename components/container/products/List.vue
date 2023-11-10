@@ -2,7 +2,7 @@
   <section v-if="loading">
     <SkeletonTableListing></SkeletonTableListing>
   </section>
-  <section v-else class="flex flex-col gap-10">
+  <section v-else class="flex py-10 lg:py-0 flex-col lg:gap-10">
     <div class="card">
       <TabView v-model:activeIndex="active">
         <TabPanel header="Products">
@@ -17,6 +17,8 @@
 </template>
 
 <script setup>
-const loading = ref(false);
+defineProps({
+  loading: Boolean,
+});
 const active = ref(0);
 </script>

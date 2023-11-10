@@ -10,8 +10,8 @@
     </h4>
     <div class="flex w-full justify-center text-center">
       <nuxt-link
-        to="/learn-more"
-        class="flex h-[50px] w-[243px] items-center justify-center rounded-full bg-[#FFF] px-20 py-4"
+        to="/"
+        class="flex-center h-[50px] w-[243px] rounded-full bg-[#FFF] px-20 py-4"
         >Learn more</nuxt-link
       >
     </div>

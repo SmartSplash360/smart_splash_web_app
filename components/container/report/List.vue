@@ -3,6 +3,7 @@
     <SkeletonReportPage></SkeletonReportPage>
   </section>
   <section v-else class="flex flex-col gap-10">
+    <RegularReportMobileBoard></RegularReportMobileBoard>
     <RegularReportBoard></RegularReportBoard>
     <div
       class="flex flex-col rounded-lg border py-5 lg:rounded-none lg:border-0 xl:flex-row"
@@ -14,10 +15,11 @@
         <RegularReportActiveProperties></RegularReportActiveProperties>
       </div>
     </div>
-    <RegularReportMobileBoard></RegularReportMobileBoard>
   </section>
 </template>
 
 <script setup>
-const loading = ref(false);
+defineProps({
+  loading: Boolean,
+});
 </script>

@@ -1,5 +1,7 @@
 <template>
-  <div>CUSTOMER INVOICES</div>
+  <div class="f my-5">
+    <h3 class="heading__h3 text-gray-600">No Invoices found.</h3>
+  </div>
 </template>
 
 <script setup></script>
