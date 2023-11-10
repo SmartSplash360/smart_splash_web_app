@@ -176,9 +176,10 @@
         </li>
         <li
           class="flex cursor-pointer items-center gap-5 rounded-xl py-2 text-gray-600 dark:text-white"
+          @click="signout"
         >
           <span>
-            <i class="pi pi-sign-out text-lg font-light" @click="signout" />
+            <i class="pi pi-sign-out text-lg font-light" />
           </span>
           <span class="span__element">Logout</span>
         </li>

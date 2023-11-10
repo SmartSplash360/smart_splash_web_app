@@ -355,7 +355,7 @@ const updateAlert = async () => {
       toast.add({
         severity: "error",
         summary: "Alerts",
-        detail: `An error has occurred: ${error}`,
+        detail: `An error has occurred.`,
         life: 5000,
       });
     }

@@ -196,7 +196,7 @@ async function login() {
       toast.add({
         severity: "error",
         summary: "Login Error",
-        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
+        detail: `Login Failed. An error has occurred`,
         life: 5000,
       });
       // location.reload();

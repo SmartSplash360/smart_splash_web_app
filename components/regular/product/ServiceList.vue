@@ -298,7 +298,7 @@ const closeModal = ({ success, error }) => {
     toast.add({
       severity: "error",
       summary: "Services",
-      detail: `An error has occurred: ${error}`,
+      detail: `An error has occurred.`,
       life: 5000,
     });
   }

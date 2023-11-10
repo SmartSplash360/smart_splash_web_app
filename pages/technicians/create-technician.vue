@@ -240,7 +240,7 @@ const createTechnician = async () => {
       toast.add({
         severity: "error",
         summary: "Technician",
-        detail: `An error has occurred: ${error}`,
+        detail: `An error has occurred.`,
         life: 5000,
       });
     }
