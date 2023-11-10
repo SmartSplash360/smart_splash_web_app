@@ -296,7 +296,7 @@ async function registerUser() {
       toast.add({
         severity: "success",
         summary: "Login Success",
-        detail: "You have been logged in successfully",
+        detail: "You have been signed up in successfully",
         life: 5000,
       });
       loading.value = false;
@@ -305,7 +305,7 @@ async function registerUser() {
       toast.add({
         severity: "error",
         summary: "Login Error",
-        detail: `Login Failed. An error has occurred`,
+        detail: `Sign up Failed. An error has occurred`,
         life: 10000,
       });
       location.reload();
