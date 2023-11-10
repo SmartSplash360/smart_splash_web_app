@@ -1,5 +1,5 @@
 <template>
-  <form class="flex flex-col gap-10 py-10 sm:gap-10 lg:px-10 xl:px-20">
+  <form class="flex flex-col gap-10 py-10 sm:gap-10 lg:px-10">
     <div class="mb-5 flex w-full flex-col gap-3">
       <h2 class="heading__h2 text-[30px]">Forgot Password ?</h2>
       <p class="paragraph__p">Please enter your details</p>
