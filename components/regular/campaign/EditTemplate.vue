@@ -106,7 +106,7 @@
       />
       <Button
         v-if="edit"
-        :label="campaignType == 2 ? 'Send Email Campagin' : 'Send SMS Campaign'"
+        :label="campaignType == 2 ? 'Send Email Campaign' : 'Send SMS Campaign'"
         class="!bg-[#0291BF] text-white"
         @click="sendCampaign"
       />

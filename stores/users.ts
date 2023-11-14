@@ -102,6 +102,7 @@ export const useUserStore = defineStore("user", {
 
       let url = `${apiUrl}/auth/logout`;
       await axios.post(url);
+      localStorage.clear();
       this.currentUser = null;
       this.jwt = "";
       this.loggedIn = false;
@@ -158,7 +159,7 @@ export const useUserStore = defineStore("user", {
         this.users = data.data;
       } catch (error) {
         alert(error);
-        console.log(error);
+        //console.log(error);
       }
     },
   },

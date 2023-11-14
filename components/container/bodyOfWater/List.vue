@@ -60,6 +60,7 @@ const props = defineProps({
   customerId: Number,
 });
 
+const toast = useToast();
 const router = useRouter();
 const userStore = useUserStore();
 const customerStore = useCustomerStore();

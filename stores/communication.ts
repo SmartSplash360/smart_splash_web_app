@@ -38,7 +38,7 @@ export const useCommunicationStore = defineStore("communication", {
         });
         this.voiceCall = res.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },

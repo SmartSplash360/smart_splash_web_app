@@ -69,7 +69,7 @@
       <div class="flex flex-col gap-2 w-full">
         <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="name"
-            >Name</label
+            >Company's name</label
           >
           <InputText
             id="name"

@@ -14,18 +14,27 @@
       :toggleAddTechnicianModal="closeModal"
       :technician="technician"
     ></ModalsTechnicianCreateTechnician>
-    <div
-      class="card-container grid items-center justify-between gap-x-5 gap-y-10"
-      v-if="technicians?.length > 0"
-    >
-      <RegularTechnicianCard
-        v-for="technician in technicians"
-        :key="technician.id"
-        :technician="technician"
-        :editItem="editItem"
-        :deleteItem="deleteItem"
-      ></RegularTechnicianCard>
+    <div class="flex flex-col gap-10" v-if="technicians?.length > 0">
+      <div
+        class="card-container grid items-center justify-between gap-x-5 gap-y-10"
+      >
+        <RegularTechnicianCard
+          v-for="technician in technicians"
+          :key="technician.id"
+          :technician="technician"
+          :editItem="editItem"
+          :deleteItem="deleteItem"
+        ></RegularTechnicianCard>
+      </div>
+      <div class="card">
+        <Paginator
+          :rows="10"
+          :totalRecords="technicians?.length"
+          :rowsPerPageOptions="[10, 20, 30]"
+        ></Paginator>
+      </div>
     </div>
+
     <div class="flex-center" v-else>
       <span class="span__element text-[#BDBDBD]">No Technicians</span>
     </div>

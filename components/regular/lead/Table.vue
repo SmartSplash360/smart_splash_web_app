@@ -111,12 +111,6 @@
                 @click="convertToCustomer(slotProps.data.id)"
               />
               <Button
-                icon="pi pi-comments"
-                label="Message"
-                class="w-full border-none self-start hover:bg-[#d4ecf4]"
-                @click="sendMessage(slotProps.data.id)"
-              />
-              <Button
                 icon="pi pi-phone"
                 label="Call"
                 class="w-full border-none self-start hover:bg-[#d4ecf4]"

@@ -80,7 +80,7 @@ async function sendLink() {
   if (validateForm()) {
     try {
       loading.value = true;
-      const res = await store.forgotPassword(email.value);
+      await store.forgotPassword(email.value);
 
       toast.add({
         severity: "success",
