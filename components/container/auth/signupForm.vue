@@ -1,5 +1,5 @@
 <template>
-  <form class="flex flex-col items-center gap-6 py-5 sm:gap-4 xl:px-20">
+  <form class="flex flex-col items-center gap-6 py-5 sm:gap-4 xl:px-20 lg:py-0">
     <div class="w-[250px] h-[99px] lg:h-[125px] lg:w-[300px]">
       <img
         :src="SmartPlashLogo"
@@ -12,22 +12,15 @@
         <div class="flex flex-col gap-2">
           <span class="w-full flex flex-col gap-2">
             <label class="span__element text-[12px] leading-none" for="domain"
-              >Domain</label
+              >Company</label
             >
-            <div class="flex">
-              <InputText
-                type="text"
-                class="w-full rounded-tl-md rounded-bl-md border-gray-300"
-                v-model="domain"
-              >
-              </InputText
-              ><input
-                disabled
-                type="text"
-                class="w-fit rounded-tr-md rounded-br-md border-gray-300 bg-gray-100 border-l-0"
-                placeholder=".smartsplash.co"
-              />
-            </div>
+            <InputText
+              id="domain"
+              v-model="domain"
+              class="w-full border-gray-300 rounded-md"
+              placeholder="Company's name"
+            >
+            </InputText>
           </span>
         </div>
       </div>
@@ -195,6 +188,7 @@ const {
   useValidateEmail,
   useValidatePhoneNumber,
 } = useValidation();
+
 const toast = useToast();
 const router = useRouter();
 
@@ -282,7 +276,10 @@ async function registerUser() {
         password_confirmation: confirmPassword.value,
         role_id: 3,
       };
-      const user = await store.register(domain.value, userPayload);
+      const user = await store.register(
+        domain.value?.toLocaleLowerCase().replace(/\s/g, ""),
+        userPayload
+      );
 
       await customerStore.fetchCustomers();
       await alertStore.fetchAlerts();

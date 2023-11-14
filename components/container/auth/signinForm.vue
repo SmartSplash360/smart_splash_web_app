@@ -13,25 +13,19 @@
     </div>
     <div class="flex w-full flex-col gap-4">
       <div class="flex flex-col gap-2">
-        <span class="w-full flex flex-col gap-2">
+        <span class="w-full flex flex-col gap-3">
           <label class="span__element text-[12px] leading-none" for="domain"
-            >Domain</label
+            >Company</label
           >
-          <div class="flex">
-            <InputText
-              type="text"
-              class="w-full rounded-tl-md rounded-bl-md border-gray-300"
-              v-model="domain"
-            >
-            </InputText
-            ><input
-              disabled
-              type="text"
-              class="w-fit rounded-tr-md rounded-br-md border-gray-300 bg-gray-100 border-l-0"
-              placeholder=".smartsplash.co"
-            />
-          </div>
+          <InputText
+            id="domain"
+            v-model="domain"
+            class="w-full border-gray-300 rounded-md"
+            placeholder="Company's name"
+          >
+          </InputText>
         </span>
+        <p class="min-h-[20px]"></p>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -173,7 +167,11 @@ async function login() {
   if (validateForm()) {
     try {
       loading.value = true;
-      const user = await store.login(domain.value, email.value, password.value);
+      const user = await store.login(
+        domain.value?.toLocaleLowerCase().replace(/\s/g, ""),
+        email.value,
+        password.value
+      );
 
       await customerStore.fetchCustomers();
       await alertStore.fetchAlerts();

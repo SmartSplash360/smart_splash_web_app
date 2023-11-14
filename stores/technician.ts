@@ -52,7 +52,7 @@ export const useTechnicianStore = defineStore("technician", {
         const res = await axios.get(url);
         this.technicians = res.data.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -72,7 +72,7 @@ export const useTechnicianStore = defineStore("technician", {
         return res.data.data as Technician;
       } catch (error) {
         alert(error);
-        console.log(error);
+        //console.log(error);
       }
     },
     async createTechnician(technicianPayload: any) {
@@ -92,7 +92,7 @@ export const useTechnicianStore = defineStore("technician", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -112,7 +112,7 @@ export const useTechnicianStore = defineStore("technician", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -136,7 +136,7 @@ export const useTechnicianStore = defineStore("technician", {
 
         return res.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },

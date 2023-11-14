@@ -109,7 +109,7 @@ const editTemplate = async () => {
     });
     router.push("/campaigns");
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
 };
 </script>

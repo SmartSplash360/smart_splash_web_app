@@ -56,7 +56,7 @@ export const useLeadStore = defineStore("lead", {
         const res = await axios.get(url);
         this.leads = res.data.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -74,7 +74,7 @@ export const useLeadStore = defineStore("lead", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -95,7 +95,7 @@ export const useLeadStore = defineStore("lead", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -115,7 +115,7 @@ export const useLeadStore = defineStore("lead", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -138,7 +138,7 @@ export const useLeadStore = defineStore("lead", {
 
         return res.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -170,7 +170,7 @@ export const useLeadStore = defineStore("lead", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },

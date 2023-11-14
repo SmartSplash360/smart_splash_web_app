@@ -37,7 +37,7 @@
           </div>
         </div>
       </template>
-      <Column field="id" header="Alert" sortable>
+      <Column field="subject" header="Alert subject" sortable>
         <template #body="slotProps">
           <span class="span__element">
             {{ slotProps.data?.subject }}
@@ -61,11 +61,6 @@
           </span>
         </template>
       </Column>
-      <!-- <Column field="alert_type_id" header="Alert type" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data?.alert_type?.name }}
-        </template>
-      </Column> -->
       <Column field="priority" header="Prority" sortable>
         <template #body="slotProps">
           <Tag

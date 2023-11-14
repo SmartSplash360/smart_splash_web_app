@@ -44,7 +44,7 @@ export const useAlertStore = defineStore("alert", {
         const res = await axios.get(url);
         this.alerts = res.data.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -63,7 +63,7 @@ export const useAlertStore = defineStore("alert", {
         return res.data.data;
       } catch (error) {
         alert(error);
-        console.log(error);
+        //console.log(error);
       }
     },
     async createAlert(alertPayload: any) {
@@ -84,7 +84,7 @@ export const useAlertStore = defineStore("alert", {
         }
         return res.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -105,7 +105,7 @@ export const useAlertStore = defineStore("alert", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -128,7 +128,7 @@ export const useAlertStore = defineStore("alert", {
 
         return res.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },

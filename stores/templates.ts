@@ -66,7 +66,7 @@ export const useTemplateStore = defineStore("template", {
         const res = await axios.get(url);
         this.templates = res.data.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -87,7 +87,7 @@ export const useTemplateStore = defineStore("template", {
         return res.data.data;
       } catch (error) {
         alert(error);
-        console.log(error);
+        //console.log(error);
       }
     },
     async createTemplate(templatePayload: any) {
@@ -108,7 +108,7 @@ export const useTemplateStore = defineStore("template", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -130,7 +130,7 @@ export const useTemplateStore = defineStore("template", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },
@@ -155,7 +155,7 @@ export const useTemplateStore = defineStore("template", {
 
         return res.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         throw error;
       }
     },

@@ -70,7 +70,7 @@ const createCampaign = async (data) => {
           title: data.name,
           role_id: 5,
           message: data.description,
-          campaign_template_id: data.templateId,
+          campaign_template_id: parseInt(data.templateId),
         });
 
         toast.add({
@@ -85,7 +85,7 @@ const createCampaign = async (data) => {
           title: data.name,
           role_id: 3,
           message: data.description,
-          campaign_template_id: data.templateId,
+          campaign_template_id: parseInt(data.templateId),
         });
         toast.add({
           severity: "info",

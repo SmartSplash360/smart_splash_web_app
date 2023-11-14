@@ -13,7 +13,14 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-5">
+    <div class="flex flex-col gap-10">
+      <div class="flex-1 flex justify-end">
+        <BaseAddButton
+          :buttonId="'add-lead-button'"
+          :btnText="'Add Lead'"
+          @click="toggleEditLeadModal"
+        ></BaseAddButton>
+      </div>
       <RegularLeadTable
         :callLead="callLead"
         :editItem="editItem"

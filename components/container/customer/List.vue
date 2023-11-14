@@ -48,6 +48,7 @@
       :handleSort="handleSort"
     ></RegularCustomerTable>
   </section>
+  <Toast />
 </template>
 
 <script setup>

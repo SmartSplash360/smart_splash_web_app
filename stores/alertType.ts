@@ -40,7 +40,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         const res = await axios.get(url);
         this.alertTypes = res.data.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -58,7 +58,7 @@ export const useAlertTypeStore = defineStore("alertType", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return error;
       }
     },
@@ -75,7 +75,7 @@ export const useAlertTypeStore = defineStore("alertType", {
       try {
         await axios.post(url, payload);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
   },
