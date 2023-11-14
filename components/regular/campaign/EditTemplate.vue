@@ -253,7 +253,7 @@ const createTemplate = async () => {
       severity: "success",
       summary: "Success",
       detail: "Template Created",
-      life: 5000,
+      life: 3000,
     });
     setTimeout(() => {
       window.location.href = "/campaigns";

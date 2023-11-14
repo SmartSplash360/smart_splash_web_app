@@ -29,6 +29,7 @@
 
 <script setup>
 import { useTemplateStore } from "@/stores/templates";
+
 defineProps({
   loading: Boolean,
 });
@@ -39,7 +40,8 @@ const count = store.getTemplateCount;
 
 const type = ref(2);
 
-onMounted(() => {
+onMounted(async () => {
+  await store.fetchTemplates();
   templates.value = store.getTemplates;
 });
 

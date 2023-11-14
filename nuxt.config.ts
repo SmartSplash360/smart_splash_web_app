@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     public: {
       appDomain : process.env.NUXT_PUBLIC_APP_DOMAIN ?? "smartsplash.co",
       apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co/api/v1",
-      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage/",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage",
     },
     pwa: {
       workbox: {

@@ -93,7 +93,7 @@ export const useTemplateStore = defineStore("template", {
     async createTemplate(templatePayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      axios.defaults.headers.post["Content-Type"] = "application/json";
+      axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
       
       const tenantUrl = useTenantStore().tenantDomain;
       if (tenantUrl) {

@@ -249,7 +249,7 @@ onMounted(async () => {
     menuList.value = menuListAdmin;
   } else if (user.value.role_id === 2 || user.value.role_id === 3) {
     menuList.value = menuListCustomer;
-    items.value.push({
+    items.value.unshift({
       label: "My Profile",
       icon: "pi pi-user",
       command: () => {
@@ -258,7 +258,7 @@ onMounted(async () => {
     });
   } else if (user.value.role_id === 4) {
     menuList.value = menuListTechnicina;
-    items.value.push({
+    items.value.unshift({
       label: "My Profile",
       icon: "pi pi-user",
       command: () => {
