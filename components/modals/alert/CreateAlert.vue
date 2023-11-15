@@ -308,11 +308,7 @@ const createAlert = async () => {
         type: "Alert",
       });
       await alertStore.fetchAlerts();
-
       toggleAddAlertModal({ success: "Alert created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
     } catch (e) {
       toggleAddAlertModal({ error: e });
     }
@@ -336,9 +332,8 @@ const updateAlert = async () => {
       toggleAddAlertModal({
         success: `Alert ${alert?.id} updated successfully`,
       });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
+
+      await alertStore.fetchAlerts();
     } catch (e) {
       toggleAddAlertModal({ error: e });
     }

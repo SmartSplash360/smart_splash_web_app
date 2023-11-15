@@ -139,7 +139,6 @@ const props = defineProps({
 const router = useRouter();
 
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
-const reloadKey = ref(0);
 const loading = ref(false);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },

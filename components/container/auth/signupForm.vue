@@ -305,7 +305,6 @@ async function registerUser() {
         detail: `Sign up Failed. An error has occurred`,
         life: 10000,
       });
-      location.reload();
       loading.value = false;
     }
   }

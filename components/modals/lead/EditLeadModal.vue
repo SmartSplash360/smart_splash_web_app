@@ -243,7 +243,7 @@ const createLead = async () => {
         password_confirmation: passwordConfirmation.value,
       });
       props.toggleEditLeadModal({ success: "Lead created successfully" });
-      location.reload();
+      await store.fetchLeads();
     } catch (e) {
       props.toggleEditLeadModal({ error: e });
     }

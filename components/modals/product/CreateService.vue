@@ -258,9 +258,6 @@ const createService = async () => {
 
       await serviceStore.fetchServices();
       toggleAddServiceModal({ success: "Service created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
     } catch (e) {
       toggleAddServiceModal({ error: e });
     }
@@ -285,9 +282,7 @@ const updateService = async () => {
       toggleAddServiceModal({
         success: `Service ${service?.id} updated successfully`,
       });
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
+      await serviceStore.fetchServices();
     } catch (e) {
       toggleAddServiceModal({ error: e });
     }

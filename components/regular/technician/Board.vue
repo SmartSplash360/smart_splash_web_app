@@ -45,12 +45,13 @@
 </template>
 
 <script setup>
-import { useTechnicianStore } from "~/stores/technician";
+defineProps({
+  techniciansCount: Number,
+});
 
 const emit = defineEmits(["search-technician", "selectStatus", "open-modal"]);
 
 const router = useRouter();
-const technicianStore = useTechnicianStore();
 
 const searchQuery = ref("");
 const statuses = ref([
@@ -59,8 +60,6 @@ const statuses = ref([
   { state: "Inactive", option: "inactive" },
 ]);
 const status = ref();
-
-const techniciansCount = computed(() => technicianStore.technicians.length);
 
 const addTechnician = () => router.push("/technicians/create-technician");
 const searchTechnician = (value) => {

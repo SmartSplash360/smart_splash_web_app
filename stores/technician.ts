@@ -20,6 +20,7 @@ export const useTechnicianStore = defineStore("technician", {
   state: () => ({
     technicians: [],
     searchQuery: "",
+    count : 0
   }),
   getters: {
     getTechnicians(state) {
@@ -30,6 +31,9 @@ export const useTechnicianStore = defineStore("technician", {
         (technician: Technician) => technician?.id === id
       );
     },
+    getTechnicianCount(state) {
+      return state.count;
+    },
     filteredTechnicians: (state) => () => {
       const search = state.searchQuery.toLocaleLowerCase();
       return state.technicians.filter((technician: any) =>
@@ -38,7 +42,7 @@ export const useTechnicianStore = defineStore("technician", {
     },
   },
   actions: {
-    async fetchTechnicians() {
+    async fetchTechnicians(pageNumber : number = 1) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       
@@ -47,12 +51,14 @@ export const useTechnicianStore = defineStore("technician", {
         apiUrl = tenantUrl
       }
 
-      let url = `${apiUrl}/technicians`;
+      let url = `${apiUrl}/technicians?page=${pageNumber}`;
       try {
         const res = await axios.get(url);
         this.technicians = res.data.data.data;
+        this.count = res.data.data.total;
+        return res.data.data.data
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -72,7 +78,7 @@ export const useTechnicianStore = defineStore("technician", {
         return res.data.data as Technician;
       } catch (error) {
         alert(error);
-        //console.log(error);
+
       }
     },
     async createTechnician(technicianPayload: any) {
@@ -92,7 +98,7 @@ export const useTechnicianStore = defineStore("technician", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -112,7 +118,7 @@ export const useTechnicianStore = defineStore("technician", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -136,7 +142,7 @@ export const useTechnicianStore = defineStore("technician", {
 
         return res.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },

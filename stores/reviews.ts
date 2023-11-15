@@ -44,7 +44,7 @@ export const useReviewStore = defineStore("review", {
         this.reviews = res.data.data;
         return res.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },

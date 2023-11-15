@@ -197,7 +197,6 @@ async function login() {
         detail: `Login Failed. An error has occurred`,
         life: 5000,
       });
-      // location.reload();
       loading.value = false;
     }
   }

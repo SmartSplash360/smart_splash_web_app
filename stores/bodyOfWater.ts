@@ -43,7 +43,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data.data;
       } catch (error) {
-        //console.log(error);
+
       }
     },
     async fetchBodyOfWater(id: number | string) {
@@ -62,7 +62,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
         const res = await axios.get(url);
         this.bodiesOfWater = res.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -123,7 +123,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           poolSpecsPayload
         );
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -148,7 +148,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           poolSpecsPayload
         );
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -166,7 +166,7 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
 
         return res.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },

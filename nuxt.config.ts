@@ -38,7 +38,6 @@ export default defineNuxtConfig({
   css: [
     "@/assets/css/tailwind.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
-    // "primevue/resources/themes/lara-light-blue/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
     "@vueup/vue-quill/dist/vue-quill.snow.css",
@@ -53,7 +52,6 @@ export default defineNuxtConfig({
   ],
   plugins: [
     "~/plugins/ckEditor",
-    // "~/plugins/firebase"
   ],
   colorMode: {
     classSuffix: "",

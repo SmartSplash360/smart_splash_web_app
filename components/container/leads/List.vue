@@ -193,7 +193,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
-        location.reload();
+        await leadStore.fetchLeads();
       } catch (e) {
         toast.add({
           severity: "error",

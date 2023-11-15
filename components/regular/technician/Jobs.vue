@@ -203,7 +203,6 @@ const viewItem = (job) => {
   props.viewItem({ ...job });
 };
 const editItem = (job) => {
-  console.log(job);
   props.editItem({ id: job.id, item: { ...job }, mobileEdit: job.mobileEdit });
 };
 

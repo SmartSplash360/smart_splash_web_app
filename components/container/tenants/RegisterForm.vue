@@ -232,7 +232,7 @@ async function registerTenant() {
       loading.value = true;
     } catch (error) {
       toast.add({
-        severity: "danger",
+        severity: "error",
         summary: "Register Tenant failed",
         detail: "Tenant registration failed",
         life: 3000,

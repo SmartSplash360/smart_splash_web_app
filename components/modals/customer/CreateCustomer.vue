@@ -186,9 +186,7 @@ const createCustomer = async () => {
         phone_number: phoneNumber.value,
       });
       toggleAddCustomerModal({ success: "Customer created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
+      await store.fetchCustomers();
     } catch (e) {
       toggleAddCustomerModal({ error: "Opps, something went wrong!" });
     }
@@ -210,7 +208,6 @@ const updateCustomer = async () => {
       toggleAddCustomerModal({
         success: `Customer ${customer?.id} updated successfully`,
       });
-      location.reload();
     } catch (e) {
       toggleAddCustomerModal({ error: e });
     }

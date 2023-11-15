@@ -444,7 +444,6 @@ const updateJob = async () => {
         success: `Job ${props.job?.id} updated successfully`,
       });
     } catch (e) {
-      console.log(e);
       props.toggleAddJobModal({ error: e });
     }
   }

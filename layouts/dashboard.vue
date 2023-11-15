@@ -26,7 +26,6 @@
 
 <script setup>
 import { useUserStore } from "~/stores/users";
-// import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import messaging from "@/plugins/firebase";
 
 const toggleSide = ref(false);
@@ -39,25 +38,6 @@ const setColorTheme = (newTheme) => {
   userStore.userDefinedTheme = true;
   location.reload();
 };
-
-// const activate = async () => {
-//   const token = await getToken(messaging, {
-//     vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q",
-//   });
-
-//   if (token) {
-// console.log(token);
-//   } else {
-// request
-//   }
-// };
-
-// onMounted(() => {
-// const messaging = getMessaging();
-// onMessage(messaging, (payload) => {
-//   // console.log("Message on Client", payload);
-// });
-// });
 </script>
 <style>
 .page-enter-active,

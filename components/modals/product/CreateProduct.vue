@@ -192,9 +192,7 @@ const createProduct = async () => {
       });
       await productStore.fetchProducts();
       toggleAddProductModal({ success: "Product created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
+      await productStore.fetchProducts();
     } catch (e) {
       toggleAddProductModal({ error: e });
     }
