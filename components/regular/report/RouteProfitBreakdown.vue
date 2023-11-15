@@ -35,7 +35,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { FilterMatchMode } from "primevue/api";
 import { ReportServices } from "@/services/ReportServices";
 

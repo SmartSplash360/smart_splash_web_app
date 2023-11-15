@@ -3,7 +3,11 @@
     @click="toggleAddBodyOfWaterModal({ show: false })"
     class="flex-center fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 dark:bg-[#31353F] lg:min-w-[950px]"
     >
@@ -184,6 +188,7 @@ const address = ref("");
 const lng = ref("");
 const lat = ref("");
 const poolSanitation = ref("");
+const loading = ref(false);
 
 const poolSanitations = ref([
   { label: "Chlorine", value: "chlorine" },
@@ -386,6 +391,7 @@ onUnmounted(async () => {
 
 const createBodyOfWater = async () => {
   // TODO: add validation
+  loading.value = true;
 
   try {
     const payload = {
@@ -401,18 +407,20 @@ const createBodyOfWater = async () => {
     };
 
     await store.createBodyOfWater(payload);
-
     await store.fetchBodiesOfWaters();
+    loading.value = false;
 
     props.toggleAddBodyOfWaterModal({
       success: "Body Of Water created successfully",
     });
   } catch (e) {
+    loading.value = false;
     props.toggleAddBodyOfWaterModal({ error: e });
   }
 };
 
 const updateBodyOfWater = async () => {
+  loading.value = true;
   try {
     const data = {
       name: name.value,
@@ -429,10 +437,12 @@ const updateBodyOfWater = async () => {
     await store.updateBodyOfWater(props.bodyOfWater?.id, data);
     await store.fetchBodiesOfWaters();
 
+    loading.value = false;
     props.toggleAddBodyOfWaterModal({
       success: `Body Of Water ${props.bodyOfWater?.id} updated successfully`,
     });
   } catch (e) {
+    loading.value = false;
     props.toggleAddBodyOfWaterModal({ error: e });
   }
 };

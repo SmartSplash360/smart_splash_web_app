@@ -3,7 +3,11 @@
     @click="toggleAddJobModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="overflow-auto flex min-h-[500px] flex-col gap-8 rounded-md bg-white p-5 lg:min-w-[950px] dark:bg-[#31353F]"
     >
@@ -220,8 +224,9 @@ const props = defineProps({
 const { useRequired, useValidateTextArea } = useValidation();
 
 const poolId = ref();
-const customerId = ref();
 const startTime = ref();
+const customerId = ref();
+const loading = ref(false);
 const startingTimeComputed = ref();
 
 const endTime = ref();
@@ -426,24 +431,25 @@ const validateForm = () => {
 };
 
 const updateJob = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
-      const data = {
+      await jobStore.updateJob(props.job?.id, {
         pool_id: poolId.value,
         technician_id: props.technicianId,
         customer_id: customerId.value,
         status: status.value,
         description: description.value,
         technical_notes: technical_notes.value,
-      };
-
-      await jobStore.updateJob(props.job?.id, data);
+      });
       await jobStore.fetchJobs();
 
+      loading.value = false;
       props.toggleAddJobModal({
         success: `Job ${props.job?.id} updated successfully`,
       });
     } catch (e) {
+      loading.value = false;
       props.toggleAddJobModal({ error: e });
     }
   }

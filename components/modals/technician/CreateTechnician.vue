@@ -3,7 +3,11 @@
     @click="toggleAddTechnicianModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
     >
@@ -127,11 +131,12 @@ const {
 } = useValidation();
 
 const name = ref("");
-const surname = ref("");
 const email = ref("");
-const phoneNumber = ref("");
+const surname = ref("");
 const company = ref("1");
 const status = ref(true);
+const loading = ref(false);
+const phoneNumber = ref("");
 
 const errorName = ref("");
 const errorSurname = ref("");
@@ -188,6 +193,7 @@ const validateForm = () => {
   );
 };
 const createTechnician = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       await store.createTechnician({
@@ -197,14 +203,17 @@ const createTechnician = async () => {
         phone_number: phoneNumber.value,
         company: company.value,
       });
-      toggleAddTechnicianModal({ success: "Technician created successfully" });
       await store.fetchTechnicians();
+      loading.value = false;
+      toggleAddTechnicianModal({ success: "Technician created successfully" });
     } catch (e) {
+      loading.value = false;
       toggleAddTechnicianModal({ error: "Opps, something went wrong!" });
     }
   }
 };
 const updateTechnician = async () => {
+  loading.value = true;
   try {
     const data = {
       id: technician.id,
@@ -216,11 +225,12 @@ const updateTechnician = async () => {
     };
     await store.updateTechnician(technician?.id, data);
     await store.fetchTechnicians();
-
+    loading.value = false;
     toggleAddTechnicianModal({
       success: `Technician ${technician?.id} updated successfully`,
     });
   } catch (e) {
+    loading.value = false;
     toggleAddTechnicianModal({ error: e });
   }
 };

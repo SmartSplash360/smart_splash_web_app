@@ -3,7 +3,11 @@
     @click="toggleAddAlertModal"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
     >
@@ -191,6 +195,7 @@ const status = ref("open");
 const priority = ref("medium");
 const subject = ref("");
 const dateTime = ref(null);
+const loading = ref(false);
 
 const notes = ref("");
 const alertTypeId = ref();
@@ -283,9 +288,10 @@ const validateForm = () => {
 };
 
 const createAlert = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
-      const data = {
+      const createdAlert = await alertStore.createAlert({
         status: status.value,
         priority: priority.value,
         date_time: new Date(dateTime.value)
@@ -296,9 +302,7 @@ const createAlert = async () => {
         body_of_water_id: bodyOfWaterId.value,
         technician_id: technicianId.value,
         subject: subject.value,
-      };
-
-      const createdAlert = await alertStore.createAlert(data);
+      });
 
       await notificationStore.createNotification({
         subject: "ALERT CREATED",
@@ -308,6 +312,8 @@ const createAlert = async () => {
         type: "Alert",
       });
       await alertStore.fetchAlerts();
+
+      loading.value = false;
       toggleAddAlertModal({ success: "Alert created successfully" });
     } catch (e) {
       toggleAddAlertModal({ error: e });
@@ -315,6 +321,7 @@ const createAlert = async () => {
   }
 };
 const updateAlert = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       const data = {
@@ -325,16 +332,16 @@ const updateAlert = async () => {
         technician_id: technicianId.value,
         subject: subject.value,
       };
-
       await alertStore.updateAlert(alert?.id, data);
       await alertStore.fetchAlerts();
-
+      loading.value = false;
       toggleAddAlertModal({
         success: `Alert ${alert?.id} updated successfully`,
       });
 
       await alertStore.fetchAlerts();
     } catch (e) {
+      loading.value = false;
       toggleAddAlertModal({ error: e });
     }
   }
