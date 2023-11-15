@@ -27,7 +27,7 @@
           :deleteItem="deleteItem"
         ></RegularTechnicianCard>
       </div>
-      <div class="flex justify-center gap-5 mt-14">
+      <div v-if="totalPage > 0" class="flex justify-center gap-5 mt-14">
         <span
           class="flex-center rounded-full w-12 h-12 text-sm text-[#646c73]"
           :class="

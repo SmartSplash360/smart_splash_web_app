@@ -20,6 +20,7 @@ export const useTemplateStore = defineStore("template", {
   state: () => ({
     templates: [],
     searchQuery: "",
+    count : 0
   }),
   getters: {
     getTemplates(state) {
@@ -47,11 +48,11 @@ export const useTemplateStore = defineStore("template", {
       );
     },
     getTemplateCount(state) {
-      return state.templates.length;
+      return state.count;
     },
   },
   actions: {
-    async fetchTemplates() {
+    async fetchTemplates(pageNumber : number = 1) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -61,10 +62,13 @@ export const useTemplateStore = defineStore("template", {
         apiUrl = tenantUrl
       }
       
-      let url = `${apiUrl}/templates`;
+      let url = `${apiUrl}/templates?page=${pageNumber}`;
       try {
         const res = await axios.get(url);
         this.templates = res.data.data.data;
+        this.count = res.data.data.total;
+        console.log(this.count)
+        return res.data.data.data
       } catch (error) {
 
         return error;
