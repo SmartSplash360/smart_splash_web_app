@@ -13,7 +13,14 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-5">
+    <div class="flex flex-col gap-10">
+      <div class="flex-1 flex justify-end">
+        <BaseAddButton
+          :buttonId="'add-lead-button'"
+          :btnText="'Add Lead'"
+          @click="toggleEditLeadModal"
+        ></BaseAddButton>
+      </div>
       <RegularLeadTable
         :callLead="callLead"
         :editItem="editItem"
@@ -111,7 +118,7 @@ const closeModal = ({ success, error }) => {
     toast.add({
       severity: "error",
       summary: "Leads",
-      detail: `An error has occurred: ${error}`,
+      detail: `An error has occurred.`,
       life: 5000,
     });
   }
@@ -186,7 +193,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
-        location.reload();
+        await leadStore.fetchLeads();
       } catch (e) {
         toast.add({
           severity: "error",

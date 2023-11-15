@@ -3,7 +3,11 @@
     @click="toggleAddProductModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F] dark:text-white"
     >
@@ -125,6 +129,7 @@ const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.0);
+const loading = ref(false);
 
 const errorName = ref("");
 const errorNotes = ref("");
@@ -181,6 +186,7 @@ const validateForm = () => {
   );
 };
 const createProduct = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       await productStore.createProduct({
@@ -191,33 +197,32 @@ const createProduct = async () => {
         is_available: isAvailable.value,
       });
       await productStore.fetchProducts();
+      loading.value = false;
       toggleAddProductModal({ success: "Product created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
     } catch (e) {
+      loading.value = false;
       toggleAddProductModal({ error: e });
     }
   }
 };
 const updateProduct = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
-      const data = {
+      await productStore.updateProduct(product?.id, {
         name: name.value,
         description: description.value,
         price: price.value,
         notes: notes.value,
         is_available: isAvailable.value,
-      };
-
-      await productStore.updateProduct(product?.id, data);
+      });
       await productStore.fetchProducts();
-
+      loading.value = false;
       toggleAddProductModal({
         success: `Product ${product?.id} updated successfully`,
       });
     } catch (e) {
+      loading.value = false;
       toggleAddProductModal({ error: e });
     }
   }

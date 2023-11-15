@@ -57,7 +57,7 @@ export const useNotificationStore = defineStore("notification", {
         const res = await axios.get(url);
         this.notifications = res.data.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -75,7 +75,7 @@ export const useNotificationStore = defineStore("notification", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -98,7 +98,7 @@ export const useNotificationStore = defineStore("notification", {
         //     throw new Error(res.data.message);
         // }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -119,7 +119,7 @@ export const useNotificationStore = defineStore("notification", {
         }
         return res.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },

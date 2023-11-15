@@ -189,7 +189,7 @@ const closeModal = ({ success, error }) => {
     toast.add({
       severity: "error",
       summary: "Alerts",
-      detail: `An error has occurred: ${error}`,
+      detail: `An error has occurred.`,
       life: 5000,
     });
   }
@@ -234,8 +234,7 @@ const deleteItem = async ({ id }) => {
         detail: res?.message,
         life: 5000,
       });
-
-      location.reload(true);
+      await alertStore.fetchAlerts();
     },
     reject: () => {},
   });

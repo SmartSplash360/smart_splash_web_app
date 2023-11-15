@@ -3,7 +3,11 @@
     @click="toggleJobQuoteModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex items-center justify-end bg-[#000000Aa]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="overflow-auto flex min-h-[500px] flex-col gap-5 rounded-md bg-white p-5 mx-auto lg:min-w-[750px] dark:bg-[#31353F]"
     >
@@ -288,10 +292,11 @@ const props = defineProps({
 
 const email = ref();
 const address = ref();
-const bodyOfWater = ref();
-const issuedDate = ref(new Date());
 const dueDate = ref();
+const bodyOfWater = ref();
+const loading = ref(false);
 const recurringInvoice = ref();
+const issuedDate = ref(new Date());
 
 const services = ref([]);
 const products = ref();
@@ -334,6 +339,7 @@ onMounted(() => {
 });
 
 const handleSendQuote = () => {
+  loading.value = true;
   confirm.require({
     message: "Are you sure you want to proceed?",
     header: "Send Quotatio",
@@ -352,5 +358,6 @@ const handleSendQuote = () => {
     },
     reject: () => {},
   });
+  loading.value = false;
 };
 </script>

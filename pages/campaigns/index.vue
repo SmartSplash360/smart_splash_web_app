@@ -1,5 +1,5 @@
 <template>
-  <ContainerCampaignList :loading="loading"></ContainerCampaignList>
+  <ContainerCampaignList></ContainerCampaignList>
 </template>
 
 <script setup>
@@ -10,10 +10,8 @@ definePageMeta({
 });
 
 const store = useTemplateStore();
-const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchTemplates();
-  loading.value = false;
 });
 </script>

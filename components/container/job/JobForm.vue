@@ -111,7 +111,7 @@ const createJob = async (totalPrice, quoteRecipient, selectedProducts) => {
     toast.add({
       severity: "error",
       summary: "Job creation Error",
-      detail: `Job creation failed. An error has occurred: ${error}`,
+      detail: `Job creation failed. An error has occurred.`,
       life: 5000,
     });
   }

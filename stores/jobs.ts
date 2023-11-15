@@ -46,7 +46,7 @@ export const useJobStore = defineStore("job", {
         const res = await axios.get(url);
         this.jobs = res.data.data.data;
       } catch (error) {
-        console.log(error);
+
       }
     },
     async fetchTechnicianJobs(id: number | string) {
@@ -63,7 +63,7 @@ export const useJobStore = defineStore("job", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -81,7 +81,7 @@ export const useJobStore = defineStore("job", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -99,7 +99,7 @@ export const useJobStore = defineStore("job", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -117,7 +117,7 @@ export const useJobStore = defineStore("job", {
         const res = await axios.get(url);
         this.completedJobs = res.data.data.data.length;
       } catch (error) {
-        console.log(error);
+
       }
     },
     async createJob(payload: any) {
@@ -139,7 +139,7 @@ export const useJobStore = defineStore("job", {
         }
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -163,7 +163,7 @@ export const useJobStore = defineStore("job", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -187,7 +187,7 @@ export const useJobStore = defineStore("job", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -207,7 +207,7 @@ export const useJobStore = defineStore("job", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -230,7 +230,7 @@ export const useJobStore = defineStore("job", {
 
         return res.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },

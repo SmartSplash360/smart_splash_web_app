@@ -43,7 +43,6 @@ const props = defineProps({
 });
 
 const days = ref();
-import { ref } from "vue";
 
 onMounted(() => {
   chartData.value = setChartData();

@@ -4,13 +4,13 @@
     :class="[$colorMode.value !== 'dark' && 'background-light']"
   >
     <div class="flex-center flex-col gap-5">
-      <div class="max-h-[150px] max-w-[298px]">
+      <nuxt-link class="max-h-[150px] max-w-[298px]" to="/alerts">
         <img
           :src="SmartPlashLogo"
           alt="Smart-Splash-Logo"
           class="h-full w-full"
         />
-      </div>
+      </nuxt-link>
       <button
         @click="handleToggleSide"
         class="self-center w-8 h-8 bg-[#707070] rounded-md text-white flex-center"

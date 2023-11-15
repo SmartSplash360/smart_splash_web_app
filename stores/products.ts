@@ -47,7 +47,7 @@ export const useProductStore = defineStore("product", {
         const res = await axios.get(url);
         this.products = res.data.data.data;
       } catch (error) {
-        console.log(error);
+
       }
     },
     async fetchProduct(id: number) {
@@ -65,7 +65,7 @@ export const useProductStore = defineStore("product", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
       }
     },
     async createProduct(productPayload: any) {
@@ -106,7 +106,7 @@ export const useProductStore = defineStore("product", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -129,7 +129,7 @@ export const useProductStore = defineStore("product", {
         }
         return res.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },

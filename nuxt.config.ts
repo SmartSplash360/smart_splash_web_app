@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     public: {
       appDomain : process.env.NUXT_PUBLIC_APP_DOMAIN ?? "smartsplash.co",
       apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co/api/v1",
-      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage/",
+      imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage",
     },
     pwa: {
       workbox: {
@@ -38,7 +38,6 @@ export default defineNuxtConfig({
   css: [
     "@/assets/css/tailwind.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
-    // "primevue/resources/themes/lara-light-blue/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
     "@vueup/vue-quill/dist/vue-quill.snow.css",
@@ -53,7 +52,6 @@ export default defineNuxtConfig({
   ],
   plugins: [
     "~/plugins/ckEditor",
-    // "~/plugins/firebase"
   ],
   colorMode: {
     classSuffix: "",

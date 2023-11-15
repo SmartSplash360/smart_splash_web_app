@@ -314,10 +314,6 @@ const updatecompanyDetails = async () => {
       detail: "You updated the tenant info successfully",
       life: 5000,
     });
-
-    setTimeout(() => {
-      location.reload();
-    }, 3000);
   } catch (error) {
     toast.add({
       severity: "error",

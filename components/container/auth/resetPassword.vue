@@ -1,10 +1,10 @@
 <template>
   <form class="flex flex-col gap-10 py-10 sm:gap-10 lg:px-10">
     <div class="mb-5 flex w-full flex-col gap-3">
-      <h2 class="heading__h2 text-[30px]">Forgot Password ?</h2>
+      <h2 class="heading__h2 text-[30px]">Reset your Password ?</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="flex w-full flex-col gap-8">
+    <div class="flex w-full flex-col gap-4">
       <div class="flex flex-col gap-2">
         <span class="flex flex-col gap-4">
           <label class="span__element text-[12px] leading-none" for="email"
@@ -107,13 +107,6 @@
           <nuxt-link to="/signin" class="text-[#4D6977]">Signin</nuxt-link>
         </p>
       </div>
-      <!-- <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
-        <Button
-          icon="pi pi-google"
-          label="Continue with Google"
-          class="w-full"
-        />
-      </div> -->
       <Toast />
     </div>
   </form>
@@ -185,20 +178,19 @@ async function resetPassword() {
 
       toast.add({
         severity: "success",
-        summary: "Login Success",
-        detail: "You have been logged in successfully",
-        life: 5000,
+        summary: "Password Reset Success",
+        detail: "You have reset your password successfully",
+        life: 7000,
       });
       loading.value = false;
       await router.push("/alerts");
     } catch (e) {
       toast.add({
         severity: "error",
-        summary: "Login Error",
-        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-        life: 5000,
+        summary: "Password Reset Error",
+        detail: `Password reset failed.`,
+        life: 7000,
       });
-      // location.reload();
       loading.value = false;
     }
   }

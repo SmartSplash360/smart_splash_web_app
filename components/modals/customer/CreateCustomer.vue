@@ -3,7 +3,11 @@
     @click="toggleAddCustomerModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
     >
@@ -119,14 +123,16 @@ const {
 } = useValidation();
 
 const name = ref("");
-const surname = ref("");
 const email = ref("");
+const surname = ref("");
+const loading = ref(false);
 const phoneNumber = ref("");
 
 const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
 const errorPhoneNumber = ref("");
+
 onMounted(() => {
   if (customer) {
     name.value = customer.name;
@@ -177,6 +183,7 @@ const validateForm = () => {
 };
 
 const createCustomer = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       await store.createCustomer({
@@ -185,32 +192,31 @@ const createCustomer = async () => {
         email: email.value,
         phone_number: phoneNumber.value,
       });
+      await store.fetchCustomers();
+      loading.value = false;
       toggleAddCustomerModal({ success: "Customer created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
     } catch (e) {
       toggleAddCustomerModal({ error: "Opps, something went wrong!" });
     }
   }
 };
 const updateCustomer = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
-      const data = {
+      await store.updateCustomer(customer?.id, {
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-      };
-
-      await store.updateCustomer(customer?.id, data);
+      });
       await store.fetchCustomers();
-
+      loading.value = false;
       toggleAddCustomerModal({
         success: `Customer ${customer?.id} updated successfully`,
       });
     } catch (e) {
+      loading.value = false;
       toggleAddCustomerModal({ error: e });
     }
   }

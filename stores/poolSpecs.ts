@@ -32,7 +32,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -51,7 +51,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        console.log(error);
+
         return error;
       }
     },
@@ -92,7 +92,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },
@@ -115,7 +115,7 @@ export const usePoolSpecsStore = defineStore("poolSpecs", {
         }
         return res.data;
       } catch (error) {
-        console.log(error);
+
         throw error;
       }
     },

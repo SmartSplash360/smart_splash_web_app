@@ -101,7 +101,6 @@ export const useTenantStore = defineStore("tenant", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        console.log(error);
         throw error;
       }
     },

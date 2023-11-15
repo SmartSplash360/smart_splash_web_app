@@ -69,7 +69,7 @@
       <div class="flex flex-col gap-2 w-full">
         <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="name"
-            >Name</label
+            >Company's name</label
           >
           <InputText
             id="name"
@@ -232,7 +232,7 @@ async function registerTenant() {
       loading.value = true;
     } catch (error) {
       toast.add({
-        severity: "danger",
+        severity: "error",
         summary: "Register Tenant failed",
         detail: "Tenant registration failed",
         life: 3000,

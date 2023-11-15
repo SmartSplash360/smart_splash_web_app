@@ -11,7 +11,7 @@
             >Email Address</label
           >
           <InputText
-            type="text"
+            type="email"
             class="w-full rounded-md border-gray-300"
             :class="errorEmail && 'border-red-300'"
             v-model="email"
@@ -45,13 +45,6 @@
           <nuxt-link to="/signin" class="text-[#4D6977]">Signin</nuxt-link>
         </p>
       </div>
-      <!-- <div class="flex w-full flex-col items-center gap-4 self-center lg:w-4/5">
-        <Button
-          icon="pi pi-google"
-          label="Continue with Google"
-          class="w-full"
-        />
-      </div> -->
       <Toast />
     </div>
   </form>
@@ -87,24 +80,23 @@ async function sendLink() {
   if (validateForm()) {
     try {
       loading.value = true;
-      const res = await store.forgotPassword(email.value);
+      await store.forgotPassword(email.value);
 
       toast.add({
         severity: "success",
-        summary: "Login Success",
-        detail: "You have been logged in successfully",
-        life: 5000,
+        summary: "Send link success",
+        detail: "You have been sent an email link to reset your password",
+        life: 7000,
       });
       loading.value = false;
-      await router.push("/alerts");
+      await router.push("/signin");
     } catch (e) {
       toast.add({
         severity: "error",
-        summary: "Login Error",
-        detail: `Login Failed. An error has occurred: ${e?.response?.data?.message}`,
-        life: 5000,
+        summary: "Send link error",
+        detail: `Send link failed, an error has occurred`,
+        life: 7000,
       });
-      // location.reload();
       loading.value = false;
     }
   }

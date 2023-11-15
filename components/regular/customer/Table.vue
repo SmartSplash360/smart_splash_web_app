@@ -44,12 +44,14 @@
         </div>
       </template>
       <template #loading> Loading customers data. Please wait.</template>
-      <Column
-        field="id"
-        header="ID"
-        exportHeader="Customer ID"
-        sortable
-      ></Column>
+      <Column field="id" header="ID" exportHeader="Customer ID" sortable>
+        <template #body="slotProps">
+          <span class="span__element">
+            {{ slotProps.data?.id }}
+          </span>
+        </template>
+      </Column>
+
       <Column field="photo" header="Photo" exportHeader="Customer Photo">
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data?.id}`">
@@ -65,13 +67,28 @@
       </Column>
       <Column field="name" header="Customer" sortable>
         <template #body="slotProps">
-          <nuxt-link :to="`/customers/${slotProps.data?.id}`">
+          <nuxt-link
+            :to="`/customers/${slotProps.data?.id}`"
+            class="span__element text-sm"
+          >
             {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
           </nuxt-link>
         </template>
       </Column>
-      <Column field="phone_number" header="Cell number"></Column>
-      <Column field="email" header="Email address"></Column>
+      <Column field="phone_number" header="Cell number">
+        <template #body="slotProps">
+          <span class="span__element text-sm">
+            {{ slotProps.data?.phone_number }}
+          </span>
+        </template></Column
+      >
+      <Column field="email" header="Email address">
+        <template #body="slotProps">
+          <span class="span__element text-sm">
+            {{ slotProps.data?.email }}
+          </span>
+        </template>
+      </Column>
       <Column field="status" header="Status">
         <template #body="slotProps">
           <Tag
@@ -230,7 +247,6 @@ const props = defineProps({
   handleSort: Function,
 });
 
-const reloadKey = ref(0);
 const loading = ref(false);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
