@@ -48,6 +48,16 @@
               {{ alert.created_at }}</span
             >
           </p>
+          <div class="flex flex-col">
+            <span class="span__element text-gray-600 dark:text-gray-400"
+              >Notes:
+            </span>
+            <p
+              class="border p-2 rounded-md span__element text-xs text-gray-400 h-[70px] lg:max-w-lg overflow-y-auto"
+            >
+              {{ alert.notes }}
+            </p>
+          </div>
           <div class="flex flex-col gap-2 my-2">
             <span
               class="span__element text-gray-600 dark:text-gray-400 font-bold"
@@ -113,6 +123,10 @@ const props = defineProps({
 });
 
 const { id, technician_id, body_of_water } = props.alert;
+
+onMounted(() => {
+  console.log(props.alert);
+});
 
 const handleCreateJob = () => {
   router.push({

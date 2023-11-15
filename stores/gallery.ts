@@ -32,7 +32,7 @@ export const useGalleryStore = defineStore("gallery", {
         const res = await axios.get(url);
         return res.data.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -50,7 +50,7 @@ export const useGalleryStore = defineStore("gallery", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -99,7 +99,7 @@ export const useGalleryStore = defineStore("gallery", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -122,7 +122,7 @@ export const useGalleryStore = defineStore("gallery", {
         }
         return res.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },

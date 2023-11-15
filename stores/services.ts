@@ -51,7 +51,7 @@ export const useServiceStore = defineStore("service", {
         const res = await axios.get(url);
         this.services = res.data.data.data;
       } catch (error) {
-        //console.log(error);
+
       }
     },
     async fetchService(id: number) {
@@ -68,7 +68,7 @@ export const useServiceStore = defineStore("service", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        //console.log(error);
+
       }
     },
     async createService(servicePayload: Service) {
@@ -109,7 +109,7 @@ export const useServiceStore = defineStore("service", {
         }
         return res.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -128,7 +128,7 @@ export const useServiceStore = defineStore("service", {
         const res = await axios.delete(url);
         return res.data.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },

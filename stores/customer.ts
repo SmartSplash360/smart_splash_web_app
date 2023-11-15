@@ -69,7 +69,7 @@ export const useCustomerStore = defineStore("customer", {
         const res = await axios.get(url);
         this.customers = res.data.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -87,7 +87,7 @@ export const useCustomerStore = defineStore("customer", {
         const res = await axios.get(url);
         return res.data.data;
       } catch (error) {
-        //console.log(error);
+
         return error;
       }
     },
@@ -108,7 +108,7 @@ export const useCustomerStore = defineStore("customer", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -128,7 +128,7 @@ export const useCustomerStore = defineStore("customer", {
           throw new Error(res.data.message);
         }
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },
@@ -151,7 +151,7 @@ export const useCustomerStore = defineStore("customer", {
 
         return res.data;
       } catch (error) {
-        //console.log(error);
+
         throw error;
       }
     },

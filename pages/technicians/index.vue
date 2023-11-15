@@ -1,15 +1,13 @@
 <template>
-  <ContainerTechnicianList :loading="loading"></ContainerTechnicianList>
+  <ContainerTechnicianList></ContainerTechnicianList>
 </template>
 
 <script setup>
 import { useTechnicianStore } from "~/stores/technician";
 const store = useTechnicianStore();
-const loading = ref(true);
 
 onMounted(async () => {
   await store.fetchTechnicians();
-  loading.value = false;
 });
 
 definePageMeta({

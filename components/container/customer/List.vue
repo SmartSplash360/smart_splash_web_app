@@ -142,7 +142,7 @@ const deleteItem = async ({ id }) => {
           detail: res?.message,
           life: 5000,
         });
-        window.location.reload();
+        await customerStore.fetchCustomers();
       } catch (e) {
         toast.add({
           severity: "error",

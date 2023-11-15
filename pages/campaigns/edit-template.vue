@@ -117,7 +117,12 @@ const editTemplate = async () => {
     });
     router.push("/campaigns");
   } catch (error) {
-    //console.log(error);
+    toast.add({
+      severity: "error",
+      summary: "Operation failed",
+      detail: "Template could not be created",
+      life: 5000,
+    });
   }
 };
 </script>

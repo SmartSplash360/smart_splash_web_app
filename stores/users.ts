@@ -159,7 +159,7 @@ export const useUserStore = defineStore("user", {
         this.users = data.data;
       } catch (error) {
         alert(error);
-        //console.log(error);
+
       }
     },
   },

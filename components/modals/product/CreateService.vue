@@ -3,7 +3,11 @@
     @click="toggleAddServiceModal({ show: false })"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-w-full flex-col gap-5 rounded-md bg-white dark:bg-[#31353F] dark:text-white p-10 lg:min-w-[950px] lg:max-w-[950px]"
     >
@@ -167,6 +171,7 @@ const description = ref("");
 const price = ref(1.0);
 const subservice = ref("");
 const subservices = ref([]);
+const loading = ref(false);
 const showSubserviceInput = ref(false);
 
 const errorNotes = ref("");
@@ -242,6 +247,7 @@ const handleRemoveSubservice = (subservice) => {
 };
 
 const createService = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       await serviceStore.createService({
@@ -257,16 +263,16 @@ const createService = async () => {
       });
 
       await serviceStore.fetchServices();
+      loading.value = false;
       toggleAddServiceModal({ success: "Service created successfully" });
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
     } catch (e) {
+      loading.value = false;
       toggleAddServiceModal({ error: e });
     }
   }
 };
 const updateService = async () => {
+  loading.value = true;
   if (validateForm()) {
     try {
       const data = {
@@ -282,13 +288,13 @@ const updateService = async () => {
       });
 
       await serviceStore.updateService(service?.id, data);
+      await serviceStore.fetchServices();
+      loading.value = false;
       toggleAddServiceModal({
         success: `Service ${service?.id} updated successfully`,
       });
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
     } catch (e) {
+      loading.value = false;
       toggleAddServiceModal({ error: e });
     }
   }
