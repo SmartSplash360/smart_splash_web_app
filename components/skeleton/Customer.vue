@@ -1,11 +1,9 @@
 <template>
   <div class="flex flex-col gap-10 sm:mt-24">
     <div role="status" class="w-full animate-pulse">
-      <div class="-mt-20 hidden items-center gap-10 sm:flex">
-        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
-        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
-        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
-        <div class="h-16 w-48 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+      <div class="-mt-20 hidden items-center justify-between sm:flex">
+        <div class="h-20 w-2/3 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+        <div class="h-12 w-1/6 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
       </div>
     </div>
     <div role="status" class="w-full animate-pulse">
