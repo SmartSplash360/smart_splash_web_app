@@ -4,13 +4,31 @@
       class="min-w-full shadow-md hover:shadow-xl dark:bg-[#1B2028] dark:text-white"
     >
       <template #header>
-        <div class="flex-center pb-5 text-[#025E7C] lg:h-[270px]">
-          <img :src="templateCover" alt="template-icon" class="w-full h-full" />
+        <div class="flex-center text-[#025E7C] h-[270px]">
+          <img
+            v-if="templateCover"
+            :src="templateCover"
+            :alt="template.name"
+            class="w-full h-full"
+          />
+          <span v-else class="bg-gray-400 w-full h-full"></span>
         </div>
       </template>
       <template #title>
+        <div class="w-full lg:w-3/4 flex items-center gap-4 mb-4">
+          <span
+            class="lg:min-w-1/3 py-1.5 px-2 font-normal rounded-lg text-[10px] text-[#12a537] bg-[#12a53733]"
+          >
+            sent by: John wick
+          </span>
+          <span
+            class="lg:min-w-1/2 py-1.5 px-2 font-normal rounded-lg text-[10px] text-[#f58d3d] bg-[#ec680633]"
+          >
+            last sent : April 24 2023
+          </span>
+        </div>
         <div class="flex items-start justify-between">
-          <div class="relative flex flex-col items-start">
+          <div class="relative flex flex-col items-start my-4">
             <div class="flex flex-col gap-4 overflow-hidden">
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
               <p

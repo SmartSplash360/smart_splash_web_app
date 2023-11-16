@@ -52,6 +52,7 @@ export default defineNuxtConfig({
   ],
   plugins: [
     "~/plugins/ckEditor",
+    "~/plugins/fix-loading-error"
   ],
   colorMode: {
     classSuffix: "",

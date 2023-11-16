@@ -1,124 +1,126 @@
 <template>
-  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
-  <form
-    v-else
-    class="flex min-h-[500px] flex-col gap-8 rounded-md bg-white dark:bg-[#31353F]"
-  >
-    <div class="flex gap-10 items-center">
-      <div
-        class="w-fit flex gap-3 items-center cursor-pointer"
-        @click="$router.back()"
-      >
-        <font-awesome-icon icon="chevron-left" />
+  <div>
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form
+      v-else
+      class="flex min-h-[500px] flex-col gap-8 rounded-md bg-white dark:bg-[#31353F]"
+    >
+      <div class="flex gap-10 items-center">
+        <div
+          class="w-fit flex gap-3 items-center cursor-pointer"
+          @click="$router.back()"
+        >
+          <font-awesome-icon icon="chevron-left" />
+        </div>
+        <h2 class="heading__h2 text-[#025E7C] self-start">Edit Job</h2>
       </div>
-      <h2 class="heading__h2 text-[#025E7C] self-start">Edit Job</h2>
-    </div>
-    <div class="flex flex-col justify-between gap-3 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="text-sm" for="type"> Customer* </label>
-        <Dropdown
-          v-model="customerId"
-          :options="customers"
-          optionValue="id"
-          optionLabel="name"
-          placeholder="Select a Customer"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
-          :class="errorCustomer && 'border-red-300'"
-          @change="handleChangeCustomer"
+      <div class="flex flex-col justify-between gap-3 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="type"> Customer* </label>
+          <Dropdown
+            v-model="customerId"
+            :options="customers"
+            optionValue="id"
+            optionLabel="name"
+            placeholder="Select a Customer"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
+            :class="errorCustomer && 'border-red-300'"
+            @change="handleChangeCustomer"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorCustomer" class="text-[#D42F24] text-xs">{{
+              errorCustomer
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="type"> Pool* </label>
+          <Dropdown
+            :disabled="disablePoolSelect"
+            v-model="poolId"
+            :options="bodiesOfWater"
+            optionValue="id"
+            optionLabel="name"
+            placeholder="Select a Body of Water"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
+            :class="errorPool && 'border-red-300'"
+            @change="handleChangePool"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorPool" class="text-[#D42F24] text-xs">{{
+              errorPool
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between items-center gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="googlePlaceId"> Status* </label>
+          <Dropdown
+            v-model="status"
+            :options="statuses"
+            optionValue="value"
+            optionLabel="label"
+            placeholder="Select a Type"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
+            :class="errorStatus && 'border-red-300'"
+            @change="handleChangeStatus"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorStatus" class="text-[#D42F24] text-xs">{{
+              errorStatus
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-3 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="address"> Description* </label>
+          <Textarea
+            type="text"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
+            v-model="description"
+            rows="3"
+            cols="30"
+            :class="errorDescription && 'border-red-300'"
+            @blur="handleChangeDescription"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{
+              errorDescription
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-3 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="text-sm" for="address"> Technical Notes* </label>
+          <Textarea
+            type="text"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
+            v-model="technical_notes"
+            rows="3"
+            cols="30"
+            :class="errorNotes && 'border-red-300'"
+            @blur="handleChangeNote"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{
+              errorNotes
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-end gap-5 sm:flex-row">
+        <Button
+          label="Update"
+          icon="pi pi-check"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
+          @click="updateJob()"
         />
-        <p class="min-h-[20px]">
-          <span v-show="errorCustomer" class="text-[#D42F24] text-xs">{{
-            errorCustomer
-          }}</span>
-        </p>
       </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="text-sm" for="type"> Pool* </label>
-        <Dropdown
-          :disabled="disablePoolSelect"
-          v-model="poolId"
-          :options="bodiesOfWater"
-          optionValue="id"
-          optionLabel="name"
-          placeholder="Select a Body of Water"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
-          :class="errorPool && 'border-red-300'"
-          @change="handleChangePool"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorPool" class="text-[#D42F24] text-xs">{{
-            errorPool
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between items-center gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="text-sm" for="googlePlaceId"> Status* </label>
-        <Dropdown
-          v-model="status"
-          :options="statuses"
-          optionValue="value"
-          optionLabel="label"
-          placeholder="Select a Type"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white w-full md:w-14rem"
-          :class="errorStatus && 'border-red-300'"
-          @change="handleChangeStatus"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorStatus" class="text-[#D42F24] text-xs">{{
-            errorStatus
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-3 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="text-sm" for="address"> Description* </label>
-        <Textarea
-          type="text"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
-          v-model="description"
-          rows="3"
-          cols="30"
-          :class="errorDescription && 'border-red-300'"
-          @blur="handleChangeDescription"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorDescription" class="text-[#D42F24] text-xs">{{
-            errorDescription
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-3 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="text-sm" for="address"> Technical Notes* </label>
-        <Textarea
-          type="text"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md text-gray-900 dark:text-white"
-          v-model="technical_notes"
-          rows="3"
-          cols="30"
-          :class="errorNotes && 'border-red-300'"
-          @blur="handleChangeNote"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{
-            errorNotes
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-end gap-5 sm:flex-row">
-      <Button
-        label="Update"
-        icon="pi pi-check"
-        class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="updateJob()"
-      />
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
 <script setup>
