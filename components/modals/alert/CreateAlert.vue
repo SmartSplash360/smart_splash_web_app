@@ -288,8 +288,8 @@ const validateForm = () => {
 };
 
 const createAlert = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       const createdAlert = await alertStore.createAlert({
         status: status.value,
@@ -321,8 +321,8 @@ const createAlert = async () => {
   }
 };
 const updateAlert = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       const data = {
         status: status.value,

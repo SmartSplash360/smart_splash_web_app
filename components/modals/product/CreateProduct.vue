@@ -186,8 +186,8 @@ const validateForm = () => {
   );
 };
 const createProduct = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await productStore.createProduct({
         name: name.value,
@@ -206,8 +206,8 @@ const createProduct = async () => {
   }
 };
 const updateProduct = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await productStore.updateProduct(product?.id, {
         name: name.value,
