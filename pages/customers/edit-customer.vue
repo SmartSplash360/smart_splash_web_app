@@ -1,103 +1,105 @@
 <template>
-  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
-  <form
-    v-else
-    class="flex min-h-[500px] flex-col gap-5 rounded-md bg-white dark:bg-[#31353F]"
-  >
-    <div class="flex items-center gap-4 text-[#025E7C] mb-5">
-      <nuxt-link to="/customers">
-        <font-awesome-icon icon="chevron-left" />
-      </nuxt-link>
-      <h2 class="heading__h2 font-bold text-[#025E7C]">
-        Edit Customer {{ customerId }}
-      </h2>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Name* </label>
-        <InputText
-          type="text"
-          v-model="name"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorName && 'border-red-300'"
-          @blur="handleChangeName"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
-            errorName
-          }}</span>
-        </p>
+  <div>
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form
+      v-else
+      class="flex min-h-[500px] flex-col gap-5 rounded-md bg-white dark:bg-[#31353F]"
+    >
+      <div class="flex items-center gap-4 text-[#025E7C] mb-5">
+        <nuxt-link to="/customers">
+          <font-awesome-icon icon="chevron-left" />
+        </nuxt-link>
+        <h2 class="heading__h2 font-bold text-[#025E7C]">
+          Edit Customer {{ customerId }}
+        </h2>
       </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Surname* </label>
-        <InputText
-          type="text"
-          v-model="surname"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorSurname && 'border-red-300'"
-          @blur="handleChangeSurname"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
-            errorSurname
-          }}</span>
-        </p>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="name"> Name* </label>
+          <InputText
+            type="text"
+            v-model="name"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorName && 'border-red-300'"
+            @blur="handleChangeName"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+              errorName
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="name"> Surname* </label>
+          <InputText
+            type="text"
+            v-model="surname"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorSurname && 'border-red-300'"
+            @blur="handleChangeSurname"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
+              errorSurname
+            }}</span>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="flex flex-col justify-between gap-5">
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="email address">
-          Email address*
-        </label>
-        <InputText
-          type="email"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          v-model="email"
-          :class="errorEmail && 'border-red-300'"
-          @blur="handleChangeEmail"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
-            errorEmail
-          }}</span>
-        </p>
+      <div class="flex flex-col justify-between gap-5">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="email address">
+            Email address*
+          </label>
+          <InputText
+            type="email"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            v-model="email"
+            :class="errorEmail && 'border-red-300'"
+            @blur="handleChangeEmail"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
+              errorEmail
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="cell number">
+            Cell number
+          </label>
+          <InputText
+            type="text"
+            v-model="phoneNumber"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorPhoneNumber && 'border-red-300'"
+            @blur="handleChangePhoneNumber"
+          ></InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
+              errorPhoneNumber
+            }}</span>
+          </p>
+        </div>
       </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="cell number">
-          Cell number
-        </label>
-        <InputText
-          type="text"
-          v-model="phoneNumber"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorPhoneNumber && 'border-red-300'"
-          @blur="handleChangePhoneNumber"
-        ></InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
-            errorPhoneNumber
-          }}</span>
-        </p>
+      <div class="mt-10 flex justify-end gap-5">
+        <Button
+          label="Cancel"
+          severity="secondary"
+          outlined
+          class="hover:shadow-xl"
+          @click="cancel"
+        />
+        <Button
+          label="Edit customer"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
+          @click="updateCustomer()"
+        />
       </div>
-    </div>
-    <div class="mt-10 flex justify-end gap-5">
-      <Button
-        label="Cancel"
-        severity="secondary"
-        outlined
-        class="hover:shadow-xl"
-        @click="cancel"
-      />
-      <Button
-        label="Edit customer"
-        class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="updateCustomer()"
-      />
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
 <script setup>

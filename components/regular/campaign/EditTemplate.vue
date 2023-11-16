@@ -1,120 +1,122 @@
 <template>
-  <div v-if="loading" class="card self-center flex-center w-10">
-    <ProgressSpinner strokeWidth="8" />
+  <div>
+    <ModalsLoaderScreen v-if="loading" :loading="loading"></ModalsLoaderScreen>
+    <form v-else class="flex flex-col px-5 lg:px-10">
+      <div v-if="edit" class="flex flex-col gap-3 lg:self-end">
+        <div class="flex items-start gap-5">
+          <h4 class="heading__h4 w-full font-bold">Select</h4>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center">
+              <Checkbox v-model="lead" :binary="true" />
+              <label for="lead" class="ml-2"> Lead </label>
+            </div>
+            <div class="flex items-center">
+              <Checkbox v-model="customer" :binary="true" />
+              <label for="customer" class="ml-2"> Customer </label>
+            </div>
+          </div>
+        </div>
+        <p class="min-h-[20px]">
+          <span v-show="errorCampaignType" class="text-[#D42F24] text-xs">{{
+            errorCampaignType
+          }}</span>
+        </p>
+      </div>
+      <div v-if="!edit" class="flex flex-col items-start gap-2 lg:self-end">
+        <div class="card b flex w-full justify-center sm:w-fit">
+          <Dropdown
+            @change="selectType(templateTypeName)"
+            v-model="templateTypeName"
+            :options="types"
+            optionLabel="state"
+            placeholder="Campaign Type"
+            class="w-full dark:bg-[#1B2028] md:w-52"
+            :class="errorTemplateType && 'border-red-300'"
+            required
+          />
+        </div>
+        <p class="min-h-[20px]">
+          <span v-show="errorTemplateType" class="text-[#D42F24] text-xs">{{
+            errorTemplateType
+          }}</span>
+        </p>
+      </div>
+      <div class="my-2 flex flex-col gap-3">
+        <div class="flex w-full flex-col gap-2">
+          <h4 class="heading__h4">Campaign Title*</h4>
+          <InputText
+            v-model="name"
+            :placeholder="name ? name : 'Enter Title'"
+            class="w-full min-w-full !outline-none dark:bg-[#1B2028]"
+            :class="errorName && 'border-red-300'"
+            required
+            @blur="handleChangeName"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+              errorName
+            }}</span>
+          </p>
+        </div>
+        <div v-if="!edit" class="my-10 flex flex-col gap-4">
+          <h4 class="heading__h4">Upload cover</h4>
+          <img
+            :src="imageSrc"
+            alt="Uploaded Image"
+            v-if="imageSrc"
+            class="h-48 w-48 rounded-full"
+          />
+          <div class="card">
+            <!-- <Toast /> -->
+            <FileUpload
+              name="basic"
+              @upload="handleUpload($event)"
+              :multiple="false"
+              accept="image/*"
+              :maxFileSize="1000000"
+            >
+              <template #empty>
+                <p>Drag and drop files to here to upload.</p>
+              </template>
+            </FileUpload>
+          </div>
+          <p class="min-h-[20px]">
+            <span v-show="errorCover" class="text-[#D42F24] text-xs">{{
+              errorCover
+            }}</span>
+          </p>
+        </div>
+        <div>
+          <BaseQuillEditor
+            @handle-editor-change="editorChange"
+            :description="template?.description ?? ''"
+          />
+          <p class="min-h-[20px] mt-3">
+            <span v-show="errorDescrption" class="text-[#D42F24] text-sm">{{
+              errorDescrption
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex justify-end gap-5">
+        <Button label="Cancel" @click="cancel" class="!bg-white text-black" />
+        <Button
+          v-if="!edit"
+          label="Save"
+          class="!bg-[#0291BF] text-white"
+          @click="createTemplate"
+        />
+        <Button
+          v-if="edit"
+          :label="
+            campaignType == 2 ? 'Send Email Campaign' : 'Send SMS Campaign'
+          "
+          class="!bg-[#0291BF] text-white"
+          @click="sendCampaign"
+        />
+      </div>
+    </form>
   </div>
-  <form v-else class="flex flex-col px-5 lg:px-10">
-    <div v-if="edit" class="flex flex-col gap-3 lg:self-end">
-      <div class="flex items-start gap-5">
-        <h4 class="heading__h4 w-full font-bold">Select</h4>
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center">
-            <Checkbox v-model="lead" :binary="true" />
-            <label for="lead" class="ml-2"> Lead </label>
-          </div>
-          <div class="flex items-center">
-            <Checkbox v-model="customer" :binary="true" />
-            <label for="customer" class="ml-2"> Customer </label>
-          </div>
-        </div>
-      </div>
-      <p class="min-h-[20px]">
-        <span v-show="errorCampaignType" class="text-[#D42F24] text-xs">{{
-          errorCampaignType
-        }}</span>
-      </p>
-    </div>
-    <div v-if="!edit" class="flex flex-col items-start gap-2 lg:self-end">
-      <div class="card b flex w-full justify-center sm:w-fit">
-        <Dropdown
-          @change="selectType(templateTypeName)"
-          v-model="templateTypeName"
-          :options="types"
-          optionLabel="state"
-          placeholder="Campaign Type"
-          class="w-full dark:bg-[#1B2028] md:w-52"
-          :class="errorTemplateType && 'border-red-300'"
-          required
-        />
-      </div>
-      <p class="min-h-[20px]">
-        <span v-show="errorTemplateType" class="text-[#D42F24] text-xs">{{
-          errorTemplateType
-        }}</span>
-      </p>
-    </div>
-    <div class="my-2 flex flex-col gap-3">
-      <div class="flex w-full flex-col gap-2">
-        <h4 class="heading__h4">Campaign Title*</h4>
-        <InputText
-          v-model="name"
-          :placeholder="name ? name : 'Enter Title'"
-          class="w-full min-w-full !outline-none dark:bg-[#1B2028]"
-          :class="errorName && 'border-red-300'"
-          required
-          @blur="handleChangeName"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
-            errorName
-          }}</span>
-        </p>
-      </div>
-      <div v-if="!edit" class="my-10 flex flex-col gap-4">
-        <h4 class="heading__h4">Upload cover</h4>
-        <img
-          :src="imageSrc"
-          alt="Uploaded Image"
-          v-if="imageSrc"
-          class="h-48 w-48 rounded-full"
-        />
-        <div class="card">
-          <!-- <Toast /> -->
-          <FileUpload
-            name="basic"
-            @upload="handleUpload($event)"
-            :multiple="false"
-            accept="image/*"
-            :maxFileSize="1000000"
-          >
-            <template #empty>
-              <p>Drag and drop files to here to upload.</p>
-            </template>
-          </FileUpload>
-        </div>
-        <p class="min-h-[20px]">
-          <span v-show="errorCover" class="text-[#D42F24] text-xs">{{
-            errorCover
-          }}</span>
-        </p>
-      </div>
-      <div>
-        <BaseQuillEditor
-          @handle-editor-change="editorChange"
-          :description="template?.description ?? ''"
-        />
-        <p class="min-h-[20px] mt-3">
-          <span v-show="errorDescrption" class="text-[#D42F24] text-sm">{{
-            errorDescrption
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex justify-end gap-5">
-      <Button label="Cancel" @click="cancel" class="!bg-white text-black" />
-      <Button
-        v-if="!edit"
-        label="Save"
-        class="!bg-[#0291BF] text-white"
-        @click="createTemplate"
-      />
-      <Button
-        v-if="edit"
-        :label="campaignType == 2 ? 'Send Email Campaign' : 'Send SMS Campaign'"
-        class="!bg-[#0291BF] text-white"
-        @click="sendCampaign"
-      />
-    </div>
-  </form>
 </template>
 
 <script setup>

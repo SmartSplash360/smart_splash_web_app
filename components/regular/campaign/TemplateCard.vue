@@ -12,6 +12,7 @@
         <div class="flex items-start justify-between">
           <div class="relative flex flex-col items-start">
             <div class="flex flex-col gap-4 overflow-hidden">
+              <p>Template summary</p>
               <h3 class="text-lg font-medium">{{ template.name }}</h3>
               <p
                 class="paragraph__p text-gray-400 h-[100px] overflow-hidden text-ellipsis"

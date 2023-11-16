@@ -3,14 +3,12 @@
 // subsequent calls to getToken will return from cache.
 // const messaging = getMessaging();
 // getToken(messaging, { vapidKey: "qhlko1rAvosF0zs7u5U2CM669bM41Uux1CemhqQ-d-Q" }).then((currentToken) => {
-//   console.log("first")
 //   if (currentToken) {
 // Send the token to your server and update the UI if necessary
 //   } else {
 //   Show permission request UI
 //   }
 // }).catch((err) => {
-//   console.log('An error occurred while retrieving token. ', err);
 // });
 // Give the service worker access to Firebase Messaging.
 // Note that you can only use Firebase Messaging here. Other Firebase libraries

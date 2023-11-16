@@ -1,24 +1,23 @@
 <template>
-  <section v-if="loading">
-    <SkeletonDetailPage></SkeletonDetailPage>
-  </section>
-  <section v-else class="flex flex-col gap-10 lg:-mx-10 lg:-my-12">
-    <RegularJobCreateJob
-      v-if="currentStep === 0"
-      :technicianId="technicianId"
-      :loading="loading"
-      :handleNextStep="handleNextStep"
-    />
-    <RegularJobCreateQuotes
-      v-else-if="currentStep === 1"
-      :technicianId="technicianId"
-      :loading="loading"
-      :totalPriceServices="totalPriceServices"
-      :newJobPayload="newJobPayload"
-      :handlePreviousStep="handlePreviousStep"
-      :createJob="createJob"
-    />
-    <Toast />
+  <section>
+    <SkeletonDetailPage v-if="loading"></SkeletonDetailPage>
+    <div v-else class="flex flex-col gap-10 lg:-mx-10 lg:-my-12">
+      <RegularJobCreateJob
+        v-if="currentStep === 0"
+        :technicianId="technicianId"
+        :loading="loading"
+        :handleNextStep="handleNextStep"
+      />
+      <RegularJobCreateQuotes
+        v-else-if="currentStep === 1"
+        :technicianId="technicianId"
+        :loading="loading"
+        :totalPriceServices="totalPriceServices"
+        :newJobPayload="newJobPayload"
+        :handlePreviousStep="handlePreviousStep"
+        :createJob="createJob"
+      />
+    </div>
   </section>
 </template>
 

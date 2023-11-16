@@ -172,7 +172,6 @@
         @click="createAlert()"
       />
     </div>
-    <Toast />
   </form>
 </template>
 

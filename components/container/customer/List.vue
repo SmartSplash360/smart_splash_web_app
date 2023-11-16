@@ -1,54 +1,54 @@
 <template>
-  <section v-if="loading">
-    <SkeletonCustomer></SkeletonCustomer>
-  </section>
-  <section v-else class="-mx-5 lg:mx-0 flex flex-col lg:gap-10">
-    <div class="hidden flex-wrap gap-5 lg:flex-between xl:gap-10">
-      <RegularCustomerActivityInfo :routes="routes">
-      </RegularCustomerActivityInfo>
-      <div class="flex-1 flex justify-end">
-        <BaseAddButton
-          :buttonId="'add-customer-button'"
-          :btnText="'Add Customer'"
-          @click="toggleAddCustomerModal"
-        ></BaseAddButton>
-      </div>
-      <ModalsCustomerCreateCustomer
-        v-if="addCustomerModal"
-        :toggleAddCustomerModal="closeModal"
-        :customer="customer"
-      ></ModalsCustomerCreateCustomer>
-    </div>
-    <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
-      <div class="flex-between gap-6">
-        <div class="flex-1">
-          <BaseSearchBar
-            class="w-full"
-            @handleSearch="(value) => handleSearch(value)"
-          />
+  <section>
+    <SkeletonCustomer v-if="loading"></SkeletonCustomer>
+
+    <div v-else class="-mx-5 lg:mx-0 flex flex-col lg:gap-10">
+      <div class="hidden flex-wrap gap-5 lg:flex-between xl:gap-10">
+        <RegularCustomerActivityInfo :routes="routes">
+        </RegularCustomerActivityInfo>
+        <div class="flex-1 flex justify-end">
+          <BaseAddButton
+            :buttonId="'add-customer-button'"
+            :btnText="'Add Customer'"
+            @click="toggleAddCustomerModal"
+          ></BaseAddButton>
         </div>
-        <span
-          @click="showActiveRoute"
-          class="flex-center h-[30px] w-[30px] cursor-pointer text-white"
-          ><font-awesome-icon
-            icon="bars"
-            class="text-2xl"
-            :class="[toggleActiveRoute && 'rotate-90']"
-        /></span>
+        <ModalsCustomerCreateCustomer
+          v-if="addCustomerModal"
+          :toggleAddCustomerModal="closeModal"
+          :customer="customer"
+        ></ModalsCustomerCreateCustomer>
       </div>
-      <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
-        <RegularCustomerActivityCard :loading="loading" :routes="routes">
-        </RegularCustomerActivityCard>
+      <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
+        <div class="flex-between gap-6">
+          <div class="flex-1">
+            <BaseSearchBar
+              class="w-full"
+              @handleSearch="(value) => handleSearch(value)"
+            />
+          </div>
+          <span
+            @click="showActiveRoute"
+            class="flex-center h-[30px] w-[30px] cursor-pointer text-white"
+            ><font-awesome-icon
+              icon="bars"
+              class="text-2xl"
+              :class="[toggleActiveRoute && 'rotate-90']"
+          /></span>
+        </div>
+        <div v-if="toggleActiveRoute" class="flex flex-col gap-2 lg:hidden">
+          <RegularCustomerActivityCard :loading="loading" :routes="routes">
+          </RegularCustomerActivityCard>
+        </div>
       </div>
+      <RegularCustomerTable
+        :editItem="editItem"
+        :deleteItem="deleteItem"
+        :customerMobiles="customerMobiles"
+        :handleSort="handleSort"
+      ></RegularCustomerTable>
     </div>
-    <RegularCustomerTable
-      :editItem="editItem"
-      :deleteItem="deleteItem"
-      :customerMobiles="customerMobiles"
-      :handleSort="handleSort"
-    ></RegularCustomerTable>
   </section>
-  <Toast />
 </template>
 
 <script setup>

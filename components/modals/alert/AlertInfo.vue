@@ -124,10 +124,6 @@ const props = defineProps({
 
 const { id, technician_id, body_of_water } = props.alert;
 
-onMounted(() => {
-  console.log(props.alert);
-});
-
 const handleCreateJob = () => {
   router.push({
     path: "/jobs/create-technician-job",

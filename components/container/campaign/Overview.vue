@@ -1,20 +1,20 @@
 <template>
-  <section v-if="loading">
-    <SkeletonEditTemplate></SkeletonEditTemplate>
-  </section>
-  <section
-    v-else
-    class="sm:gap-13 -mx-5 -my-6 flex min-h-screen flex-col gap-8 bg-[#f5fbfc] dark:bg-inherit lg:-mx-10 lg:-my-12"
-  >
-    <RegularCampaignEditTemplateControl
-      :edit="edit"
-    ></RegularCampaignEditTemplateControl>
+  <section>
+    <SkeletonEditTemplate v-if="loading"></SkeletonEditTemplate>
+    <div
+      v-else
+      class="sm:gap-13 -mx-5 -my-6 flex min-h-screen flex-col gap-8 bg-[#f5fbfc] dark:bg-inherit lg:-mx-10 lg:-my-12"
+    >
+      <RegularCampaignEditTemplateControl
+        :edit="edit"
+      ></RegularCampaignEditTemplateControl>
 
-    <RegularCampaignEditTemplate
-      :campaignId="campaignId"
-      :edit="edit"
-      :createCampaign="createCampaign"
-    ></RegularCampaignEditTemplate>
+      <RegularCampaignEditTemplate
+        :campaignId="campaignId"
+        :edit="edit"
+        :createCampaign="createCampaign"
+      ></RegularCampaignEditTemplate>
+    </div>
   </section>
 </template>
 
