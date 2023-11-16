@@ -247,8 +247,8 @@ const handleRemoveSubservice = (subservice) => {
 };
 
 const createService = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await serviceStore.createService({
         name: name.value,
@@ -272,8 +272,8 @@ const createService = async () => {
   }
 };
 const updateService = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       const data = {
         name: name.value,
