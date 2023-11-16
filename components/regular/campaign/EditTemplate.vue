@@ -1,5 +1,8 @@
 <template>
-  <form class="flex flex-col px-5 lg:px-10">
+  <div v-if="loading" class="card self-center flex-center w-10">
+    <ProgressSpinner strokeWidth="8" />
+  </div>
+  <form v-else class="flex flex-col px-5 lg:px-10">
     <div v-if="edit" class="flex flex-col gap-3 lg:self-end">
       <div class="flex items-start gap-5">
         <h4 class="heading__h4 w-full font-bold">Select</h4>
@@ -148,6 +151,7 @@ const types = ref([
 ]);
 
 const lead = ref(null);
+const loading = ref(false);
 const customer = ref(null);
 const description = ref("");
 const name = ref("");
@@ -241,12 +245,13 @@ const createTemplate = async () => {
     return;
   }
   try {
-    console.log("ccover", selectedFile.value);
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("description", description.value);
     formData.append("cover", selectedFile.value);
     formData.append("template_type_id", templateType.value);
+
+    loading.value = true;
 
     await store.createTemplate(formData);
     toast.add({
@@ -256,6 +261,7 @@ const createTemplate = async () => {
       life: 3000,
     });
     await store.fetchTemplates();
+    loading.value = false;
     router.push("/campaigns");
   } catch (error) {
     toast.add({
@@ -271,6 +277,7 @@ const sendCampaign = () => {
     errorCampaignType.value = "Please select a recipient";
     return;
   }
+  loading.value = true;
 
   props.createCampaign({
     name: name.value,
@@ -280,5 +287,7 @@ const sendCampaign = () => {
     lead: lead.value,
     customer: customer.value,
   });
+
+  loading.value = false;
 };
 </script>
