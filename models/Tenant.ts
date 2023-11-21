@@ -8,7 +8,6 @@ interface Tenant {
     address: String
     tenancy_db_name: String
     domain: Object | undefined | null
-    owner: number | String | null | undefined
     cover : String | null | undefined
     created_at: String | null | undefined
     updated_at: String | null | undefined

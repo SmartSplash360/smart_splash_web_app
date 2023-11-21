@@ -2,7 +2,7 @@
   <div>
     <div class="hero-signup-container" v-if="!login">
       <div
-        class="flex max-w-[350px] flex-col items-center gap-6 rounded-lg bg-white px-8 py-10 text-center"
+        class="flex max-w-[400px] flex-col items-center gap-6 rounded-lg bg-white px-8 py-10 text-center"
       >
         <img :src="img_pool" alt="img__pool" class="h-[137px] w-[200px]" />
         <h3 class="heading__h3 text-black">
