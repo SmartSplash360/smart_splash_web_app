@@ -1,6 +1,6 @@
 <template>
   <form class="flex flex-col items-center gap-4 py-5 sm:gap-4 xl:px-10">
-    <div class="w-[250px] h-[79px] lg:h-[100px] lg:w-[265px]">
+    <div class="w-[250px] h-[79px] lg:h-[60px] lg:w-[150px] lg:self-end">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
@@ -8,7 +8,7 @@
       />
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-6">
-      <h3 class="heading__h3 font-bold py-4">Register your Compagny</h3>
+      <h3 class="heading__h3 font-bold py-4">Register your Compagny 1/2</h3>
       <div class="flex flex-col gap-2 w-full">
         <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="email"
@@ -108,8 +108,8 @@
     <div class="w-full lg:w-5/6 flex flex-col gap-3 mt-5">
       <Button
         @click="registerTenant()"
-        label="Create a Tenant Account"
-        class="w-full bg-[#0291BF] text-white"
+        label="Next"
+        class="w-full lg:w-fit min-w-[150px] bg-[#0291BF] text-white"
       />
     </div>
   </form>

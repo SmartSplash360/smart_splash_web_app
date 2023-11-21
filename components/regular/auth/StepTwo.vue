@@ -1,15 +1,16 @@
 <template>
   <form
-    class="w-full lg:w-1/2 h-full flex flex-col items-center gap-4 py-5 sm:gap-14 lg:py-10"
+    class="w-full lg:w-1/2 h-full flex flex-col items-center gap-4 py- sm:gap-14 lg:py-10"
   >
-    <div class="w-[250px] h-[79px] lg:h-[100px] lg:w-[265px]">
+    <div class="w-[250px] h-[79px] lg:h-[100px] lg:w-[265px] mb-5">
       <img
         :src="SmartPlashLogo"
         alt="Smart-Splash-Logo"
         class="h-full w-full"
       />
+      <h3 class="heading__h3 font-bold my-4">Personal Information 2/2</h3>
     </div>
-    <div class="w-full lg:w-5/6 flex flex-col gap-10">
+    <div class="w-full lg:w-5/6 flex flex-col gap-8 mt-2">
       <div class="flex flex-col lg:flex-row gap-8 items-center lg:gap-4 -mt-2">
         <div class="w-full flex flex-col gap-1">
           <span class="w-full flex flex-col gap-2">
