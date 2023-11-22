@@ -137,7 +137,7 @@
         severity="secondary"
         outlined
         class="hover:shadow-xl"
-        @click="this.$router.back()"
+        @click="$router.back()"
       />
       <Button
         label="Edit Quote"

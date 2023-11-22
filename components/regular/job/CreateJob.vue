@@ -2,7 +2,7 @@
   <form class="lg:overflow-auto flex flex-col gap-8 dark:bg-[#31353F] lg:p-5">
     <div
       class="flex cursor-pointer gap-3 items-center w-fit"
-      @click="this.$router.back()"
+      @click="$router.back()"
     >
       <font-awesome-icon icon="arrow-left" />
       <span class="hidden sm:flex span__element">Back</span>
@@ -23,6 +23,7 @@
           <Dropdown
             v-model="selectedTechnician"
             :options="technicians"
+            :disabled="disabledFromAlert"
             optionValue="id"
             optionLabel="name"
             placeholder="Choose technician"
@@ -40,6 +41,7 @@
           <Dropdown
             v-model="customerId"
             :options="customers"
+            :disabled="disabledFromAlert"
             optionValue="id"
             optionLabel="name"
             placeholder="Choose customer"
@@ -55,7 +57,7 @@
         </div>
         <div class="w-full lg:w-1/3 flex flex-col gap-2">
           <Dropdown
-            :disabled="disablePoolSelect"
+            :disabled="disablePoolSelect || disabledFromAlert"
             v-model="poolId"
             :options="bodiesOfWater"
             optionValue="id"
@@ -338,7 +340,7 @@
         severity="secondary"
         outlined
         class="hover:shadow-xl"
-        @click="this.$router.back()"
+        @click="$router.back()"
       />
       <Button
         label="Next"
@@ -417,6 +419,7 @@ const errorNotes = ref();
 const errorServicesSelected = ref("");
 
 const disablePoolSelect = ref(true);
+const disabledFromAlert = ref(false);
 
 const statuses = ref([
   { value: "scheduled", label: "Scheduled" },
@@ -455,9 +458,8 @@ onMounted(async () => {
   const { technicianIdAlert, customerIdAlert, poolIdAlert } = route.query;
 
   if (technicianIdAlert && customerIdAlert && poolIdAlert) {
-    const resutl = technicians.value.find(
-      (tech) => tech.id === parseInt(technicianIdAlert)
-    );
+    disabledFromAlert.value = true;
+    technicians.value.find((tech) => tech.id === parseInt(technicianIdAlert));
     selectedTechnician.value = parseInt(technicianIdAlert);
     customerId.value = parseInt(customerIdAlert);
 

@@ -13,10 +13,9 @@
             never existed.
           </p>
           <Button
-            :disabled="loading"
             @click="$router.back()"
             label="Go back "
-            class="lg:w-1/3 bg-[#0291BF] text-white"
+            class="min-w-fit lg:w-1/3 bg-[#0291BF] text-white"
           />
         </div>
         <div>
