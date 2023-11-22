@@ -1,209 +1,211 @@
 <template>
-  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
-  <form
-    v-else
-    class="flex min-w-full flex-col gap-5 bg-white dark:bg-[#31353F]"
-  >
-    <div class="flex items-center gap-4 text-[#025E7C]">
-      <nuxt-link to="/alerts">
-        <font-awesome-icon icon="chevron-left" />
-      </nuxt-link>
-      <h2 class="heading__h2 font-bold">Edit Alert {{ alertId }}</h2>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="hidden w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="alertType"
-        >
-          Alert Type*
-        </label>
-        <Dropdown
-          v-model="alertTypeId"
-          :options="alertTypes"
-          optionLabel="name"
-          optionValue="id"
-          placeholder="Select an alert type"
-          class="md:w-14rem w-full dark:bg-[#1B2028]"
-          :class="errorAlertTypeId && 'border-red-300'"
-          @change="handleChangeAlertType"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{
-            errorAlertTypeId
-          }}</span>
-        </p>
+  <div>
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form
+      v-else
+      class="flex min-w-full flex-col gap-5 bg-white dark:bg-[#31353F]"
+    >
+      <div class="flex items-center gap-4 text-[#025E7C]">
+        <nuxt-link to="/alerts">
+          <font-awesome-icon icon="chevron-left" />
+        </nuxt-link>
+        <h2 class="heading__h2 font-bold">Edit Alert {{ alertId }}</h2>
       </div>
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="bodyOfWater"
-        >
-          Body of Water*
-        </label>
-        <Dropdown
-          v-model="bodyOfWaterId"
-          :options="bodiesOfWater"
-          optionValue="id"
-          optionLabel="name"
-          placeholder="Select a body of water"
-          class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorBodyOfWaterId && 'border-red-300'"
-          @change="handleChangeBodyOfWater"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorBodyOfWaterId" class="text-[#D42F24] text-xs">{{
-            errorBodyOfWaterId
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="technician"
-        >
-          Technician*
-        </label>
-        <div class="card justify-content-center flex">
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="hidden w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="alertType"
+          >
+            Alert Type*
+          </label>
           <Dropdown
-            v-model="technicianId"
-            :options="technicians"
+            v-model="alertTypeId"
+            :options="alertTypes"
             optionLabel="name"
             optionValue="id"
-            placeholder="Select a technician"
-            class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-            :class="errorTechnicianId && 'border-red-300'"
-            @change="handleChangeTechnician"
+            placeholder="Select an alert type"
+            class="md:w-14rem w-full dark:bg-[#1B2028]"
+            :class="errorAlertTypeId && 'border-red-300'"
+            @change="handleChangeAlertType"
           />
+          <p class="min-h-[20px]">
+            <span v-show="errorAlertTypeId" class="text-[#D42F24] text-xs">{{
+              errorAlertTypeId
+            }}</span>
+          </p>
         </div>
-        <p class="min-h-[20px]">
-          <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{
-            errorTechnicianId
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-3">
-        <label class="span__element" for="technician"> Subject* </label>
-        <InputText
-          type="text"
-          v-model="subject"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorSubject && 'border-red-300'"
-          @blur="handleChangeSubject"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorSubject" class="text-[#D42F24] text-xs">{{
-            errorSubject
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="notes"
-        >
-          Notes* (10 to 300 characters)</label
-        >
-        <Textarea
-          v-model="notes"
-          rows="5"
-          cols="30"
-          class="dark:bg-[#1B2028] text-sm"
-          :class="errorNotes && 'border-red-300'"
-          @blur="handleChangeNote"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{
-            errorNotes
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="hidden w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="date"
-        >
-          Date</label
-        >
-        <Calendar
-          id="date"
-          class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          v-model="dateTime"
-          :minDate="minDate"
-          :maxDate="maxDate"
-          :manualInput="false"
-          showTime
-          hourFormat="24"
-          :class="errorDate && 'border-red-300'"
-          @blur="handleChangeDate"
-        />
-        <p class="min-h-[20px]">
-          <span v-show="errorDate" class="text-[#D42F24] text-xs">{{
-            errorDate
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="priority"
-        >
-          Priority
-        </label>
-        <div class="card justify-content-center flex">
+        <div class="flex w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="bodyOfWater"
+          >
+            Body of Water*
+          </label>
           <Dropdown
-            v-model="priority"
-            :options="priorityOptions"
-            optionLabel="label"
-            option-value="value"
-            placeholder="Select a status"
+            v-model="bodyOfWaterId"
+            :options="bodiesOfWater"
+            optionValue="id"
+            optionLabel="name"
+            placeholder="Select a body of water"
             class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorBodyOfWaterId && 'border-red-300'"
+            @change="handleChangeBodyOfWater"
           />
+          <p class="min-h-[20px]">
+            <span v-show="errorBodyOfWaterId" class="text-[#D42F24] text-xs">{{
+              errorBodyOfWaterId
+            }}</span>
+          </p>
         </div>
       </div>
-      <div class="flex w-full flex-col gap-3">
-        <label
-          class="span__element text-gray-600 dark:text-gray-200"
-          for="status"
-        >
-          Status
-        </label>
-        <div class="card justify-content-center flex">
-          <Dropdown
-            v-model="status"
-            :options="statusOptions"
-            optionLabel="label"
-            option-value="value"
-            placeholder="Select a status"
-            class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          />
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="technician"
+          >
+            Technician*
+          </label>
+          <div class="card justify-content-center flex">
+            <Dropdown
+              v-model="technicianId"
+              :options="technicians"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Select a technician"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+              :class="errorTechnicianId && 'border-red-300'"
+              @change="handleChangeTechnician"
+            />
+          </div>
+          <p class="min-h-[20px]">
+            <span v-show="errorTechnicianId" class="text-[#D42F24] text-xs">{{
+              errorTechnicianId
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-3">
+          <label class="span__element" for="technician"> Subject* </label>
+          <InputText
+            type="text"
+            v-model="subject"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorSubject && 'border-red-300'"
+            @blur="handleChangeSubject"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorSubject" class="text-[#D42F24] text-xs">{{
+              errorSubject
+            }}</span>
+          </p>
         </div>
       </div>
-    </div>
-    <div class="mt-5 flex justify-end gap-5">
-      <nuxt-link to="/alerts">
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="notes"
+          >
+            Notes* (10 to 300 characters)</label
+          >
+          <Textarea
+            v-model="notes"
+            rows="5"
+            cols="30"
+            class="dark:bg-[#1B2028] text-sm"
+            :class="errorNotes && 'border-red-300'"
+            @blur="handleChangeNote"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorNotes" class="text-[#D42F24] text-xs">{{
+              errorNotes
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="hidden w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="date"
+          >
+            Date</label
+          >
+          <Calendar
+            id="date"
+            class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            v-model="dateTime"
+            :minDate="minDate"
+            :maxDate="maxDate"
+            :manualInput="false"
+            showTime
+            hourFormat="24"
+            :class="errorDate && 'border-red-300'"
+            @blur="handleChangeDate"
+          />
+          <p class="min-h-[20px]">
+            <span v-show="errorDate" class="text-[#D42F24] text-xs">{{
+              errorDate
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="priority"
+          >
+            Priority
+          </label>
+          <div class="card justify-content-center flex">
+            <Dropdown
+              v-model="priority"
+              :options="priorityOptions"
+              optionLabel="label"
+              option-value="value"
+              placeholder="Select a status"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            />
+          </div>
+        </div>
+        <div class="flex w-full flex-col gap-3">
+          <label
+            class="span__element text-gray-600 dark:text-gray-200"
+            for="status"
+          >
+            Status
+          </label>
+          <div class="card justify-content-center flex">
+            <Dropdown
+              v-model="status"
+              :options="statusOptions"
+              optionLabel="label"
+              option-value="value"
+              placeholder="Select a status"
+              class="md:w-14rem w-full dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 flex justify-end gap-5">
+        <nuxt-link to="/alerts">
+          <Button
+            label="Cancel"
+            severity="secondary"
+            outlined
+            class="hover:shadow-xl"
+            @click="cancel"
+          />
+        </nuxt-link>
         <Button
-          label="Cancel"
-          severity="secondary"
-          outlined
-          class="hover:shadow-xl"
-          @click="cancel"
+          label="Update"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
+          @click="updateAlert()"
         />
-      </nuxt-link>
-      <Button
-        label="Update"
-        class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="updateAlert()"
-      />
-    </div>
-  </form>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script setup>

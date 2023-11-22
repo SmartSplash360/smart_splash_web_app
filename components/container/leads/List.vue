@@ -1,48 +1,48 @@
 <template>
-  <section v-if="loading">
-    <SkeletonCustomer></SkeletonCustomer>
-  </section>
-  <section v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
-    <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
-      <div class="flex-between gap-6">
-        <div class="flex-1">
-          <BaseSearchBar
-            class="w-full"
-            @handleSearch="(value) => handleSearch(value)"
-          />
+  <section>
+    <SkeletonCustomer v-if="loading"></SkeletonCustomer>
+    <div v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
+      <div class="flex flex-col gap-8 bg-[#0291BF] px-5 py-14 lg:hidden">
+        <div class="flex-between gap-6">
+          <div class="flex-1">
+            <BaseSearchBar
+              class="w-full"
+              @handleSearch="(value) => handleSearch(value)"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col gap-10">
-      <div class="flex-1 flex justify-end">
-        <BaseAddButton
-          :buttonId="'add-lead-button'"
-          :btnText="'Add Lead'"
-          @click="toggleEditLeadModal"
-        ></BaseAddButton>
+      <div class="flex flex-col gap-10">
+        <div class="flex-1 flex justify-end">
+          <BaseAddButton
+            :buttonId="'add-lead-button'"
+            :btnText="'Add Lead'"
+            @click="toggleEditLeadModal"
+          ></BaseAddButton>
+        </div>
+        <RegularLeadTable
+          :callLead="callLead"
+          :editItem="editItem"
+          :deleteItem="deleteItem"
+          :convertToCustomer="convertToCustomer"
+          :leadsMobiles="leadsMobiles"
+          :handleSort="handleSort"
+        >
+        </RegularLeadTable>
       </div>
-      <RegularLeadTable
-        :callLead="callLead"
-        :editItem="editItem"
-        :deleteItem="deleteItem"
-        :convertToCustomer="convertToCustomer"
-        :leadsMobiles="leadsMobiles"
-        :handleSort="handleSort"
+      <ModalsLeadEditLeadModal
+        v-if="editLeadModal"
+        :toggleEditLeadModal="closeModal"
+        :lead="lead"
       >
-      </RegularLeadTable>
+      </ModalsLeadEditLeadModal>
+      <ModalsCommunicationVoiceCallModal
+        v-if="voiceCallModal"
+        :toggleCallModal="closeVoiceCallModal"
+        :lead="lead"
+      >
+      </ModalsCommunicationVoiceCallModal>
     </div>
-    <ModalsLeadEditLeadModal
-      v-if="editLeadModal"
-      :toggleEditLeadModal="closeModal"
-      :lead="lead"
-    >
-    </ModalsLeadEditLeadModal>
-    <ModalsCommunicationVoiceCallModal
-      v-if="voiceCallModal"
-      :toggleCallModal="closeVoiceCallModal"
-      :lead="lead"
-    >
-    </ModalsCommunicationVoiceCallModal>
   </section>
 </template>
 

@@ -1,49 +1,50 @@
 <template>
-  <section v-if="loading">
-    <SkeletonBodyOfWater />
-  </section>
-  <section v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
-    <div class="w-full flex flex-col gap-5">
-      <div
-        class="lg:-mt-12 flex flex-col lg:flex-row w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
-      >
-        <Button
-          icon="pi pi-map-marker"
-          label="View Bodies Of Water"
-          @click="handleViewBodyOfWaterList"
-          class="lg:hidden rounded-xl bg-[#0291BF] text-white"
-        />
-        <Button
-          icon="pi pi-map-marker"
-          label="View Bodies Of Water"
-          @click="toggleAddBodyOfListModal"
-          class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
-        />
-        <Button
-          v-if="user?.role_id === 3"
-          icon="pi pi-user"
-          label="Update My profile"
-          @click="updateProfileUser"
-          class="flex lg:hidden rounded-xl bg-[#0291BF] text-white"
-        />
-        <Button
-          v-if="user?.role_id === 3"
-          icon="pi pi-user"
-          label="Update My profile"
-          @click="toggleAddCustomerModal"
-          class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
-        />
-        <ModalsBodiesOfWaterBodyOfWaterList
-          v-if="BodyOfWaterList"
-          :toggleBodyOfWaterList="closeBodyOfWaterModal"
-          :customerId="customerId"
-        />
-        <ModalsCustomerCreateCustomer
-          v-if="addCustomerModal"
-          :toggleAddCustomerModal="closeModal"
-          :customer="userProfile"
-          :profile="true"
-        ></ModalsCustomerCreateCustomer>
+  <section>
+    <SkeletonBodyOfWater v-if="loading" />
+
+    <div v-else class="-mx-5 flex flex-col gap-10 lg:mx-0">
+      <div class="w-full flex flex-col gap-5">
+        <div
+          class="lg:-mt-12 flex flex-col lg:flex-row w-full justify-between gap-5 rounded-xl px-3 pb-5 pt-10 md:mt-0 md:rounded-none lg:justify-end lg:p-0"
+        >
+          <Button
+            icon="pi pi-map-marker"
+            label="View Bodies Of Water"
+            @click="handleViewBodyOfWaterList"
+            class="lg:hidden rounded-xl bg-[#0291BF] text-white"
+          />
+          <Button
+            icon="pi pi-map-marker"
+            label="View Bodies Of Water"
+            @click="toggleAddBodyOfListModal"
+            class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
+          />
+          <Button
+            v-if="user?.role_id === 3"
+            icon="pi pi-user"
+            label="Update My profile"
+            @click="updateProfileUser"
+            class="flex lg:hidden rounded-xl bg-[#0291BF] text-white"
+          />
+          <Button
+            v-if="user?.role_id === 3"
+            icon="pi pi-user"
+            label="Update My profile"
+            @click="toggleAddCustomerModal"
+            class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
+          />
+          <ModalsBodiesOfWaterBodyOfWaterList
+            v-if="BodyOfWaterList"
+            :toggleBodyOfWaterList="closeBodyOfWaterModal"
+            :customerId="customerId"
+          />
+          <ModalsCustomerCreateCustomer
+            v-if="addCustomerModal"
+            :toggleAddCustomerModal="closeModal"
+            :customer="userProfile"
+            :profile="true"
+          ></ModalsCustomerCreateCustomer>
+        </div>
       </div>
     </div>
   </section>

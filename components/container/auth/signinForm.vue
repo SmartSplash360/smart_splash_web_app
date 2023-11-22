@@ -127,6 +127,9 @@ const leadStore = useLeadStore();
 const technicianStore = useTechnicianStore();
 const menuStore = useMenuStore();
 
+const config = useRuntimeConfig();
+const appDomain = config.public.appDomain;
+
 const {
   useRequired,
   useValidateEmail,
@@ -163,12 +166,13 @@ const validateForm = () => {
   handleChangePassword();
   return !errorEmail.value && !errorPassword.value;
 };
+
 async function login() {
   if (validateForm()) {
     try {
       loading.value = true;
       const user = await store.login(
-        domain.value?.toLocaleLowerCase().replace(/\s/g, ""),
+        domain.value?.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
         email.value,
         password.value
       );

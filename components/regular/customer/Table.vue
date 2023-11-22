@@ -55,13 +55,15 @@
       <Column field="photo" header="Photo" exportHeader="Customer Photo">
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data?.id}`">
-            <Avatar
-              :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
-              :alt="slotProps.data.name"
-              class="mr-2 translate-y-4"
-              size="large"
-              shape="circle"
-            />
+            <div class="w-full h-full">
+              <Avatar
+                :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
+                :alt="slotProps.data.name"
+                class="mr-2 translate-y-4"
+                size="large"
+                shape="circle"
+              />
+            </div>
           </nuxt-link>
         </template>
       </Column>

@@ -96,7 +96,6 @@
         @click="createCustomer()"
       />
     </div>
-    <Toast />
   </form>
 </template>
 

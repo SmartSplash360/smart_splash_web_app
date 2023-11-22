@@ -193,8 +193,8 @@ const validateForm = () => {
   );
 };
 const createTechnician = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await store.createTechnician({
         name: name.value,
@@ -213,25 +213,26 @@ const createTechnician = async () => {
   }
 };
 const updateTechnician = async () => {
-  loading.value = true;
-  try {
-    const data = {
-      id: technician.id,
-      name: name.value,
-      surname: surname.value,
-      email: email.value,
-      phone_number: phoneNumber.value,
-      status: status.value ? 1 : 0,
-    };
-    await store.updateTechnician(technician?.id, data);
-    await store.fetchTechnicians();
-    loading.value = false;
-    toggleAddTechnicianModal({
-      success: `Technician ${technician?.id} updated successfully`,
-    });
-  } catch (e) {
-    loading.value = false;
-    toggleAddTechnicianModal({ error: e });
+  if (validateForm()) {
+    try {
+      loading.value = true;
+      await store.updateTechnician(technician?.id, {
+        id: technician.id,
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        phone_number: phoneNumber.value,
+        status: status.value ? 1 : 0,
+      });
+      await store.fetchTechnicians();
+      loading.value = false;
+      toggleAddTechnicianModal({
+        success: `Technician ${technician?.id} updated successfully`,
+      });
+    } catch (e) {
+      loading.value = false;
+      toggleAddTechnicianModal({ error: e });
+    }
   }
 };
 </script>

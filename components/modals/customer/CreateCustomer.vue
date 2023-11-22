@@ -183,8 +183,8 @@ const validateForm = () => {
 };
 
 const createCustomer = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await store.createCustomer({
         name: name.value,
@@ -201,8 +201,8 @@ const createCustomer = async () => {
   }
 };
 const updateCustomer = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await store.updateCustomer(customer?.id, {
         name: name.value,

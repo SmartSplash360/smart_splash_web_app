@@ -234,8 +234,8 @@ const validateForm = () => {
   );
 };
 const createLead = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await store.createLead({
         name: name.value,
@@ -254,8 +254,8 @@ const createLead = async () => {
 };
 
 const updateLead = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await store.updateLead(props.lead?.id, {
         name: name.value,

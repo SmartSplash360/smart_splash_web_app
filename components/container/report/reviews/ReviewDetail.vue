@@ -1,37 +1,37 @@
 <template>
-  <section v-if="loading">
-    <SkeletonCustomer></SkeletonCustomer>
-  </section>
-  <section v-else class="flex flex-col gap-10">
-    <div
-      class="w-fit flex gap-3 items-center cursor-pointer"
-      @click="handletechnicianReviews()"
-    >
-      <font-awesome-icon icon="arrow-left" />
-      <span class="sm:flex span__element">Back</span>
-    </div>
-    <div class="flex flex-col xl:flex-row gap-2 xl:items-center lg:gap-5">
-      <h2 class="text-3xl font-bold text-[#025E7C]">
-        {{ technician?.name }}
-      </h2>
-      <span class="span__element text-gray-500 dark:text-gray-300"
-        >({{ reviewCount }} Results)</span
+  <section>
+    <SkeletonCustomer v-if="loading"></SkeletonCustomer>
+    <div v-else class="flex flex-col gap-10">
+      <div
+        class="w-fit flex gap-3 items-center cursor-pointer"
+        @click="handletechnicianReviews()"
       >
-    </div>
-    <div v-if="reviewCount == 0">
-      <h3 class="heading__h3 text-[#025E7C] mt-10">No reviews found</h3>
-    </div>
-    <div v-else class="w-full flex flex-col gap-20">
-      <ModalsReportJobComments
-        v-if="showComments"
-        :handleToggleShowComment="closeModal"
-        :jobDetails="jobDetails"
-      />
-      <RegularReportTechnicianReviewTable
-        :technicianId="technicianId"
-        :handleToggleShowComment="handleToggleShowComment"
-        :reviews="reviews"
-      />
+        <font-awesome-icon icon="arrow-left" />
+        <span class="sm:flex span__element">Back</span>
+      </div>
+      <div class="flex flex-col xl:flex-row gap-2 xl:items-center lg:gap-5">
+        <h2 class="text-3xl font-bold text-[#025E7C]">
+          {{ technician?.name }}
+        </h2>
+        <span class="span__element text-gray-500 dark:text-gray-300"
+          >({{ reviewCount }} Results)</span
+        >
+      </div>
+      <div v-if="reviewCount == 0">
+        <h3 class="heading__h3 text-[#025E7C] mt-10">No reviews found</h3>
+      </div>
+      <div v-else class="w-full flex flex-col gap-20">
+        <ModalsReportJobComments
+          v-if="showComments"
+          :handleToggleShowComment="closeModal"
+          :jobDetails="jobDetails"
+        />
+        <RegularReportTechnicianReviewTable
+          :technicianId="technicianId"
+          :handleToggleShowComment="handleToggleShowComment"
+          :reviews="reviews"
+        />
+      </div>
     </div>
   </section>
 </template>

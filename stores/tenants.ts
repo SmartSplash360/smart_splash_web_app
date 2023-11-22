@@ -7,7 +7,6 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
-const appDomain = config.public.appDomain;
 
 let apiUrl = requestUrl;
 
@@ -40,7 +39,7 @@ export const useTenantStore = defineStore("tenant", {
   actions: {
     async fetchTenantByWebsite(domain : string) {
       try {
-        const res = await axios.get(`${apiUrl}/tenant/getTenantByWebsite/${domain}.${appDomain}`);
+        const res = await axios.get(`${apiUrl}/tenant/getTenantByWebsite/${domain}`);
         
         if (!res.data.success) {
             throw new Error(res.data.message);
@@ -78,14 +77,12 @@ export const useTenantStore = defineStore("tenant", {
       }
     },
     async register(tenantPayload: {}) {
-      const jwt = useUserStore().getJwt;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-
       try {
         const res = await axios.post(`${apiUrl}/tenant`, tenantPayload);
         if (!res.data.success) {
-          throw new Error()
+          return res.data
         }
+        return res.data
       } catch (error) {
         throw new Error("An error");
       }

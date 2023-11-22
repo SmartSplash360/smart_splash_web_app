@@ -431,8 +431,8 @@ const validateForm = () => {
 };
 
 const updateJob = async () => {
-  loading.value = true;
   if (validateForm()) {
+    loading.value = true;
     try {
       await jobStore.updateJob(props.job?.id, {
         pool_id: poolId.value,

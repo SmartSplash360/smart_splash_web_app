@@ -67,7 +67,6 @@ export const useTemplateStore = defineStore("template", {
         const res = await axios.get(url);
         this.templates = res.data.data.data;
         this.count = res.data.data.total;
-        console.log(this.count)
         return res.data.data.data
       } catch (error) {
 

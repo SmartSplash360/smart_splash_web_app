@@ -1,147 +1,152 @@
 <template>
-  <section v-if="loading">
-    <SkeletonMapPage></SkeletonMapPage>
-  </section>
-  <section v-else>
-    <div>
-      <div class="mb-3">
-        <!--      <h5 class="pb-2">Route Date:</h5>-->
-        <VueDatePicker v-model="date"></VueDatePicker>
-      </div>
-      <GoogleMap
-        api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
-        style="width: 100%; height: 700px;"
-        :center="center"
-        class="border-2"
-        :zoom="13"
-        :styles="googleMapStyles"
-      >
-        <Polyline
-          v-for="jobTechnicianPath in jobTechnicianPaths"
-          :options="jobTechnicianPath"
-          :key="jobTechnicianPath"
-        />
-
-        <Marker
-          v-for="marker in jobMarkers"
-          :options="marker"
-          :key="marker.job.id"
+  <div>
+    <section v-if="loading">
+      <SkeletonMapPage></SkeletonMapPage>
+    </section>
+    <section v-else>
+      <div>
+        <div class="mb-3">
+          <!--      <h5 class="pb-2">Route Date:</h5>-->
+          <VueDatePicker v-model="date"></VueDatePicker>
+        </div>
+        <GoogleMap
+          api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
+          style="width: 100%; height: 700px;"
+          :center="center"
+          class="border-2"
+          :zoom="13"
+          :styles="googleMapStyles"
         >
-          <InfoWindow :options="{ position: marker.position }">
-            <div class="flex flex-col text-black">
-              <nuxt-link
-                :to="`/customers/${marker?.job?.customer?.id}`"
-                class="tx pb-5 font-bold"
-              >
-                {{ marker?.job?.customer?.name }}
-              </nuxt-link>
-              <div>{{ marker.content }}</div>
-              <Divider type="solid" />
-              <div class="flex justify-between">
+          <Polyline
+            v-for="jobTechnicianPath in jobTechnicianPaths"
+            :options="jobTechnicianPath"
+            :key="jobTechnicianPath"
+          />
+
+          <Marker
+            v-for="marker in jobMarkers"
+            :options="marker"
+            :key="marker.job.id"
+          >
+            <InfoWindow :options="{ position: marker.position }">
+              <div class="flex flex-col text-black">
                 <nuxt-link
-                  :to="`/technicians/${marker?.job?.technician?.id}`"
-                  class="flex flex-col"
+                  :to="`/customers/${marker?.job?.customer?.id}`"
+                  class="tx pb-5 font-bold"
                 >
-                  <span class="pb-2">TECHNICIAN</span>
-                  <span class="font-bold">{{
-                    marker?.job?.technician?.name
-                  }}</span>
+                  {{ marker?.job?.customer?.name }}
                 </nuxt-link>
+                <div>{{ marker.content }}</div>
+                <Divider type="solid" />
+                <div class="flex justify-between">
+                  <nuxt-link
+                    :to="`/technicians/${marker?.job?.technician?.id}`"
+                    class="flex flex-col"
+                  >
+                    <span class="pb-2">TECHNICIAN</span>
+                    <span class="font-bold">{{
+                      marker?.job?.technician?.name
+                    }}</span>
+                  </nuxt-link>
+                  <div class="flex flex-col">
+                    <span class="pb-2">TIME WINDOW</span>
+                    <span class="font-bold">{{
+                      marker?.job?.end_date ?? "(None)"
+                    }}</span>
+                  </div>
+                </div>
+                <Divider type="solid" />
                 <div class="flex flex-col">
-                  <span class="pb-2">TIME WINDOW</span>
-                  <span class="font-bold">{{
-                    marker?.job?.end_date ?? "(None)"
-                  }}</span>
+                  <div class="flex flex-col pb-5">
+                    <span class="pb-2">OFFICE NOTES</span>
+                    <span class="font-semibold">{{
+                      marker?.job?.technical_notes ?? "(None)"
+                    }}</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="pb-2">TECH INSTRUCTIONS</span>
+                    <span class="font-semibold">(None)</span>
+                  </div>
+                </div>
+                <div class="my-5 flex w-full justify-center">
+                  <nuxt-link :to="`technicians/${marker?.job?.technician?.id}`">
+                    <Button
+                      size="small"
+                      icon="pi pi-info-circle"
+                      label="OPEN JOB"
+                    />
+                  </nuxt-link>
                 </div>
               </div>
-              <Divider type="solid" />
-              <div class="flex flex-col">
-                <div class="flex flex-col pb-5">
-                  <span class="pb-2">OFFICE NOTES</span>
-                  <span class="font-semibold">{{
-                    marker?.job?.technical_notes ?? "(None)"
-                  }}</span>
-                </div>
-                <div class="flex flex-col">
-                  <span class="pb-2">TECH INSTRUCTIONS</span>
-                  <span class="font-semibold">(None)</span>
-                </div>
-              </div>
-              <div class="my-5 flex w-full justify-center">
-                <nuxt-link :to="`technicians/${marker?.job?.technician?.id}`">
-                  <Button
-                    size="small"
-                    icon="pi pi-info-circle"
-                    label="OPEN JOB"
-                  />
-                </nuxt-link>
-              </div>
-            </div>
-          </InfoWindow>
-        </Marker>
-      </GoogleMap>
-      <div class="mt-5 flex flex-row gap-5">
-        <div
-          v-if="technicianDetails.length === 0"
-          class="w-full text-center text-base text-red-700"
-        >
-          No technician Routes for {{ date }}
-        </div>
-
-        <div
-          v-for="technician in technicianDetails"
-          :key="technician.id"
-          class="flex w-1/4 flex-col rounded-[0.5rem] border-2 p-3"
-        >
-          <div class="flex flex-row justify-between gap-2">
-            <Avatar
-              size="large"
-              icon="pi pi-user"
-              class="text-white"
-              :style="{ backgroundColor: technician?.color }"
-            />
-            <div class="flex flex-col">
-              <span class="pb-3 font-bold">{{ technician?.name }}</span>
-              <span class="text-sm font-semibold">Pool Service</span>
-            </div>
-            <div class="flex flex-col justify-center gap-2 align-middle">
-              <i
-                class="pi pi-map-marker"
-                :style="{ color: technician?.color }"
-                style="font-size: 1.5rem;"
-              ></i>
-              <span class="self-center text-sm">{{
-                technician?.jobCount
-              }}</span>
-            </div>
+            </InfoWindow>
+          </Marker>
+        </GoogleMap>
+        <div class="mt-5 flex flex-row gap-5">
+          <div
+            v-if="technicianDetails.length === 0"
+            class="w-full text-center text-base text-red-700"
+          >
+            No technician Routes for {{ date }}
           </div>
 
-          <div class="mt-2 flex w-full flex-row justify-between gap-5">
-            <div class="flex flex-row gap-2">
-              <i class="pi pi-car" :style="{ color: technician?.color }"></i>
-              <span class="text-sm"
-                >{{ technician?.estimatedTravelTime }}min</span
-              >
+          <div
+            v-for="technician in technicianDetails"
+            :key="technician.id"
+            class="flex w-1/4 flex-col rounded-[0.5rem] border-2 p-3"
+          >
+            <div class="flex flex-row justify-between gap-2">
+              <Avatar
+                size="large"
+                icon="pi pi-user"
+                class="text-white"
+                :style="{ backgroundColor: technician?.color }"
+              />
+              <div class="flex flex-col">
+                <span class="pb-3 font-bold">{{ technician?.name }}</span>
+                <span class="text-sm font-semibold">Pool Service</span>
+              </div>
+              <div class="flex flex-col justify-center gap-2 align-middle">
+                <i
+                  class="pi pi-map-marker"
+                  :style="{ color: technician?.color }"
+                  style="font-size: 1.5rem;"
+                ></i>
+                <span class="self-center text-sm">{{
+                  technician?.jobCount
+                }}</span>
+              </div>
             </div>
 
-            <div class="flex flex-row gap-2">
-              <i class="pi pi-bolt" :style="{ color: technician?.color }"></i>
-              <span class="text-sm"
-                >{{ technician?.estimatedTravelDistance }}km</span
-              >
-            </div>
+            <div class="mt-2 flex w-full flex-row justify-between gap-5">
+              <div class="flex flex-row gap-2">
+                <i class="pi pi-car" :style="{ color: technician?.color }"></i>
+                <span class="text-sm"
+                  >{{ technician?.estimatedTravelTime }}min</span
+                >
+              </div>
 
-            <div class="flex flex-row gap-2">
-              <i class="pi pi-clock" :style="{ color: technician?.color }"></i>
-              <span class="text-sm"
-                >{{ technician?.estimatedWorkTime }} min</span
-              >
+              <div class="flex flex-row gap-2">
+                <i class="pi pi-bolt" :style="{ color: technician?.color }"></i>
+                <span class="text-sm"
+                  >{{ technician?.estimatedTravelDistance }}km</span
+                >
+              </div>
+
+              <div class="flex flex-row gap-2">
+                <i
+                  class="pi pi-clock"
+                  :style="{ color: technician?.color }"
+                ></i>
+                <span class="text-sm"
+                  >{{ technician?.estimatedWorkTime }} min</span
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup>

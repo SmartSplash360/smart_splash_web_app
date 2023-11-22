@@ -1,20 +1,24 @@
 <template>
-  <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
-  <form
-    v-else
-    class="flex min-h-[500px] flex-col gap-10 rounded-md bg-white dark:bg-[#31353F]"
-  >
-    <div class="flex justify-between items-center gap-4 text-[#025E7C]">
-      <div
-        class="w-fit flex gap-3 items-center cursor-pointer"
-        @click="$router.back()"
-      >
-        <font-awesome-icon icon="chevron-left" />
+  <div>
+    <SkeletonEditMobilePages v-if="loading"></SkeletonEditMobilePages>
+    <form
+      v-else
+      class="flex min-h-[500px] flex-col gap-10 rounded-md bg-white dark:bg-[#31353F]"
+    >
+      <div class="flex justify-between items-center gap-4 text-[#025E7C]">
+        <div
+          class="w-fit flex gap-3 items-center cursor-pointer"
+          @click="$router.back()"
+        >
+          <font-awesome-icon icon="chevron-left" />
+        </div>
+        <h2 class="heading__h2 font-bold">
+          {{ userProfile }}'s Bodies of water
+        </h2>
       </div>
-      <h2 class="heading__h2 font-bold">{{ userProfile }}'s Bodies of water</h2>
-    </div>
-    <RegularBodiesOfWaterTable :bodiesOfWater="bodiesOfWater" />
-  </form>
+      <RegularBodiesOfWaterTable :bodiesOfWater="bodiesOfWater" />
+    </form>
+  </div>
 </template>
 
 <script setup>
