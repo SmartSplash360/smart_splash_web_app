@@ -1,16 +1,27 @@
 <template>
   <div
     v-if="currentStep === 1"
-    class="w-full sm:mx-auto px-5 sm:px-0 rounded-md bg-white lg:h-[880px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-3/5 xl:w-[40%]"
+    class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[900px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
   >
     <RegularAuthStepOne :handleStepOne="handleStepOne"></RegularAuthStepOne>
+    <ContainerAuthHeroLogger
+      :tenantRegistrationHero="true"
+      class="hidden h-full lg:block lg:w-[45%]"
+    >
+    </ContainerAuthHeroLogger>
   </div>
   <div
     v-else-if="currentStep === 2"
-    class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[850px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:[55%]"
+    class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[850px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
   >
-    <RegularAuthStepTwo :handleStepTwo="handleStepTwo"></RegularAuthStepTwo>
-    <ContainerAuthHeroLogger class="hidden h-full lg:block lg:w-2/5">
+    <RegularAuthStepTwo
+      :handleStepTwo="handleStepTwo"
+      :handlePrevious="handlePrevious"
+    ></RegularAuthStepTwo>
+    <ContainerAuthHeroLogger
+      :userSignUpHero="true"
+      class="hidden h-full lg:block lg:w-[45%]"
+    >
     </ContainerAuthHeroLogger>
   </div>
 </template>
@@ -51,6 +62,7 @@ const handleStepTwo = (user) => {
   userPayload.value = user;
   registerTenant();
 };
+const handlePrevious = () => (currentStep.value -= 1);
 
 const registerTenant = async () => {
   try {

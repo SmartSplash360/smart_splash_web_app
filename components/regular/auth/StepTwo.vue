@@ -1,6 +1,6 @@
 <template>
   <form
-    class="w-full lg:w-1/2 h-full flex flex-col items-center gap-4 py- sm:gap-14 lg:py-10"
+    class="w-full lg:w-[55%] h-full flex flex-col items-center gap-4 py- sm:gap-14 lg:py-10"
   >
     <div class="w-[250px] h-[79px] lg:h-[100px] lg:w-[265px] mb-5">
       <img
@@ -131,16 +131,23 @@
       </div>
     </div>
     <div class="w-full lg:w-5/6 flex flex-col gap-5 mt-5">
-      <Button
-        :disabled="loading"
-        @click="registerUser()"
-        label="Create Account"
-        class="w-full bg-[#0291BF] text-white"
-      />
+      <div class="w-full flex gap-5">
+        <Button
+          @click="handlePrevious"
+          label="Back"
+          class="w-full bg-[#0291BF] text-white"
+        />
+        <Button
+          :disabled="loading"
+          @click="registerUser()"
+          label="Create Account"
+          class="w-full bg-[#0291BF] text-white"
+        />
+      </div>
       <div v-if="loading" class="card self-center flex-center w-10">
         <ProgressSpinner strokeWidth="8" />
       </div>
-      <div v-else class="pb-3 text-center">
+      <div v-else class="my-3 self-end">
         <p class="paragraph__p">
           Already have an account ?
           <nuxt-link to="/signin" class="text-[#4D6977]">Log In</nuxt-link>
@@ -157,6 +164,7 @@ import InputText from "primevue/inputtext";
 
 const props = defineProps({
   handleStepTwo: Function,
+  handlePrevious: Function,
 });
 
 const appDomain = process.env.NUXT_PUBLIC_API_URL ?? "smartsplash.co";

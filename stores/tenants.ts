@@ -7,7 +7,6 @@ axios.defaults.headers.common["Accept"] = "application/json";
 
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
-const appDomain = config.public.appDomain;
 
 let apiUrl = requestUrl;
 
