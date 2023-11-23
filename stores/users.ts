@@ -41,7 +41,6 @@ export const useUserStore = defineStore("user", {
   },
   actions: {
     async login(domain: string, email: string, password: string) {
-      console.log(domain, email, password)
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;

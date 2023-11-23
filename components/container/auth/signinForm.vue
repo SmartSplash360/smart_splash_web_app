@@ -172,7 +172,9 @@ async function login() {
     try {
       loading.value = true;
       const user = await store.login(
-        domain.value?.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
+        domain.value ??
+          domain.value?.toLocaleLowerCase().replace(/\s/g, "") +
+            `.${appDomain}`,
         email.value,
         password.value
       );
