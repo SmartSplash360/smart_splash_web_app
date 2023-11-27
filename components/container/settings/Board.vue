@@ -19,6 +19,14 @@
           </template>
           <RegularSettingsPaymentCredentials></RegularSettingsPaymentCredentials>
         </TabPanel>
+        <TabPanel>
+          <template #header>
+            <div class="flex-center min-w-max">
+              <span class="span__element">Admin Details</span>
+            </div>
+          </template>
+          <RegularSettingsAdminDetails></RegularSettingsAdminDetails>
+        </TabPanel>
       </TabView>
     </div>
   </section>

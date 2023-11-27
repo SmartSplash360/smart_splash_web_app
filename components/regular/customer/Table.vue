@@ -55,11 +55,11 @@
       <Column field="photo" header="Photo" exportHeader="Customer Photo">
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data?.id}`">
-            <div class="w-full h-full">
+            <div class="w-full h-full max-w-[20px] max-h-[20px]">
               <Avatar
                 :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
                 :alt="slotProps.data.name"
-                class="mr-2 translate-y-4"
+                class="mr-2 translate-y-4 w-full h-full"
                 size="large"
                 shape="circle"
               />

@@ -135,10 +135,6 @@ const props = defineProps({
   tenantRegistrationHero: Boolean,
   userSignUpHero: Boolean,
 });
-
-onMounted(() => {
-  console.log(props.tenantRegistrationHero);
-});
 </script>
 
 <style scoped>

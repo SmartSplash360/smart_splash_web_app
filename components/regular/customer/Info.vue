@@ -6,15 +6,26 @@
       <div
         class="flex-between w-full flex-col gap-4 items-center lg:justify-start xl:flex-row"
       >
-        <img
-          :src="
-            customerInfo.photo
-              ? customerInfo.photo
-              : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fuser-profile&psig=AOvVaw0tfzkKYSuOP1iYQZelyp5B&ust=1696411955000000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCKC7_prJ2YEDFQAAAAAdAAAAABAI'
-          "
-          alt=""
-          class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
-        />
+        <div class="relative flex flex-col">
+          <img
+            :src="customerInfo.photo ? customerPhoto : ProfileImage"
+            alt=""
+            class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
+          />
+          <span
+            v-tooltip.top="'Update Profile'"
+            @click="handleUpdateProfileModal"
+            class="flex items-center justify-center self-end absolute bottom-0 cursor-pointer hover:scale-[1.1] hover:transition-all"
+          >
+            <font-awesome-icon icon="camera" class="text-gray-500" />
+          </span>
+          <ModalsProfileUpdateProfile
+            v-if="updateProfile"
+            :customer="customerInfo"
+            :handleCloseUpdateProfileModal="handleCloseUpdateProfileModal"
+            :type="'customer'"
+          ></ModalsProfileUpdateProfile>
+        </div>
         <div class="flex flex-col gap-3">
           <h3 class="hidden min-w-max text-[13px] text-gray-500 lg:flex">
             CUSTOMER INFO:
@@ -57,7 +68,10 @@
     <div
       class="min-w-[250px] max-w-[350px] flex-1 flex-between lg:flex-row xl:justify-between"
     >
-      <div class="relative flex-center flex-col">
+      <div
+        v-if="customerInfo.GateSecurityCode"
+        class="relative flex-center flex-col"
+      >
         <img
           :src="BuildingIcon"
           alt="building-icon"
@@ -67,17 +81,26 @@
           class="-mt-2 flex-center flex-col gap-1 rounded-xl bg-white px-4 py-2"
         >
           <span class="min-w-max span__element text-[#025E7C]">Gate code</span>
-          <span class="span__element dark:text-black">F5JKJGF</span>
+          <span class="span__element dark:text-black">{{
+            customerInfo.GateSecurityCode
+          }}</span>
         </div>
       </div>
-      <font-awesome-icon icon="lock" class="text-2xl" />
-      <font-awesome-icon icon="dog" class="text-2xl" />
+      <font-awesome-icon
+        v-if="customerInfo.GateSecurityCode"
+        icon="lock"
+        class="text-2xl"
+      />
+      <font-awesome-icon
+        v-if="customerInfo.hasDog"
+        icon="dog"
+        class="text-2xl"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import userProfile from "@/assets/images/profile_user.jpg";
 import ChatIcon from "@/assets/icons/ion_chatbubbles.svg";
 import EmailIcon from "@/assets/icons/email-icon.svg";
 import PhoneIcon from "@/assets/icons/phone-icon.svg";
@@ -85,6 +108,7 @@ import LocationIcon from "@/assets/icons/location-icon.svg";
 import BuildingIcon from "@/assets/icons/building-icon.svg";
 import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
 
 const props = defineProps({
   customerInfo: {
@@ -92,6 +116,12 @@ const props = defineProps({
     required: true,
   },
 });
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
+const updateProfile = ref(false);
+const customerPhoto = ref();
 
 const fullAddress = computed(() => {
   let address = "N/A";
@@ -102,6 +132,16 @@ const fullAddress = computed(() => {
   }
   return address;
 });
-</script>
 
-<style lang="scss" scoped></style>
+onMounted(() => {
+  if (props.customerInfo.photo.includes("public/images/")) {
+    let photo = props.customerInfo.photo.replace("public/images/", "/images/");
+    customerPhoto.value = `${imageUrl}/${photo}`;
+  } else {
+    customerPhoto.value = props.customerInfo.photo;
+  }
+});
+
+const handleUpdateProfileModal = () => (updateProfile.value = true);
+const handleCloseUpdateProfileModal = () => (updateProfile.value = false);
+</script>
