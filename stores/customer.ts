@@ -132,6 +132,27 @@ export const useCustomerStore = defineStore("customer", {
         throw error;
       }
     },
+    async updateCustomerProfile(id: number | string, photo: any) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/customers/${id}`;
+      try {
+        const res = await axios.post(url, photo);
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+      } catch (error) {
+
+        throw error;
+      }
+    },
     async deleteCustomer(customerId: number | string) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;

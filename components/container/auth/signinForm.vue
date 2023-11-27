@@ -25,7 +25,13 @@
           >
           </InputText>
         </span>
-        <p class="min-h-[20px]"></p>
+        <p class="min-h-[20px]">
+          <span
+            v-show="errorDomain"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorDomain }}</span
+          >
+        </p>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -143,6 +149,7 @@ const domain = ref("");
 const loading = ref(false);
 
 const errorEmail = ref("");
+const errorDomain = ref("");
 const errorPassword = ref("");
 
 const toast = useToast();
@@ -170,12 +177,18 @@ const validateForm = () => {
 async function login() {
   if (validateForm()) {
     try {
+      let user;
       loading.value = true;
-      const user = await store.login(
-        domain.value?.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
-        email.value,
-        password.value
-      );
+
+      if (domain.value) {
+        user = await store.login(
+          domain.value.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
+          email.value,
+          password.value
+        );
+      } else {
+        user = await store.login(domain.value, email.value, password.value);
+      }
 
       await customerStore.fetchCustomers();
       await alertStore.fetchAlerts();
@@ -195,6 +208,9 @@ async function login() {
       loading.value = false;
       await router.push("/alerts");
     } catch (e) {
+      errorDomain.value = "Please ensure the company is registered!";
+      errorEmail.value = "Please ensure you have entered valid credentials";
+      errorPassword.value = "Please ensure you have entered valid credentials";
       toast.add({
         severity: "error",
         summary: "Login Error",
@@ -202,6 +218,13 @@ async function login() {
         life: 5000,
       });
       loading.value = false;
+
+      errorDomain.value = "Please ensure the company is registered!";
+      errorEmail.value = "Please ensure you have entered valid credentials";
+      errorPassword.value = "Please ensure you have entered valid credentials";
+      domain.value = "";
+      email.value = "";
+      password.value = "";
     }
   }
 }

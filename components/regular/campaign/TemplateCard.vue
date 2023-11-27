@@ -114,10 +114,7 @@ const toggle = (event) => {
 
 onMounted(() => {
   if (props.template.cover.includes("public/images/")) {
-    let cover = props.template.cover.replace(
-      "public/images/",
-      "storage/images/"
-    );
+    let cover = props.template.cover.replace("public/images/", "/images/");
     templateCover.value = `${imageUrl}/${cover}`;
   } else {
     templateCover.value = props.template.cover;

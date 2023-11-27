@@ -13,6 +13,25 @@
       </h3>
       <div class="flex flex-col gap-2 w-full">
         <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="name"
+            >Name</label
+          >
+          <InputText
+            id="name"
+            v-model="name"
+            class="w-full border-gray-300 rounded-md"
+            :class="errorName && 'border-red-300'"
+            @blur="handleChangeName"
+          />
+        </span>
+        <p class="h-[10px]">
+          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+            errorName
+          }}</span>
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="email"
             >Email</label
           >
@@ -51,6 +70,25 @@
       </div>
       <div class="flex flex-col gap-2 w-full">
         <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="website"
+            >Website</label
+          >
+        </span>
+        <InputText
+          id="website"
+          v-model="website"
+          class="w-full border-gray-300 rounded-md"
+          :class="errorWebsite && 'border-red-300'"
+          @blur="handleChangeWebsite"
+        />
+        <p class="h-[10px]">
+          <span v-show="errorWebsite" class="text-[#D42F24] text-xs">{{
+            errorWebsite
+          }}</span>
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <span class="w-full flex flex-col gap-2">
           <label class="span__element text-[12px] leading-none" for="phone"
             >Address</label
           >
@@ -67,44 +105,6 @@
         <p class="h-[10px]">
           <span v-show="errorAddress" class="text-[#D42F24] text-xs">{{
             errorAddress
-          }}</span>
-        </p>
-      </div>
-      <div class="flex flex-col gap-2 w-full">
-        <span class="w-full flex flex-col gap-2">
-          <label class="span__element text-[12px] leading-none" for="name"
-            >Name</label
-          >
-          <InputText
-            id="name"
-            v-model="name"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorName && 'border-red-300'"
-            @blur="handleChangeName"
-          />
-        </span>
-        <p class="h-[10px]">
-          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
-            errorName
-          }}</span>
-        </p>
-      </div>
-      <div class="flex flex-col gap-2 w-full">
-        <span class="w-full flex flex-col gap-2">
-          <label class="span__element text-[12px] leading-none" for="website"
-            >Website</label
-          >
-        </span>
-        <InputText
-          id="website"
-          v-model="website"
-          class="w-full border-gray-300 rounded-md"
-          :class="errorWebsite && 'border-red-300'"
-          @blur="handleChangeWebsite"
-        />
-        <p class="h-[10px]">
-          <span v-show="errorWebsite" class="text-[#D42F24] text-xs">{{
-            errorWebsite
           }}</span>
         </p>
       </div>
@@ -169,11 +169,6 @@ const handleChangeAddress = () => {
 };
 const handleChangeWebsite = () => {
   const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-  errorWebsite.value = useRequired({
-    fieldname: "website",
-    field: website.value,
-    error: errorWebsite.value,
-  });
   if (!urlPattern.test(website.value)) {
     errorWebsite.value = "Please enter a valid website URL";
     return;

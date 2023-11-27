@@ -55,13 +55,15 @@
       <Column field="photo" header="Photo" exportHeader="Customer Photo">
         <template #body="slotProps">
           <nuxt-link :to="`/customers/${slotProps.data?.id}`">
-            <div class="w-full h-full">
-              <Avatar
-                :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
-                :alt="slotProps.data.name"
-                class="mr-2 translate-y-4"
-                size="large"
-                shape="circle"
+            <div class="flex items-center br-red-300 w-full h-full">
+              <img
+                :src="
+                  slotProps.data.photo
+                    ? renderCustomerImage(slotProps.data?.photo)
+                    : ProfileImage
+                "
+                alt=""
+                class="items-center rounded-full lg:h-[40px] lg:w-[40px]"
               />
             </div>
           </nuxt-link>
@@ -233,11 +235,12 @@
 </template>
 
 <script setup>
+import Tag from "primevue/tag";
+import Avatar from "primevue/avatar";
 import { FilterMatchMode } from "primevue/api";
 import { useCustomerStore } from "~/stores/customer";
-import Avatar from "primevue/avatar";
 import SortIcon from "~/assets/icons/arrow-sort.svg";
-import Tag from "primevue/tag";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
 
 const store = useCustomerStore();
 const router = useRouter();
@@ -248,6 +251,9 @@ const props = defineProps({
   customerMobiles: Array,
   handleSort: Function,
 });
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
 
 const loading = ref(false);
 const filters = ref({
@@ -266,5 +272,14 @@ const viewCustomer = (id) => router.push(`/customers/${id}`);
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
+};
+
+const renderCustomerImage = (photo) => {
+  if (photo?.includes("public/images/")) {
+    let img = photo.replace("public/images/", "/images/");
+    return `${imageUrl}/${img}`;
+  } else {
+    return photo;
+  }
 };
 </script>

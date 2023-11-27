@@ -272,6 +272,8 @@ const createTemplate = async () => {
       detail: "Error Occured",
       life: 5000,
     });
+
+    loading.value = false;
   }
 };
 const sendCampaign = () => {
