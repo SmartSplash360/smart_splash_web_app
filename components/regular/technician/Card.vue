@@ -65,11 +65,10 @@
           <nuxt-link :to="`technicians/${props.technician.id}`">
             <div class="flex items-center gap-5">
               <div class="h-[120px] w-[120px] rounded-full">
-                <Avatar
-                  :image="technician?.photo ?? 'https://plchldr.co/i/500x500'"
-                  class="mr-2"
-                  style="width: 100px; height: 100px;"
-                  shape="circle"
+                <img
+                  :src="technician.photo ? technicianPhoto : ProfileImage"
+                  alt=""
+                  class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
                 />
               </div>
               <div class="flex flex-col gap-2 dark:text-white">
@@ -136,26 +135,31 @@
 </template>
 
 <script setup>
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
+
 const showMenu = ref(false);
 
 const props = defineProps({
-  technician: {
-    type: Object,
-    default: () => {
-      return {
-        name: "Evan",
-        surname: "Kings",
-        email: "test@user.com",
-        phone_number: "0760970734",
-        role: "technician",
-        photo: "https://plchldr.co/i/500x500",
-        status: 1,
-      };
-    },
-  },
+  technician: Object,
   deleteItem: Function,
   editItem: Function,
 });
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
+const updateProfile = ref(false);
+const technicianPhoto = ref();
+
+onMounted(() => {
+  if (props.technician.photo?.includes("public/images/")) {
+    let photo = props.technician.photo.replace("public/images/", "/images/");
+    technicianPhoto.value = `${imageUrl}/${photo}`;
+  } else {
+    technicianPhoto.value = props.technician.photo;
+  }
+});
+
 const toggleMenu = () => {
   showMenu.value = !showMenu.value;
 };
@@ -166,5 +170,14 @@ const deleteTechnician = () => {
 
 const editTechnician = () => {
   props.editItem({ item: props.technician });
+};
+
+const renderCustomerImage = (photo) => {
+  if (photo?.includes("public/images/")) {
+    let img = photo.replace("public/images/", "/images/");
+    return `${imageUrl}/${img}`;
+  } else {
+    return photo;
+  }
 };
 </script>

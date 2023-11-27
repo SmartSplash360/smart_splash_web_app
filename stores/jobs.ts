@@ -14,9 +14,6 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const useJobStore = defineStore("job", {
-  persist: {
-    storage: persistedState.localStorage,
-  },
   state: () => ({
     jobs: [],
     completedJobs: 0,

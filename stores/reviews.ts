@@ -14,9 +14,6 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const useReviewStore = defineStore("review", {
-  persist: {
-    storage: persistedState.localStorage,
-  },
   state: () => ({
     reviews: [],
   }),

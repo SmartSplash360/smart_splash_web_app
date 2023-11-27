@@ -190,7 +190,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useUserStore } from "~/stores/users";
 import { useCustomerStore } from "~/stores/customer";
 
@@ -217,6 +217,7 @@ const phoneNumber = ref("");
 const hasGateCode = ref(false);
 const gateCode = ref("");
 const hasDog = ref(false);
+const customerLoggedUpdate = ref(false);
 
 const errorName = ref("");
 const errorSurname = ref("");
@@ -236,6 +237,8 @@ onMounted(() => {
     hasGateCode.value = customer.GateSecurityCode ? true : false;
     gateCode.value = customer.GateSecurityCode;
   }
+
+  customerLoggedUpdate.value = user.value.role_id === 3 ?? true;
 });
 
 const handleChangeName = () => {
@@ -313,7 +316,7 @@ const updateCustomer = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.updateCustomer(customer?.id, {
+      await store.updateCustomer(customer?.id, customerLoggedUpdate.value, {
         name: name.value,
         surname: surname.value,
         email: email.value,
