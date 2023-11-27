@@ -11,12 +11,25 @@
       ></ModalsJobsEditJob>
       <div class="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6">
         <div class="flex items-center gap-2 sm:gap-5">
-          <div class="h-[70px] w-[70px] rounded-full sm:h-[120px] sm:w-[120px]">
-            <Avatar
-              :image="profileImage"
-              class="mr-2 !h-full !w-full"
-              shape="circle"
+          <div class="relative flex flex-col">
+            <img
+              :src="technician.photo ? technicianPhoto : ProfileImage"
+              alt=""
+              class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
             />
+            <span
+              v-tooltip.top="'Update Profile'"
+              @click="handleUpdateProfileModal"
+              class="flex items-center justify-center self-end absolute bottom-0 cursor-pointer hover:scale-[1.1] hover:transition-all"
+            >
+              <font-awesome-icon icon="camera" class="text-gray-500" />
+            </span>
+            <ModalsProfileUpdateProfile
+              v-if="updateProfile"
+              :customer="technician"
+              :handleCloseUpdateProfileModal="handleCloseUpdateProfileModal"
+              :type="'technician'"
+            ></ModalsProfileUpdateProfile>
           </div>
           <div class="flex flex-1 flex-col gap-2">
             <h2 class="text-sm font-bold lg:heading__h2">
@@ -84,6 +97,10 @@ import { useCustomerStore } from "~/stores/customer";
 import { useJobStore } from "~/stores/jobs";
 import { useQuoteStore } from "~/stores/quote";
 import { useUserStore } from "~/stores/users";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
 
 const toast = useToast();
 const confirm = useConfirm();
@@ -102,6 +119,9 @@ const props = defineProps({
 });
 
 const router = useRouter();
+
+const updateProfile = ref(false);
+const technicianPhoto = ref();
 
 const currentTab = ref("JOBS");
 const loading = ref(true);
@@ -130,6 +150,15 @@ onMounted(async () => {
   technician.value = await technicianStore.fetchTechnician(props.technicianId);
   jobs.value = await jobStore.fetchTechnicianJobs(props.technicianId);
   quotes.value = quoteStore.getTechnicianQuotes(props.technicianId);
+
+  console.log(technician.value);
+  if (technician.value.photo?.includes("public/images/")) {
+    let photo = technician.value.photo.replace("public/images/", "/images/");
+    technicianPhoto.value = `${imageUrl}/${photo}`;
+  } else {
+    technicianPhoto.value = technician.value.photo;
+  }
+
   loading.value = false;
 });
 
@@ -138,6 +167,9 @@ const switchTabs = (tab) => {
     currentTab.value = tab;
   }
 };
+
+const handleUpdateProfileModal = () => (updateProfile.value = true);
+const handleCloseUpdateProfileModal = () => (updateProfile.value = false);
 
 const toggleAddJobModal = () => (addJobModal.value = true);
 

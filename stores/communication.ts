@@ -14,9 +14,6 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const useCommunicationStore = defineStore("communication", {
-  persist: {
-    storage: persistedState.localStorage,
-  },
   state: () => ({
     voiceCall: null,
   }),

@@ -28,9 +28,6 @@ let apiUrl = requestUrl;
 // const soundUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 
 export const useNotificationStore = defineStore("notification", {
-  persist: {
-    storage: persistedState.localStorage,
-  },
   state: () => ({
     notifications: [],
   }),
