@@ -56,6 +56,7 @@
 <script setup>
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { useMenuStore } from "~/stores/menu";
+import findFirstUniqueByName from "@/utils/filterMenuItem";
 
 defineProps({
   toggleSide: Boolean,
@@ -66,8 +67,10 @@ const router = useRouter();
 const menuStore = useMenuStore();
 const menu = ref();
 
+const menuList = computed(() => menuStore.getMenu);
+
 onMounted(async () => {
-  menu.value = menuStore.getMenu;
+  menu.value = findFirstUniqueByName(menuList.value);
 });
 </script>
 

@@ -48,7 +48,7 @@
         class="hover:shadow-xl"
       />
       <Button
-        label="Update Info"
+        label="Create role"
         class="!bg-[#0291BF] hover:shadow-xl text-white"
         @click="createRole()"
       />

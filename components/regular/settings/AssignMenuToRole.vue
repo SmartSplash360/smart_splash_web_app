@@ -105,6 +105,7 @@ const createRoleMenu = () => {
     errorRole.value = "Please select a Role and assign Menu items to it.";
   } else {
     try {
+      // check if item already exist
       selectedMenuItem.value?.forEach(async (menuItemSelected) => {
         await menuStore.createRoleMenu({
           menu_id: menuItemSelected.id,
