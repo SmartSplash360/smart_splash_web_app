@@ -122,7 +122,7 @@ export const useTechnicianStore = defineStore("technician", {
         throw error;
       }
     },
-        async updateTechnicianProfile(id: number | string, photo: any) {
+    async updateTechnicianProfile(id: number | string, photo: any) {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
         axios.defaults.headers.post["Content-Type"] = "multipart/form-data";

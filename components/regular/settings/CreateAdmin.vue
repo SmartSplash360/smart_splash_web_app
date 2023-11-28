@@ -1,11 +1,29 @@
 <template>
+  <div v-if="loading" class="card self-center flex-center w-10">
+    <ProgressSpinner strokeWidth="8" />
+  </div>
   <form
-    class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white lg:p-10 lg:min-w-[950px] dark:bg-[#31353F]"
+    v-else
+    class="flex flex-col gap-4 rounded-md bg-white dark:bg-[#31353F]"
   >
     <h2 class="heading__h2 font-bold text-[#025E7C]">
-      Update admin details
+      New User
     </h2>
-
+    <div class="flex w-full lg:w-1/2 flex-col gap-2">
+      <Dropdown
+        v-model="role"
+        :options="roles"
+        optionLabel="name"
+        placeholder="Roles"
+        @change="handleChangeRole"
+        class="w-1/2 dark:bg-[#1B2028]"
+      />
+      <p class="min-h-[20px]">
+        <span v-show="errorRole" class="text-[#D42F24] text-xs">{{
+          errorRole
+        }}</span>
+      </p>
+    </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
       <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Name* </label>
@@ -91,14 +109,18 @@
         />
       </span>
     </div>
-    <div v-if="loading" class="self-center flex-center w-10">
-      <ProgressSpinner strokeWidth="8" />
-    </div>
-    <div class="mt-4 flex flex-col justify-end gap-5 sm:flex-row">
+    <div class="flex flex-col justify-end gap-5 sm:flex-row">
       <Button
-        label="Update Info"
+        label="Cancel"
+        severity="secondary"
+        outlined
+        @click="handleCancelCreateUser"
+        class="hover:shadow-xl"
+      />
+      <Button
+        label="Create User"
         class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="updateInfo()"
+        @click="createUser()"
       />
     </div>
   </form>
@@ -107,11 +129,21 @@
 <script setup>
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
-import { useCustomerStore } from "~/stores/customer";
+import { useRoleStore } from "~/stores/role";
+import { useTenantStore } from "~/stores/tenants";
+
+const { handleCancelCreateUser } = defineProps([
+  "toggleAddCustomerModal",
+  "handleCancelCreateUser",
+]);
+
+const config = useRuntimeConfig();
+const appDomain = config.public.appDomain;
 
 const toast = useToast();
-const store = useCustomerStore();
 const userStore = useUserStore();
+const roleStore = useRoleStore();
+const tenantStore = useTenantStore();
 
 const {
   useRequired,
@@ -123,23 +155,38 @@ const name = ref("");
 const email = ref("");
 const surname = ref("");
 const address = ref("");
+const role = ref();
 const loading = ref(false);
 const phoneNumber = ref("");
+
+const roles = ref([]);
 
 const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
+const errorRole = ref("");
 const errorPhoneNumber = ref("");
 
 const user = computed(() => userStore.getCurrentUser);
+const rolesList = computed(() => roleStore.getRoles);
 
-onMounted(() => {
-  if (user.value) {
-    name.value = user.value?.name;
-    surname.value = user.value?.surname;
-    email.value = user.value?.email;
-    phoneNumber.value = user.value?.phone_number;
-  }
+onMounted(async () => {
+  loading.value = true;
+  await roleStore.fetchRoles();
+  rolesList.value.forEach((role) => {
+    if (
+      role.name.toLowerCase() !== "customer" &&
+      role.name.toLowerCase() !== "lead" &&
+      role.name.toLowerCase() !== "client"
+    ) {
+      roles.value.push({
+        name: role.name,
+        id: role.id,
+      });
+    }
+  });
+
+  loading.value = false;
 });
 
 const handleChangeName = () => {
@@ -168,45 +215,63 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber.value,
   });
 };
+const handleChangeRole = () => {
+  errorRole.value = useRequired({
+    fieldname: "Role",
+    field: role.value,
+    error: errorRole.value,
+  });
+};
 
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
+  handleChangeRole();
   return (
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value
+    !errorPhoneNumber.value &&
+    !errorRole.value
   );
 };
 
-const updateInfo = async () => {
+const createUser = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.updateCustomer(user.value?.id, {
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
-        address: [address.value],
-      });
-      loading.value = false;
+      // get current tenant
+      const tenant = tenantStore.getCurrentTenant;
+      const res = await userStore.registerUser(
+        tenant.name.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
+        {
+          name: name.value,
+          surname: surname.value,
+          email: email.value,
+          phone_number: phoneNumber.value,
+          role_id: role.value.id,
+          password: "123456",
+          password_confirmation: "123456",
+        }
+      );
+
+      console.log(res);
       toast.add({
         severity: "success",
-        summary: "Admin Update Success",
-        detail: "You have updated the admin details successfully",
+        summary: "User Registration Success",
+        detail: "You have added a user successfully",
         life: 5000,
       });
-    } catch (e) {
       loading.value = false;
+      handleCancelCreateUser();
+    } catch (e) {
       toast.add({
         severity: "error",
-        summary: "Admin Update Error",
-        detail: `Update Failed. An error has occurred`,
-        life: 5000,
+        summary: "User Registration Fail",
+        detail: `Registration Failed. An error has occurred`,
+        life: 10000,
       });
     }
   }

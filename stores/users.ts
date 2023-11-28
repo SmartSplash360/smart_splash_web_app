@@ -40,6 +40,22 @@ export const useUserStore = defineStore("user", {
     },
   },
   actions: {
+    async registerUser(domain: string | null , userPayload: {}) {
+      if (domain && domain !== appDomain) {
+        await useTenantStore().fetchTenantByWebsite(domain);
+        apiUrl = useTenantStore().tenantDomain;
+      }
+      try {
+        const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
+        this.currentUser = res.data;
+
+        if (res.data.success) {
+          return res.data.data.user;
+        } 
+      } catch (error) {
+        return { errorMessage: error };
+      }
+    },
     async login(domain: string, email: string, password: string) {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
@@ -64,7 +80,7 @@ export const useUserStore = defineStore("user", {
         throw error;
       }
     },
-    async register(domain: string, userPayload: {}) {
+    async register(domain: string | null , userPayload: {}) {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;

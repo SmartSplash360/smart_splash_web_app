@@ -27,6 +27,22 @@
           </template>
           <RegularSettingsAdminDetails></RegularSettingsAdminDetails>
         </TabPanel>
+        <TabPanel>
+          <template #header>
+            <div class="flex-center min-w-max">
+              <span class="span__element">User Management</span>
+            </div>
+          </template>
+          <RegularSettingsUserManagement></RegularSettingsUserManagement>
+        </TabPanel>
+        <TabPanel>
+          <template #header>
+            <div class="flex-center min-w-max">
+              <span class="span__element">Role Management</span>
+            </div>
+          </template>
+          <RegularSettingsRoleManagement></RegularSettingsRoleManagement>
+        </TabPanel>
       </TabView>
     </div>
   </section>

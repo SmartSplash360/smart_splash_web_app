@@ -151,7 +151,6 @@ onMounted(async () => {
   jobs.value = await jobStore.fetchTechnicianJobs(props.technicianId);
   quotes.value = quoteStore.getTechnicianQuotes(props.technicianId);
 
-  console.log(technician.value);
   if (technician.value.photo?.includes("public/images/")) {
     let photo = technician.value.photo.replace("public/images/", "/images/");
     technicianPhoto.value = `${imageUrl}/${photo}`;

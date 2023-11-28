@@ -100,11 +100,6 @@ const registerTenant = async () => {
 
 //  store.register(tenantPayload);
 const loginInNewTenant = async (data) => {
-  console.log(
-    data.domain.domain,
-    userPayload.value.user_email,
-    userPayload.value.password
-  );
   try {
     const user = await store.login(
       data.domain.domain,
