@@ -80,7 +80,7 @@
       </div>
       <nuxt-link
         to="/forgotten-password"
-        class="paragraph__p w-full text-end text-[#4D6977]"
+        class="paragraph__p w-fit text-end text-[#4D6977] ml-auto"
       >
         Forgot password?
       </nuxt-link>
