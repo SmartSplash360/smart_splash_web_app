@@ -43,6 +43,14 @@
           </template>
           <RegularSettingsRoleManagement></RegularSettingsRoleManagement>
         </TabPanel>
+        <TabPanel>
+          <template #header>
+            <div class="flex-center min-w-max">
+              <span class="span__element">Menu Management</span>
+            </div>
+          </template>
+          <RegularSettingsMenuManagement></RegularSettingsMenuManagement>
+        </TabPanel>
       </TabView>
     </div>
   </section>

@@ -257,7 +257,6 @@ const createUser = async () => {
         }
       );
 
-      console.log(res);
       toast.add({
         severity: "success",
         summary: "User Registration Success",

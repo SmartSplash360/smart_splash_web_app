@@ -195,7 +195,6 @@ onMounted(async () => {
       });
     }
   });
-  console.log(user);
   loading.value = false;
 });
 
@@ -267,7 +266,6 @@ const updateUser = async () => {
         }
       );
 
-      console.log(res);
       toast.add({
         severity: "success",
         summary: "User Registration Success",
