@@ -134,11 +134,16 @@ const fullAddress = computed(() => {
 });
 
 onMounted(() => {
-  if (props.customerInfo.photo.includes("public/images/")) {
-    let photo = props.customerInfo.photo.replace("public/images/", "/images/");
-    customerPhoto.value = `${imageUrl}/${photo}`;
-  } else {
-    customerPhoto.value = props.customerInfo.photo;
+  if (props.customerInfo.photo) {
+    if (props.customerInfo.photo?.includes("public/images/")) {
+      let photo = props.customerInfo.photo.replace(
+        "public/images/",
+        "/images/"
+      );
+      customerPhoto.value = `${imageUrl}/${photo}`;
+    } else {
+      customerPhoto.value = props.customerInfo.photo;
+    }
   }
 });
 

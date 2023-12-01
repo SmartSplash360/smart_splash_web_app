@@ -38,7 +38,9 @@
             <p class="text-xs lg:paragraph__p">Cleaning Tech</p>
           </div>
         </div>
-        <div class="ml-0 sm:ml-auto flex justify-end gap-5">
+        <div
+          class="ml-0 sm:ml-auto flex flex-col lg:flex-row justify-end sm:gap-5 mt-5"
+        >
           <BaseAddButton
             :btnText="'Job'"
             @click="handleAddJob"
@@ -51,6 +53,20 @@
               class="w-full text-[#025E7C] hover:bg-[#0291BF] hover:!text-white min-w-max text-sm lg:text-sm hover:shadow-xl"
             />
           </nuxt-link>
+          <Button
+            v-if="user?.role_id === 4"
+            icon="pi pi-user"
+            label="Update My profile"
+            @click="updateMyProfileMobile"
+            class="flex w-fit self-end lg:hidden rounded-xl bg-[#0291BF] text-white"
+          />
+          <Button
+            v-if="user?.role_id === 4"
+            icon="pi pi-user"
+            label="Update My profile"
+            @click="updateMyProfileDesktop"
+            class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
+          />
         </div>
       </div>
       <RegularTechnicianStats></RegularTechnicianStats>
@@ -172,6 +188,19 @@ const handleCloseUpdateProfileModal = () => (updateProfile.value = false);
 
 const toggleAddJobModal = () => (addJobModal.value = true);
 
+const updateMyProfileDesktop = () => {
+  router.push({
+    path: "/settings",
+    query: { technicianId: props.technicianId },
+  });
+};
+const updateMyProfileMobile = () => {
+  router.push({
+    path: "/technician/edit-technician",
+    query: { technicianId: props.technicianId },
+  });
+};
+
 const closeModal = ({ success, error }) => {
   addJobModal.value = false;
   showQuotationModal.value = false;
@@ -251,7 +280,6 @@ const handleAddJob = () => {
     query: { technicianId: props.technicianId },
   });
 };
-
 const viewQuote = ({ item }) => {
   quote.value = item;
   job.value = jobs.value.find((job) => job.id === item.job_id);

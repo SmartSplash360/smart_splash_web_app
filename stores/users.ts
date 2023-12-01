@@ -47,7 +47,7 @@ export const useUserStore = defineStore("user", {
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
-        this.currentUser = res.data;
+        this.currentUser = res.data.data.user;
 
         if (res.data.success) {
           return res.data.data.user;
@@ -87,8 +87,6 @@ export const useUserStore = defineStore("user", {
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
-        this.currentUser = res.data;
-
         if (res.data.success) {
           this.currentUser = res.data.data.user;
           this.jwt = res.data.data.token;

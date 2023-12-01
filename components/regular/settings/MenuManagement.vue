@@ -90,15 +90,6 @@
         <Column v-if="user?.role_id === 1">
           <template #body="slotProps">
             <div class="flex justify-end flex-row gap-2">
-              <!-- <Button
-                icon="pi pi-pencil"
-                text
-                raised
-                rounded
-                @click="
-                  editItem(slotProps.data.id, { ...slotProps.data }, false)
-                "
-              /> -->
               <Button
                 icon="pi pi-trash"
                 text
@@ -112,7 +103,6 @@
         </Column>
       </DataTable>
     </div>
-    <RegularSettingsAssignMenuToRole></RegularSettingsAssignMenuToRole>
   </div>
 </template>
 

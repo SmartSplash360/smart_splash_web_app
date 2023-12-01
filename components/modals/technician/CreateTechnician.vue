@@ -143,6 +143,16 @@ const errorSurname = ref("");
 const errorEmail = ref("");
 const errorPhoneNumber = ref("");
 
+onMounted(() => {
+  if (technician) {
+    name.value = technician.name;
+    surname.value = technician.surname;
+    email.value = technician.email;
+    phoneNumber.value = technician.phone_number;
+    status.value = technician.status ? true : false;
+  }
+});
+
 const handleChangeName = () => {
   errorName.value = useRequired({
     fieldname: "Name",
@@ -169,16 +179,6 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber,
   });
 };
-
-onMounted(() => {
-  if (technician) {
-    name.value = technician.name;
-    surname.value = technician.surname;
-    email.value = technician.email;
-    phoneNumber.value = technician.phone_number;
-    status.value = technician.status ? true : false;
-  }
-});
 
 const validateForm = () => {
   handleChangeName();

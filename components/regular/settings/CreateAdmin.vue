@@ -1,129 +1,131 @@
 <template>
-  <div v-if="loading" class="card self-center flex-center w-10">
-    <ProgressSpinner strokeWidth="8" />
-  </div>
-  <form
-    v-else
-    class="flex flex-col gap-4 rounded-md bg-white dark:bg-[#31353F]"
-  >
-    <h2 class="heading__h2 font-bold text-[#025E7C]">
-      New User
-    </h2>
-    <div class="flex w-full lg:w-1/2 flex-col gap-2">
-      <Dropdown
-        v-model="role"
-        :options="roles"
-        optionLabel="name"
-        placeholder="Roles"
-        @change="handleChangeRole"
-        class="w-1/2 dark:bg-[#1B2028]"
-      />
-      <p class="min-h-[20px]">
-        <span v-show="errorRole" class="text-[#D42F24] text-xs">{{
-          errorRole
-        }}</span>
-      </p>
+  <section class="flex flex-col">
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
     </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Name* </label>
-        <InputText
-          type="text"
-          v-model="name"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorName && 'border-red-300'"
-          @blur="handleChangeName"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorName" class="text-[#D42F24] text-xs">{{
-            errorName
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Surname* </label>
-        <InputText
-          type="text"
-          v-model="surname"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorSurname && 'border-red-300'"
-          @blur="handleChangeSurname"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
-            errorSurname
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between gap-5 sm:flex-row">
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="email address">
-          Email address*
-        </label>
-        <InputText
-          type="email"
-          v-model="email"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorEmail && 'border-red-300'"
-          @blur="handleChangeEmail"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
-            errorEmail
-          }}</span>
-        </p>
-      </div>
-      <div class="flex w-full flex-col gap-2">
-        <label class="span__element text-sm" for="cell number">
-          Cell number*
-        </label>
-        <InputText
-          type="text"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          v-model="phoneNumber"
-          :class="errorPhoneNumber && 'border-red-300'"
-          @blur="handleChangePhoneNumber"
-        ></InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
-            errorPhoneNumber
-          }}</span>
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-col gap-2 w-full">
-      <span class="w-full flex flex-col gap-2">
-        <label class="span__element text-[12px] leading-none" for="phone"
-          >Address</label
-        >
-        <Textarea
-          rows="3"
-          cols="30"
-          id="address"
-          v-model="address"
-          class="w-full border-gray-300 rounded-md"
+    <form
+      v-else
+      class="flex flex-col gap-4 rounded-md bg-white dark:bg-[#31353F]"
+    >
+      <h2 class="heading__h2 font-bold text-[#025E7C]">
+        New User
+      </h2>
+      <div class="flex w-full lg:w-1/2 flex-col gap-2">
+        <Dropdown
+          v-model="role"
+          :options="roles"
+          optionLabel="name"
+          placeholder="Roles"
+          @change="handleChangeRole"
+          class="w-1/2 dark:bg-[#1B2028]"
         />
-      </span>
-    </div>
-    <div class="flex flex-col justify-end gap-5 sm:flex-row">
-      <Button
-        label="Cancel"
-        severity="secondary"
-        outlined
-        @click="handleCancelCreateUser"
-        class="hover:shadow-xl"
-      />
-      <Button
-        label="Create User"
-        class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="createUser()"
-      />
-    </div>
-  </form>
+        <p class="min-h-[20px]">
+          <span v-show="errorRole" class="text-[#D42F24] text-xs">{{
+            errorRole
+          }}</span>
+        </p>
+      </div>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="name"> Name* </label>
+          <InputText
+            type="text"
+            v-model="name"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorName && 'border-red-300'"
+            @blur="handleChangeName"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+              errorName
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="name"> Surname* </label>
+          <InputText
+            type="text"
+            v-model="surname"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorSurname && 'border-red-300'"
+            @blur="handleChangeSurname"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorSurname" class="text-[#D42F24] text-xs">{{
+              errorSurname
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-5 sm:flex-row">
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="email address">
+            Email address*
+          </label>
+          <InputText
+            type="email"
+            v-model="email"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            :class="errorEmail && 'border-red-300'"
+            @blur="handleChangeEmail"
+          >
+          </InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorEmail" class="text-[#D42F24] text-xs">{{
+              errorEmail
+            }}</span>
+          </p>
+        </div>
+        <div class="flex w-full flex-col gap-2">
+          <label class="span__element text-sm" for="cell number">
+            Cell number*
+          </label>
+          <InputText
+            type="text"
+            class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
+            v-model="phoneNumber"
+            :class="errorPhoneNumber && 'border-red-300'"
+            @blur="handleChangePhoneNumber"
+          ></InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorPhoneNumber" class="text-[#D42F24] text-xs">{{
+              errorPhoneNumber
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="phone"
+            >Address</label
+          >
+          <Textarea
+            rows="3"
+            cols="30"
+            id="address"
+            v-model="address"
+            class="w-full border-gray-300 rounded-md"
+          />
+        </span>
+      </div>
+      <div class="flex flex-col justify-end gap-5 sm:flex-row">
+        <Button
+          label="Cancel"
+          severity="secondary"
+          outlined
+          @click="handleCancelCreateUser"
+          class="hover:shadow-xl"
+        />
+        <Button
+          label="Create User"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
+          @click="createUser()"
+        />
+      </div>
+    </form>
+  </section>
 </template>
 
 <script setup>
@@ -244,7 +246,7 @@ const createUser = async () => {
     try {
       // get current tenant
       const tenant = tenantStore.getCurrentTenant;
-      const res = await userStore.registerUser(
+      await userStore.registerUser(
         tenant.name.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
         {
           name: name.value,
@@ -272,6 +274,7 @@ const createUser = async () => {
         detail: `Registration Failed. An error has occurred`,
         life: 10000,
       });
+      loading.value = false;
     }
   }
 };

@@ -17,6 +17,7 @@
     <RegularAuthStepTwo
       :handleStepTwo="handleStepTwo"
       :handlePrevious="handlePrevious"
+      :loading="loading"
     ></RegularAuthStepTwo>
     <ContainerAuthHeroLogger
       :userSignUpHero="true"
@@ -50,6 +51,7 @@ const leadStore = useLeadStore();
 const technicianStore = useTechnicianStore();
 const menuStore = useMenuStore();
 
+const loading = ref(false);
 const currentStep = ref(1);
 const userPayload = ref();
 const tenantPayload = ref();
@@ -70,6 +72,8 @@ const registerTenant = async () => {
       ...tenantPayload.value,
       ...userPayload.value,
     };
+
+    loading.value = true;
     const res = await tenantStore.register(tenant);
     if (res.success) {
       toast.add({
@@ -88,6 +92,8 @@ const registerTenant = async () => {
       });
     }
     loginInNewTenant(res.data);
+
+    loading.value = false;
   } catch (error) {
     toast.add({
       severity: "error",
@@ -95,6 +101,8 @@ const registerTenant = async () => {
       detail: `Registration up Failed. An error has occurred`,
       life: 10000,
     });
+
+    loading.value = false;
   }
 };
 

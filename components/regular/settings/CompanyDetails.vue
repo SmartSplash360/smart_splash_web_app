@@ -160,13 +160,21 @@
         ></InputText>
       </div>
     </div>
+    <div class="flex flex-col gap-4">
+      <h2 class="lg:min-w-max heading__h3">
+        Company Address :
+        <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
+      </h2>
+      <span class="min-w-max span__element span__element-light"
+        >Update company address
+      </span>
+    </div>
     <div
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
         <h2 class="lg:min-w-max heading__h3">
           Company Address :
-          <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
         </h2>
         <span class="min-w-max span__element span__element-light"
           >Update company address
@@ -201,7 +209,7 @@
               </template>
             </Dropdown>
 
-            <label for="dd-city" class="text-md">Select State</label>
+            <label for="dd-city" class="text-md my-[-8px]">Select State</label>
           </div>
         </div>
         <div class="card justify-content-center w-full">
@@ -230,19 +238,18 @@
                 </div>
               </template>
             </Dropdown>
-            <label for="dd-city" class="text-md">Select City</label>
+            <label for="dd-city" class="text-md my-[-8px]">Select City</label>
           </div>
         </div>
-        <div class="card justify-content-center w-full">
+        <div class="card justify-content-center w-full lg:w-1/2">
           <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
               v-model="zipCode"
               class="w-full dark:bg-[#1B2028] border-gray-300 rounded-lg"
-              :placeholder="'32211'"
             ></InputText>
 
-            <label for="dd-city" class="text-md">Zip code</label>
+            <label for="dd-city" class="text-md my-[-8px]">Zip code</label>
           </div>
         </div>
       </div>
