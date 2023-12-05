@@ -287,7 +287,7 @@ const updateCustomer = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.updateCustomer(customerId, {
+      await store.updateMyProfile(customerId, {
         name: name.value,
         surname: surname.value,
         email: email.value,

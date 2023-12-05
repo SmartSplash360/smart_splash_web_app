@@ -122,6 +122,28 @@ export const useTechnicianStore = defineStore("technician", {
         throw error;
       }
     },
+    async updateMyProfile(id: number | string, technicianPayload: any) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/technicians/${id}`;
+      try {
+        const res = await axios.post(url, technicianPayload);
+
+        useUserStore().setCurrentUser(res.data.data);
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+      } catch (error) {
+
+        throw error;
+      }
+    },
     async updateTechnicianProfile(id: number | string, photo: any) {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
@@ -135,6 +157,8 @@ export const useTechnicianStore = defineStore("technician", {
         let url = `${apiUrl}/technicians/${id}`;
         try {
           const res = await axios.post(url, photo);
+
+          useUserStore().setCurrentUser(res.data.data);
           if (!res.data.success) {
             throw new Error(res.data.message);
           }

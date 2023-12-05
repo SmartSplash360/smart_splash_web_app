@@ -39,6 +39,7 @@ export const useUserStore = defineStore("user", {
       return state.userDefinedTheme;
     },
   },
+
   actions: {
     async registerUser(domain: string | null , userPayload: {}) {
       if (domain && domain !== appDomain) {
@@ -47,7 +48,6 @@ export const useUserStore = defineStore("user", {
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
-        this.currentUser = res.data.data.user;
 
         if (res.data.success) {
           return res.data.data.user;
@@ -87,6 +87,8 @@ export const useUserStore = defineStore("user", {
       }
       try {
         const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
+        this.currentUser = res.data;
+
         if (res.data.success) {
           this.currentUser = res.data.data.user;
           this.jwt = res.data.data.token;
@@ -105,6 +107,11 @@ export const useUserStore = defineStore("user", {
     },
     setJwt(newJwt: any) {
       this.jwt = newJwt;
+    },
+    setCurrentUser(newUserDetail: any) {
+      this.$patch((state) => {
+        state.currentUser = newUserDetail
+      })
     },
     async logout() {
       const router = useRouter();

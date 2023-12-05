@@ -195,7 +195,7 @@ const updateTechnician = async () => {
   if (validateForm()) {
     try {
       loading.value = true;
-      await store.updateTechnician(technicianId, {
+      await store.updateMyProfile(technicianId, {
         id: technicianId,
         name: name.value,
         surname: surname.value,

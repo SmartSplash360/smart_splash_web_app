@@ -18,6 +18,7 @@
               class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
             />
             <span
+              v-if="user?.role_id == 4"
               v-tooltip.top="'Update Profile'"
               @click="handleUpdateProfileModal"
               class="flex items-center justify-center self-end absolute bottom-0 cursor-pointer hover:scale-[1.1] hover:transition-all"
@@ -34,6 +35,7 @@
           <div class="flex flex-1 flex-col gap-2">
             <h2 class="text-sm font-bold lg:heading__h2">
               {{ technician?.name }}
+              {{ technician?.surname }}
             </h2>
             <p class="text-xs lg:paragraph__p">Cleaning Tech</p>
           </div>

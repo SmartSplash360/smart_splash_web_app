@@ -26,11 +26,36 @@ export const useValidation = () => {
             : "" : "Please add a note";
         return error
     }
+    const useValidatePassword = ({ password, error }) => {
+
+        // Check if the password length is between 6 and 12 characters
+        const lengthCheck = password.length >= 6 && password.length <= 12;
+
+        // Check if the password includes at least one uppercase letter
+        const uppercaseCheck = /[A-Z]/.test(password);
+
+        // Check if the password includes at least one lowercase letter
+        const lowercaseCheck = /[a-z]/.test(password);
+
+        // Check if the password includes at least one number
+        const numberCheck = /\d/.test(password);
+
+        // Check if the password includes at least one special character
+        const specialCharacterCheck = /[!@#$%^&]/.test(password);
+
+        // Return true if all checks pass, indicating a strong password
+
+        error = "Please ensure your password contains 6 to 12 characters and includes Uppercase letters (A-Z), Lowercase letters (a-z), Numbers (0-9) and a Special characters"
+            
+        return  (lengthCheck && uppercaseCheck && lowercaseCheck && numberCheck && specialCharacterCheck) ? "" : error
+
+    }
 
     return {
         useValidateEmail,
         useRequired,
         useValidatePhoneNumber,
-        useValidateTextArea
+        useValidateTextArea,
+        useValidatePassword
     }
 }
