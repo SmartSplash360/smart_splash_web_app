@@ -4,7 +4,7 @@
       <h2 class="heading__h2 text-[30px]">Reset your Password ?</h2>
       <p class="paragraph__p">Please enter your details</p>
     </div>
-    <div class="flex w-full flex-col gap-4">
+    <div class="flex w-full flex-col">
       <div class="flex flex-col gap-2">
         <span class="flex flex-col gap-4">
           <label class="span__element text-[12px] leading-none" for="email"
@@ -27,7 +27,7 @@
           >
         </p>
       </div>
-      <div class="w-full flex flex-col gap-4">
+      <div class="hidden w-full flex-col gap-4">
         <span class="flex flex-col gap-4">
           <label class="span__element text-[12px] leading-none" for="token"
             >Token</label
@@ -42,53 +42,55 @@
         </span>
         <p class="h-[4px]"></p>
       </div>
-      <div class="w-full flex flex-col gap-4">
-        <span class="w-full flex flex-col gap-2">
-          <label class="span__element text-[12px] leading-none" for="password"
-            >Password</label
-          >
-          <InputText
-            id="password"
-            type="password"
-            v-model="password"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorPassword && 'border-red-300'"
-            @blur="handleChangePassword"
-          >
-          </InputText>
-        </span>
-        <p class="h-[4px]">
-          <span
-            v-show="errorPassword"
-            class="text-[#D42F24] text-[10px] space-x-8"
-            >{{ errorPassword }}</span
-          >
-        </p>
-      </div>
-      <div class="w-full flex flex-col gap-4">
-        <span class="w-full flex flex-col gap-2">
-          <label
-            class="span__element text-[12px] leading-none"
-            for="confirmedPassword"
-            >Confirm Password</label
-          >
-          <InputText
-            id="confirmedPassword"
-            type="password"
-            v-model="confirmPassword"
-            class="w-full border-gray-300 rounded-md"
-            :class="errorPassword && 'border-red-300'"
-            @blur="handleChangePasswordMatching"
-          >
-          </InputText>
-        </span>
-        <p class="h-[4px]">
-          <span
-            v-show="errorPassword"
-            class="text-[#D42F24] text-[10px] space-x-8"
-            >{{ errorPassword }}</span
-          >
-        </p>
+      <div class="flex flex-col gap-10">
+        <div class="w-full flex flex-col gap-4">
+          <span class="w-full flex flex-col gap-2">
+            <label class="span__element text-[12px] leading-none" for="password"
+              >Password</label
+            >
+            <InputText
+              id="password"
+              type="password"
+              v-model="password"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorPassword && 'border-red-300'"
+              @blur="handleChangePassword"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span
+              v-show="errorPassword"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorPassword }}</span
+            >
+          </p>
+        </div>
+        <div class="w-full flex flex-col gap-4">
+          <span class="w-full flex flex-col gap-2">
+            <label
+              class="span__element text-[12px] leading-none"
+              for="confirmedPassword"
+              >Confirm Password</label
+            >
+            <InputText
+              id="confirmedPassword"
+              type="password"
+              v-model="confirmPassword"
+              class="w-full border-gray-300 rounded-md"
+              :class="errorPassword && 'border-red-300'"
+              @blur="handleChangePasswordMatching"
+            >
+            </InputText>
+          </span>
+          <p class="h-[4px]">
+            <span
+              v-show="errorPassword"
+              class="text-[#D42F24] text-[10px] space-x-8"
+              >{{ errorPassword }}</span
+            >
+          </p>
+        </div>
       </div>
     </div>
     <div class="mt-5 flex w-full flex-col gap-3">
@@ -116,7 +118,7 @@
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
 
-const { useRequired, useValidateEmail } = useValidation();
+const { useRequired, useValidateEmail, useValidatePassword } = useValidation();
 const router = useRouter();
 
 const store = useUserStore();
@@ -145,9 +147,8 @@ const handleChangeEmail = () => {
   });
 };
 const handleChangePassword = () => {
-  errorPassword.value = useRequired({
-    fieldname: "password",
-    field: password.value,
+  errorPassword.value = useValidatePassword({
+    password: password.value,
     error: errorPassword.value,
   });
 };

@@ -61,6 +61,9 @@ defineProps({
   handleToggleSide: Function,
 });
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const router = useRouter();
 const menuStore = useMenuStore();
 const tenantStore = useTenantStore();

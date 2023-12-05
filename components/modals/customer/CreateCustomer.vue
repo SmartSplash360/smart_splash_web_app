@@ -200,6 +200,7 @@ const createCustomer = async () => {
       loading.value = false;
       toggleAddCustomerModal({ success: "Customer created successfully" });
     } catch (e) {
+      console.log(e);
       toggleAddCustomerModal({ error: "Opps, something went wrong!" });
     }
   }

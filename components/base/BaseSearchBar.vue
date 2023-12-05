@@ -8,7 +8,7 @@
       :class="[
         size === 'lg' ? 'min-w-[300px] xl:min-w-[400px]' : ' w-full min-w-full',
       ]"
-      @input="$emit('handleSearch', value)"
+      @keyup="$emit('handleSearch', value)"
     />
   </span>
 </template>

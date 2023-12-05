@@ -179,7 +179,7 @@ onMounted(async () => {
     email.value = user.email;
     phoneNumber.value = user.phone_number;
     address.value = user.address;
-    role.value = user.role_id;
+    role.value = user?.role_id;
   }
 
   await roleStore.fetchRoles();

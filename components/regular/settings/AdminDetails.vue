@@ -5,7 +5,26 @@
     <h2 class="heading__h2 font-bold text-[#025E7C]">
       Update admin details
     </h2>
-
+    <div class="relative flex flex-col w-fit">
+      <img
+        :src="user.photo ? profilePhoto : ProfileImage"
+        alt=""
+        class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
+      />
+      <span
+        v-tooltip.top="'Update Profile'"
+        @click="handleUpdateProfileModal"
+        class="flex items-center justify-center self-end absolute bottom-0 cursor-pointer hover:scale-[1.1] hover:transition-all"
+      >
+        <font-awesome-icon icon="camera" class="text-gray-500" />
+      </span>
+      <ModalsProfileUpdateProfile
+        v-if="updateProfile"
+        :customer="user"
+        :handleCloseUpdateProfileModal="handleCloseUpdateProfileModal"
+        :type="'customer'"
+      ></ModalsProfileUpdateProfile>
+    </div>
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
       <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Name* </label>
@@ -108,6 +127,7 @@
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
 import { useCustomerStore } from "~/stores/customer";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
 
 const toast = useToast();
 const store = useCustomerStore();
@@ -119,12 +139,17 @@ const {
   useValidatePhoneNumber,
 } = useValidation();
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const name = ref("");
 const email = ref("");
 const surname = ref("");
 const address = ref("");
+const profilePhoto = ref();
 const loading = ref(false);
 const phoneNumber = ref("");
+const updateProfile = ref(false);
 
 const errorName = ref("");
 const errorSurname = ref("");
@@ -140,7 +165,19 @@ onMounted(() => {
     email.value = user.value?.email;
     phoneNumber.value = user.value?.phone_number;
   }
+
+  if (user.value.photo) {
+    if (user.value.photo?.includes("public/images/")) {
+      let photo = user.value.photo.replace("public/images/", "/images/");
+      profilePhoto.value = `${imageUrl}/${photo}`;
+    } else {
+      profilePhoto.value = user.value.photo;
+    }
+  }
 });
+
+const handleUpdateProfileModal = () => (updateProfile.value = true);
+const handleCloseUpdateProfileModal = () => (updateProfile.value = false);
 
 const handleChangeName = () => {
   errorName.value = useRequired({
