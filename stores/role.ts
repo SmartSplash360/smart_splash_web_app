@@ -13,25 +13,20 @@ const requestUrl = config.public.apiUrl;
 
 let apiUrl = requestUrl;
 
-export const useMenuStore = defineStore("menu", {
+export const useRoleStore = defineStore("role", {
   persist: {
     storage: persistedState.localStorage,
   },
   state: () => ({
-    menu: [],
-    listMenu : [],
-    searchQuery: "",
+    roles: [],
   }),
   getters: {
-    getMenu(state) {
-      return state.menu;
+    getRoles(state) {
+      return state.roles;
     },
-    getMenuList(state) {
-      return state.listMenu
-    }
   },
   actions: {
-    async fetchMenuByRole(id: number | string) {
+    async fetchRoles() {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
@@ -40,34 +35,16 @@ export const useMenuStore = defineStore("menu", {
         apiUrl = tenantUrl
       }
 
-      let url = `${apiUrl}/roleMenus/getMenuByRole/${id}`;
+      let url = `${apiUrl}/roles`;
       try {
         const res = await axios.get(url);
-        this.menu = res.data.data;
+          this.roles = res.data.data.data;
       } catch (error) {
 
         return error;
       }
     },
-    async fetchMenu() {
-        const jwt = useUserStore().getJwt;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-
-        const tenantUrl = useTenantStore().tenantDomain;
-        if (tenantUrl) {
-          apiUrl = tenantUrl
-        }
-
-        let url = `${apiUrl}/menus`;
-        try {
-          const res = await axios.get(url);
-            this.listMenu = res.data.data.data;
-        } catch (error) {
-
-          return error;
-        }
-    },
-    async createMenu(menuPayload : object) {
+    async createRole(rolePayload : object) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       
@@ -76,42 +53,22 @@ export const useMenuStore = defineStore("menu", {
         apiUrl = tenantUrl
       }
 
-      let url = `${apiUrl}/menus`;
+      let url = `${apiUrl}/roles`;
       try {
-        const res = await axios.post(url, menuPayload);
-        this.fetchMenu()
+        const res = await axios.post(url, rolePayload);
+        this.fetchRoles()
 
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+
+        return res.data.data
       } catch (error) {
 
         throw error;
       }
     },
-    async createRoleMenu(menuPayload : object) {
-      const jwt = useUserStore().getJwt;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      
-      const tenantUrl = useTenantStore().tenantDomain;
-      if (tenantUrl) {
-        apiUrl = tenantUrl
-      }
-
-      let url = `${apiUrl}/roleMenus`;
-      try {
-        const res = await axios.post(url, menuPayload);
-        this.fetchMenu()
-
-        if (!res.data.success) {
-          throw new Error(res.data.message);
-        }
-      } catch (error) {
-
-        throw error;
-      }
-    },
-    async deleteMenu(menuId: number) {
+    async deleteRole(roleId: number) {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
@@ -120,7 +77,7 @@ export const useMenuStore = defineStore("menu", {
           apiUrl = tenantUrl
         }
 
-        let url = `${apiUrl}/menus/${menuId}`;
+        let url = `${apiUrl}/roles/${roleId}`;
 
         try {
           const res = await axios.delete(url);
@@ -128,7 +85,7 @@ export const useMenuStore = defineStore("menu", {
           if (!res.data.success) {
             throw new Error(res.data.message);
           }
-          this.fetchMenu()
+          this.fetchRoles()
           return res.data;
         } catch (error) {
 

@@ -34,9 +34,9 @@
       >
         <div v-if="files.length < 1" class="flex-center">
           <img
-            :src="currentLogo"
-            :alt="companyName + ' Logo'"
-            class="h-52 w-52 object-contain"
+            :src="tenant?.cover ? currentLogo : SmartPlashLogo"
+            alt=""
+            class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
           />
         </div>
         <div v-else class="max-h-[80px] max-w-[225px]">
@@ -160,13 +160,18 @@
         ></InputText>
       </div>
     </div>
+    <div class="flex flex-col gap-4">
+      <h2 class="lg:min-w-max heading__h3">
+        Company Address :
+        <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
+      </h2>
+    </div>
     <div
       class="flex flex-col gap-10 py-14 xl:flex-row xl:items-center xl:gap-64"
     >
       <div class="flex flex-col gap-4">
         <h2 class="lg:min-w-max heading__h3">
-          Company Address :
-          <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
+          Company Address
         </h2>
         <span class="min-w-max span__element span__element-light"
           >Update company address
@@ -201,7 +206,7 @@
               </template>
             </Dropdown>
 
-            <label for="dd-city" class="text-md">Select State</label>
+            <label for="dd-city" class="text-md my-[-8px]">Select State</label>
           </div>
         </div>
         <div class="card justify-content-center w-full">
@@ -230,19 +235,18 @@
                 </div>
               </template>
             </Dropdown>
-            <label for="dd-city" class="text-md">Select City</label>
+            <label for="dd-city" class="text-md my-[-8px]">Select City</label>
           </div>
         </div>
-        <div class="card justify-content-center w-full">
+        <div class="card justify-content-center w-full lg:w-1/2">
           <div class="card justify-content-center p-float-label flex">
             <InputText
               type="number"
               v-model="zipCode"
               class="w-full dark:bg-[#1B2028] border-gray-300 rounded-lg"
-              :placeholder="'32211'"
             ></InputText>
 
-            <label for="dd-city" class="text-md">Zip code</label>
+            <label for="dd-city" class="text-md my-[-8px]">Zip code</label>
           </div>
         </div>
       </div>
@@ -259,7 +263,6 @@ import { useTenantStore } from "@/stores/tenants";
 const tenantStore = useTenantStore();
 
 const toast = useToast();
-const tenant = computed(() => tenantStore.getCurrentTenant);
 
 const companyName = ref();
 const companyWebsite = ref();
@@ -273,6 +276,8 @@ const selectedCity = ref();
 const selectedState = ref();
 const states = ref(stateList);
 
+const tenant = computed(() => tenantStore.getCurrentTenant);
+
 onMounted(async () => {
   await tenantStore.fetchCurrentTenant();
 
@@ -280,8 +285,16 @@ onMounted(async () => {
     companyName.value = tenant.value?.name;
     companyWebsite.value = tenant.value?.website;
     companyNumber.value = tenant.value?.phone_number;
-    currentLogo.value = tenant.value?.cover;
     companyAddress.value = tenant.value.address;
+  }
+
+  if (tenant.value?.cover) {
+    if (tenant.value.cover?.includes("public/images/")) {
+      let photo = tenant.value.cover.replace("public/images/", "/images/");
+      currentLogo.value = `${imageUrl}/${photo}`;
+    } else {
+      currentLogo.value = tenant.value.cover;
+    }
   }
 });
 
@@ -299,28 +312,39 @@ const onTemplatedUpload = () => {
 };
 
 const updatecompanyDetails = async () => {
-  try {
-    await tenantStore.updateTenant({
-      cover: files.value,
-      name: companyName.value,
-      address: `${selectedCity.value} - ${selectedState.value?.name} - ${zipCode.value}`,
-      website: companyWebsite.value,
-      phone_number: companyNumber.value,
-    });
+  if (
+    companyName.value &&
+    companyAddress.value &&
+    companyNumber.value &&
+    companyWebsite.value
+  ) {
+    try {
+      const formData = new FormData();
+      formData.append("name", companyName.value);
+      formData.append(
+        "address",
+        `${selectedCity.value} - ${selectedState.value?.name} - ${zipCode.value}`
+      );
+      formData.append("cover", files.value);
+      formData.append("website", companyWebsite.value);
+      formData.append("phone_number", companyNumber.value);
 
-    toast.add({
-      severity: "success",
-      summary: "Tenant Details",
-      detail: "You updated the tenant info successfully",
-      life: 5000,
-    });
-  } catch (error) {
-    toast.add({
-      severity: "error",
-      summary: "Tenant Details Error",
-      detail: `Tenant updated Failed. An error has occurred: ${error?.response?.data?.message}`,
-      life: 5000,
-    });
+      await tenantStore.updateTenant(tenant.value.id, formData);
+
+      toast.add({
+        severity: "success",
+        summary: "Tenant Details",
+        detail: "You updated the tenant info successfully",
+        life: 5000,
+      });
+    } catch (error) {
+      toast.add({
+        severity: "error",
+        summary: "Tenant Details Error",
+        detail: `Tenant updated Failed. An error has occurred: ${error?.response?.data?.message}`,
+        life: 5000,
+      });
+    }
   }
 };
 </script>

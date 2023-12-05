@@ -190,16 +190,10 @@ const handleChangePhoneNumber = () => {
 
 const validateForm = () => {
   handleChangeName();
-  handleChangeWebsite();
   handleChangeEmail();
   handleChangePhoneNumber();
   handleChangeAddress();
-  return (
-    !errorName.value &&
-    !errorWebsite.value &&
-    !errorEmail.value &&
-    !errorPhoneNumber.value
-  );
+  return !errorName.value && !errorEmail.value && !errorPhoneNumber.value;
 };
 
 function registerTenant() {

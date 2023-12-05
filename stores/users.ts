@@ -39,7 +39,23 @@ export const useUserStore = defineStore("user", {
       return state.userDefinedTheme;
     },
   },
+
   actions: {
+    async registerUser(domain: string | null , userPayload: {}) {
+      if (domain && domain !== appDomain) {
+        await useTenantStore().fetchTenantByWebsite(domain);
+        apiUrl = useTenantStore().tenantDomain;
+      }
+      try {
+        const res = await axios.post(`${apiUrl}/auth/register`, userPayload);
+
+        if (res.data.success) {
+          return res.data.data.user;
+        } 
+      } catch (error) {
+        return { errorMessage: error };
+      }
+    },
     async login(domain: string, email: string, password: string) {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
@@ -64,7 +80,7 @@ export const useUserStore = defineStore("user", {
         throw error;
       }
     },
-    async register(domain: string, userPayload: {}) {
+    async register(domain: string | null , userPayload: {}) {
       if (domain && domain !== appDomain) {
         await useTenantStore().fetchTenantByWebsite(domain);
         apiUrl = useTenantStore().tenantDomain;
@@ -91,6 +107,11 @@ export const useUserStore = defineStore("user", {
     },
     setJwt(newJwt: any) {
       this.jwt = newJwt;
+    },
+    setCurrentUser(newUserDetail: any) {
+      this.$patch((state) => {
+        state.currentUser = newUserDetail
+      })
     },
     async logout() {
       const router = useRouter();

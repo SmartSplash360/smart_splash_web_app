@@ -13,6 +13,7 @@
             class="h-32 w-32 items-center rounded-full lg:h-[70px] lg:w-[70px]"
           />
           <span
+            v-if="user?.role_id == 3"
             v-tooltip.top="'Update Profile'"
             @click="handleUpdateProfileModal"
             class="flex items-center justify-center self-end absolute bottom-0 cursor-pointer hover:scale-[1.1] hover:transition-all"
@@ -109,6 +110,7 @@ import BuildingIcon from "@/assets/icons/building-icon.svg";
 import LockIcon from "@/assets/icons/locker-icon.svg";
 import DogIcon from "@/assets/icons/dog-icon.svg";
 import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
+import { useUserStore } from "~/stores/users";
 
 const props = defineProps({
   customerInfo: {
@@ -116,6 +118,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const userStore = useUserStore();
 
 const config = useRuntimeConfig();
 const imageUrl = config.public.imageUrl;
@@ -133,12 +137,19 @@ const fullAddress = computed(() => {
   return address;
 });
 
+const user = computed(() => userStore.getCurrentUser);
+
 onMounted(() => {
-  if (props.customerInfo.photo.includes("public/images/")) {
-    let photo = props.customerInfo.photo.replace("public/images/", "/images/");
-    customerPhoto.value = `${imageUrl}/${photo}`;
-  } else {
-    customerPhoto.value = props.customerInfo.photo;
+  if (props.customerInfo.photo) {
+    if (props.customerInfo.photo?.includes("public/images/")) {
+      let photo = props.customerInfo.photo.replace(
+        "public/images/",
+        "/images/"
+      );
+      customerPhoto.value = `${imageUrl}/${photo}`;
+    } else {
+      customerPhoto.value = props.customerInfo.photo;
+    }
   }
 });
 

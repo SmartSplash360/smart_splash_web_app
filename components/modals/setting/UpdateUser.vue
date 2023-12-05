@@ -1,6 +1,6 @@
 <template>
   <div
-    @click="toggleAddCustomerModal({ show: false })"
+    @click="handleCancelUpdateUser"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex-center bg-[#000000da]"
   >
     <div v-if="loading" class="card self-center flex-center w-10">
@@ -9,14 +9,22 @@
     <form
       v-else
       @click.stop
-      class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
+      class="flex min-h-[500px] flex-col gap-6 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
     >
       <h2 class="heading__h2 font-bold text-[#025E7C]">
-        {{ profile ? "Update my profile" : customer ? "Edit" : "New" }}
-        {{ !profile ? "Customer" : "" }}
-        {{ customer && !profile ? `#${customer?.id}` : "" }}
+        Update User
       </h2>
-
+      <div class="flex w-full lg:w-1/2 flex-col gap-2">
+        <label class="span__element" for="stage"> Select Role </label>
+        <select
+          name="role"
+          id="role"
+          v-model="role"
+          class="w-full lg:w-1/2 rounded-md border-gray-300"
+        >
+          <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
+        </select>
+      </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
         <div class="flex w-full flex-col gap-2">
           <label class="span__element text-sm" for="name"> Name* </label>
@@ -88,18 +96,32 @@
           </p>
         </div>
       </div>
-      <div class="mt-10 flex flex-col justify-end gap-5 sm:flex-row">
+      <div class="flex flex-col gap-2 w-full">
+        <span class="w-full flex flex-col gap-2">
+          <label class="span__element text-[12px] leading-none" for="phone"
+            >Address</label
+          >
+          <Textarea
+            rows="3"
+            cols="30"
+            id="address"
+            v-model="address"
+            class="w-full border-gray-300 rounded-md"
+          />
+        </span>
+      </div>
+      <div class="flex flex-col justify-end gap-5 sm:flex-row">
         <Button
           label="Cancel"
           severity="secondary"
           outlined
-          @click="toggleAddCustomerModal({ show: false })"
+          @click="handleCancelUpdateUser"
           class="hover:shadow-xl"
         />
         <Button
-          :label="customer ? 'Update Customer' : 'Create Customer '"
+          label="Update User"
           class="!bg-[#0291BF] hover:shadow-xl text-white"
-          @click="customer ? updateCustomer() : createCustomer()"
+          @click="updateUser()"
         />
       </div>
     </form>
@@ -107,43 +129,73 @@
 </template>
 
 <script setup>
+import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
-import { useCustomerStore } from "~/stores/customer";
+import { useRoleStore } from "~/stores/role";
+import { useTenantStore } from "~/stores/tenants";
 
-const { toggleAddCustomerModal, customer, profile } = defineProps([
-  "toggleAddCustomerModal",
-  "customer",
-  "profile",
+const { handleCancelUpdateUser, user } = defineProps([
+  "handleCancelUpdateUser",
+  "user",
 ]);
 
-const store = useCustomerStore();
+const config = useRuntimeConfig();
+const appDomain = config.public.appDomain;
+
+const toast = useToast();
 const userStore = useUserStore();
+const roleStore = useRoleStore();
+const tenantStore = useTenantStore();
+
 const {
   useRequired,
   useValidateEmail,
   useValidatePhoneNumber,
 } = useValidation();
 
+const role = ref();
 const name = ref("");
 const email = ref("");
 const surname = ref("");
+const address = ref("");
 const loading = ref(false);
 const phoneNumber = ref("");
+
+const roles = ref([]);
 
 const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
+const errorRole = ref("");
 const errorPhoneNumber = ref("");
 
-const user = computed(() => userStore.getCurrentUser);
+const rolesList = computed(() => roleStore.getRoles);
 
-onMounted(() => {
-  if (customer) {
-    name.value = customer.name;
-    surname.value = customer.surname;
-    email.value = customer.email;
-    phoneNumber.value = customer.phone_number;
+onMounted(async () => {
+  loading.value = true;
+  if (user) {
+    name.value = user.name;
+    surname.value = user.surname;
+    email.value = user.email;
+    phoneNumber.value = user.phone_number;
+    address.value = user.address;
+    role.value = user.role_id;
   }
+
+  await roleStore.fetchRoles();
+  rolesList.value.forEach((role) => {
+    if (
+      role.name.toLowerCase() !== "customer" &&
+      role.name.toLowerCase() !== "lead" &&
+      role.name.toLowerCase() !== "client"
+    ) {
+      roles.value.push({
+        name: role.name,
+        id: role.id,
+      });
+    }
+  });
+  loading.value = false;
 });
 
 const handleChangeName = () => {
@@ -172,56 +224,63 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber.value,
   });
 };
+const handleChangeRole = () => {
+  errorRole.value = useRequired({
+    fieldname: "Role",
+    field: role.value,
+    error: errorRole.value,
+  });
+};
 
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
+  handleChangeRole();
   return (
     !errorName.value &&
     !errorSurname.value &&
     !errorEmail.value &&
-    !errorPhoneNumber.value
+    !errorPhoneNumber.value &&
+    !errorRole.value
   );
 };
 
-const createCustomer = async () => {
+const updateUser = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.createCustomer({
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
+      // get current tenant
+      const tenant = tenantStore.getCurrentTenant;
+      const res = await userStore.registerUser(
+        tenant.name.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
+        {
+          name: name.value,
+          surname: surname.value,
+          email: email.value,
+          phone_number: phoneNumber.value,
+          role_id: role.value.id,
+          password: "123456",
+          password_confirmation: "123456",
+        }
+      );
+
+      toast.add({
+        severity: "success",
+        summary: "User Registration Success",
+        detail: "You have added a user successfully",
+        life: 5000,
       });
-      await store.fetchCustomers();
       loading.value = false;
-      toggleAddCustomerModal({ success: "Customer created successfully" });
+      handleCancelUpdateUser();
     } catch (e) {
-      toggleAddCustomerModal({ error: "Opps, something went wrong!" });
-    }
-  }
-};
-const updateCustomer = async () => {
-  if (validateForm()) {
-    loading.value = true;
-    try {
-      await store.updateCustomer(customer?.id, {
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        phone_number: phoneNumber.value,
+      toast.add({
+        severity: "error",
+        summary: "User Registration Fail",
+        detail: `Registration Failed. An error has occurred`,
+        life: 10000,
       });
-      await store.fetchCustomers();
-      loading.value = false;
-      toggleAddCustomerModal({
-        success: `Customer ${customer?.id} updated successfully`,
-      });
-    } catch (e) {
-      loading.value = false;
-      toggleAddCustomerModal({ error: e });
     }
   }
 };
