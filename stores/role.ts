@@ -61,6 +61,8 @@ export const useRoleStore = defineStore("role", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+
+        return res.data.data
       } catch (error) {
 
         throw error;

@@ -1,11 +1,10 @@
 <template>
   <form
-    class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white lg:p-10 lg:min-w-[950px] dark:bg-[#31353F]"
+    class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-10 lg:min-w-[950px] dark:bg-[#31353F]"
   >
     <h2 class="heading__h2 font-bold text-[#025E7C]">
-      Update admin details
+      Update my details
     </h2>
-
     <div class="flex flex-col justify-between gap-5 sm:flex-row">
       <div class="flex w-full flex-col gap-2">
         <label class="span__element text-sm" for="name"> Name* </label>
@@ -91,14 +90,19 @@
         />
       </span>
     </div>
-    <div v-if="loading" class="self-center flex-center w-10">
-      <ProgressSpinner strokeWidth="8" />
-    </div>
-    <div class="mt-4 flex flex-col justify-end gap-5 sm:flex-row">
+
+    <div class="mt-10 flex flex-col justify-end gap-5 sm:flex-row">
       <Button
-        label="Update Info"
+        label="Cancel"
+        severity="secondary"
+        outlined
+        @click="$router.back()"
+        class="hover:shadow-xl"
+      />
+      <Button
+        label="Update My Profile"
         class="!bg-[#0291BF] hover:shadow-xl text-white"
-        @click="updateInfo()"
+        @click="updateTechnician()"
       />
     </div>
   </form>
@@ -107,10 +111,12 @@
 <script setup>
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
-import { useCustomerStore } from "~/stores/customer";
+import { useTechnicianStore } from "~/stores/technician";
 
 const toast = useToast();
-const store = useCustomerStore();
+const route = useRoute();
+const router = useRouter();
+const store = useTechnicianStore();
 const userStore = useUserStore();
 
 const {
@@ -119,10 +125,13 @@ const {
   useValidatePhoneNumber,
 } = useValidation();
 
+const technicianId = route.query.technicianId;
+
 const name = ref("");
 const email = ref("");
 const surname = ref("");
 const address = ref("");
+const status = ref(true);
 const loading = ref(false);
 const phoneNumber = ref("");
 
@@ -131,27 +140,27 @@ const errorSurname = ref("");
 const errorEmail = ref("");
 const errorPhoneNumber = ref("");
 
-const user = computed(() => userStore.getCurrentUser);
-
-onMounted(() => {
-  if (user.value) {
-    name.value = user.value?.name;
-    surname.value = user.value?.surname;
-    email.value = user.value?.email;
-    phoneNumber.value = user.value?.phone_number;
+onMounted(async () => {
+  const technician = await store.fetchTechnician(technicianId);
+  if (technician) {
+    name.value = technician.name;
+    surname.value = technician.surname;
+    email.value = technician.email;
+    phoneNumber.value = technician.phone_number;
+    status.value = technician.status ? true : false;
   }
 });
 
 const handleChangeName = () => {
   errorName.value = useRequired({
-    fieldname: "name",
+    fieldname: "Name",
     field: name.value,
     error: errorName.value,
   });
 };
 const handleChangeSurname = () => {
   errorSurname.value = useRequired({
-    fieldname: "surname",
+    fieldname: "Surname",
     field: surname.value,
     error: errorSurname.value,
   });
@@ -165,7 +174,7 @@ const handleChangeEmail = () => {
 const handleChangePhoneNumber = () => {
   errorPhoneNumber.value = useValidatePhoneNumber({
     phoneNumber: phoneNumber.value,
-    error: errorPhoneNumber.value,
+    error: errorPhoneNumber,
   });
 };
 
@@ -182,30 +191,33 @@ const validateForm = () => {
   );
 };
 
-const updateInfo = async () => {
+const updateTechnician = async () => {
   if (validateForm()) {
-    loading.value = true;
     try {
-      await store.updateMyProfile(user.value?.id, {
+      loading.value = true;
+      await store.updateMyProfile(technicianId, {
+        id: technicianId,
         name: name.value,
         surname: surname.value,
         email: email.value,
+        address: address.value,
         phone_number: phoneNumber.value,
-        address: [address.value],
+        status: status.value ? 1 : 0,
       });
       loading.value = false;
       toast.add({
         severity: "success",
-        summary: "Admin Update Success",
-        detail: "You have updated the admin details successfully",
+        summary: "Profile Update",
+        detail: "Your profile has been updated successfully",
         life: 5000,
       });
+      router.back();
     } catch (e) {
       loading.value = false;
       toast.add({
         severity: "error",
-        summary: "Admin Update Error",
-        detail: `Update Failed. An error has occurred`,
+        summary: "Profile Update fail",
+        detail: `Your profile could not be updated, An error has occurred.`,
         life: 5000,
       });
     }

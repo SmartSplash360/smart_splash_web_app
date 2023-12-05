@@ -76,7 +76,7 @@
               <Avatar
                 @contextmenu="onImageRightClick"
                 aria-haspopup="true"
-                :image="user?.photo || userProfile"
+                :image="user?.photo ? userPhoto : userProfile"
                 class="mr-2 min-w-[50px] min-h-[50px]"
                 shape="circle"
               />
@@ -148,7 +148,7 @@
           /></nuxt-link>
           <div class="flex items-center gap-2">
             <Avatar
-              :image="user?.photo || userProfile"
+              :image="user?.photo ? userPhoto : userProfile"
               class="mr-2"
               size="xmedium"
               shape="circle"
@@ -192,7 +192,7 @@
 </template>
 
 <script setup>
-import userProfile from "@/assets/images/profile_user.jpg";
+import userProfile from "@/assets/images/ProfilePlaceholder.png";
 import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import {
   menuListAdmin,
@@ -205,27 +205,26 @@ import { useNotificationStore } from "~/stores/notification";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useConfirm } from "primevue/useconfirm";
 
-const menuStore = useMenuStore();
-
 defineProps({
   setColorTheme: Function,
 });
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const route = useRoute();
-const confirm = useConfirm();
 const router = useRouter();
+const confirm = useConfirm();
 const userStore = useUserStore();
-const loading = ref(false);
+const menuStore = useMenuStore();
 const notificationStore = useNotificationStore();
 
+const menu = ref();
+const menuList = ref();
+const userPhoto = ref();
+const loading = ref(false);
 const sideBarVisible = ref(false);
 const showNotificationModal = ref(false);
-const notificationCount = computed(
-  () => notificationStore.getNotificationCount
-);
-const menu = ref();
-const menuListItem = menuStore.getMenu;
-
 const items = ref([
   {
     label: "Logout",
@@ -234,7 +233,10 @@ const items = ref([
   },
 ]);
 
-const menuList = ref();
+const notificationCount = computed(
+  () => notificationStore.getNotificationCount
+);
+const menuListItem = menuStore.getMenu;
 
 const user = computed(() => userStore.getCurrentUser);
 const pageName = computed(() => {
@@ -269,6 +271,15 @@ onMounted(async () => {
         router.push("/technicians/my-profile");
       },
     });
+  }
+
+  if (user.value.photo) {
+    if (user.value.photo?.includes("public/images/")) {
+      let photo = user.value.photo.replace("public/images/", "/images/");
+      userPhoto.value = `${imageUrl}/${photo}`;
+    } else {
+      userPhoto.value = user.value.photo;
+    }
   }
 });
 

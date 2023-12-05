@@ -5,11 +5,7 @@
   >
     <div class="flex-center flex-col gap-5">
       <nuxt-link class="max-h-[150px] max-w-[298px]" to="/alerts">
-        <img
-          :src="SmartPlashLogo"
-          alt="Smart-Splash-Logo"
-          class="h-full w-full"
-        />
+        <img :src="siteLogo" alt="Smart-Splash-Logo" class="h-full w-full" />
       </nuxt-link>
       <button
         @click="handleToggleSide"
@@ -54,9 +50,11 @@
 </template>
 
 <script setup>
-import SmartPlashLogo from "@/assets/images/SmartSplash.png";
 import { useMenuStore } from "~/stores/menu";
+import { useTenantStore } from "@/stores/tenants";
 import findFirstUniqueByName from "@/utils/filterMenuItem";
+import SmartPlashLogo from "@/assets/images/SmartSplash.png";
+import TestPhoto from "@/assets/images/404-image.png";
 
 defineProps({
   toggleSide: Boolean,
@@ -65,11 +63,23 @@ defineProps({
 
 const router = useRouter();
 const menuStore = useMenuStore();
+const tenantStore = useTenantStore();
+
 const menu = ref();
+const siteLogo = ref();
 
 const menuList = computed(() => menuStore.getMenu);
+const tenant = computed(() => tenantStore.getCurrentTenant);
 
 onMounted(async () => {
+  await tenantStore.fetchCurrentTenant();
+  siteLogo.value = SmartPlashLogo;
+
+  if (tenant.value?.cover && tenant.value.cover?.includes("public/images/")) {
+    let photo = tenant.value.cover.replace("public/images/", "/images/");
+    siteLogo.value = `${imageUrl}/${photo}`;
+  }
+
   menu.value = findFirstUniqueByName(menuList.value);
 });
 </script>

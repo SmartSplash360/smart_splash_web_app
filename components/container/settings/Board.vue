@@ -3,7 +3,7 @@
     <LazySkeletonSetting v-if="loading"></LazySkeletonSetting>
     <div v-else>
       <TabView v-model:activeIndex="active">
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 1">
           <template #header>
             <div class="flex-center min-w-max">
               <span class="span__element">Company Details</span>
@@ -11,7 +11,7 @@
           </template>
           <RegularSettingsCompanyDetails></RegularSettingsCompanyDetails>
         </TabPanel>
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 1">
           <template #header>
             <div class="flex-center min-w-max">
               <span class="span__element">Payment Credentials</span>
@@ -19,7 +19,7 @@
           </template>
           <RegularSettingsPaymentCredentials></RegularSettingsPaymentCredentials>
         </TabPanel>
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 1">
           <template #header>
             <div class="flex-center min-w-max">
               <span class="span__element">Admin Details</span>
@@ -27,7 +27,7 @@
           </template>
           <RegularSettingsAdminDetails></RegularSettingsAdminDetails>
         </TabPanel>
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 1">
           <template #header>
             <div class="flex-center min-w-max">
               <span class="span__element">User Management</span>
@@ -35,7 +35,7 @@
           </template>
           <RegularSettingsUserManagement></RegularSettingsUserManagement>
         </TabPanel>
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 1">
           <template #header>
             <div class="flex-center min-w-max">
               <span class="span__element">Role Management</span>
@@ -43,13 +43,21 @@
           </template>
           <RegularSettingsRoleManagement></RegularSettingsRoleManagement>
         </TabPanel>
-        <TabPanel>
+        <TabPanel v-if="user.role_id === 3">
           <template #header>
             <div class="flex-center min-w-max">
-              <span class="span__element">Menu Management</span>
+              <span class="span__element">Update My Profile</span>
             </div>
           </template>
-          <RegularSettingsMenuManagement></RegularSettingsMenuManagement>
+          <RegularSettingsCustomerDetails></RegularSettingsCustomerDetails>
+        </TabPanel>
+        <TabPanel v-if="user.role_id === 4">
+          <template #header>
+            <div class="flex-center min-w-max">
+              <span class="span__element">Update My Profile</span>
+            </div>
+          </template>
+          <RegularSettingsTechnicianDetails></RegularSettingsTechnicianDetails>
         </TabPanel>
       </TabView>
     </div>
@@ -57,6 +65,12 @@
 </template>
 
 <script setup>
+import { useUserStore } from "~/stores/users";
+
+const userStore = useUserStore();
+
+const user = computed(() => userStore.getCurrentUser);
+
 const active = ref(0);
 const loading = ref(false);
 </script>

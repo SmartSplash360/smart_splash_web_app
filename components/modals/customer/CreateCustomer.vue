@@ -88,90 +88,6 @@
           </p>
         </div>
       </div>
-      <div v-if="user.role_id === 3" class="flex flex-col gap-2 w-full">
-        <span class="w-full flex flex-col gap-2">
-          <label class="span__element text-[12px] leading-none" for="phone"
-            >Address</label
-          >
-          <Textarea
-            rows="3"
-            cols="30"
-            id="address"
-            v-model="address"
-            class="w-full border-gray-300 rounded-md"
-          />
-        </span>
-      </div>
-      <div v-if="user.role_id === 3" class="flex-between">
-        <div class="flex-col gap-4 lg:w-1/2">
-          <div class="flex items-centergap-2">
-            <label class="span__element font-bold" for="status">
-              Do you have a Gate code ? :
-            </label>
-            <div class="flex ml-5 gap-5">
-              <div class="flex items-center">
-                <RadioButton
-                  v-model="hasGateCode"
-                  inputId="hasGateCode1"
-                  name="hasGateCode"
-                  :value="true"
-                />
-                <label for="ingredient1" class="ml-2">Yes</label>
-              </div>
-              <div class="flex items-center">
-                <RadioButton
-                  v-model="hasGateCode"
-                  inputId="hasGateCode2"
-                  name="hasGateCode"
-                  :value="false"
-                />
-                <label for="ingredient2" class="ml-2">No</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex w-1/2 items-centergap-2">
-          <label class="span__element font-bold" for="status">
-            Do you have a dog ? :
-          </label>
-          <div class="flex ml-5 gap-5">
-            <div class="flex items-center">
-              <RadioButton
-                v-model="hasDog"
-                inputId="hasDog1"
-                name="hasDog"
-                :value="true"
-              />
-              <label for="ingredient1" class="ml-2">Yes</label>
-            </div>
-            <div class="flex items-center">
-              <RadioButton
-                v-model="hasDog"
-                inputId="hasDog2"
-                name="hasDog"
-                :value="false"
-              />
-              <label for="ingredient2" class="ml-2">No</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-if="hasGateCode" class="flex lg:w-1/4 flex-col gap-2">
-        <label class="span__element text-sm" for="name"> Gate Code* </label>
-        <InputText
-          type="text"
-          v-model="gateCode"
-          class="dark:bg-[#1B2028] border-gray-300 rounded-md dark:text-white"
-          :class="errorGateCode && 'border-red-300'"
-          @blur="handleChangeGateCode"
-        >
-        </InputText>
-        <p class="min-h-[20px]">
-          <span v-show="errorGateCode" class="text-[#D42F24] text-xs">{{
-            errorGateCode
-          }}</span>
-        </p>
-      </div>
       <div class="mt-10 flex flex-col justify-end gap-5 sm:flex-row">
         <Button
           label="Cancel"
@@ -211,18 +127,12 @@ const {
 const name = ref("");
 const email = ref("");
 const surname = ref("");
-const address = ref("");
 const loading = ref(false);
 const phoneNumber = ref("");
-const hasGateCode = ref(false);
-const gateCode = ref("");
-const hasDog = ref(false);
-const customerLoggedUpdate = ref(false);
 
 const errorName = ref("");
 const errorSurname = ref("");
 const errorEmail = ref("");
-const errorGateCode = ref("");
 const errorPhoneNumber = ref("");
 
 const user = computed(() => userStore.getCurrentUser);
@@ -233,12 +143,7 @@ onMounted(() => {
     surname.value = customer.surname;
     email.value = customer.email;
     phoneNumber.value = customer.phone_number;
-    hasDog.value = customer.hasDog ? true : false;
-    hasGateCode.value = customer.GateSecurityCode ? true : false;
-    gateCode.value = customer.GateSecurityCode;
   }
-
-  customerLoggedUpdate.value = user.value.role_id === 3 ?? true;
 });
 
 const handleChangeName = () => {
@@ -267,25 +172,12 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber.value,
   });
 };
-const handleChangeGateCode = () => {
-  if (hasGateCode) {
-    errorGateCode.value = useRequired({
-      fieldname: "gate code",
-      field: gateCode.value,
-      error: errorGateCode.value,
-    });
-  } else {
-    gateCode.value = "";
-    errorGateCode.value = "";
-  }
-};
 
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
   handleChangeEmail();
   handleChangePhoneNumber();
-  handleChangeGateCode();
   return (
     !errorName.value &&
     !errorSurname.value &&
@@ -316,14 +208,11 @@ const updateCustomer = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.updateCustomer(customer?.id, customerLoggedUpdate.value, {
+      await store.updateCustomer(customer?.id, {
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-        hasDog: hasDog.value ? 1 : 0,
-        GateSecurityCode: gateCode.value,
-        address: [address.value],
       });
       await store.fetchCustomers();
       loading.value = false;

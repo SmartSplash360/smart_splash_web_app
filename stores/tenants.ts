@@ -84,11 +84,12 @@ export const useTenantStore = defineStore("tenant", {
         throw new Error("An error");
       }
     },
-    async updateTenant(tenantPayload: any) {
+    async updateTenant(tenantId : number, tenantPayload: any) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 
-      let url = `${requestUrl}/tenant/${this.currentTenantId}`;
+      let url = `${requestUrl}/tenant/${tenantId}`;
       try {
         const res = await axios.post(url, tenantPayload);
         if (!res.data.success) {

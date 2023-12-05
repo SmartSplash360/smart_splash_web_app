@@ -122,8 +122,32 @@ export const useCustomerStore = defineStore("customer", {
       }
 
       let url = `${apiUrl}/customers/${id}`;
+
       try {
         const res = await axios.post(url, customerPayload);
+
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+      } catch (error) {
+
+        throw error;
+      }
+    },
+    async updateMyProfile(id: number | string, customerPayload: any) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/customers/${id}`;
+
+      try {
+        const res = await axios.post(url, customerPayload);
+        useUserStore().setCurrentUser(res.data.data);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -145,6 +169,7 @@ export const useCustomerStore = defineStore("customer", {
       let url = `${apiUrl}/customers/${id}`;
       try {
         const res = await axios.post(url, photo);
+        useUserStore().setCurrentUser(res.data.data);
         if (!res.data.success) {
           throw new Error(res.data.message);
         }

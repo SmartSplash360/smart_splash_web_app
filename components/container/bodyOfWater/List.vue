@@ -23,14 +23,14 @@
             v-if="user?.role_id === 3"
             icon="pi pi-user"
             label="Update My profile"
-            @click="updateProfileUser"
+            @click="updateMyProfileMobile"
             class="flex lg:hidden rounded-xl bg-[#0291BF] text-white"
           />
           <Button
             v-if="user?.role_id === 3"
             icon="pi pi-user"
             label="Update My profile"
-            @click="toggleAddCustomerModal"
+            @click="updateMyProfileDesktop"
             class="hidden lg:flex rounded-xl bg-[#0291BF] text-white"
           />
           <ModalsBodiesOfWaterBodyOfWaterList
@@ -40,7 +40,7 @@
           />
           <ModalsCustomerCreateCustomer
             v-if="addCustomerModal"
-            :toggleAddCustomerModal="closeModal"
+            :updateMyProfileDesktop="closeModal"
             :customer="userProfile"
             :profile="true"
           ></ModalsCustomerCreateCustomer>
@@ -84,9 +84,13 @@ const handleViewBodyOfWaterList = () => {
   });
 };
 const toggleAddBodyOfListModal = () => (BodyOfWaterList.value = true);
-const toggleAddCustomerModal = () => (addCustomerModal.value = true);
-
-const updateProfileUser = () => {
+const updateMyProfileDesktop = () => {
+  router.push({
+    path: "/settings",
+    query: { customerId: props.customerId },
+  });
+};
+const updateMyProfileMobile = () => {
   router.push({
     path: "/customers/edit-customer",
     query: { customerId: props.customerId },
