@@ -148,13 +148,11 @@ const totalPriceChems = ref();
 const readOnly = ref(false);
 const addJobModal = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
   loading.value = true;
-  async () => {
-    await quoteStore.fetchCustomerQuotes(props.customerId);
-    customer.value = await store.fetchCustomer(props.customerId);
-    jobs.value = await jobStore.fetchCustomerJobs(props.customerId);
-  };
+  await quoteStore.fetchCustomerQuotes(props.customerId);
+  customer.value = await store.fetchCustomer(props.customerId);
+  jobs.value = await jobStore.fetchCustomerJobs(props.customerId);
   quotes.value = quoteStore.getQuotesByCustomerId(props.customerId);
   loading.value = false;
 });
