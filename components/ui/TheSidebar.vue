@@ -5,7 +5,7 @@
   >
     <div class="flex-center flex-col gap-5">
       <nuxt-link class="max-h-[150px] max-w-[298px]" to="/alerts">
-        <img :src="siteLogo" alt="Smart-Splash-Logo" class="h-full w-full" />
+        <img :src="siteLogo" alt="" class="h-full w-full" />
       </nuxt-link>
       <button
         @click="handleToggleSide"

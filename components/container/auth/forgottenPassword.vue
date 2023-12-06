@@ -36,6 +36,7 @@
         label="Send link to change password"
         class="w-full bg-[#0291BF] text-white"
       />
+      <nuxt-link to="/reset-password/0939039034909034"></nuxt-link>
       <div v-if="loading" class="card self-center flex-center w-10">
         <ProgressSpinner strokeWidth="8" />
       </div>
@@ -54,16 +55,14 @@
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
 
-const { useRequired, useValidateEmail } = useValidation();
+const toast = useToast();
 const router = useRouter();
-
 const store = useUserStore();
+const { useRequired, useValidateEmail } = useValidation();
 
 const email = ref("");
 const errorEmail = ref("");
 const loading = ref(false);
-
-const toast = useToast();
 
 const handleChangeEmail = () => {
   errorEmail.value = useValidateEmail({
@@ -71,7 +70,6 @@ const handleChangeEmail = () => {
     error: errorEmail.value,
   });
 };
-
 const validateForm = () => {
   handleChangeEmail();
   return !errorEmail.value;
