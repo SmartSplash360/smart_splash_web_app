@@ -56,9 +56,6 @@ import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { useCustomerStore } from "~/stores/customer";
 
-defineProps({
-  loading: Boolean,
-});
 const toast = useToast();
 const router = useRouter();
 const confirm = useConfirm();
@@ -66,6 +63,7 @@ const customerStore = useCustomerStore();
 
 const addCustomerModal = ref(false);
 const customer = ref();
+const loading = ref(false);
 const customerMobiles = ref();
 const routes = ref({
   activeRoute: 0,
@@ -79,8 +77,10 @@ const toggleActiveRoute = ref(false);
 customerMobiles.value = customerStore.getCustomers;
 
 onMounted(() => {
+  loading.value = true;
   routes.value.activeRoute = customerStore.getActiveCustomers;
   routes.value.inactive = customerStore.getInactiveCustomers;
+  loading.value = false;
 });
 
 const handleSearch = (value) => {

@@ -124,7 +124,6 @@ const handleNext = async () => {
 const handleSearch = async (query) => {
   if (query) {
     technicians.value = await store.searchTechnician(query);
-  } else {
   }
 };
 const closeModal = ({ success, error }) => {

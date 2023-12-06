@@ -125,13 +125,15 @@ import { useLeadStore } from "~/stores/leads";
 import { useAlertStore } from "~/stores/alert";
 import { useTechnicianStore } from "~/stores/technician";
 import { useMenuStore } from "~/stores/menu";
+import { useTemplateStore } from "@/stores/templates";
 
 const store = useUserStore();
-const customerStore = useCustomerStore();
-const alertStore = useAlertStore();
 const leadStore = useLeadStore();
-const technicianStore = useTechnicianStore();
 const menuStore = useMenuStore();
+const alertStore = useAlertStore();
+const templateStore = useTemplateStore();
+const customerStore = useCustomerStore();
+const technicianStore = useTechnicianStore();
 
 const config = useRuntimeConfig();
 const appDomain = config.public.appDomain;
@@ -194,6 +196,7 @@ async function login() {
       await alertStore.fetchAlerts();
       await leadStore.fetchLeads();
       await technicianStore.fetchTechnicians();
+      await templateStore.fetchTemplates();
 
       if (user) {
         await menuStore.fetchMenuByRole(user?.role_id);

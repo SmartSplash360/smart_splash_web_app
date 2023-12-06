@@ -203,7 +203,6 @@ export const useTechnicianStore = defineStore("technician", {
       let url = `${apiUrl}/technicians/get_by_name/${query}`;
       try {
         const res = await axios.get(url);
-        console.log(res.data.data.data)
         return res.data.data.data
       } catch (error) {
 

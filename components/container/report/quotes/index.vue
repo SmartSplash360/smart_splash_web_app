@@ -159,10 +159,12 @@ const user = computed(() => userStore.getCurrentUser);
 const quoteList = computed(() => quoteStore.getQuotes);
 const quoteCount = ref();
 
-onMounted(async () => {
+onMounted(() => {
   loading.value = true;
-  await quoteStore.fetchQuotes();
-  await jobStore.fetchJobs();
+  async () => {
+    await quoteStore.fetchQuotes();
+    await jobStore.fetchJobs();
+  };
   jobs.value = jobStore.getJobs;
 
   if (user.value.role_id == 1) {
