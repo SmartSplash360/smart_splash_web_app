@@ -78,6 +78,7 @@ export const useAlertStore = defineStore("alert", {
       let url = `${apiUrl}/alerts`;
       try {
         const res = await axios.post(url, alertPayload);
+        this.fetchAlerts();
 
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -100,7 +101,7 @@ export const useAlertStore = defineStore("alert", {
       let url = `${apiUrl}/alerts/${alertId}`;
       try {
         const res = await axios.post(url, alertPayload);
-
+        this.fetchAlerts();
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -121,7 +122,7 @@ export const useAlertStore = defineStore("alert", {
       let url = `${apiUrl}/alerts/${alertId}`;
       try {
         const res = await axios.delete(url);
-
+        this.fetchAlerts();
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
