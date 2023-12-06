@@ -36,7 +36,6 @@
             :disabled="true"
             type="text"
             class="w-full rounded-md border-gray-300"
-            v-model="token"
           >
           </InputText>
         </span>
@@ -118,14 +117,13 @@
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
 
-const props = defineProps({
-  token: String,
-});
-
-const { useRequired, useValidateEmail, useValidatePassword } = useValidation();
+const toast = useToast();
 const router = useRouter();
-
 const store = useUserStore();
+const { useRequired, useValidateEmail, useValidatePassword } = useValidation();
+
+const route = useRoute();
+const token = route.params.token;
 
 const loading = ref(false);
 
@@ -135,8 +133,6 @@ const confirmPassword = ref("");
 
 const errorEmail = ref("");
 const errorPassword = ref("");
-
-const toast = useToast();
 
 const handleChangeEmail = () => {
   errorEmail.value = useValidateEmail({
@@ -172,7 +168,7 @@ async function resetPassword() {
         email.value,
         password.value,
         confirmPassword.value,
-        props.token
+        token
       );
 
       toast.add({
@@ -182,7 +178,7 @@ async function resetPassword() {
         life: 7000,
       });
       loading.value = false;
-      await router.push("/alerts");
+      await router.push("/signin");
     } catch (e) {
       toast.add({
         severity: "error",
