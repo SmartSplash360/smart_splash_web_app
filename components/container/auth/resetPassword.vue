@@ -118,16 +118,18 @@
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
 
+const props = defineProps({
+  token: String,
+});
+
 const { useRequired, useValidateEmail, useValidatePassword } = useValidation();
 const router = useRouter();
 
 const store = useUserStore();
-const route = useRoute();
 
 const loading = ref(false);
 
 const email = ref("");
-const token = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
@@ -135,10 +137,6 @@ const errorEmail = ref("");
 const errorPassword = ref("");
 
 const toast = useToast();
-
-onMounted(() => {
-  token.value = route.params.token;
-});
 
 const handleChangeEmail = () => {
   errorEmail.value = useValidateEmail({
@@ -174,7 +172,7 @@ async function resetPassword() {
         email.value,
         password.value,
         confirmPassword.value,
-        token.value
+        props.token
       );
 
       toast.add({
