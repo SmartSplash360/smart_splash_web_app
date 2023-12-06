@@ -9,8 +9,6 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-
-
 let apiUrl = requestUrl;
 
 export const useTechnicianStore = defineStore("technician", {
@@ -93,6 +91,7 @@ export const useTechnicianStore = defineStore("technician", {
       let url = `${apiUrl}/technicians`;
       try {
         const res = await axios.post(url, technicianPayload);
+        this.fetchTechnicians();
 
         if (!res.data.success) {
           throw new Error(res.data.message);
@@ -114,6 +113,7 @@ export const useTechnicianStore = defineStore("technician", {
       let url = `${apiUrl}/technicians/${id}`;
       try {
         const res = await axios.post(url, technicianPayload);
+        this.fetchTechnicians();
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
@@ -191,5 +191,23 @@ export const useTechnicianStore = defineStore("technician", {
         throw error;
       }
     },
+    async searchTechnician(query: string) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/technicians/get_by_name/${query}`;
+      try {
+        const res = await axios.get(url);
+        return res.data.data.data
+      } catch (error) {
+
+        return error;
+      }
+    }
   },
 });

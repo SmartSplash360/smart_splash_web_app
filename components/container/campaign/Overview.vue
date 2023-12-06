@@ -53,9 +53,11 @@ const { templateId } = route.query;
 
 const user = computed(() => userStore.getCurrentUser);
 
-onMounted(async () => {
+onMounted(() => {
   if (props.campaignId) {
-    template.value = await templateStore.fetchTemplate(props.campaignId);
+    async () => {
+      template.value = await templateStore.fetchTemplate(props.campaignId);
+    };
   }
   loading.value = false;
 });

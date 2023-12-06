@@ -264,6 +264,9 @@ const tenantStore = useTenantStore();
 
 const toast = useToast();
 
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
 const companyName = ref();
 const companyWebsite = ref();
 const companyNumber = ref();

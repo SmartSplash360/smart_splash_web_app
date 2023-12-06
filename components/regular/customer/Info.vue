@@ -33,11 +33,6 @@
           </h3>
           <div class="flex items-center gap-2">
             <span class="span__element">{{ customerInfo.name }}</span>
-            <img
-              :src="ChatIcon"
-              alt="chat-icon"
-              class="h-4 w-4 cursor-pointer lg:h-[20px] lg:w-[20px]"
-            />
           </div>
         </div>
       </div>

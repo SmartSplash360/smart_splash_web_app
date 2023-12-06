@@ -232,12 +232,6 @@ const handleChangePhoneNumber = () => {
   });
 };
 const handleChangePassword = () => {
-  // errorPassword.value = useRequired({
-  //   fieldname: "password",
-  //   field: password.value,
-  //   error: errorPassword.value,
-  // });
-
   errorPassword.value = useValidatePassword({
     password: password.value,
     error: errorPassword.value,

@@ -10,7 +10,7 @@
         @select-type="(value) => handleSelectType(value)"
       >
       </RegularCampaignBoard>
-      <div class="flex flex-col gap-10" v-if="count > 0">
+      <div class="flex flex-col gap-10" v-if="templates?.length > 0">
         <div class="card-container grid items-center justify-between">
           <RegularCampaignTemplateCard
             v-for="template in templates"
@@ -66,7 +66,6 @@ import { useTemplateStore } from "@/stores/templates";
 
 const store = useTemplateStore();
 const templates = ref();
-const count = computed(() => store.getTemplateCount);
 
 const type = ref(2);
 const pageNumber = ref(1);
@@ -74,11 +73,11 @@ const totalPage = ref();
 const loading = ref(false);
 const currentPage = ref(1);
 
+const count = computed(() => store.getTemplateCount);
 const templateList = computed(() => store.getTemplates);
 
-onMounted(async () => {
+onMounted(() => {
   loading.value = true;
-  await store.fetchTemplates();
   templates.value = templateList.value;
   totalPage.value = Math.ceil(count.value / 15);
   loading.value = false;
@@ -116,9 +115,10 @@ const handleSelectType = (value) => {
     templates.value = store.getTemplates;
   }
 };
-const handleSearch = (value) => {
-  store.searchQuery = value;
-  templates.value = store.filteredTemplates(value);
+const handleSearch = async (value) => {
+  if (value) {
+    templates.value = await store.searchTemplate(value);
+  }
 };
 </script>
 

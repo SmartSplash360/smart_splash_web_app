@@ -92,6 +92,7 @@ export const useTenantStore = defineStore("tenant", {
       let url = `${requestUrl}/tenant/${tenantId}`;
       try {
         const res = await axios.post(url, tenantPayload);
+        this.fetchCurrentTenant()
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
