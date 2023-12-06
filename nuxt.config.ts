@@ -67,10 +67,10 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ["primevue", "@vuepic/vue-datepicker"],
-    extend(config, { isClient }) {
+    extend(config : any, { isClient } : any) {
       if (isClient) {
         // Find the rule for JavaScript files
-        const jsRule = config.module.rules.find((rule) =>
+        const jsRule = config.module.rules.find((rule : any) =>
           rule.test.toString().includes('js|ts')
         );
 
