@@ -441,7 +441,8 @@ const technicians = computed(() => technicianStore.getTechnicians);
 onMounted(async () => {
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
-  services.value = await serviceStore.getServices;
+  await serviceStore.fetchServices();
+  services.value = serviceStore.getServices;
 
   if (props.job) {
     let customer = customerStore.getCustomerById(props.job.customer_id);

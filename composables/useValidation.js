@@ -21,8 +21,8 @@ export const useValidation = () => {
         return error
     }
     const useValidateTextArea = ({  field, error }) => {
-        error = field ? field.length > 300
-        ? "Please enter between 10 and 300 characters"
+        error = field ? field.length > 200
+        ? "Please enter between 10 and 200 characters"
             : "" : "Please add a note";
         return error
     }
