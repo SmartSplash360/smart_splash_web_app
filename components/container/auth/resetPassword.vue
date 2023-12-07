@@ -36,7 +36,6 @@
             :disabled="true"
             type="text"
             class="w-full rounded-md border-gray-300"
-            v-model="token"
           >
           </InputText>
         </span>
