@@ -14,6 +14,9 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const useCampaignStore = defineStore("camapign", {
+  persist: {
+    storage: persistedState.localStorage,
+  },
   state: () => ({
     campaigns: [],
     filter: "",

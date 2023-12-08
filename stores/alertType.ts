@@ -14,6 +14,9 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const useAlertTypeStore = defineStore("alertType", {
+  persist: {
+    storage: persistedState.localStorage,
+  },
   state: () => ({
     alertTypes: [],
   }),

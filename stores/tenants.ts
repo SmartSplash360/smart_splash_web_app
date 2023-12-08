@@ -15,6 +15,9 @@ function appendSubdomain(url: string, tenantId: number) {
 }
 
 export const useTenantStore = defineStore("tenant", {
+  persist: {
+    storage: persistedState.localStorage,
+  },
   state: () => ({
     loggedIn: false,
     currentTenant: null,

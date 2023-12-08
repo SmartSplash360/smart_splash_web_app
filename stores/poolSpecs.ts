@@ -14,6 +14,9 @@ const requestUrl = config.public.apiUrl;
 let apiUrl = requestUrl;
 
 export const usePoolSpecsStore = defineStore("poolSpecs", {
+  persist: {
+    storage: persistedState.localStorage,
+  },
   state: () => ({}),
   getters: {},
   actions: {
