@@ -235,7 +235,10 @@
             errorServicesSelected
           }}</span>
         </p>
-        <div class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
+        <div v-if="loadingServices" class="card self-center flex-center w-10">
+          <ProgressSpinner strokeWidth="8" />
+        </div>
+        <div v-else class="overflow-y-auto max-h-[40vh] flex flex-col gap-3">
           <div class="create-job-accordion">
             <Accordion v-model:activeIndex="active">
               <AccordionTab v-for="service in services" :key="service.id">
@@ -382,7 +385,7 @@ const startingTimeComputed = ref();
 
 const endTime = ref();
 const endingTimeComputed = ref();
-
+const loadingServices = ref(false);
 const status = ref("");
 const description = ref("");
 const technical_notes = ref("");
@@ -439,6 +442,7 @@ const customers = computed(() => customerStore.getCustomers);
 const technicians = computed(() => technicianStore.getTechnicians);
 
 onMounted(async () => {
+  loadingServices.value = true;
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
   await serviceStore.fetchServices();
@@ -471,6 +475,7 @@ onMounted(async () => {
     }
     poolId.value = parseInt(poolIdAlert);
   }
+  loadingServices.value = false;
 });
 
 const getSubservices = async (serviceId) => {

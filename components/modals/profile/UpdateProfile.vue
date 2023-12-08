@@ -106,29 +106,16 @@ const updateProfile = async () => {
       const formData = new FormData();
       formData.append("photo", selectedFile.value);
 
-      if (type === "customer") {
-        await store.updateCustomerProfile(customer?.id, {
-          photo: selectedFile.value,
-        });
-        await store.fetchCustomers();
-        toast.add({
-          severity: "success",
-          summary: "Profile Update Success",
-          detail: "You have updated your profile successfully",
-          life: 5000,
-        });
-      } else if (type === "technician") {
-        await store.updateCustomerProfile(customer?.id, {
-          photo: selectedFile.value,
-        });
-        await store.fetchCustomers();
-        toast.add({
-          severity: "success",
-          summary: "Profile Update Success",
-          detail: "You have updated your profile successfully",
-          life: 5000,
-        });
-      }
+      await store.updateCustomerProfile(customer?.id, {
+        photo: selectedFile.value,
+      });
+      toast.add({
+        severity: "success",
+        summary: "Profile Update Success",
+        detail: "You have updated your profile successfully",
+        life: 5000,
+      });
+
       location.reload();
       loading.value = false;
     } catch (e) {
