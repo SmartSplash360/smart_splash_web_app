@@ -133,7 +133,7 @@ const {
 const name = ref("");
 const email = ref("");
 const surname = ref("");
-const company = ref("1");
+const company = ref(1);
 const status = ref(true);
 const loading = ref(false);
 const phoneNumber = ref("");
