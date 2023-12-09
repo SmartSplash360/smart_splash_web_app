@@ -160,7 +160,7 @@
         ></InputText>
       </div>
     </div>
-    <div class="flex flex-col gap-4">
+    <div v-if="companyAddress" class="flex flex-col gap-4">
       <h2 class="lg:min-w-max heading__h3">
         Company Address :
         <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
