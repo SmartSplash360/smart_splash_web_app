@@ -24,7 +24,11 @@
           >List of available products</span
         >
         <div class="overflow-auto max-h-[40vh] flex flex-col gap-3">
+          <div v-if="loadingServices" class="card self-center flex-center w-10">
+            <ProgressSpinner strokeWidth="8" />
+          </div>
           <div
+            v-else
             class="bg-[#edf7fb] dark:bg-[#1B2028] py-5 rounded-md flex flex-col lg:flex-row gap-10 sm:gap-20 lg:items-center px-3 lg:px-5"
             v-for="product in products"
             :key="product.id"
@@ -111,6 +115,7 @@ const props = defineProps({
 
 const customerDetails = ref();
 const products = ref([]);
+const loadingProducts = ref(false);
 const selectedProducts = ref([]);
 const showQuotationModal = ref(false);
 const totalPriceProducts = ref(0);
@@ -125,10 +130,12 @@ const availableChems = ref([
 ]);
 
 onMounted(async () => {
+  loadingProducts.value = true;
   products.value = await productStore.getProducts;
   customerDetails.value = await customerStore.getCustomerById(
     props.newJobPayload.customer_id
   );
+  loadingProducts.value = false;
 });
 
 const toggleJobQuoteModal = () =>

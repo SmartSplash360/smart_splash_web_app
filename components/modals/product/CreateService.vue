@@ -96,7 +96,10 @@
       </div>
       <div class="flex flex-col gap-2 max-h-[150px] overflow-y-auto">
         <h4 class="heading__h4 text-gray-600">List of subservices</h4>
-        <ul class="flex flex-wrap gap-2">
+        <div v-if="loadingSubservices" class="flex w-6">
+          <ProgressSpinner strokeWidth="6" />
+        </div>
+        <ul v-else class="flex flex-wrap gap-2">
           <li
             class="max-w-fit flex gap-3 items-center bg-[#D9ECF5] px-4 py-1 rounded-xl shadow-sm"
             v-for="suServ in subservices"
@@ -165,12 +168,14 @@ const serviceStore = useServiceStore();
 const { useRequired, useValidateTextArea } = useValidation();
 
 const isAvailable = ref(true);
+const loadingSubservices = ref(false);
 const notes = ref("");
 const name = ref("");
 const description = ref("");
 const price = ref(1.0);
 const subservice = ref("");
 const subservices = ref([]);
+const currentSubserviceList = ref([]);
 const loading = ref(false);
 const showSubserviceInput = ref(false);
 
@@ -180,13 +185,24 @@ const errorDescription = ref("");
 const errorPrice = ref("");
 const errorSubservice = ref("");
 
-onMounted(() => {
+onMounted(async () => {
   if (service) {
+    loadingSubservices.value = true;
     isAvailable.value = service.is_available === 1;
     notes.value = service.notes;
     name.value = service.name;
     description.value = service.description;
     price.value = service.price;
+
+    const listOfSubservices = await serviceStore.fechSubservicesByServiceId(
+      service.id
+    );
+    listOfSubservices.forEach((subService) => {
+      subservices.value.push(subService.name);
+      currentSubserviceList.value.push(subService.name);
+    });
+
+    loadingSubservices.value = false;
   }
 });
 
@@ -282,12 +298,15 @@ const updateService = async () => {
         notes: notes.value,
         is_available: isAvailable.value,
       };
-
-      subservices.value?.forEach(async (subservice) => {
-        await serviceStore.createSubService(subservice);
-      });
-
       await serviceStore.updateService(service?.id, data);
+
+      const myDifferences = subservices.value.filter(
+        (item) => !currentSubserviceList.value.includes(item)
+      );
+
+      myDifferences?.forEach(async (subservice) => {
+        await serviceStore.createSubService(subservice, service?.id);
+      });
       await serviceStore.fetchServices();
       loading.value = false;
       toggleAddServiceModal({
