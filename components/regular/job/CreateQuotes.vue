@@ -24,7 +24,7 @@
           >List of available products</span
         >
         <div class="overflow-auto max-h-[40vh] flex flex-col gap-3">
-          <div v-if="loadingServices" class="card self-center flex-center w-10">
+          <div v-if="loadingProducts" class="card self-center flex-center w-10">
             <ProgressSpinner strokeWidth="8" />
           </div>
           <div
@@ -131,8 +131,9 @@ const availableChems = ref([
 
 onMounted(async () => {
   loadingProducts.value = true;
-  products.value = await productStore.getProducts;
-  customerDetails.value = await customerStore.getCustomerById(
+  await productStore.fetchProducts();
+  products.value = productStore.getProducts;
+  customerDetails.value = customerStore.getCustomerById(
     props.newJobPayload.customer_id
   );
   loadingProducts.value = false;

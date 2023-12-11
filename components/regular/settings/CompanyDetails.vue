@@ -43,7 +43,7 @@
           <img
             :src="files?.objectURL"
             :alt="companyName + ' Logo'"
-            class="h-40 w-40 rounded-full object-contain"
+            class="h-40 w-40 rounded-full object-fill"
           />
         </div>
         <div class="card max-w-[300px]">
@@ -160,7 +160,7 @@
         ></InputText>
       </div>
     </div>
-    <div class="flex flex-col gap-4">
+    <div v-if="companyAddress" class="flex flex-col gap-4">
       <h2 class="lg:min-w-max heading__h3">
         Company Address :
         <span class="ml-10 font-medium italic"> {{ companyAddress }}</span>
@@ -285,6 +285,7 @@ onMounted(async () => {
   await tenantStore.fetchCurrentTenant();
 
   if (tenant.value) {
+    console.log(tenant.value);
     companyName.value = tenant.value?.name;
     companyWebsite.value = tenant.value?.website;
     companyNumber.value = tenant.value?.phone_number;
@@ -326,7 +327,9 @@ const updatecompanyDetails = async () => {
       formData.append("name", companyName.value);
       formData.append(
         "address",
-        `${selectedCity.value} - ${selectedState.value?.name} - ${zipCode.value}`
+        `${selectedCity.value ?? selectedCity.value} - ${
+          selectedState.value?.name ?? selectedState.value?.name
+        } - ${zipCode.value ?? zipCode.value}`
       );
       formData.append("cover", files.value);
       formData.append("website", companyWebsite.value);
