@@ -27,20 +27,6 @@
           >
         </p>
       </div>
-      <div class="hidden w-full flex-col gap-4">
-        <span class="flex flex-col gap-4">
-          <label class="span__element text-[12px] leading-none" for="token"
-            >Token</label
-          >
-          <InputText
-            :disabled="true"
-            type="text"
-            class="w-full rounded-md border-gray-300"
-          >
-          </InputText>
-        </span>
-        <p class="h-[4px]"></p>
-      </div>
       <div class="flex flex-col gap-10">
         <div class="w-full flex flex-col gap-4">
           <span class="w-full flex flex-col gap-2">
@@ -122,8 +108,10 @@ const router = useRouter();
 const store = useUserStore();
 const { useRequired, useValidateEmail, useValidatePassword } = useValidation();
 
-const route = useRoute();
-const token = route.params.token;
+const props = defineProps({
+  companyId: Number,
+  token: String,
+});
 
 const loading = ref(false);
 
@@ -168,7 +156,8 @@ async function resetPassword() {
         email.value,
         password.value,
         confirmPassword.value,
-        token
+        props.token,
+        props.companyId
       );
 
       toast.add({
