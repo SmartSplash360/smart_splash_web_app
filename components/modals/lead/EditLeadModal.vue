@@ -184,6 +184,7 @@ onMounted(() => {
     email.value = props.lead.email;
     phoneNumber.value = props.lead.phone_number;
     stage.value = props.lead.status;
+    notes.value = props.lead.notes;
   }
 });
 

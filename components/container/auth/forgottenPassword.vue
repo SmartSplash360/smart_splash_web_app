@@ -6,6 +6,27 @@
     </div>
     <div class="flex w-full flex-col gap-4">
       <div class="flex flex-col gap-2">
+        <span class="w-full flex flex-col gap-3">
+          <label class="span__element text-[12px] leading-none" for="domain"
+            >Company</label
+          >
+          <InputText
+            id="domain"
+            v-model="domain"
+            class="w-full border-gray-300 rounded-md"
+            placeholder="Company's name"
+          >
+          </InputText>
+        </span>
+        <p class="min-h-[20px]">
+          <span
+            v-show="errorDomain"
+            class="text-[#D42F24] text-[10px] space-x-8"
+            >{{ errorDomain }}</span
+          >
+        </p>
+      </div>
+      <div class="flex flex-col gap-2">
         <span class="flex flex-col gap-4">
           <label class="span__element text-[12px] leading-none" for="email"
             >Email Address</label
@@ -61,7 +82,10 @@ const store = useUserStore();
 const { useRequired, useValidateEmail } = useValidation();
 
 const email = ref("");
+const domain = ref("");
+
 const errorEmail = ref("");
+const errorDomain = ref("");
 const loading = ref(false);
 
 const handleChangeEmail = () => {
@@ -78,7 +102,7 @@ async function sendLink() {
   if (validateForm()) {
     try {
       loading.value = true;
-      await store.forgotPassword(email.value);
+      await store.forgotPassword(domain.value, email.value);
 
       toast.add({
         severity: "success",

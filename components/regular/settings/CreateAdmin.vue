@@ -268,7 +268,6 @@ const createUser = async () => {
       loading.value = false;
       handleCancelCreateUser();
     } catch (e) {
-      console.log(e);
       toast.add({
         severity: "error",
         summary: "User Registration Fail",

@@ -149,7 +149,7 @@ export const useServiceStore = defineStore("service", {
         throw error
       }
     },
-    async createSubService(subServicePayload: any) {
+    async createSubService(subServicePayload: any, serviceId : number | null) {
       try {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
@@ -161,7 +161,7 @@ export const useServiceStore = defineStore("service", {
 
         let url = `${apiUrl}/subServices`;
         const res = await axios.post(url, {
-          service_id: this.createdServiceId,
+          service_id: this.createdServiceId ?? serviceId,
           name: subServicePayload,
         });
 

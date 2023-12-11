@@ -130,14 +130,15 @@ export const useUserStore = defineStore("user", {
       this.userDefinedTheme = false;
       await router.push("/");
     },
-    async forgotPassword(email:string) {
+    async forgotPassword(domain : string | null ,email:string) {
 
-      const tenantUrl = useTenantStore().tenantDomain;
-      if (tenantUrl) {
-        apiUrl = tenantUrl
+      if (domain && domain !== appDomain) {
+        await useTenantStore().fetchTenantByWebsite(domain);
+        apiUrl = useTenantStore().tenantDomain;
       }
 
       let url = `${apiUrl}/auth/forgot_password`;
+      
       try {
         const res = await axios.post(url, { email });
         if (!res.data.success) {
@@ -150,14 +151,19 @@ export const useUserStore = defineStore("user", {
       }
 
     },
-    async resetPassword(email : string, password : string, password_confirmation : string, token : string) {
+    async resetPassword(email: string, password: string, password_confirmation: string, token: string, companyId: number | null) {
+      console.log(email, companyId)
       
-      const tenantUrl = useTenantStore().tenantDomain;
-      if (tenantUrl) {
-        apiUrl = tenantUrl
+      function appendSubdomain(url: string, companyId: number) {
+        return url.replace("/api/", `/api/${companyId}/`)
+      }
+      
+      if (companyId) {
+        apiUrl = appendSubdomain(apiUrl, companyId);
       }
 
       let url = `${apiUrl}/auth/reset_password`;
+      
       try {
         const res = await axios.post(url, {
           email, password, password_confirmation,token 
