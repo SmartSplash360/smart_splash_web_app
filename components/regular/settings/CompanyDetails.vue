@@ -285,7 +285,6 @@ onMounted(async () => {
   await tenantStore.fetchCurrentTenant();
 
   if (tenant.value) {
-    console.log(tenant.value);
     companyName.value = tenant.value?.name;
     companyWebsite.value = tenant.value?.website;
     companyNumber.value = tenant.value?.phone_number;
