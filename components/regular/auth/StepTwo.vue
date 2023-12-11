@@ -124,9 +124,9 @@
           </span>
           <p class="h-[4px]">
             <span
-              v-show="errorPassword"
+              v-show="errorPasswordConfirm"
               class="text-[#D42F24] text-[10px] space-x-8"
-              >{{ errorPassword }}</span
+              >{{ errorPasswordConfirm }}</span
             >
           </p>
         </div>
@@ -195,6 +195,7 @@ const passwordError = ref("");
 const errorFirstame = ref("");
 const errorLastname = ref("");
 const errorPassword = ref("");
+const errorPasswordConfirm = ref("");
 const firstNameError = ref("");
 const errorPhoneNumber = ref("");
 
@@ -238,11 +239,11 @@ const handleChangePassword = () => {
   });
 };
 const handleChangePasswordMatching = () => {
-  errorPassword.value = confirmPassword.value
+  errorPasswordConfirm.value = confirmPassword.value
     ? password.value !== confirmPassword.value
       ? "Please provide matching password"
       : ""
-    : "The password fields are required";
+    : "The confirm password field is required";
 };
 const validateForm = () => {
   handleChangeDomain();
