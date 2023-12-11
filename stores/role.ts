@@ -68,6 +68,30 @@ export const useRoleStore = defineStore("role", {
         throw error;
       }
     },
+    async updateRole(id : number ,rolePayload : object) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/roles/${id}`;
+      try {
+        const res = await axios.post(url, rolePayload);
+        this.fetchRoles()
+
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        return res.data.data
+      } catch (error) {
+
+        throw error;
+      }
+    },
     async deleteRole(roleId: number) {
         const jwt = useUserStore().getJwt;
         axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;

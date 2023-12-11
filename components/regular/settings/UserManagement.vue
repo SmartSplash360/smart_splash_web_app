@@ -13,11 +13,11 @@
         :handleCancelCreateUser="handleCancelCreateUser"
       ></RegularSettingsCreateAdmin>
     </div>
-    <!-- <ModalsSettingUpdateUser
+    <ModalsSettingUpdateUser
       v-if="toggleUpdateUser"
       :user="managedUser"
       :handleCancelUpdateUser="handleCancelUpdateUser"
-    ></ModalsSettingUpdateUser> -->
+    ></ModalsSettingUpdateUser>
     <div
       class="card products-table"
       :class="[currentMode == 'dark' ? 'dark-mode' : '']"
@@ -49,7 +49,7 @@
         </template>
         <template #empty>
           <div class="flex-center my-5">
-            <h3 class="heading__h3 text-gray-600">No Technicians found.</h3>
+            <h3 class="heading__h3 text-gray-600">No users found.</h3>
           </div>
         </template>
         <Column field="id" header="ID" sortable>
@@ -59,6 +59,21 @@
             </div>
           </template></Column
         >
+        <Column field="photo" header="Photo" exportHeader="Customer Photo">
+          <template #body="slotProps">
+            <div class="flex items-center br-red-300 w-full h-full">
+              <img
+                :src="
+                  slotProps.data.photo
+                    ? renderCustomerImage(slotProps.data?.photo)
+                    : ProfileImage
+                "
+                alt=""
+                class="items-center rounded-full lg:h-[40px] lg:w-[40px]"
+              />
+            </div>
+          </template>
+        </Column>
         <Column field="name" header="Name" sortable>
           <template #body="slotProps">
             <div class="flex items-center gap-5 w-fit">
@@ -76,30 +91,12 @@
         <Column field="role" header="Role">
           <template #body="slotProps">
             <div class="flex items-center gap-5">
-              <span class="span__element">{{
-                slotProps.data.role_id === 1
-                  ? "Super Admin"
-                  : slotProps.data.role_id === 2
-                  ? "Client"
-                  : slotProps.data.role_id == 3
-                  ? "Customer"
-                  : slotProps.data.role_id === 4
-                  ? "Technician"
-                  : null
-              }}</span>
+              <span class="span__element"
+                >{{ renderRoleName(slotProps.data.role_id) }}
+              </span>
             </div>
           </template></Column
         >
-        <Column field="status" header="Status" class="w-[5%] lg:w-[10%]">
-          <template #body="slotProps">
-            <span v-if="slotProps.data?.is_available === 1">
-              <Tag value="Available" class="w-full py-1" severity="success" />
-            </span>
-            <span v-else>
-              <Tag value="Unavailable" class="w-full" severity="danger"
-            /></span>
-          </template>
-        </Column>
         <Column
           field="created_at"
           header="Created Date"
@@ -117,13 +114,13 @@
         <Column v-if="user?.role_id === 1">
           <template #body="slotProps">
             <div class="flex-center gap-2">
-              <!-- <Button
+              <Button
                 icon="pi pi-pencil"
                 text
                 raised
                 rounded
                 @click="editItem(slotProps.data)"
-              /> -->
+              />
               <Button
                 icon="pi pi-trash"
                 text
@@ -143,18 +140,22 @@
 <script setup>
 import Tag from "primevue/tag";
 import { format } from "date-fns";
-import { FilterMatchMode } from "primevue/api";
 import { useToast } from "primevue/usetoast";
 import { useUserStore } from "~/stores/users";
+import { FilterMatchMode } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
-import { useTechnicianStore } from "~/stores/technician";
+import { useRoleStore } from "~/stores/role";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
 
 const toast = useToast();
-const confirm = useConfirm();
 const router = useRouter();
+const confirm = useConfirm();
 
 const userStore = useUserStore();
-const technicianStore = useTechnicianStore();
+const roleStore = useRoleStore();
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
 
 const currentMode = ref(localStorage.getItem("nuxt-color-mode"));
 const filters = ref({
@@ -166,16 +167,31 @@ const toggleUpdateUser = ref(false);
 const loading = ref(true);
 const managedUser = ref();
 const user = computed(() => userStore.getCurrentUser);
-const technicians = computed(() => technicianStore.getTechnicians);
+const users = computed(() => userStore.getRegisteredUsers);
+const rolesList = computed(() => roleStore.getRoles);
 
 const data = ref([]);
 
 onMounted(async () => {
   loading.value = false;
-  await technicianStore.fetchTechnicians();
-  data.value = [...technicians.value];
+  await userStore.fetchAllUsers();
+  data.value = users.value?.filter(
+    (user) => user.role_id !== 3 && user.role_id !== 2 && user.role_id !== 5
+  );
 });
 
+const renderCustomerImage = (photo) => {
+  if (photo?.includes("public/images/")) {
+    let img = photo.replace("public/images/", "/images/");
+    return `${imageUrl}/${img}`;
+  } else {
+    return photo;
+  }
+};
+const renderRoleName = (id) => {
+  const role = rolesList.value.filter((role) => role.id === id)[0];
+  return role.slug;
+};
 const handleSearch = (value) => {};
 
 const handleCreateUser = () =>
@@ -187,7 +203,6 @@ const handleUpdateUser = () =>
   (toggleUpdateUser.value = !toggleUpdateUser.value);
 
 const handleCancelUpdateUser = () => (toggleUpdateUser.value = false);
-
 const editItem = (item) => {
   managedUser.value = item;
   handleUpdateUser();
@@ -204,16 +219,16 @@ const deleteItem = async ({ id, role_id }) => {
           const res = await technicianStore.deleteTechnician(id);
           toast.add({
             severity: "info",
-            summary: "Delete Technician",
-            detail: res?.message,
+            summary: "Delete Uer",
+            detail: "User deleted successfully",
             life: 5000,
           });
         }
       } catch (e) {
         toast.add({
           severity: "error",
-          summary: "Delete Technician",
-          detail: `An error has occurred`,
+          summary: "Delete User",
+          detail: `Fail to delete user.An error has occurred`,
           life: 5000,
         });
       }
