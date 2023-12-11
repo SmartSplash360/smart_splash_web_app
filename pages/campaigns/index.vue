@@ -11,7 +11,9 @@ definePageMeta({
 
 const store = useTemplateStore();
 
-onMounted(async () => {
-  await store.fetchTemplates();
+onMounted(() => {
+  async () => {
+    await store.fetchTemplates();
+  };
 });
 </script>

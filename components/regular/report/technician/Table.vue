@@ -46,14 +46,18 @@
       <Column field="name" header="technician" sortable>
         <template #body="slotProps">
           <nuxt-link :to="`/reports/reviews/${slotProps.data?.id}`">
-            <Avatar
-              :image="slotProps.data.photo || 'https://plchldr.co/i/500x2500'"
-              :alt="slotProps.data.name"
-              class="mr-2 translate-y-4"
-              size="large"
-              shape="circle"
-            />
-            {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
+            <div class="flex items-center br-red-300 w-full h-full gap-5">
+              <img
+                :src="
+                  slotProps.data.photo
+                    ? renderCustomerImage(slotProps.data?.photo)
+                    : ProfileImage
+                "
+                alt=""
+                class="items-center rounded-full lg:h-[40px] lg:w-[40px]"
+              />
+              {{ slotProps.data.name }} {{ slotProps.data.surname ?? "" }}
+            </div>
           </nuxt-link>
         </template>
       </Column>
@@ -127,10 +131,14 @@
 </template>
 
 <script setup>
-import { FilterMatchMode } from "primevue/api";
-import Avatar from "primevue/avatar";
-import SortIcon from "~/assets/icons/arrow-sort.svg";
 import Tag from "primevue/tag";
+import Avatar from "primevue/avatar";
+import { FilterMatchMode } from "primevue/api";
+import SortIcon from "~/assets/icons/arrow-sort.svg";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
+
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
 
 const props = defineProps({
   technicians: Array,
@@ -148,5 +156,14 @@ const filters = ref({
 const dt = ref();
 const exportCSV = (event) => {
   dt.value.exportCSV();
+};
+
+const renderCustomerImage = (photo) => {
+  if (photo?.includes("public/images/")) {
+    let img = photo.replace("public/images/", "/images/");
+    return `${imageUrl}/${img}`;
+  } else {
+    return photo;
+  }
 };
 </script>

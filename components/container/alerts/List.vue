@@ -75,10 +75,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useAlertStore } from "~/stores/alert";
 import { useUserStore } from "~/stores/users";
 
-defineProps({
-  loading: Boolean,
-});
-
 const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
@@ -91,6 +87,7 @@ const alerts = ref([]);
 const alertsMobile = ref([]);
 const alertList = ref([]);
 const alert = ref();
+const loading = ref(false);
 
 const countAllAlert = ref(0);
 const countHighAlert = ref(0);
@@ -119,7 +116,8 @@ const lowAlerts = computed(() => {
   return list;
 });
 
-onMounted(async () => {
+onMounted(() => {
+  loading.value = true;
   const list = alertStore.getAlerts;
   if (user.value.role_id == 1) {
     alerts.value = list;
@@ -142,6 +140,8 @@ onMounted(async () => {
     alertList.value = items;
     alertsMobile.value = items;
   }
+
+  loading.value = false;
 });
 
 const handleSearch = (value) => {

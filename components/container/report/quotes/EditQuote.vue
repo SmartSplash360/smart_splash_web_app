@@ -164,9 +164,7 @@ const props = defineProps({
 const serviceStore = useServiceStore();
 const productStore = useProductStore();
 
-const products = ref([]);
 const selectedProducts = ref([]);
-const services = ref([]);
 const selectedServices = ref([]);
 const active = ref(0);
 const selectedChems = ref([]);
@@ -178,8 +176,6 @@ const availableChems = ref([
   { name: "Alkalinity", price: 11 },
 ]);
 
-onMounted(async () => {
-  products.value = await productStore.getProducts;
-  services.value = await serviceStore.getServices;
-});
+const products = computed(() => productStore.getProducts);
+const services = computed(() => serviceStore.getServices);
 </script>

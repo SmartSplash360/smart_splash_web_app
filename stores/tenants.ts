@@ -15,6 +15,9 @@ function appendSubdomain(url: string, tenantId: number) {
 }
 
 export const useTenantStore = defineStore("tenant", {
+  persist: {
+    storage: persistedState.localStorage,
+  },
   state: () => ({
     loggedIn: false,
     currentTenant: null,
@@ -92,6 +95,7 @@ export const useTenantStore = defineStore("tenant", {
       let url = `${requestUrl}/tenant/${tenantId}`;
       try {
         const res = await axios.post(url, tenantPayload);
+        this.fetchCurrentTenant()
         if (!res.data.success) {
           throw new Error(res.data.message);
         }

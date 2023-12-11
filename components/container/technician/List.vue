@@ -121,9 +121,10 @@ const handleNext = async () => {
   }
 };
 
-const handleSearch = (query) => {
-  store.searchQuery = query;
-  technicians.value = store.filteredTechnicians(query);
+const handleSearch = async (query) => {
+  if (query) {
+    technicians.value = await store.searchTechnician(query);
+  }
 };
 const closeModal = ({ success, error }) => {
   addTechnicianModal.value = false;

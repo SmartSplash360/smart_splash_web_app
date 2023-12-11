@@ -21,15 +21,15 @@ export const useValidation = () => {
         return error
     }
     const useValidateTextArea = ({  field, error }) => {
-        error = field ? field.length > 300
-        ? "Please enter between 10 and 300 characters"
+        error = field ? field.length > 250
+        ? "Please enter between 10 and 250 characters"
             : "" : "Please add a note";
         return error
     }
     const useValidatePassword = ({ password, error }) => {
 
         // Check if the password length is between 6 and 12 characters
-        const lengthCheck = password.length >= 6 && password.length <= 12;
+        const lengthCheck = password.length >= 8 && password.length <= 12;
 
         // Check if the password includes at least one uppercase letter
         const uppercaseCheck = /[A-Z]/.test(password);
@@ -45,7 +45,7 @@ export const useValidation = () => {
 
         // Return true if all checks pass, indicating a strong password
 
-        error = "Please ensure your password contains 6 to 12 characters and includes Uppercase letters (A-Z), Lowercase letters (a-z), Numbers (0-9) and a Special characters"
+        error = "Please ensure your password contains 8 to 12 characters and includes Uppercase letters (A-Z), Lowercase letters (a-z), Numbers (0-9) and a Special characters"
             
         return  (lengthCheck && uppercaseCheck && lowercaseCheck && numberCheck && specialCharacterCheck) ? "" : error
 

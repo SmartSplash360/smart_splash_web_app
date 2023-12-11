@@ -101,7 +101,7 @@
         >
       </div>
       <ul class="flex flex-col gap-2">
-        <li class="flex justify-between items-center">
+        <li v-if="!readOnly" class="flex justify-between items-center">
           <div class="w-full">
             <Accordion v-model:activeIndex="active">
               <AccordionTab>
@@ -137,7 +137,7 @@
             </Accordion>
           </div>
         </li>
-        <li class="flex justify-between items-center">
+        <li v-if="!readOnly" class="flex justify-between items-center">
           <div class="w-full">
             <Accordion>
               <AccordionTab>
@@ -157,23 +157,23 @@
                 </template>
                 <div
                   class="max-h-[300px] overflow-y-auto flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center"
-                  v-for="service in services"
-                  :key="service.id"
+                  v-for="product in products"
+                  :key="product.id"
                 >
                   <div class="flex items-center gap-4">
                     <span class="span__element text-gray-500">{{
-                      service.name
+                      product.name
                     }}</span>
                   </div>
                   <span class="span__element font-bold text-[#025E7C]">
-                    ${{ service.price.toFixed(2) }}</span
+                    ${{ product.price.toFixed(2) }}</span
                   >
                 </div>
               </AccordionTab>
             </Accordion>
           </div>
         </li>
-        <li class="flex justify-between items-center">
+        <li v-if="!readOnly" class="flex justify-between items-center">
           <div class="w-full">
             <Accordion>
               <AccordionTab>
@@ -193,16 +193,16 @@
                 </template>
                 <div
                   class="max-h-[300px] overflow-y-auto flex flex-col lg:flex-row gap-5 lg:justify-between lg:items-center"
-                  v-for="service in services"
-                  :key="service.id"
+                  v-for="chemReading in chemicalReadings"
+                  :key="chemReading.id"
                 >
                   <div class="flex items-center gap-4">
                     <span class="span__element text-gray-500">{{
-                      service.name
+                      chemReading.name
                     }}</span>
                   </div>
                   <span class="span__element font-bold text-[#025E7C]">
-                    ${{ service.price.toFixed(2) }}</span
+                    ${{ chemReading.price.toFixed(2) }}</span
                   >
                 </div>
               </AccordionTab>
@@ -213,13 +213,13 @@
         <li class="flex justify-between items-center mt-6">
           <h2 class="heading__h2 text-gray-800 dark:text-gray-400">Total</h2>
           <h2 class="heading__h2 text-gray-800 dark:text-gray-400">
-            ${{ totalPrice }}
+            ${{ total ?? totalPrice }}
           </h2>
         </li>
       </ul>
       <div
         v-if="!readOnly"
-        class="mt-5 flex lg:flex-col justify-end gap-5 sm:flex-row"
+        class="mt-5 flex flex-col justify-end gap-5 lg:flex-row"
       >
         <Button
           label="Cancel"
@@ -281,6 +281,7 @@ const props = defineProps({
   totalPriceServices: String | Number,
   totalPriceProducts: String | Number,
   totalPriceChems: String | Number,
+  total: String | Number,
   selectedProducts: Array,
   customerDetails: String | Number,
   readOnly: {

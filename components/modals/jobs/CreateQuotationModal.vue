@@ -203,7 +203,7 @@
       </ul>
       <div
         v-if="!readOnly"
-        class="mt-5 flex flex-col justify-end gap-5 sm:flex-row"
+        class="w-full bg-red-400 flex flex-col justify-end gap-5 lg:flex-row"
       >
         <Button
           label="Cancel"

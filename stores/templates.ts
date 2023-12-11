@@ -9,8 +9,6 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-
-
 let apiUrl = requestUrl;
 
 export const useTemplateStore = defineStore("template", {
@@ -162,5 +160,23 @@ export const useTemplateStore = defineStore("template", {
         throw error;
       }
     },
+    async searchTemplate(query: string) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/templates/get_by_name/${query}`;
+      try {
+        const res = await axios.get(url);
+        return res.data.data
+      } catch (error) {
+
+        return error;
+      }
+    }
   },
 });

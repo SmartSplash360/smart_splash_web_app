@@ -327,14 +327,14 @@ const deleteItem = async (id) => {
         toast.add({
           severity: "info",
           summary: "Delete Service",
-          detail: res?.message,
+          detail: "You have successfully delete a service",
           life: 5000,
         });
       } catch (e) {
         toast.add({
           severity: "error",
           summary: "Delete Service",
-          detail: `an error has occurred: ${e}`,
+          detail: `Service deletion failed.an error has occurred`,
           life: 5000,
         });
       }

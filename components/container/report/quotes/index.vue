@@ -32,6 +32,7 @@
         :totalPriceChems="totalPriceChems"
         :newJobPayload="job"
         :readOnly="readOnly"
+        :total="total"
         :toggleJobQuoteModal="closeModal"
       ></ModalsJobsCreateQuotation>
       <div v-if="quoteCount === 0" class="flex">
@@ -117,11 +118,6 @@
               @click="toggleJobQuoteModal({ quote, readOnlyValue: true })"
               >View Quote</span
             >
-            <!-- <nuxt-link
-            class="span__element text-[#5B7CFF] cursor-pointer"
-            :to="`/reports/quotes/${quote.id}`"
-            >Edit Quote</nuxt-link
-          > -->
           </div>
         </div>
       </div>
@@ -146,9 +142,12 @@ const showQuotationModal = ref(false);
 const customerDetails = ref();
 const technician = ref();
 const quotes = ref();
-const totalPriceServices = ref(154);
-const totalPriceProducts = ref(454);
-const totalPriceChems = ref(205);
+
+const totalPriceServices = ref(0);
+const totalPriceProducts = ref(0);
+const totalPriceChems = ref(0);
+const total = ref(0);
+
 const jobs = ref();
 const job = ref();
 const readOnly = ref(false);
@@ -210,10 +209,11 @@ const renderDate = (data) => {
 const closeModal = () => (showQuotationModal.value = false);
 
 const toggleJobQuoteModal = ({ quote, readOnlyValue }) => {
+  total.value = quote.total_amount;
   job.value = jobs.value.find((job) => job.id === quote.job_id);
   customerDetails.value = customerStore.getCustomerById(quote.customer_id);
   technician.value = technicianStore.getTechnicianById(quote.technician_id);
-  readOnly.value = readOnlyValue;
   showQuotationModal.value = !showQuotationModal.value;
+  readOnly.value = readOnlyValue;
 };
 </script>
