@@ -144,6 +144,7 @@ const errorEmail = ref("");
 const errorPhoneNumber = ref("");
 
 onMounted(() => {
+  loading.value = true;
   if (technician) {
     name.value = technician.name;
     surname.value = technician.surname;
@@ -151,6 +152,7 @@ onMounted(() => {
     phoneNumber.value = technician.phone_number;
     status.value = technician.status ? true : false;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {

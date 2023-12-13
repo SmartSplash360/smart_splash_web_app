@@ -120,12 +120,10 @@ export const useCustomerStore = defineStore("customer", {
       if (tenantUrl) {
         apiUrl = tenantUrl
       }
-
       let url = `${apiUrl}/customers/${id}`;
 
       try {
         const res = await axios.post(url, customerPayload);
-
         if (!res.data.success) {
           throw new Error(res.data.message);
         }

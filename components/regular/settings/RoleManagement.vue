@@ -12,6 +12,11 @@
         v-if="toggleCreateRole"
         :handleCancelCreateRole="handleCancelCreateRole"
       ></RegularSettingsCreateRole>
+      <ModalsSettingUpdateRole
+        v-if="toggleUpdateRole"
+        :handleCancelUpdateRole="handleCancelUpdateRole"
+        :role="role"
+      ></ModalsSettingUpdateRole>
     </div>
     <div
       class="card products-table"
@@ -83,15 +88,13 @@
         <Column v-if="user?.role_id === 1">
           <template #body="slotProps">
             <div class="flex justify-end flex-row gap-2">
-              <!-- <Button
+              <Button
                 icon="pi pi-pencil"
                 text
                 raised
                 rounded
-                @click="
-                  editItem(slotProps.data.id, { ...slotProps.data }, false)
-                "
-              /> -->
+                @click="editItem(slotProps.data.id, { ...slotProps.data })"
+              />
               <Button
                 icon="pi pi-trash"
                 text
@@ -125,7 +128,9 @@ const router = useRouter();
 const userStore = useUserStore();
 const roleStore = useRoleStore();
 
+const role = ref();
 const toggleCreateRole = ref(false);
+const toggleUpdateRole = ref(false);
 const loading = ref(true);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -146,7 +151,12 @@ const handleSearch = (value) => {};
 const handleCreateRole = () =>
   (toggleCreateRole.value = !toggleCreateRole.value);
 
+const handleUpdateRole = () => {
+  toggleUpdateRole.value = !toggleUpdateRole.value;
+};
+
 const handleCancelCreateRole = () => (toggleCreateRole.value = false);
+const handleCancelUpdateRole = () => (toggleUpdateRole.value = false);
 
 const deleteItem = async (id) => {
   confirm.require({
@@ -174,5 +184,9 @@ const deleteItem = async (id) => {
     },
     reject: () => {},
   });
+};
+const editItem = (id, item) => {
+  role.value = item;
+  handleUpdateRole();
 };
 </script>

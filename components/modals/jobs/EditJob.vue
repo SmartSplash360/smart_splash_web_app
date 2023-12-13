@@ -277,6 +277,7 @@ const customers = computed(() => customerStore.getCustomers);
 const bodiesOfWater = ref([]);
 
 onMounted(async () => {
+  loading.value = true;
   // get drop down data
   await customerStore.fetchCustomers();
   await bodyOfWaterStore.fetchBodiesOfWaters();
@@ -293,6 +294,8 @@ onMounted(async () => {
     description.value = props.job.description;
     technical_notes.value = props.job.technical_notes;
   }
+
+  loading.value = false;
 });
 
 const handleChangeCustomer = () => {

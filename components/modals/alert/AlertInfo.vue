@@ -3,7 +3,16 @@
     @click="toggleShowAlertInfo"
     class="fixed bottom-0 left-0 right-0 top-0 z-[1000] flex-center bg-[#000000da]"
   >
+    <div
+      v-if="loading"
+      class="fixed bottom-0 left-0 right-0 top-0 z-[1200] flex-center bg-[#000000da]"
+    >
+      <div class="card self-center flex-center w-10">
+        <ProgressSpinner strokeWidth="8" />
+      </div>
+    </div>
     <form
+      v-else
       @click.stop
       class="flex min-w-full flex-col gap-8 rounded-md bg-white p-10 lg:min-w-[550px] lg:max-h-[100vh] dark:bg-[#31353F] overflow-y-auto"
     >
@@ -120,6 +129,7 @@ const router = useRouter();
 const props = defineProps({
   alert: Object,
   toggleShowAlertInfo: Function,
+  loading: Boolean,
 });
 
 const { id, technician_id, body_of_water } = props.alert;

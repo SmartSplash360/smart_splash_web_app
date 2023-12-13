@@ -231,6 +231,7 @@ maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
 
 onMounted(async () => {
+  loading.value = true;
   await bodyOfWaterStore.fetchBodiesOfWaters();
   await technicianStore.fetchTechnicians();
   await alertTypeStore.fetchAlertTypes();
@@ -243,6 +244,7 @@ onMounted(async () => {
     technicianId.value = alert.technician_id;
     subject.value = alert.subject;
   }
+  loading.value = false;
 });
 
 const handleChangeBodyOfWater = () => {

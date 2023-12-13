@@ -20,11 +20,15 @@ export const useUserStore = defineStore("user", {
     currentUser: null,
     jwt: "",
     users: [],
+    registeredUsers : [],
     userDefinedTheme: true,
   }),
   getters: {
     getUsers(state) {
       return state.users;
+    },
+    getRegisteredUsers(state) {
+      return state.registeredUsers;
     },
     getCurrentUser(state) {
       return state.currentUser;
@@ -152,8 +156,6 @@ export const useUserStore = defineStore("user", {
 
     },
     async resetPassword(email: string, password: string, password_confirmation: string, token: string, companyId: number | null) {
-      console.log(email, companyId)
-      
       function appendSubdomain(url: string, companyId: number) {
         return url.replace("/api/", `/api/${companyId}/`)
       }
@@ -177,6 +179,24 @@ export const useUserStore = defineStore("user", {
         throw error;
       }
 
+    },
+    async fetchAllUsers() {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/auth/users`;
+            try {
+        const res = await axios.get(url);
+        this.registeredUsers = res.data.data.data;
+      } catch (error) {
+
+        return error;
+      }
     },
     async fetchUsers() {
       try {

@@ -137,6 +137,7 @@ const errorDescription = ref("");
 const errorPrice = ref("");
 
 onMounted(() => {
+  loading.value = true;
   if (product) {
     isAvailable.value = product.is_available === 1;
     notes.value = product.notes;
@@ -144,6 +145,7 @@ onMounted(() => {
     description.value = product.description;
     price.value = product.price;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {
