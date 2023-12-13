@@ -50,6 +50,7 @@
         v-if="AlertInfo"
         :alert="alert"
         :toggleShowAlertInfo="closeModal"
+        :loading="loadingInfo"
       >
       </ModalsAlertInfo>
       <div class="w-full flex mb-4 lg:hidden">
@@ -88,6 +89,7 @@ const alertsMobile = ref([]);
 const alertList = ref([]);
 const alert = ref();
 const loading = ref(false);
+const loadingInfo = ref(false);
 
 const countAllAlert = ref(0);
 const countHighAlert = ref(0);
@@ -195,6 +197,7 @@ const closeModal = ({ success, error }) => {
   }
 };
 const viewItem = ({ id, item, mobileEdit = false }) => {
+  loadingInfo.value = true;
   alert.value = item;
   if (mobileEdit) {
     router.push({
@@ -207,6 +210,7 @@ const viewItem = ({ id, item, mobileEdit = false }) => {
     });
     return;
   }
+  loadingInfo.value = false;
   toggleShowAlertInfo();
 };
 const editItem = ({ id, item, mobileEdit = false }) => {

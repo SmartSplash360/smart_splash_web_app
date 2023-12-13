@@ -138,12 +138,14 @@ const errorPhoneNumber = ref("");
 const user = computed(() => userStore.getCurrentUser);
 
 onMounted(() => {
+  loading.value = true;
   if (customer) {
     name.value = customer.name;
     surname.value = customer.surname;
     email.value = customer.email;
     phoneNumber.value = customer.phone_number;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {

@@ -93,7 +93,7 @@
             v-model="stage"
             class="w-full lg:w-1/2 rounded-md border-gray-300"
           >
-            <option disabled selected value="">Stage stage</option>
+            <option>Select stage</option>
             <option value="1">Stage 1</option>
             <option value="2">Stage 2</option>
             <option value="3">Stage 3</option>
@@ -178,6 +178,7 @@ const errorEmail = ref("");
 const errorPhoneNumber = ref("");
 
 onMounted(() => {
+  loading.value = true;
   if (props.lead) {
     name.value = props.lead.name;
     surname.value = props.lead.surname;
@@ -186,6 +187,7 @@ onMounted(() => {
     stage.value = props.lead.status;
     notes.value = props.lead.notes;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {

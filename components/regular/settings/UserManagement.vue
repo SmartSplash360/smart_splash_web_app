@@ -190,7 +190,7 @@ const renderCustomerImage = (photo) => {
 };
 const renderRoleName = (id) => {
   const role = rolesList.value.filter((role) => role.id === id)[0];
-  return role.slug;
+  return role?.slug;
 };
 const handleSearch = (value) => {};
 

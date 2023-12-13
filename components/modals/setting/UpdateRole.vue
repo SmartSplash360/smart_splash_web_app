@@ -9,7 +9,7 @@
     <form
       v-else
       @click.stop
-      class="flex min-h-[250px] flex-col gap-6 rounded-md bg-white p-10 lg:min-w-[750px] dark:bg-[#31353F]"
+      class="flex min-h-[150px] h-fit flex-col gap-6 rounded-md bg-white p-10 lg:min-w-[750px] dark:bg-[#31353F]"
     >
       <h2 class="heading__h2 font-bold text-[#025E7C]">
         Update Role
@@ -42,9 +42,9 @@
           </InputText>
         </div>
       </div>
-      <div class="flex flex-col gap-4 hidden">
+      <div v-if="menusList.length > 0" class="flex flex-col gap-4">
         <h2 class="heading__h2 font-bold text-[#025E7C]">
-          Assign Menu to role
+          Update assigned Menu to role
         </h2>
         <div class="grid grid-cols-4 gap-8 mt-5">
           <div
@@ -52,7 +52,12 @@
             :key="menuItem.id"
             class="flex items-center gap-2"
           >
-            <Checkbox :name="menuItem.name" :value="menuItem" />
+            {{ menuItem.name }}
+            <Checkbox
+              :name="menuItem.name"
+              :value="menuItem"
+              v-model="selectedMenuItem"
+            />
             <label class="ml-2"> {{ menuItem.name }} </label>
           </div>
         </div>
@@ -100,6 +105,8 @@ const errorRole = ref();
 const errorName = ref("");
 const errorSlug = ref("");
 
+const selectedMenuItem = ref([]);
+
 const menusList = computed(() => menuStore.getMenuList);
 
 onMounted(async () => {
@@ -107,9 +114,10 @@ onMounted(async () => {
   if (props.role) {
     name.value = props.role.name;
     slug.value = props.role.slug;
-    menu.value = [...(await menuStore.fetchMenuByRole(props.role.id))];
   }
-
+  selectedMenuItem.value = [
+    ...(await menuStore.fetchMenuByRole(props.role.id)),
+  ];
   loading.value = false;
 });
 
@@ -120,7 +128,6 @@ const handleChangeName = () => {
     error: errorName.value,
   });
 };
-
 const validateForm = () => {
   handleChangeName();
   return !errorName.value;
@@ -132,6 +139,12 @@ const updateRole = async () => {
       await roleStore.updateRole(props.role.id, {
         name: name.value.toLocaleLowerCase(),
         slug: name.value.charAt(0).toUpperCase() + name.value.slice(1),
+      });
+      selectedMenuItem.value?.forEach(async (menuItemSelected) => {
+        // await menuStore.createRoleMenu({
+        //   menu_id: menuItemSelected.id,
+        //   role_id: res.id,
+        // });
       });
       loading.value = false;
       props.handleCancelUpdateRole();
