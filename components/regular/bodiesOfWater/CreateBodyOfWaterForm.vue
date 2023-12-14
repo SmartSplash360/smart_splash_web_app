@@ -21,9 +21,16 @@
           <InputText
             :disabled="readOnly"
             type="text"
-            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
             v-model="name"
+            class="rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+            :class="errorName && 'border-red-300'"
+            @blur="handleChangeName"
           ></InputText>
+          <p class="min-h-[20px]">
+            <span v-show="errorName" class="text-[#D42F24] text-xs">{{
+              errorName
+            }}</span>
+          </p>
         </div>
 
         <div class="flex w-full flex-col gap-2">
@@ -105,26 +112,34 @@
           <label class="text-sm" for="address">
             Address* (Click the icon to show coordinates)</label
           >
-          <div class="flex gap-4">
-            <InputText
-              :disabled="readOnly"
-              id="autocomplete"
-              type="text"
-              class="w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
-              v-model="address"
-            ></InputText>
-            <div
-              class="flex flex-col items-center justify-center gap-2"
-              @click="toggleShowCoordinates"
-            >
-              <Button
-                :icon="showCoordinates ? 'pi pi-eye-slash' : 'pi pi-eye'"
-              />
-              <!-- <span>show coordinates</span> -->
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-4">
+              <InputText
+                :disabled="readOnly"
+                id="autocomplete"
+                type="text"
+                class="w-full rounded-md border-gray-300 dark:bg-[#1B2028] dark:text-white"
+                :class="errorAddress && 'border-red-300'"
+                v-model="address"
+                @blur="handleChangeAddress"
+              ></InputText>
+              <div
+                class="flex flex-col items-center justify-center gap-2"
+                @click="toggleShowCoordinates"
+              >
+                <Button
+                  :icon="showCoordinates ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                />
+                <!-- <span>show coordinates</span> -->
+              </div>
             </div>
           </div>
+          <p class="min-h-[20px]">
+            <span v-show="errorAddress" class="text-[#D42F24] text-xs">{{
+              errorAddress
+            }}</span>
+          </p>
         </div>
-
         <!-- co-ordinates -->
         <div
           v-if="showCoordinates"
@@ -168,86 +183,7 @@
         />
       </div>
 
-      <!-- image upload -->
-      <FileUpload
-        v-if="!readOnly"
-        name="gallery[]"
-        customUpload
-        @select="onSelectedFiles"
-        @upload="onAdvancedUpload($event)"
-        :multiple="true"
-        accept="image/*"
-        :maxFileSize="1000000"
-      >
-        <template
-          #header="{ chooseCallback, uploadCallback, clearCallback, files }"
-        >
-          <div
-            class="justify-content-between align-items-center flex flex-1 flex-wrap gap-2"
-          >
-            <div class="flex gap-2">
-              <Button
-                @click="chooseCallback()"
-                icon="pi pi-images"
-                rounded
-                outlined
-              ></Button>
-              <Button
-                @click="uploadEvent(uploadCallback)"
-                icon="pi pi-cloud-upload"
-                rounded
-                outlined
-                severity="success"
-                :disabled="!files || files.length === 0"
-              ></Button>
-              <Button
-                @click="clearCallback()"
-                icon="pi pi-times"
-                rounded
-                outlined
-                severity="danger"
-                :disabled="!files || files.length === 0"
-              ></Button>
-            </div>
-            <ProgressBar
-              :value="totalSizePercent"
-              :showValue="false"
-              :class="
-                totalSizePercent > 100
-                  ? 'md:w-20rem h-1rem w-full md:ml-auto'
-                  : 'exceeded-progress-bar'
-              "
-            >
-              <span class="white-space-nowrap"
-                >{{ totalSize }}B / 1Mb</span
-              ></ProgressBar
-            >
-          </div>
-        </template>
-
-        <template #empty>
-          <p>Drag and drop files to here to upload.</p>
-        </template>
-      </FileUpload>
-
-      <!-- image view -->
-      <div
-        v-if="readOnly && bodyOfWater.gallery_id"
-        class="flex flex-wrap justify-center gap-2"
-      >
-        <!-- storage/appc -->
-        <div
-          v-for="image in bodyOfWater.gallery.images"
-          :key="image.image_path"
-        >
-          <img
-            class="m-2 h-20 w-20 rounded-md object-cover"
-            :src="config.public.imageUrl + image.image_path"
-          />
-        </div>
-      </div>
-
-      <div class="flex flex-col justify-center gap-5 sm:flex-row">
+      <div class="flex flex-col justify-end mt-5 gap-5 sm:flex-row">
         <Button
           v-if="readOnly"
           label="Close"
@@ -268,7 +204,7 @@
           v-if="!readOnly"
           label="Submit"
           icon="pi pi-check"
-          class="!bg-[#0291BF] hover:shadow-xl"
+          class="!bg-[#0291BF] hover:shadow-xl text-white"
           @click="bodyOfWater ? updateBodyOfWater() : createBodyOfWater()"
         />
       </div>
@@ -286,10 +222,12 @@ import { useGeolocation } from "@/utils/useGeolocation";
 const config = useRuntimeConfig();
 
 const loader = new Loader({
-  apiKey: config.public.googleMapsApiKey,
+  apiKey: config.public.apiSecret,
 });
 
 const store = useBodyOfWaterStore();
+
+const { useRequired } = useValidation();
 
 const props = defineProps({
   toggleAddBodyOfWaterModal: {
@@ -326,6 +264,9 @@ const width = ref(0);
 const depth = ref(0);
 
 const showCoordinates = ref(false);
+
+const errorName = ref("");
+const errorAddress = ref("");
 
 const toggleShowCoordinates = () =>
   (showCoordinates.value = !showCoordinates.value);
@@ -523,41 +464,61 @@ onUnmounted(async () => {
   if (autocompleteListener) autocompleteListener.remove();
 });
 
+const handleChangeName = () => {
+  errorName.value = useRequired({
+    fieldname: "name",
+    field: name.value,
+    error: errorName.value,
+  });
+};
+const handleChangeAddress = () => {
+  errorAddress.value = useRequired({
+    fieldname: "address",
+    field: address.value,
+    error: errorAddress.value,
+  });
+};
+const validateForm = () => {
+  handleChangeName();
+  handleChangeAddress();
+  return !errorName.value && googlePlaceId.value && lng.value && lat.value;
+};
+
 const createBodyOfWater = async () => {
-  // TODO: add validation
+  if (validateForm()) {
+    try {
+      const payload = {
+        name: name.value,
+        type: type.value,
+        size: size.value ?? "Large",
+        condition: condition.value ?? "Good",
+        google_place_id: googlePlaceId.value,
+        address: address.value,
+        lng: lng.value,
+        lat: lat.value,
+        customer_id: props.customerId,
+      };
 
-  try {
-    const payload = {
-      name: name.value,
-      type: type.value,
-      size: size.value ?? "Large",
-      condition: condition.value ?? "Good",
-      google_place_id: googlePlaceId.value,
-      address: address.value,
-      lng: lng.value,
-      lat: lat.value,
-      customer_id: props.customerId,
-    };
+      // Pool Specs variables
+      let poolSpecs = {
+        pool_sanitation: poolSanitation.value,
+        pool_length: length.value,
+        pool_width: width.value,
+        pool_depth: depth.value,
+      };
 
-    // Pool Specs variables
-    let poolSpecs = {
-      pool_sanitation: poolSanitation.value,
-      pool_length: length.value,
-      pool_width: width.value,
-      pool_depth: depth.value,
-    };
+      let galleryPayload = gallery.value;
 
-    let galleryPayload = gallery.value;
+      await store.createBodyOfWater(payload, poolSpecs, galleryPayload);
 
-    await store.createBodyOfWater(payload, poolSpecs, galleryPayload);
+      await store.fetchBodiesOfWaters();
 
-    await store.fetchBodiesOfWaters();
-
-    props.toggleAddBodyOfWaterModal({
-      success: "Body Of Water created successfully",
-    });
-  } catch (e) {
-    props.toggleAddBodyOfWaterModal({ error: e });
+      props.toggleAddBodyOfWaterModal({
+        success: "Body Of Water created successfully",
+      });
+    } catch (e) {
+      props.toggleAddBodyOfWaterModal({ error: e });
+    }
   }
 };
 

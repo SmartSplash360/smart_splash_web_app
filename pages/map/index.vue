@@ -10,7 +10,7 @@
           <VueDatePicker v-model="date"></VueDatePicker>
         </div>
         <GoogleMap
-          api-key="AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88"
+          :api-key="apiKey"
           style="width: 100%; height: 700px;"
           :center="center"
           class="border-2"
@@ -160,6 +160,10 @@ definePageMeta({
 });
 
 const loading = ref(false);
+
+const config = useRuntimeConfig();
+
+const apiKey = config.public.apiSecret;
 
 const jobStore = useJobStore();
 const jobs = ref([]);
