@@ -2,14 +2,16 @@ const baseUrl = "/";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  
   runtimeConfig: {
-    googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-    twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID,
-    twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN,
-    twilioNumber: process.env.NUXT_PUBLIC_TWILIO_NUMBER,
-    twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID,
-    twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET,
     public: {
+      apiSecret : process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID,
+      twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN,
+      twilioNumber: process.env.NUXT_PUBLIC_TWILIO_NUMBER,
+      twilioApiKeySid: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SID,
+      twilioApiKeySecret: process.env.NUXT_PUBLIC_TWILIO_API_KEY_SECRET,
       appDomain : process.env.NUXT_PUBLIC_APP_DOMAIN ?? "smartsplash.co",
       apiUrl: process.env.NUXT_PUBLIC_API_URL ??  "https://smartsplash.co/api/v1",
       imageUrl: process.env.NUXT_PUBLIC_IMAGE_URL ?? "https://smartsplash.co/storage",
@@ -67,19 +69,6 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ["primevue", "@vuepic/vue-datepicker"],
-    extend(config : any, { isClient } : any) {
-      if (isClient) {
-        // Find the rule for JavaScript files
-        const jsRule = config.module.rules.find((rule : any) =>
-          rule.test.toString().includes('js|ts')
-        );
-
-        // Set the Content-Type header for JavaScript files
-        if (jsRule) {
-          jsRule.type = 'javascript/auto';
-        }
-      }
-    },
   },
 
   ssr: false,

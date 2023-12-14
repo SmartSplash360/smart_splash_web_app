@@ -130,7 +130,8 @@ const loginInNewTenant = async (data) => {
       detail: "You have been signed up in successfully",
       life: 5000,
     });
-    await router.push("/settings");
+
+    await router.push("/map");
   } catch (error) {
     toast.add({
       severity: "error",
