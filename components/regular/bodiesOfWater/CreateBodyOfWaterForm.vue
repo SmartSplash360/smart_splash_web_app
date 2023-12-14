@@ -224,7 +224,7 @@ const config = useRuntimeConfig();
 const loader = new Loader({
   apiKey: config.public.apiSecret,
 });
-
+console.log(config.public.apiSecret);
 const store = useBodyOfWaterStore();
 
 const { useRequired } = useValidation();
