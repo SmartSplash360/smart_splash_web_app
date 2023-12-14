@@ -165,8 +165,6 @@ const config = useRuntimeConfig();
 
 const apiKey = config.public.apiSecret;
 
-console.log(config.public.apiSecret);
-
 const jobStore = useJobStore();
 const jobs = ref([]);
 const jobLocations = ref([]);

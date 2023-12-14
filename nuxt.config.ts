@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   
   runtimeConfig: {
     public: {
-      apiSecret : process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? 'AIzaSyCURQ_envINqjUvuufWZ9zVHxq2pAwKVmQ',
+      apiSecret : process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? 'AIzaSyAIr2H3KUBXswMlrYpGgF44-NioOxasA88',
       googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
       twilioAccountSid: process.env.NUXT_PUBLIC_TWILIO_ACCOUNT_SID,
       twilioAuthToken: process.env.NUXT_PUBLIC_TWILIO_AUTH_TOKEN,
