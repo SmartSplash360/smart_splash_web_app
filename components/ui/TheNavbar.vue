@@ -57,7 +57,7 @@
             :toggleNotificationModal="toggleNotificationModal"
           ></ModalsNotificationViewNotification>
           <span
-            class="hidden relative flex-between cursor-pointer"
+            class="relative flex-between cursor-pointer"
             @click="handleNotification"
           >
             <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />

@@ -63,6 +63,7 @@ const handlePreviousStep = () => {
 };
 
 const createJob = async (totalPrice, quoteRecipient, selectedProducts) => {
+  console.log("we are here");
   try {
     const createdJob = await jobStore.createJob(newJobPayload.value);
     selectedServices.value?.forEach(async (service) => {
@@ -88,10 +89,11 @@ const createJob = async (totalPrice, quoteRecipient, selectedProducts) => {
     await notificationStore.createNotification({
       subject: "JOB CREATED",
       description: `A job has been created successfully and a quote was sent to ${quoteRecipient}`,
-      user_id: user.id,
-      alert_id: createdJob.id,
+      user_id: newJobPayload.value.technician_id,
+      alert_id: alertId.value ?? createdJob.id,
       type: "Job",
     });
+    console.log("first");
 
     if (alertId.value) {
       alertStore.updateAlert(alertId.value, {

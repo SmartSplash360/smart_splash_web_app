@@ -91,12 +91,6 @@ export const useNotificationStore = defineStore("notification", {
       let url = `${apiUrl}/notifications`;
       try {
         const res = await axios.post(url, notificationPayload);
-        // var audio = new Audio(require('~/assets/sound/notification.wav'));
-        // audio.play();
-        // play(800,1e3)
-        // if (!res.data.success) {
-        //     throw new Error(res.data.message);
-        // }
       } catch (error) {
 
         throw error;

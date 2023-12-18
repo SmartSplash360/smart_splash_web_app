@@ -105,6 +105,7 @@ export const useAlertStore = defineStore("alert", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+        return res.data.data;
       } catch (error) {
 
         throw error;

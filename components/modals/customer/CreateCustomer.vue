@@ -109,6 +109,7 @@
 <script setup>
 import { useUserStore } from "~/stores/users";
 import { useCustomerStore } from "~/stores/customer";
+import { useNotificationStore } from "~/stores/notification";
 
 const { toggleAddCustomerModal, customer, profile } = defineProps([
   "toggleAddCustomerModal",
@@ -118,6 +119,7 @@ const { toggleAddCustomerModal, customer, profile } = defineProps([
 
 const store = useCustomerStore();
 const userStore = useUserStore();
+const notificationStore = useNotificationStore();
 const {
   useRequired,
   useValidateEmail,
@@ -192,11 +194,19 @@ const createCustomer = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.createCustomer({
+      const createdCustomer = await store.createCustomer({
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
+      });
+      // Send message to customer
+      await notificationStore.createNotification({
+        subject: "Welcome message",
+        description: `Welcome to the platform ${name.value}`,
+        user_id: createdCustomer.user.id,
+        alert_id: null,
+        type: "Customer",
       });
       await store.fetchCustomers();
       loading.value = false;
@@ -210,11 +220,19 @@ const updateCustomer = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.updateCustomer(customer?.id, {
+      const updatedCustomer = await store.updateCustomer(customer?.id, {
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
+      });
+      // Send message to customer
+      await notificationStore.createNotification({
+        subject: "Updated details message",
+        description: `${name.value}, your details have been updated`,
+        user_id: updatedCustomer.id,
+        alert_id: null,
+        type: "Customer",
       });
       await store.fetchCustomers();
       loading.value = false;
