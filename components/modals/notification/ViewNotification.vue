@@ -36,7 +36,6 @@
           @click="handleViewNotification(notification)"
         >
           <div class="rounded-full flex-center gap-2 self-start">
-            <!-- <span class="bg-[#0291BF] w-2 h-2 rounded-full"></span> -->
             <img
               :src="user.photo ? customerPhoto : ProfileImage"
               class="w-10 h-10 rounded-full"
@@ -114,7 +113,6 @@ const refreshInterval = setInterval(() => {
   refreshFlag.value = !refreshFlag.value;
 }, 1 * 60 * 1000);
 
-// Cleanup the interval when the component is unmounted
 onBeforeUnmount(() => {
   clearInterval(refreshInterval);
 });
