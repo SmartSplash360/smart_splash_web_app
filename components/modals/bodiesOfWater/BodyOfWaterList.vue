@@ -72,6 +72,7 @@ const user = computed(() => userStore.getCurrentUser);
 onMounted(async () => {
   loading.value = true;
   await bodyOfWaterStore.fetchBodiesOfWaters();
+  await customerStore.fetchCustomers();
   customer.value = customerStore.getCustomerById(props.customerId);
   bodiesOfWater.value = customer.value?.bodies_of_water;
   loading.value = false;

@@ -33,13 +33,14 @@ export const useNotificationStore = defineStore("notification", {
   },
   state: () => ({
     notifications: [],
+    count : 0
   }),
   getters: {
     getNotifications(state) {
       return state.notifications;
     },
     getNotificationCount(state) {
-      return state.notifications.length;
+      return state.count;
     },
   },
   actions: {
@@ -96,7 +97,7 @@ export const useNotificationStore = defineStore("notification", {
         throw error;
       }
     },
-    async deleteNotification(id: number | string) {
+    async deleteNotification(id: number | string, userId : number ) {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
@@ -111,6 +112,8 @@ export const useNotificationStore = defineStore("notification", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+
+        this.fetchAllNotificationByUser(userId);
         return res.data;
       } catch (error) {
 
@@ -148,7 +151,7 @@ export const useNotificationStore = defineStore("notification", {
       let url = `${apiUrl}/userNotifications/getAllByUser/${id}`;
       try {
         const res = await axios.get(url);
-        this.notifications = res.data.data
+        this.notifications = res.data.data;
         return res.data.data
       } catch (error) {
         return error;
@@ -166,7 +169,7 @@ export const useNotificationStore = defineStore("notification", {
       let url = `${apiUrl}/userNotifications/getUnreadByUser/${id}`;
       try {
         const res = await axios.get(url);
-        this.notifications = res.data.data
+        this.count = res.data.data.length;
         return res.data.data
       } catch (error) {
         return error;
@@ -187,6 +190,29 @@ export const useNotificationStore = defineStore("notification", {
         } catch (error) {
           throw error;
         }
+    },
+    async deleteUserNotification(id: number, userId : number) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/userNotifications/${id}`;
+      try {
+        const res = await axios.delete(url);
+        if (!res.data.success) {
+          throw new Error(res.data.message);
+        }
+
+        this.fetchAllNotificationByUser(userId);
+        return res.data;
+      } catch (error) {
+
+        throw error;
+      }
     }
   },
 });

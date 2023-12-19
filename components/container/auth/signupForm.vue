@@ -131,7 +131,7 @@ const loginInNewTenant = async (data) => {
       life: 5000,
     });
 
-    await router.push("/map");
+    await router.push("/alerts");
   } catch (error) {
     toast.add({
       severity: "error",

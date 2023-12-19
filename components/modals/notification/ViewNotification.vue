@@ -6,7 +6,7 @@
     <div
       @click.stop=""
       class="absolute z-50 flex flex-col gap-14 rounded-md bg-white dark:bg-[#1B2028] p-4 mr-64 mt-28 w-[450px] lg:gap-3 -right-4 -top-7"
-      :class="allNotifications.length > 0 ? 'h-[465px]  ' : 'h-[200px]'"
+      :class="allNotifications.length > 0 ? 'h-[465px]  ' : 'h-fit'"
     >
       <div class="flex justify-between w-full bg-[#d4ecf4] p-2 rounded-md">
         <span
@@ -33,7 +33,6 @@
           class="flex gap-5 items-center justify-between border rounded-md p-2 cursor-pointer hover:shadow-xl hover:bg-slate-100"
           v-for="(notification, index) in allNotifications"
           :key="index"
-          @click="handleViewNotification(notification)"
         >
           <div class="rounded-full flex-center gap-2 self-start">
             <img
@@ -42,7 +41,10 @@
             />
           </div>
 
-          <div class="flex flex-col justify-between p-2">
+          <div
+            @click="handleViewNotification(notification)"
+            class="flex flex-col justify-between p-2"
+          >
             <div class="flex items-center gap-2">
               <span class="span__element font-bold text-xs uppercase"
                 >{{ notification.notification.type }}:</span
@@ -65,7 +67,7 @@
       <div v-else class="flex-center pt-5">
         You have 0 notifications
       </div>
-      <div class="h-1/5 flex-center border-t pt-5">
+      <div class="flex-center border-t pt-4">
         <Button
           label="Delete all"
           severity="secondary"
@@ -88,8 +90,6 @@ const notificationStore = useNotificationStore();
 const userStore = useUserStore();
 
 const props = defineProps({
-  notifications: Array,
-  unreadNotifications: Array,
   toggleNotificationModal: Function,
 });
 
@@ -101,7 +101,6 @@ const customerPhoto = ref();
 const refreshFlag = ref(false);
 
 const loading = ref(false);
-const notifications = ref([]);
 const notificationsList = ref([]);
 const allNotifications = ref([]);
 const currentTab = ref("All");
@@ -119,8 +118,10 @@ onBeforeUnmount(() => {
 
 onMounted(async () => {
   loading.value = true;
-  notificationsList.value = props.notifications;
-  allNotifications.value = props.notifications;
+  await notificationStore.fetchAllUnreadNotificationByUser(user.value.id);
+  const res = await notificationStore.fetchAllNotificationByUser(user.value.id);
+  notificationsList.value = res;
+  allNotifications.value = res;
 
   if (user.value?.photo) {
     if (user.value.photo?.includes("public/images/")) {
@@ -140,8 +141,8 @@ const handleChangeTab = (tab) => {
       (notif) => notif.is_read === 0
     );
   } else {
-    allNotifications.value = notificationsList.value;
     currentTab.value = "All";
+    allNotifications.value = notificationsList.value;
   }
 };
 const handleViewNotification = (notification) => {
@@ -163,12 +164,14 @@ const handleViewNotification = (notification) => {
   }
 };
 const deleteNotification = async (id) => {
-  await notificationStore.deleteNotification(id);
+  await notificationStore.deleteUserNotification(id, user.value.id);
+  await notificationStore.deleteNotification(id, user.value.id);
   props.toggleNotificationModal();
 };
 const deleteAllNotification = () => {
   allNotifications.value.forEach(async (notification) => {
     await notificationStore.deleteNotification(notification.id);
+    await notificationStore.deleteUserNotification(notification.id);
   });
   props.toggleNotificationModal();
 };

@@ -176,7 +176,6 @@ const handleChangePhoneNumber = () => {
     error: errorPhoneNumber.value,
   });
 };
-
 const validateForm = () => {
   handleChangeName();
   handleChangeSurname();
@@ -189,7 +188,6 @@ const validateForm = () => {
     !errorPhoneNumber.value
   );
 };
-
 const createCustomer = async () => {
   if (validateForm()) {
     loading.value = true;

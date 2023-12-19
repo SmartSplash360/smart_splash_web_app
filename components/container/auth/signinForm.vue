@@ -209,7 +209,7 @@ async function login() {
         life: 5000,
       });
       loading.value = false;
-      await router.push("/map");
+      await router.push("/alerts");
     } catch (e) {
       errorDomain.value = "Please ensure the company is registered!";
       errorEmail.value = "Please ensure you have entered valid credentials";

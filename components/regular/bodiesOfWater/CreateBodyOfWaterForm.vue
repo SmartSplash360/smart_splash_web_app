@@ -214,10 +214,11 @@
 
 <script setup>
 import { Loader } from "@googlemaps/js-api-loader";
-import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
 import { useCustomerStore } from "~/stores/customer";
 import SvgMarker from "~/components/base/SvgMarker";
 import { useGeolocation } from "@/utils/useGeolocation";
+import { useBodyOfWaterStore } from "~/stores/bodyOfWater";
+import { useNotificationStore } from "~/stores/notification";
 
 const config = useRuntimeConfig();
 
@@ -226,6 +227,7 @@ const loader = new Loader({
 });
 
 const store = useBodyOfWaterStore();
+const notificationStore = useNotificationStore();
 
 const { useRequired } = useValidation();
 
@@ -510,6 +512,23 @@ const createBodyOfWater = async () => {
       let galleryPayload = gallery.value;
 
       await store.createBodyOfWater(payload, poolSpecs, galleryPayload);
+
+      // Send message to customer
+      const newNotification = await notificationStore.createNotification({
+        subject: "New body of water",
+        description: `A new body of water was added`,
+        user_id: props.customerId,
+        alert_id: null,
+        type: "Customer",
+      });
+
+      await notificationStore.createUserNotification({
+        user_id: props.customerId,
+        alert_id: null,
+        notification_id: newNotification.id,
+        notification_type: "Customer",
+        job_id: null,
+      });
 
       await store.fetchBodiesOfWaters();
 
