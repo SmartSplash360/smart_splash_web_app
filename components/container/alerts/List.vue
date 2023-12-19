@@ -118,8 +118,9 @@ const lowAlerts = computed(() => {
   return list;
 });
 
-onMounted(() => {
+onMounted(async () => {
   loading.value = true;
+  await alertStore.fetchAlerts();
   const list = alertStore.getAlerts;
   if (user.value.role_id == 1) {
     alerts.value = list;
@@ -127,9 +128,9 @@ onMounted(() => {
     alertList.value = list;
   }
   if (user.value.role_id == 3) {
-    const items = list.filter((alert) => {
-      return alert.body_of_water.customer_id == user.value.id;
-    });
+    const items = list.filter(
+      (alert) => alert.body_of_water.customer_id == user.value.id
+    );
     alerts.value = items;
     alertList.value = items;
     alertsMobile.value = items;

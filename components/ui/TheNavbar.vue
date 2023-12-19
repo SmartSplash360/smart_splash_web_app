@@ -55,9 +55,11 @@
           <ModalsNotificationViewNotification
             v-if="showNotificationModal"
             :toggleNotificationModal="toggleNotificationModal"
+            :notifications="notifications"
+            :unreadNotifications="unreadNotifications"
           ></ModalsNotificationViewNotification>
           <span
-            class="hidden relative flex-between cursor-pointer"
+            class="relative flex-between cursor-pointer"
             @click="handleNotification"
           >
             <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
@@ -223,6 +225,8 @@ const menu = ref();
 const menuList = ref();
 const userPhoto = ref();
 const loading = ref(false);
+const notifications = ref();
+const unreadNotifications = ref();
 const sideBarVisible = ref(false);
 const showNotificationModal = ref(false);
 const items = ref([
@@ -251,6 +255,14 @@ const pageIcon = computed(() => {
 });
 
 onMounted(async () => {
+  notifications.value = await notificationStore.fetchAllNotificationByUser(
+    user.value.id
+  );
+
+  unreadNotifications.value = await notificationStore.fetchAllUnreadNotificationByUser(
+    user.value.id
+  );
+
   if (user.value.role_id === 1) {
     menuList.value = menuListAdmin;
   } else if (user.value.role_id === 2 || user.value.role_id === 3) {

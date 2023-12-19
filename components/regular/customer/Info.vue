@@ -119,8 +119,8 @@ const userStore = useUserStore();
 const config = useRuntimeConfig();
 const imageUrl = config.public.imageUrl;
 
-const updateProfile = ref(false);
 const customerPhoto = ref();
+const updateProfile = ref(false);
 
 const fullAddress = computed(() => {
   let address = "N/A";

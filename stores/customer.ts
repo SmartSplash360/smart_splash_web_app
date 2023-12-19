@@ -107,8 +107,8 @@ export const useCustomerStore = defineStore("customer", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+        return res.data.data;
       } catch (error) {
-
         throw error;
       }
     },
@@ -127,6 +127,7 @@ export const useCustomerStore = defineStore("customer", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
+        return res.data.data;
       } catch (error) {
 
         throw error;

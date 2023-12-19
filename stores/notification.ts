@@ -55,7 +55,6 @@ export const useNotificationStore = defineStore("notification", {
       let url = `${apiUrl}/notifications`;
       try {
         const res = await axios.get(url);
-        this.notifications = res.data.data.data;
       } catch (error) {
 
         return error;
@@ -91,12 +90,7 @@ export const useNotificationStore = defineStore("notification", {
       let url = `${apiUrl}/notifications`;
       try {
         const res = await axios.post(url, notificationPayload);
-        // var audio = new Audio(require('~/assets/sound/notification.wav'));
-        // audio.play();
-        // play(800,1e3)
-        // if (!res.data.success) {
-        //     throw new Error(res.data.message);
-        // }
+        return res.data.data
       } catch (error) {
 
         throw error;
@@ -123,5 +117,76 @@ export const useNotificationStore = defineStore("notification", {
         throw error;
       }
     },
+
+
+    async createUserNotification(userNotification: any) {
+        const jwt = useUserStore().getJwt;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
+
+        let url = `${apiUrl}/userNotifications`;
+        try {
+          const res = await axios.post(url, userNotification);
+        } catch (error) {
+
+          throw error;
+        }
+    },
+    async fetchAllNotificationByUser(id: number) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/userNotifications/getAllByUser/${id}`;
+      try {
+        const res = await axios.get(url);
+        this.notifications = res.data.data
+        return res.data.data
+      } catch (error) {
+        return error;
+      }
+    },
+    async fetchAllUnreadNotificationByUser(id: number) {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+      let url = `${apiUrl}/userNotifications/getUnreadByUser/${id}`;
+      try {
+        const res = await axios.get(url);
+        this.notifications = res.data.data
+        return res.data.data
+      } catch (error) {
+        return error;
+      }
+    },
+    async updateUserNotification(id: number, payload : any) {
+        const jwt = useUserStore().getJwt;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+        const tenantUrl = useTenantStore().tenantDomain;
+        if (tenantUrl) {
+          apiUrl = tenantUrl
+        }
+
+        let url = `${apiUrl}/userNotifications/${id}`;
+        try {
+           await axios.post(url, payload);
+        } catch (error) {
+          throw error;
+        }
+    }
   },
 });

@@ -306,13 +306,23 @@ const createAlert = async () => {
         subject: subject.value,
       });
 
-      await notificationStore.createNotification({
-        subject: "ALERT CREATED",
-        description: "An Alert has been created successfully",
-        user_id: user.id,
+      // Send alert to technician
+      const newNotification = await notificationStore.createNotification({
+        subject: "New alert",
+        description: "An alert has been added under your name",
+        user_id: createdAlert.technician_id,
         alert_id: createdAlert.id,
         type: "Alert",
       });
+
+      await notificationStore.createUserNotification({
+        user_id: createdAlert.technician_id,
+        alert_id: createdAlert.id,
+        notification_id: newNotification.id,
+        notification_type: "Alert",
+        job_id: null,
+      });
+
       await alertStore.fetchAlerts();
 
       loading.value = false;
@@ -334,7 +344,15 @@ const updateAlert = async () => {
         technician_id: technicianId.value,
         subject: subject.value,
       };
-      await alertStore.updateAlert(alert?.id, data);
+      const updatedAlert = await alertStore.updateAlert(alert?.id, data);
+      // Send alert to technician
+      await notificationStore.createNotification({
+        subject: "Alert updated",
+        description: "An alert under your name has been updated",
+        user_id: updatedAlert.technician_id,
+        alert_id: updatedAlert.id,
+        type: "Alert",
+      });
       await alertStore.fetchAlerts();
       loading.value = false;
       toggleAddAlertModal({

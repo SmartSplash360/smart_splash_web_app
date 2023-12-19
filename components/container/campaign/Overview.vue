@@ -24,6 +24,8 @@ import { useTemplateStore } from "@/stores/templates";
 import { useCampaignStore } from "@/stores/campaign";
 import { useUserStore } from "~/stores/users";
 import { useNotificationStore } from "~/stores/notification";
+import { useCustomerStore } from "~/stores/customer";
+import { useLeadStore } from "~/stores/leads";
 
 const toast = useToast();
 const props = defineProps({
@@ -39,8 +41,10 @@ const props = defineProps({
   },
 });
 
+const leadStore = useLeadStore();
 const templateStore = useTemplateStore();
 const campaignStore = useCampaignStore();
+const customerStore = useCustomerStore();
 const notificationStore = useNotificationStore();
 
 const loading = ref(true);
@@ -52,6 +56,8 @@ const route = useRoute();
 const { templateId } = route.query;
 
 const user = computed(() => userStore.getCurrentUser);
+const leads = computed(() => leadStore.getLeads);
+const customers = computed(() => customerStore.getCustomers);
 
 onMounted(() => {
   if (props.campaignId) {
@@ -81,6 +87,24 @@ const createCampaign = async (data) => {
           detail: "Email Campaign sent successfully to all Leads",
           life: 5000,
         });
+
+        leads.value.forEach(async (lead) => {
+          const notification = await notificationStore.createNotification({
+            subject: "New Email Campaign ",
+            description: data.name,
+            user_id: lead.id,
+            alert_id: null,
+            type: "Campaign",
+          });
+
+          await notificationStore.createUserNotification({
+            user_id: lead.id,
+            alert_id: null,
+            notification_id: notification.id,
+            notification_type: "Campaign",
+            job_id: null,
+          });
+        });
       }
       if (data.customer) {
         await campaignStore.createCampaignEmail({
@@ -94,6 +118,23 @@ const createCampaign = async (data) => {
           summary: "Success",
           detail: "Email Campaign sent successfully to all Customers",
           life: 5000,
+        });
+        customers.value.forEach(async (customer) => {
+          const notification = await notificationStore.createNotification({
+            subject: "New  Campaign ",
+            description: data.name,
+            user_id: customer.id,
+            alert_id: null,
+            type: "Campaign",
+          });
+
+          await notificationStore.createUserNotification({
+            user_id: customer.id,
+            alert_id: null,
+            notification_id: notification.id,
+            notification_type: "Campaign",
+            job_id: null,
+          });
         });
       }
     } else if (data.templateType === 3) {
@@ -111,6 +152,23 @@ const createCampaign = async (data) => {
           detail: "SMS Campaign sent successfully to all Leads",
           life: 5000,
         });
+        leads.value.forEach(async (lead) => {
+          const notification = await notificationStore.createNotification({
+            subject: "New SMS Campaign ",
+            description: data.name,
+            user_id: lead.id,
+            alert_id: null,
+            type: "Campaign",
+          });
+
+          await notificationStore.createUserNotification({
+            user_id: lead.id,
+            alert_id: null,
+            notification_id: notification.id,
+            notification_type: "Campaign",
+            job_id: null,
+          });
+        });
       }
       if (data.customer) {
         await campaignStore.createCampaignSMS({
@@ -125,23 +183,27 @@ const createCampaign = async (data) => {
           detail: "SMS Campaign sent successfully to all Customers",
           life: 5000,
         });
+        customers.value.forEach(async (customer) => {
+          await notificationStore.createNotification({
+            subject: "New  Campaign ",
+            description: data.name,
+            user_id: customer.id,
+            alert_id: null,
+            type: "Campaign",
+          });
+
+          await notificationStore.createUserNotification({
+            user_id: customer.id,
+            alert_id: null,
+            notification_id: notification.id,
+            notification_type: "Campaign",
+            job_id: null,
+          });
+        });
       }
     }
 
     router.push("/campaigns");
-    await notificationStore.createNotification({
-      subject: "CAMPAIGN CREATED",
-      description: `Campaign sent to all ${
-        data.lead && data.customer
-          ? "Leads and Customers"
-          : data.lead
-          ? "Leads"
-          : "Customers"
-      }`,
-      user_id: user.id,
-      alert_id: "",
-      type: "Campaign",
-    });
   } catch (error) {
     toast.add({
       severity: "error",
