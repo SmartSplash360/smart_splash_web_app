@@ -134,13 +134,22 @@ const convertToCustomer = ({ id }) => {
       try {
         const newCustomer = await leadStore.updateLead(id, { role_id: 3 });
         await leadStore.fetchLeads();
-        await notificationStore.createNotification({
+        const notification = await notificationStore.createNotification({
           subject: "Welcome message",
           description: `Welcome to the platform ${newCustomer.name}`,
-          user_id: user.id,
+          user_id: newCustomer.id,
           alert_id: "",
           type: "Customer",
         });
+
+        await notificationStore.createUserNotification({
+          user_id: newCustomer.id,
+          alert_id: null,
+          notification_id: notification.id,
+          notification_type: "Customer",
+          job_id: null,
+        });
+
         toast.add({
           severity: "success",
           summary: "Convert Lead to Customer",

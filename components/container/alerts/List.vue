@@ -128,11 +128,9 @@ onMounted(async () => {
     alertList.value = list;
   }
   if (user.value.role_id == 3) {
-    console.log("first");
     const items = list.filter(
       (alert) => alert.body_of_water.customer_id == user.value.id
     );
-    console.log(items);
     alerts.value = items;
     alertList.value = items;
     alertsMobile.value = items;

@@ -201,13 +201,22 @@ const createCustomer = async () => {
         phone_number: phoneNumber.value,
       });
       // Send message to customer
-      await notificationStore.createNotification({
+      const newNotification = await notificationStore.createNotification({
         subject: "Welcome message",
-        description: `Welcome to the platform ${name.value}`,
+        description: `Welcome to the platform`,
         user_id: createdCustomer.user.id,
         alert_id: null,
         type: "Customer",
       });
+
+      await notificationStore.createUserNotification({
+        user_id: createdCustomer.user.id,
+        alert_id: null,
+        notification_id: newNotification.id,
+        notification_type: "Customer",
+        job_id: null,
+      });
+
       await store.fetchCustomers();
       loading.value = false;
       toggleAddCustomerModal({ success: "Customer created successfully" });
@@ -227,13 +236,22 @@ const updateCustomer = async () => {
         phone_number: phoneNumber.value,
       });
       // Send message to customer
-      await notificationStore.createNotification({
+      const updatedNotification = await notificationStore.createNotification({
         subject: "Updated details message",
-        description: `${name.value}, your details have been updated`,
+        description: `Your details has been updated`,
         user_id: updatedCustomer.id,
         alert_id: null,
         type: "Customer",
       });
+
+      await notificationStore.createUserNotification({
+        user_id: updatedCustomer.id,
+        alert_id: null,
+        notification_id: updatedNotification.id,
+        notification_type: "Customer",
+        job_id: null,
+      });
+
       await store.fetchCustomers();
       loading.value = false;
       toggleAddCustomerModal({

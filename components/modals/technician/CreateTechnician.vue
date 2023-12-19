@@ -208,13 +208,21 @@ const createTechnician = async () => {
         company: company.value,
       });
       // Send message to customer
-      await notificationStore.createNotification({
+      const newNotification = await notificationStore.createNotification({
         subject: "Welcome message",
-        description: `Welcome to the platform ${name.value}`,
+        description: `Welcome to the platform`,
         user_id: createdTechnician.user.id,
         alert_id: null,
         type: "Technician",
       });
+
+      await notificationStore.createUserNotification({
+        user_id: createdTechnician.user.id,
+        alert_id: null,
+        notification_id: newNotification.id,
+        job_id: null,
+      });
+
       await store.fetchTechnicians();
       loading.value = false;
       toggleAddTechnicianModal({ success: "Technician created successfully" });
@@ -237,12 +245,20 @@ const updateTechnician = async () => {
         status: status.value ? 1 : 0,
       });
       // Send message to customer
-      await notificationStore.createNotification({
+      const updatedNotification = await notificationStore.createNotification({
         subject: "Updated details message",
-        description: `${name.value}, your details have been updated`,
+        description: `Your details have been updated`,
         user_id: updatedTechnician.id,
         alert_id: null,
         type: "Technician",
+      });
+
+      await notificationStore.createUserNotification({
+        user_id: updatedTechnician.id,
+        alert_id: null,
+        notification_id: updatedNotification.id,
+        notification_type: "Technician",
+        job_id: null,
       });
       await store.fetchTechnicians();
       loading.value = false;
