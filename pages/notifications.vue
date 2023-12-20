@@ -20,7 +20,13 @@
         >Unread</span
       >
     </div>
-    <div class="flex flex-col gap-4 overflow-auto">
+    <div v-if="loading" class="h-full self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
+    <div
+      v-else-if="allNotifications.length > 0"
+      class="flex flex-col gap-4 overflow-auto"
+    >
       <div
         class="flex gap-5 items-center border rounded-md p-2"
         v-for="(notification, index) in allNotifications"
@@ -28,19 +34,22 @@
       >
         <div class="w-[50px] h-[50px] rounded-full flex-center">
           <img
-            :src="notification.profilePic"
+            :src="user.photo ? customerPhoto : ProfileImage"
             class="w-full h-full rounded-full"
           />
         </div>
         <div class="flex flex-col justify-between p-2">
           <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-            <span class="span__element">{{ notification.user }}:</span>
+            <span class="span__element"
+              >{{ notification.user.name }}
+              {{ notification.user.surname }}:</span
+            >
             <span class="span__element text-gray-500">{{
-              notification.content
+              notification.notification.subject
             }}</span>
           </div>
           <span class="text-[#015D7B] span__element font-medium">{{
-            notification.subject
+            notification.notification.description
           }}</span>
         </div>
         <Dropdown>
@@ -56,15 +65,20 @@
               icon="pi pi-eye"
               label="View"
               class="w-full border-none self-start !text-[#015D7B]"
+              @click="handleViewNotification(notification)"
             />
             <Button
               icon="pi pi-trash"
               label="Delete"
               class="w-full border-none self-start !text-[#015D7B]"
+              @click="deleteNotification(notification.id)"
             />
           </div>
         </Dropdown>
       </div>
+    </div>
+    <div v-else class="flex-center pt-5">
+      You have 0 notifications
     </div>
     <div class="h-1/5 flex-center border-t pt-5">
       <Button
@@ -72,6 +86,7 @@
         severity="secondary"
         outlined
         class="hover:shadow-xl w-3/5 !border-red-400 !bg-red-200 !text-gray-700"
+        @click="deleteAllNotification"
       />
     </div>
   </div>
@@ -79,70 +94,86 @@
 
 <script setup>
 import Dropdown from "v-dropdown";
+import { useUserStore } from "~/stores/users";
+import { useNotificationStore } from "~/stores/notification";
+import ProfileImage from "@/assets/images/ProfilePlaceholder.png";
 
 definePageMeta({
   layout: "dashboard",
   middleware: ["auth", "auto-theme"],
 });
 
-const notificationsList = ref([
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "read",
-  },
-  {
-    profilePic: "https://xsgames.co/randomusers/avatar.php?g=male",
-    user: "Shawn DeVries",
-    subject: "PSI Trending Alert",
-    content: "Set an Alert for A.J Beson. ",
-    status: "unread",
-  },
-]);
-const allNotifications = ref();
+const notificationStore = useNotificationStore();
+const userStore = useUserStore();
+
+const router = useRouter();
+const config = useRuntimeConfig();
+const imageUrl = config.public.imageUrl;
+
+const customerPhoto = ref();
+const loading = ref(false);
+const notificationsList = ref([]);
+const allNotifications = ref([]);
 const currentTab = ref("All");
 
-onMounted(() => {
-  allNotifications.value = notificationsList.value;
+const user = computed(() => userStore.getCurrentUser);
+onMounted(async () => {
+  loading.value = true;
+  await notificationStore.fetchAllUnreadNotificationByUser(user.value.id);
+  const res = await notificationStore.fetchAllNotificationByUser(user.value.id);
+  notificationsList.value = res;
+  allNotifications.value = res;
+
+  if (user.value?.photo) {
+    if (user.value.photo?.includes("public/images/")) {
+      let photo = user.value.photo.replace("public/images/", "/images/");
+      customerPhoto.value = `${imageUrl}/${photo}`;
+    } else {
+      customerPhoto.value = user.value.photo;
+    }
+  }
+  loading.value = false;
 });
 
 const handleChangeTab = (tab) => {
   if (tab === "Unread") {
+    currentTab.value = "Unread";
     allNotifications.value = notificationsList.value.filter(
-      (notif) => notif.status === "unread"
+      (notif) => notif.is_read === 0
     );
   } else {
+    currentTab.value = "All";
     allNotifications.value = notificationsList.value;
   }
+};
+const handleViewNotification = (notification) => {
+  notificationStore.updateUserNotification(notification.id, { is_read: 1 });
+  if (notification.notification.type.toLowerCase() == "alert") {
+    window.location.href = "/alerts";
+    props.toggleNotificationModal();
+  }
+  if (notification.notification.type.toLowerCase() === "job") {
+    window.location.href = "/technicians/my-profile";
+  }
+  if (notification.notification.type.toLowerCase() == "campaign") {
+    window.location.href = "/campaigns";
+    props.toggleNotificationModal();
+  }
+  if (notification.notification.type.toLowerCase() == "customer") {
+    window.location.href = "/customers/my-profile";
+    props.toggleNotificationModal();
+  }
+};
+const deleteNotification = async (id) => {
+  await notificationStore.deleteUserNotification(id, user.value.id);
+  await notificationStore.deleteNotification(id, user.value.id);
+  props.toggleNotificationModal();
+};
+const deleteAllNotification = () => {
+  allNotifications.value.forEach(async (notification) => {
+    await notificationStore.deleteNotification(notification.id);
+    await notificationStore.deleteUserNotification(notification.id);
+  });
+  props.toggleNotificationModal();
 };
 </script>

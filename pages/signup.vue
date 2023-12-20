@@ -1,7 +1,6 @@
 <template>
   <main class="flex md:h-[100vh] w-full md:items-center py-10 md:py-0">
-    <ContainerAuthSignupForm class="h-full w-full lg:w-3/5">
-    </ContainerAuthSignupForm>
+    <ContainerAuthSignupForm class="h-full w-full"> </ContainerAuthSignupForm>
   </main>
 </template>
 

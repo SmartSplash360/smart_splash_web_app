@@ -84,7 +84,7 @@ export const useTenantStore = defineStore("tenant", {
         }
         return res.data
       } catch (error) {
-        throw new Error("An error");
+        return error
       }
     },
     async updateTenant(tenantId : number, tenantPayload: any) {
