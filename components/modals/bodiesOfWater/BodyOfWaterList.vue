@@ -3,7 +3,11 @@
     @click="toggleBodyOfWaterList({ show: false })"
     class="flex-center fixed bottom-0 left-0 right-0 top-0 z-[1000] bg-[#000000da]"
   >
+    <div v-if="loading" class="card self-center flex-center w-10">
+      <ProgressSpinner strokeWidth="8" />
+    </div>
     <div
+      v-else
       @click.stop
       class="flex min-h-[500px] flex-col gap-12 rounded-md bg-white p-5 dark:bg-[#31353F] lg:min-w-[950px]"
     >
@@ -61,12 +65,17 @@ const userStore = useUserStore();
 const addBodyOfWaterModal = ref(false);
 const readOnly = ref(false);
 const bodyOfWater = ref();
+const loading = ref(false);
 
 const user = computed(() => userStore.getCurrentUser);
 
-onMounted(() => {
+onMounted(async () => {
+  loading.value = true;
+  await bodyOfWaterStore.fetchBodiesOfWaters();
+  await customerStore.fetchCustomers();
   customer.value = customerStore.getCustomerById(props.customerId);
   bodiesOfWater.value = customer.value?.bodies_of_water;
+  loading.value = false;
 });
 
 const toggleAddBodyOfWaterModal = () => (addBodyOfWaterModal.value = true);

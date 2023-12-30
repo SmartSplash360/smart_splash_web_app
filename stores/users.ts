@@ -20,11 +20,15 @@ export const useUserStore = defineStore("user", {
     currentUser: null,
     jwt: "",
     users: [],
+    registeredUsers : [],
     userDefinedTheme: true,
   }),
   getters: {
     getUsers(state) {
       return state.users;
+    },
+    getRegisteredUsers(state) {
+      return state.registeredUsers;
     },
     getCurrentUser(state) {
       return state.currentUser;
@@ -130,10 +134,10 @@ export const useUserStore = defineStore("user", {
       this.userDefinedTheme = false;
       await router.push("/");
     },
-    async forgotPassword(domain : string | null ,email:string) {
+    async forgotPassword(domain: string | null, email: string) {
 
       if (domain && domain !== appDomain) {
-        await useTenantStore().fetchTenantByWebsite(domain);
+        await useTenantStore().fetchTenantByWebsite(`${domain}.${appDomain}`);
         apiUrl = useTenantStore().tenantDomain;
       }
 
@@ -144,7 +148,6 @@ export const useUserStore = defineStore("user", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
-
         return res.data;
       } catch (error) {
         throw error;
@@ -152,8 +155,6 @@ export const useUserStore = defineStore("user", {
 
     },
     async resetPassword(email: string, password: string, password_confirmation: string, token: string, companyId: number | null) {
-      console.log(email, companyId)
-      
       function appendSubdomain(url: string, companyId: number) {
         return url.replace("/api/", `/api/${companyId}/`)
       }
@@ -178,15 +179,23 @@ export const useUserStore = defineStore("user", {
       }
 
     },
-    async fetchUsers() {
-      try {
-        const data = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        this.users = data.data;
-      } catch (error) {
-        alert(error);
+    async fetchAllUsers() {
+      const jwt = useUserStore().getJwt;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
+      let url = `${apiUrl}/auth/users`;
+            try {
+        const res = await axios.get(url);
+        this.registeredUsers = res.data.data.data;
+        this.users = res.data.data.data;
+      } catch (error) {
+
+        return error;
       }
     },
   },

@@ -186,6 +186,7 @@ const errorPrice = ref("");
 const errorSubservice = ref("");
 
 onMounted(async () => {
+  loading.value = true;
   if (service) {
     loadingSubservices.value = true;
     isAvailable.value = service.is_available === 1;
@@ -204,6 +205,7 @@ onMounted(async () => {
 
     loadingSubservices.value = false;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {

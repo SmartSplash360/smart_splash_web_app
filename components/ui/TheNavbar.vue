@@ -57,7 +57,7 @@
             :toggleNotificationModal="toggleNotificationModal"
           ></ModalsNotificationViewNotification>
           <span
-            class="hidden relative flex-between cursor-pointer"
+            class="relative flex-between cursor-pointer"
             @click="handleNotification"
           >
             <font-awesome-icon icon="fa-regular fa-bell" class="text-4xl" />
@@ -251,6 +251,7 @@ const pageIcon = computed(() => {
 });
 
 onMounted(async () => {
+  await notificationStore.fetchAllUnreadNotificationByUser(user.value.id);
   if (user.value.role_id === 1) {
     menuList.value = menuListAdmin;
   } else if (user.value.role_id === 2 || user.value.role_id === 3) {

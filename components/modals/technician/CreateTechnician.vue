@@ -114,10 +114,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { useTechnicianStore } from "~/stores/technician";
+import { useNotificationStore } from "~/stores/notification";
 
 const store = useTechnicianStore();
+const notificationStore = useNotificationStore();
 
 const { toggleAddTechnicianModal, technician } = defineProps([
   "toggleAddTechnicianModal",
@@ -144,6 +146,7 @@ const errorEmail = ref("");
 const errorPhoneNumber = ref("");
 
 onMounted(() => {
+  loading.value = true;
   if (technician) {
     name.value = technician.name;
     surname.value = technician.surname;
@@ -151,6 +154,7 @@ onMounted(() => {
     phoneNumber.value = technician.phone_number;
     status.value = technician.status ? true : false;
   }
+  loading.value = false;
 });
 
 const handleChangeName = () => {
@@ -196,13 +200,29 @@ const createTechnician = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      await store.createTechnician({
+      const createdTechnician = await store.createTechnician({
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
         company: company.value,
       });
+      // Send message to customer
+      const newNotification = await notificationStore.createNotification({
+        subject: "Welcome message",
+        description: `Welcome to the platform`,
+        user_id: createdTechnician.user.id,
+        alert_id: null,
+        type: "Technician",
+      });
+
+      await notificationStore.createUserNotification({
+        user_id: createdTechnician.user.id,
+        alert_id: null,
+        notification_id: newNotification.id,
+        job_id: null,
+      });
+
       await store.fetchTechnicians();
       loading.value = false;
       toggleAddTechnicianModal({ success: "Technician created successfully" });
@@ -216,13 +236,29 @@ const updateTechnician = async () => {
   if (validateForm()) {
     try {
       loading.value = true;
-      await store.updateTechnician(technician?.id, {
+      const updatedTechnician = await store.updateTechnician(technician?.id, {
         id: technician.id,
         name: name.value,
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
         status: status.value ? 1 : 0,
+      });
+      // Send message to customer
+      const updatedNotification = await notificationStore.createNotification({
+        subject: "Updated details message",
+        description: `Your details have been updated`,
+        user_id: updatedTechnician.id,
+        alert_id: null,
+        type: "Technician",
+      });
+
+      await notificationStore.createUserNotification({
+        user_id: updatedTechnician.id,
+        alert_id: null,
+        notification_id: updatedNotification.id,
+        notification_type: "Technician",
+        job_id: null,
       });
       await store.fetchTechnicians();
       loading.value = false;

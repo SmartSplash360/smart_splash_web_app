@@ -50,6 +50,7 @@
         v-if="AlertInfo"
         :alert="alert"
         :toggleShowAlertInfo="closeModal"
+        :loading="loadingInfo"
       >
       </ModalsAlertInfo>
       <div class="w-full flex mb-4 lg:hidden">
@@ -88,6 +89,7 @@ const alertsMobile = ref([]);
 const alertList = ref([]);
 const alert = ref();
 const loading = ref(false);
+const loadingInfo = ref(false);
 
 const countAllAlert = ref(0);
 const countHighAlert = ref(0);
@@ -116,8 +118,9 @@ const lowAlerts = computed(() => {
   return list;
 });
 
-onMounted(() => {
+onMounted(async () => {
   loading.value = true;
+  await alertStore.fetchAlerts();
   const list = alertStore.getAlerts;
   if (user.value.role_id == 1) {
     alerts.value = list;
@@ -125,9 +128,9 @@ onMounted(() => {
     alertList.value = list;
   }
   if (user.value.role_id == 3) {
-    const items = list.filter((alert) => {
-      return alert.body_of_water.customer_id == user.value.id;
-    });
+    const items = list.filter(
+      (alert) => alert.body_of_water.customer_id == user.value.id
+    );
     alerts.value = items;
     alertList.value = items;
     alertsMobile.value = items;
@@ -195,6 +198,7 @@ const closeModal = ({ success, error }) => {
   }
 };
 const viewItem = ({ id, item, mobileEdit = false }) => {
+  loadingInfo.value = true;
   alert.value = item;
   if (mobileEdit) {
     router.push({
@@ -207,6 +211,7 @@ const viewItem = ({ id, item, mobileEdit = false }) => {
     });
     return;
   }
+  loadingInfo.value = false;
   toggleShowAlertInfo();
 };
 const editItem = ({ id, item, mobileEdit = false }) => {

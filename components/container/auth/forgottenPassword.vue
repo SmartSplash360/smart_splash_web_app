@@ -49,7 +49,6 @@
         </p>
       </div>
     </div>
-
     <div class="mt-5 flex w-full flex-col gap-3">
       <Button
         :disabled="loading"
@@ -102,7 +101,8 @@ async function sendLink() {
   if (validateForm()) {
     try {
       loading.value = true;
-      await store.forgotPassword(domain.value, email.value);
+      const res = await store.forgotPassword(domain.value, email.value);
+      console.log(res);
 
       toast.add({
         severity: "success",

@@ -58,7 +58,7 @@
       v-if="fullAddress !== 'N/A'"
       class="w-full flex lg:min-w-[150px] lg:max-w-[300px] items-start sm:justify-center gap-3 overflow-hidden text-ellipsis xl:h-[75px] xl:gap-3"
     >
-      <font-awesome-icon icon="location-dot" class="text-lg" />
+      <font-awesome-icon icon="location-dot" class="text-lg span__element" />
       <span class="span__element">{{ fullAddress }}</span>
     </div>
     <div
@@ -119,15 +119,13 @@ const userStore = useUserStore();
 const config = useRuntimeConfig();
 const imageUrl = config.public.imageUrl;
 
-const updateProfile = ref(false);
 const customerPhoto = ref();
+const updateProfile = ref(false);
 
 const fullAddress = computed(() => {
   let address = "N/A";
   if (props.customerInfo?.address && props.customerInfo?.address.length > 0) {
-    address = `${props.customerInfo?.address[0]?.address_line1}, ${props.customerInfo?.address[0]?.city}, ${props.customerInfo?.address[0]?.state}
-    ${props.customerInfo?.address[0]?.address_line2}
-    ${props.customerInfo?.address[0]?.country}`;
+    address = props.customerInfo.address;
   }
   return address;
 });

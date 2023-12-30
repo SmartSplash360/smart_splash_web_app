@@ -1,29 +1,42 @@
 <template>
-  <div
-    v-if="currentStep === 1"
-    class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[900px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
-  >
-    <RegularAuthStepOne :handleStepOne="handleStepOne"></RegularAuthStepOne>
-    <ContainerAuthHeroLogger
-      :tenantRegistrationHero="true"
-      class="hidden h-full lg:block lg:w-[45%]"
+  <div class="w-full lg:py-20">
+    <div
+      v-if="currentStep === 1"
+      class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[900px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
     >
-    </ContainerAuthHeroLogger>
-  </div>
-  <div
-    v-else-if="currentStep === 2"
-    class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[850px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
-  >
-    <RegularAuthStepTwo
-      :handleStepTwo="handleStepTwo"
-      :handlePrevious="handlePrevious"
-      :loading="loading"
-    ></RegularAuthStepTwo>
-    <ContainerAuthHeroLogger
-      :userSignUpHero="true"
-      class="hidden h-full lg:block lg:w-[45%]"
+      <RegularAuthStepOne :handleStepOne="handleStepOne"></RegularAuthStepOne>
+      <ContainerAuthHeroLogger
+        :tenantRegistrationHero="true"
+        class="hidden h-full lg:block lg:w-[45%]"
+      >
+      </ContainerAuthHeroLogger>
+    </div>
+    <div
+      v-else-if="currentStep === 2"
+      class="w-full sm:mx-auto px-5 sm:px-0 flex-between gap-0 rounded-md bg-white lg:h-[850px] lg:border lg:shadow-lg lg:hover:shadow-xl md:w-4/5 xl:w-[55%]"
     >
-    </ContainerAuthHeroLogger>
+      <RegularAuthStepTwo
+        :handleStepTwo="handleStepTwo"
+        :handlePrevious="handlePrevious"
+        :loading="loading"
+      ></RegularAuthStepTwo>
+      <ContainerAuthHeroLogger
+        :userSignUpHero="true"
+        class="hidden h-full lg:block lg:w-[45%]"
+      >
+      </ContainerAuthHeroLogger>
+    </div>
+    <div
+      v-if="errorDomain"
+      id="slide-up-div"
+      class="fixed bottom-5 left-0 right-0 w-full flex-center text-white p-4 rounded-md transform translate-y-full transition-transform duration-700 ease-in-out"
+    >
+      <h2
+        class="bg-red-400 py-3 w-1/2 rounded-md text-center text-white text-sm"
+      >
+        {{ errorDomain }}
+      </h2>
+    </div>
   </div>
 </template>
 
@@ -56,6 +69,8 @@ const currentStep = ref(1);
 const userPayload = ref();
 const tenantPayload = ref();
 
+const errorDomain = ref(false);
+
 const handleStepOne = (tenant) => {
   tenantPayload.value = tenant;
   currentStep.value += 1;
@@ -84,12 +99,23 @@ const registerTenant = async () => {
         life: 5000,
       });
     } else {
+      errorDomain.value = res.response.data.message;
+      setTimeout(() => {
+        const slideUpDiv = document.getElementById("slide-up-div");
+        if (slideUpDiv) {
+          slideUpDiv.classList.remove("translate-y-full");
+        }
+      }, 1000);
       toast.add({
         severity: "error",
         summary: "Registration Error",
         detail: `Registration up Failed. An error has occurred`,
         life: 10000,
       });
+      loading.value = false;
+      setTimeout(() => {
+        location.reload();
+      }, 10000);
     }
     loginInNewTenant(res.data);
 
@@ -106,7 +132,6 @@ const registerTenant = async () => {
   }
 };
 
-//  store.register(tenantPayload);
 const loginInNewTenant = async (data) => {
   try {
     const user = await store.login(
@@ -130,7 +155,8 @@ const loginInNewTenant = async (data) => {
       detail: "You have been signed up in successfully",
       life: 5000,
     });
-    await router.push("/settings");
+
+    await router.push("/alerts");
   } catch (error) {
     toast.add({
       severity: "error",

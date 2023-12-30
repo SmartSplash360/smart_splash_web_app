@@ -132,20 +132,29 @@ const convertToCustomer = ({ id }) => {
     accept: async () => {
       // delete item
       try {
-        const res = await leadStore.updateLead(id, { role_id: 3 });
+        const newCustomer = await leadStore.updateLead(id, { role_id: 3 });
         await leadStore.fetchLeads();
+        const notification = await notificationStore.createNotification({
+          subject: "Welcome message",
+          description: `Welcome to the platform ${newCustomer.name}`,
+          user_id: newCustomer.id,
+          alert_id: "",
+          type: "Customer",
+        });
+
+        await notificationStore.createUserNotification({
+          user_id: newCustomer.id,
+          alert_id: null,
+          notification_id: notification.id,
+          notification_type: "Customer",
+          job_id: null,
+        });
+
         toast.add({
           severity: "success",
           summary: "Convert Lead to Customer",
-          detail: res?.message,
+          detail: "Lead converted to customer successfully",
           life: 5000,
-        });
-        await notificationStore.createNotification({
-          subject: "NEW CUSTOMER",
-          description: `A Lead has been converted into a customer`,
-          user_id: user.id,
-          alert_id: "",
-          type: "Customer",
         });
         router.push("/customers");
       } catch (e) {

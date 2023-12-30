@@ -22,7 +22,9 @@
           v-model="role"
           class="w-full lg:w-1/2 rounded-md border-gray-300"
         >
-          <option v-for="role in roles" :key="role.id">{{ role.name }}</option>
+          <option v-for="role in roles" :key="role.id" :value="role.id">{{
+            role.name
+          }}</option>
         </select>
       </div>
       <div class="flex flex-col justify-between gap-5 sm:flex-row">
@@ -130,8 +132,9 @@
 
 <script setup>
 import { useToast } from "primevue/usetoast";
-import { useUserStore } from "~/stores/users";
 import { useRoleStore } from "~/stores/role";
+import { useUserStore } from "~/stores/users";
+import { useCustomerStore } from "~/stores/customer";
 import { useTenantStore } from "~/stores/tenants";
 
 const { handleCancelUpdateUser, user } = defineProps([
@@ -146,6 +149,7 @@ const toast = useToast();
 const userStore = useUserStore();
 const roleStore = useRoleStore();
 const tenantStore = useTenantStore();
+const customerStore = useCustomerStore();
 
 const {
   useRequired,
@@ -251,20 +255,13 @@ const updateUser = async () => {
   if (validateForm()) {
     loading.value = true;
     try {
-      // get current tenant
-      const tenant = tenantStore.getCurrentTenant;
-      const res = await userStore.registerUser(
-        tenant.name.toLocaleLowerCase().replace(/\s/g, "") + `.${appDomain}`,
-        {
-          name: name.value,
-          surname: surname.value,
-          email: email.value,
-          phone_number: phoneNumber.value,
-          role_id: role.value.id,
-          password: "123456",
-          password_confirmation: "123456",
-        }
-      );
+      await customerStore.updateCustomer(user.id, {
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        phone_number: phoneNumber.value,
+        role_id: role.value,
+      });
 
       toast.add({
         severity: "success",
@@ -281,6 +278,7 @@ const updateUser = async () => {
         detail: `Registration Failed. An error has occurred`,
         life: 10000,
       });
+      loading.value = false;
     }
   }
 };

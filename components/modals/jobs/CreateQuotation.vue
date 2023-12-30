@@ -321,6 +321,7 @@ const totalPrice = computed(() =>
 );
 
 onMounted(() => {
+  loading.value = true;
   const poolInfo = props.customerDetails.bodies_of_water?.filter(
     (bodyOfWaterItem) => (bodyOfWaterItem.pool_id = props.newJobPayload.pool_id)
   )[0];
@@ -336,6 +337,7 @@ onMounted(() => {
     });
   }
   services.value = [...array];
+  loading.value = false;
 });
 
 const handleSendQuote = () => {

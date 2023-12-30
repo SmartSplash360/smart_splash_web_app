@@ -11,8 +11,6 @@ axios.defaults.headers.common["Accept"] = "application/json";
 const config = useRuntimeConfig();
 const requestUrl = config.public.apiUrl;
 
-
-
 let apiUrl = requestUrl;
 
 export const useBodyOfWaterStore = defineStore("bodyOfWater", {
@@ -74,6 +72,11 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
+            
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
 
       try {
         // create gallery
@@ -88,10 +91,6 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
           const headers = {
             "Content-Type": "multipart/form-data",
           };
-          const tenantUrl = useTenantStore().tenantDomain;
-          if (tenantUrl) {
-            apiUrl = tenantUrl
-          }
 
           let url = `${apiUrl}/galleries`;
 
@@ -135,6 +134,13 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+
       let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
         const res = await axios.post(url, payload);
@@ -156,6 +162,13 @@ export const useBodyOfWaterStore = defineStore("bodyOfWater", {
       const jwt = useUserStore().getJwt;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
+
+      const tenantUrl = useTenantStore().tenantDomain;
+      if (tenantUrl) {
+        apiUrl = tenantUrl
+      }
+
+
       let url = `${apiUrl}/bodyOfWater/${id}`;
       try {
         const res = await axios.delete(url);

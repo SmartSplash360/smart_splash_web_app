@@ -1,3 +1,6 @@
+
+
+
 export const useValidation = () => {
 
     const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,28 +30,20 @@ export const useValidation = () => {
         return error
     }
     const useValidatePassword = ({ password, error }) => {
+        error = ''
+        if (!(password.length >= 8 && password.length <= 12)) {
+            error = 'Password must contains 8 to 12 characters';
+        }  
+        if (!/[A-Z]/.test(password)) {
+            error += ' Password must includes Uppercase letters (A-Z)';}  
+        if (!/[a-z]/.test(password)) {
+            error += ' Password must includes lowercase letters (a-z)';}  
+        if (!/\d/.test(password)) {
+            error += ' Password must contains Numbers (0-9)';}  
+        if (!/[!@#$%^&]/.test(password)) {
+            error += ' Password must contains special characters (@#$%^&)';}       
 
-        // Check if the password length is between 6 and 12 characters
-        const lengthCheck = password.length >= 8 && password.length <= 12;
-
-        // Check if the password includes at least one uppercase letter
-        const uppercaseCheck = /[A-Z]/.test(password);
-
-        // Check if the password includes at least one lowercase letter
-        const lowercaseCheck = /[a-z]/.test(password);
-
-        // Check if the password includes at least one number
-        const numberCheck = /\d/.test(password);
-
-        // Check if the password includes at least one special character
-        const specialCharacterCheck = /[!@#$%^&]/.test(password);
-
-        // Return true if all checks pass, indicating a strong password
-
-        error = "Please ensure your password contains 8 to 12 characters and includes Uppercase letters (A-Z), Lowercase letters (a-z), Numbers (0-9) and a Special characters"
-            
-        return  (lengthCheck && uppercaseCheck && lowercaseCheck && numberCheck && specialCharacterCheck) ? "" : error
-
+        return error
     }
 
     return {

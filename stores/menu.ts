@@ -44,6 +44,7 @@ export const useMenuStore = defineStore("menu", {
       try {
         const res = await axios.get(url);
         this.menu = res.data.data;
+        return res.data.data
       } catch (error) {
 
         return error;
