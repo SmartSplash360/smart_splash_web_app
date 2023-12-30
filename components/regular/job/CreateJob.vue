@@ -443,10 +443,11 @@ const technicians = computed(() => technicianStore.getTechnicians);
 
 onMounted(async () => {
   loadingServices.value = true;
-  await customerStore.fetchCustomers();
-  await bodyOfWaterStore.fetchBodiesOfWaters();
   await serviceStore.fetchServices();
+  await customerStore.fetchCustomers();
+  await technicianStore.fetchTechnicians();
   services.value = serviceStore.getServices;
+  await bodyOfWaterStore.fetchBodiesOfWaters();
 
   if (props.job) {
     let customer = customerStore.getCustomerById(props.job.customer_id);

@@ -134,10 +134,10 @@ export const useUserStore = defineStore("user", {
       this.userDefinedTheme = false;
       await router.push("/");
     },
-    async forgotPassword(domain : string | null ,email:string) {
+    async forgotPassword(domain: string | null, email: string) {
 
       if (domain && domain !== appDomain) {
-        await useTenantStore().fetchTenantByWebsite(domain);
+        await useTenantStore().fetchTenantByWebsite(`${domain}.${appDomain}`);
         apiUrl = useTenantStore().tenantDomain;
       }
 
@@ -148,7 +148,6 @@ export const useUserStore = defineStore("user", {
         if (!res.data.success) {
           throw new Error(res.data.message);
         }
-
         return res.data;
       } catch (error) {
         throw error;
@@ -193,20 +192,10 @@ export const useUserStore = defineStore("user", {
             try {
         const res = await axios.get(url);
         this.registeredUsers = res.data.data.data;
+        this.users = res.data.data.data;
       } catch (error) {
 
         return error;
-      }
-    },
-    async fetchUsers() {
-      try {
-        const data = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        this.users = data.data;
-      } catch (error) {
-        alert(error);
-
       }
     },
   },

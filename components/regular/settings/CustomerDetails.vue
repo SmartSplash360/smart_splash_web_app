@@ -294,7 +294,7 @@ const updateCustomer = async () => {
         phone_number: phoneNumber.value,
         hasDog: hasDog.value ? 1 : 0,
         GateSecurityCode: gateCode.value,
-        address: [address.value],
+        address: address.value,
       });
       loading.value = false;
       toast.add({
