@@ -164,6 +164,7 @@ onMounted(() => {
     surname.value = user.value?.surname;
     email.value = user.value?.email;
     phoneNumber.value = user.value?.phone_number;
+    address.value = user.value?.address;
   }
 
   if (user.value.photo) {
@@ -228,7 +229,7 @@ const updateInfo = async () => {
         surname: surname.value,
         email: email.value,
         phone_number: phoneNumber.value,
-        address: [address.value],
+        address: address.value,
       });
       loading.value = false;
       toast.add({
